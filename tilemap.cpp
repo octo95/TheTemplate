@@ -19,13 +19,13 @@ namespace Tmpl8
         }
     }
 
-    Tile TileMap::tile_at(int x, int y) const
+    Tile TileMap::tile_at(int x, int y)
     {
-        int tx = MAP1[(y+1) / TILE_SIZE][((x+1) / TILE_SIZE) * 3] - 'a';
-        int ty = MAP1[(y+1) / TILE_SIZE][((x+1) / TILE_SIZE) * 3 + 1] - 'a';
+        int tx = MAP1[y / TILE_SIZE][(x / TILE_SIZE) * 3] - 'a';
+        int ty = MAP1[y / TILE_SIZE][(x/ TILE_SIZE) * 3 + 1] - 'a';
         
-        char a = MAP1[ty][tx * 3];
-        char b = MAP1[ty][tx * 3 + 1];
+        char a = MAP1[y / TILE_SIZE][x / TILE_SIZE * 3];
+        char b = MAP1[y / TILE_SIZE][x / TILE_SIZE * 3 + 1];
 
         TileType tile_type = None;
 

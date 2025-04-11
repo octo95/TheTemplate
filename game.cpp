@@ -9,7 +9,7 @@
 
 #include <stdio.h>
 #include <vector>
-// Git Test!
+
 namespace Tmpl8
 {
     Sprite player_img(new Surface("assets/tenjarine.png"), 1);
@@ -31,7 +31,7 @@ namespace Tmpl8
     // Radius of the hitbox with a tolerance of 1 pixel
     int hitbox_size = 16 - 1;
 
-    TileType CheckCollision(int x, int y)
+    TileType CheckCollision(int x, int y, Surface* screen)
     {
         TileType tile_type = None;
 
@@ -47,6 +47,12 @@ namespace Tmpl8
         tile = map.tile_at(x + hitbox_size * 2, y + hitbox_size * 2);
         if (tile.type != TileType::None) tile_type = tile.type;
 
+        if (GetAsyncKeyState(VK_SPACE))
+        {
+            char coords[100];
+            sprintf(coords, "Collision type: %d", tile_type);
+            screen->Print(coords, 10, 30, 0xFFFF00);
+        }
         return tile_type;
     }
 
@@ -66,20 +72,13 @@ namespace Tmpl8
     {
         if (GetAsyncKeyState(VK_SPACE))
         {
+            // Display the player's hitbox
             DrawHitbox(px, py, false, screen);
 
-            Pixel* buffer = screen->GetBuffer();
-            if (px >= 0 && px < screen_width && py >= 0 && py < screen_height)
-                buffer[px + py * screen_width] = 0xFFFF00;
-
+            // Display the player's screen coordinates
             char coords[100];
             sprintf(coords, "px: %d, py: %d", px, py);
             screen->Print(coords, 10, 10, 0xFFFF00);
-
-            Pixel* buffer2 = screen->GetBuffer();
-            if (px >= 0 && px < screen_width && py >= 0 && py < screen_height) {
-                buffer2[px + py * screen_width] = 0xFFFF00;
-            }
         }
     }
 
@@ -112,26 +111,18 @@ namespace Tmpl8
 
         char coords[100];
 
-        switch (CheckCollision(nx, ny)) {
+        switch (CheckCollision(nx, ny, screen)) {
         case TileType::None:
-            sprintf(coords, "None");
-            screen->Print(coords, 10, 30, 0xFFFF00);
             px = nx, py = ny;
             break;
         case TileType::Collision:
-            sprintf(coords, "Collision");
-            screen->Print(coords, 10, 30, 0xFFFF00);
             break;
         case TileType::Damage:
             px = DEFAULT_PX, py = DEFAULT_PY;
-            sprintf(coords, "Damage");
-            screen->Print(coords, 10, 30, 0xFFFF00);
             break;
         case TileType::End:
             px = DEFAULT_PX;
             py = DEFAULT_PY;
-            sprintf(coords, "End");
-            screen->Print(coords, 10, 30, 0xFFFF00);
             break;
         }
         player_img.Draw(screen, px, py);
