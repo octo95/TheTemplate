@@ -7,25 +7,24 @@
 
 namespace Tmpl8
 {
-    TileMap::TileMap(int index) 
+    TileMap::TileMap(int index)
     {
-        if (index == 1) 
-        {
-            current_map = (char**) MAP1;
-        }
-        else 
-        {
-            current_map = (char**) MAP2;
-        }
+        if      (index == 1)    current_map = (char**) MAP1;
+        else if (index == 2)    current_map = (char**) MAP2;
+        else if (index == 3)    current_map = (char**) MAP3;
     }
 
     Tile TileMap::tile_at(int x, int y)
     {
-        int tx = MAP1[y / TILE_SIZE][(x / TILE_SIZE) * 3] - 'a';
-        int ty = MAP1[y / TILE_SIZE][(x/ TILE_SIZE) * 3 + 1] - 'a';
-        
-        char a = MAP1[y / TILE_SIZE][x / TILE_SIZE * 3];
-        char b = MAP1[y / TILE_SIZE][x / TILE_SIZE * 3 + 1];
+
+        int tile_row = y / TILE_SIZE;
+        int tile_col = x / TILE_SIZE;
+
+        char a = MAP1[tile_row][tile_col * 3];
+        char b = MAP1[tile_row][tile_col * 3 + 1];
+
+        int tx = a - 'a';
+        int ty = b - 'a';
 
         TileType tile_type = None;
 
@@ -34,13 +33,11 @@ namespace Tmpl8
         else if (a == 'b' && b == 'a')  tile_type = End;
         else if (a == 'c' && b == 'a')  tile_type = Collision;
 
-        Tile tile = Tile
-        {
-            tile.tx = tx,
-            tile.ty = ty,
-            tile.type = tile_type,
+        Tile tile = Tile{
+            tx,
+            ty,
+            tile_type,
         };
-
         return tile;
     }
 

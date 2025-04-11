@@ -1,3 +1,4 @@
+// Libraries and files
 #define WIN32_LEAN_AND_MEAN
 
 #include "surface.h"
@@ -12,7 +13,7 @@
 
 namespace Tmpl8
 {
-    Sprite player_img(new Surface("assets/tenjarine.png"), 1);
+    Sprite player_img(new Surface("assets/tangerine.png"), 1);
 
     const int DEFAULT_PX = 400, DEFAULT_PY = 10;
     int px = DEFAULT_PX;
@@ -47,6 +48,7 @@ namespace Tmpl8
         tile = map.tile_at(x + hitbox_size * 2, y + hitbox_size * 2);
         if (tile.type != TileType::None) tile_type = tile.type;
 
+        // Debug
         if (GetAsyncKeyState(VK_SPACE))
         {
             char coords[100];
@@ -56,16 +58,15 @@ namespace Tmpl8
         return tile_type;
     }
 
-    void DrawHitbox(int x, int y, bool enemy, Surface* screen)
+    // Debug
+    void DrawHitbox(int x, int y, Surface* screen)
     {
         int squareTop = y + player_img_width / 2 - hitbox_size;
         int squareRight = x + player_img_width / 2 + hitbox_size;
         int squareBottom = y + player_img_width / 2 + hitbox_size;
         int squareLeft = x + player_img_width / 2 - hitbox_size;
 
-        int color = enemy ? 0xFF0000 : 0x00FF00;
-
-        screen->Box(squareLeft, squareTop, squareRight, squareBottom, color);
+        screen->Box(squareLeft, squareTop, squareRight, squareBottom, 0x00FF00);
     }
 
     void Debug(Surface* screen)
@@ -73,7 +74,7 @@ namespace Tmpl8
         if (GetAsyncKeyState(VK_SPACE))
         {
             // Display the player's hitbox
-            DrawHitbox(px, py, false, screen);
+            DrawHitbox(px, py, screen);
 
             // Display the player's screen coordinates
             char coords[100];
@@ -84,47 +85,47 @@ namespace Tmpl8
 
     void Game::Tick(float deltaTime)
     {
+        // Drawing the map and clearing the screen every tick.
         screen->Clear(0);
         map.drawMap(screen);
 
-        Debug(screen);
-
+        // Player movement
         int nx = px, ny = py;
         int player_speed = 1;
 
-        if (GetAsyncKeyState(VK_LEFT))
-        {
-            nx -= player_speed;
-        }
-        if (GetAsyncKeyState(VK_RIGHT))
-        {
-            nx += player_speed;
-        }
-        if (GetAsyncKeyState(VK_UP))
-        {
-            ny -= player_speed;
-        }
-        if (GetAsyncKeyState(VK_DOWN))
-        {
-            ny += player_speed;
-        }
+        if (GetAsyncKeyState(VK_LEFT)) nx -= player_speed;
+        if (GetAsyncKeyState(VK_RIGHT)) nx += player_speed;
+        if (GetAsyncKeyState(VK_UP)) ny -= player_speed;
+        if (GetAsyncKeyState(VK_DOWN)) ny += player_speed;
 
-        char coords[100];
+        // Prevent the player to go out of the screen boundaries by clamping their coordinates.
+        if (nx < 0) nx = 0;
+        if (ny < 0) ny = 0;
+        if (nx + player_img_width > screen_width) nx = screen_width - player_img_width;
+        if (ny + player_img_height > screen_height) ny = screen_height - player_img_height;
 
+        // Managing each type of collisions and what to do.
         switch (CheckCollision(nx, ny, screen)) {
         case TileType::None:
-            px = nx, py = ny;
+            px = nx;
+            py = ny;
             break;
         case TileType::Collision:
             break;
         case TileType::Damage:
-            px = DEFAULT_PX, py = DEFAULT_PY;
-            break;
+            px = DEFAULT_PX;
+            py = DEFAULT_PY;
         case TileType::End:
             px = DEFAULT_PX;
             py = DEFAULT_PY;
             break;
         }
+
+        // Draw the player
         player_img.Draw(screen, px, py);
+
+        // Debug: Enabled if pressing space
+        Debug(screen);
     }
+
 }
