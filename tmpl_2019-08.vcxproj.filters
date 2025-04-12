@@ -10,6 +10,7 @@
     </ClCompile>
     <ClCompile Include="tile.cpp" />
     <ClCompile Include="tilemap.cpp" />
+    <ClCompile Include="player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -21,6 +22,7 @@
     </ClInclude>
     <ClInclude Include="tile.h" />
     <ClInclude Include="tilemap.h" />
+    <ClInclude Include="player.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">

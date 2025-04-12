@@ -83,29 +83,25 @@ namespace Tmpl8
         }
     }
 
-    void Game::Tick(float deltaTime)
+    void movePlayer(int& x, int& y, int player_speed)
     {
-        // Drawing the map and clearing the screen every tick.
-        screen->Clear(0);
-        map.drawMap(screen);
-
         // Player movement
-        int nx = px, ny = py;
-        int player_speed = 1;
+        if (GetAsyncKeyState(VK_LEFT))  x -= player_speed;
+        if (GetAsyncKeyState(VK_RIGHT)) x += player_speed;
+        if (GetAsyncKeyState(VK_UP))    y -= player_speed;
+        if (GetAsyncKeyState(VK_DOWN))  y += player_speed;
 
-        if (GetAsyncKeyState(VK_LEFT)) nx -= player_speed;
-        if (GetAsyncKeyState(VK_RIGHT)) nx += player_speed;
-        if (GetAsyncKeyState(VK_UP)) ny -= player_speed;
-        if (GetAsyncKeyState(VK_DOWN)) ny += player_speed;
+        // Clamping positions to stay on the screen
+        if (x < 0) x = 0;
+        if (y < 0) y = 0;
+        if (x + player_img_width > screen_width) x = screen_width - player_img_width;
+        if (y + player_img_height > screen_height) y = screen_height - player_img_height;
+    }
 
-        // Prevent the player to go out of the screen boundaries by clamping their coordinates.
-        if (nx < 0) nx = 0;
-        if (ny < 0) ny = 0;
-        if (nx + player_img_width > screen_width) nx = screen_width - player_img_width;
-        if (ny + player_img_height > screen_height) ny = screen_height - player_img_height;
-
-        // Managing each type of collisions and what to do.
-        switch (CheckCollision(nx, ny, screen)) {
+    void manageCollisions(int& nx, int& ny, Surface* screen)
+    {
+        switch (CheckCollision(nx, ny, screen))
+        {
         case TileType::None:
             px = nx;
             py = ny;
@@ -120,12 +116,25 @@ namespace Tmpl8
             py = DEFAULT_PY;
             break;
         }
+    }
+
+    void Game::Tick(float deltaTime)
+    {
+        // Drawing the map and clearing the screen every tick.
+        screen->Clear(0);
+        map.drawMap(screen);
+
+        // Player movement
+        int nx = px, ny = py;
+        movePlayer(nx, ny, 1);
 
         // Draw the player
         player_img.Draw(screen, px, py);
 
+        // Managing each type of collisions and what to do.
+        manageCollisions(nx, ny, screen);
+
         // Debug: Enabled if pressing space
         Debug(screen);
     }
-
 }
