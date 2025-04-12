@@ -3,37 +3,62 @@
   <ItemGroup>
     <ClCompile Include="game.cpp" />
     <ClCompile Include="surface.cpp">
-      <Filter>template code</Filter>
+      <Filter>template</Filter>
     </ClCompile>
     <ClCompile Include="template.cpp">
-      <Filter>template code</Filter>
+      <Filter>template</Filter>
     </ClCompile>
-    <ClCompile Include="tile.cpp" />
-    <ClCompile Include="tilemap.cpp" />
-    <ClCompile Include="player.cpp" />
-    <ClCompile Include="debug.cpp" />
+    <ClCompile Include="tile.cpp">
+      <Filter>tile</Filter>
+    </ClCompile>
+    <ClCompile Include="tilemap.cpp">
+      <Filter>tile</Filter>
+    </ClCompile>
+    <ClCompile Include="debug.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
     <ClInclude Include="surface.h">
-      <Filter>template code</Filter>
+      <Filter>template</Filter>
     </ClInclude>
     <ClInclude Include="template.h">
-      <Filter>template code</Filter>
+      <Filter>template</Filter>
     </ClInclude>
-    <ClInclude Include="tile.h" />
-    <ClInclude Include="tilemap.h" />
-    <ClInclude Include="player.h" />
-    <ClInclude Include="debug.h" />
+    <ClInclude Include="tile.h">
+      <Filter>tile</Filter>
+    </ClInclude>
+    <ClInclude Include="tilemap.h">
+      <Filter>tile</Filter>
+    </ClInclude>
+    <ClInclude Include="debug.h">
+      <Filter>debug</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="template code">
+    <Filter Include="tile">
+      <UniqueIdentifier>{88ec49ad-c030-482e-b1a0-15b7ba00c70d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="template">
       <UniqueIdentifier>{bf32dd6e-4be7-4889-8ac6-49e7ee163c40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="debug">
+      <UniqueIdentifier>{03025e6a-b6ad-4f0b-a5eb-cfb32a912709}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="player">
+      <UniqueIdentifier>{53d83d1c-b763-434b-adb6-96fa54c09d44}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="_readme.txt">
-      <Filter>template code</Filter>
+      <Filter>template</Filter>
     </Text>
   </ItemGroup>
 </Project>

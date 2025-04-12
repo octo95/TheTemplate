@@ -4,9 +4,9 @@
 
 namespace Tmpl8
 {
+    // Constants
     const int TILE_ROWS = 16;
     const int TILE_COLUMNS = 25;
-
     const char MAP1[TILE_ROWS][TILE_COLUMNS * 3] = {
         "da da da da da da da da da da da da da da da da da da da da da da da da da",
         "da da da da da da da da da da da da da da da da da da da da da da da da da",

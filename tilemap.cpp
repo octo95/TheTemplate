@@ -16,7 +16,6 @@ namespace Tmpl8
 
     Tile TileMap::tile_at(int x, int y)
     {
-
         int tile_row = y / TILE_SIZE;
         int tile_col = x / TILE_SIZE;
 
@@ -28,7 +27,7 @@ namespace Tmpl8
 
         TileType tile_type = None;
 
-        if (a == 'd' && b == 'a')       tile_type = None;
+        if      (a == 'd' && b == 'a')  tile_type = None;
         else if (a == 'a' && b == 'a')  tile_type = Damage;
         else if (a == 'b' && b == 'a')  tile_type = End;
         else if (a == 'c' && b == 'a')  tile_type = Collision;

@@ -4,8 +4,10 @@
 
 namespace Tmpl8
 {
+    // Variables
     Surface tiles("assets/nc2tiles.png");
 
+    // Tile functions
     void Tile::DrawTile(Surface* screen, int x, int y)
     {
         Pixel* src = tiles.GetBuffer() + 1 + tx * 33 + (1 + ty * 33) * 595;

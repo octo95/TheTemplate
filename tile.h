@@ -3,16 +3,20 @@
 
 namespace Tmpl8
 {
+    // External variables
     extern Surface tiles;
-    const int TILE_SIZE = 32;
 
-    enum TileType {
+    // Constants
+    const int TILE_SIZE = 32;
+    enum TileType 
+    {
         None,
         Damage,
         End,
         Collision
     };
 
+    // Tile struct
     struct Tile {
         int tx;
         int ty;

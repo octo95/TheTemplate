@@ -6,8 +6,10 @@
 
 namespace Tmpl8
 {
+    // Variables
+    TileMap map = TileMap(2);
     Sprite player_img(new Surface("assets/tangerine.png"), 1);
-    TileMap map = TileMap(1);
+
     int hitbox_size = 16 - 1; // Radius of the hitbox with a tolerance of 1 pixel
     int px = DEFAULT_PX;
     int py = DEFAULT_PY;
