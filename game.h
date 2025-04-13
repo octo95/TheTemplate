@@ -1,6 +1,9 @@
 #pragma once
+#include "tilemap.h"
 
-namespace Tmpl8 {
+namespace Tmpl8 
+{
+	extern TileMap map;
 
 class Surface;
 class Game

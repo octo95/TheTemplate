@@ -3,10 +3,7 @@
 // +------------+
 
 /*
-* - Map level change logic (move "TileMap map;" away from player object).
 * - Fix git missing sdl2.lib
-* - Acceleration / Deceleration of player movement.
-* - Gravity.
 */
 
 #define WIN32_LEAN_AND_MEAN
@@ -23,12 +20,16 @@
 namespace Tmpl8
 {
     // + Initializer / Shutdown
-    void Game::Init() {}
+    void Game::Init() 
+    {
+        map.setMapIndex(1); // Default: start on the map of Level 1
+    }
     void Game::Shutdown() {}
 
     // + MAIN OBJECTS
     Player player;
     Debug debug;
+    TileMap map;
 
     // + MAIN GAME LOGIC
     void Game::Tick(float deltaTime)
@@ -39,7 +40,7 @@ namespace Tmpl8
 
         // * Player logic.
         int nx = px, ny = py; // Update the player's new position every tick.
-        player.movePlayer(nx, ny, 3);
+        player.movePlayer(nx, ny);
         player_img.Draw(screen, px, py);
         player.manageCollisions(nx, ny, screen);
 

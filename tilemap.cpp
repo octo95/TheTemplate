@@ -1,17 +1,45 @@
 #include "tile.h"
 #include "surface.h"
 #include "tilemap.h"
+#include "player.h"
 
 #include <stdio.h>
 #include <iostream>
 
 namespace Tmpl8
 {
-    TileMap::TileMap(int index)
+    TileMap::TileMap() {}
+
+    int TileMap::getCurrentLevel() const
     {
-        if      (index == 1)    current_map = (char**) MAP1;
-        else if (index == 2)    current_map = (char**) MAP2;
-        else if (index == 3)    current_map = (char**) MAP3;
+        return (current_level - 1) % 3 + 1;
+    }
+
+    int TileMap::incrementMapIndex()
+    {
+        return current_level = current_level % 3 + 1;
+        
+    }
+
+    void TileMap::setMapIndex(int index)
+    {
+        Player player;
+        switch (index)
+        {
+        case 1:
+            current_map = MAP1;
+            player.setMapDefaultPos();
+            break;
+        case 2:
+            current_map = MAP2;
+            player.setMapDefaultPos();
+            break;
+        case 3:
+            current_map = MAP3;
+            player.setMapDefaultPos();
+            break;
+        
+        }
     }
 
     Tile TileMap::tile_at(int x, int y)
@@ -19,8 +47,8 @@ namespace Tmpl8
         int tile_row = y / TILE_SIZE;
         int tile_col = x / TILE_SIZE;
 
-        char a = MAP1[tile_row][tile_col * 3];
-        char b = MAP1[tile_row][tile_col * 3 + 1];
+        char a = current_map[tile_row][tile_col * 3];
+        char b = current_map[tile_row][tile_col * 3 + 1];
 
         int tx = a - 'a';
         int ty = b - 'a';
@@ -32,7 +60,8 @@ namespace Tmpl8
         else if (a == 'b' && b == 'a')  tile_type = End;
         else if (a == 'c' && b == 'a')  tile_type = Collision;
 
-        Tile tile = Tile{
+        Tile tile = Tile
+        {
             tx,
             ty,
             tile_type,
