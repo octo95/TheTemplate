@@ -3,7 +3,12 @@
 
 namespace Tmpl8 
 {
+	// External variables
 	extern TileMap map;
+	
+	// Constants
+	const int OFFSET_X = 0;
+	const int OFFSET_Y = -10;
 
 class Surface;
 class Game

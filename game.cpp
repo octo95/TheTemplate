@@ -4,6 +4,9 @@
 
 /*
 * - Fix git missing sdl2.lib
+* - Implement vertical camera
+* - Better physics
+* - Jump button
 */
 
 #define WIN32_LEAN_AND_MEAN
@@ -31,7 +34,7 @@ namespace Tmpl8
     Debug debug;
     TileMap map;
 
-    // + MAIN GAME LOGIC
+    // + MAIN GAME LOGIC 
     void Game::Tick(float deltaTime)
     {
         // * Clear the screen black every tick and draw the map.

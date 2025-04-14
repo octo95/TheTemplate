@@ -19,7 +19,7 @@ namespace Tmpl8
         "ca ca ca ca ca ca ca ca da da da ca ca ca da da da ca ca ca ca ca ca ca ca",
         "ca ca da da da da da da da da da da da da da da da da da da da da da ca ca",
         "ca ca da da da da da da da da da da da da da da da da da da da da da ca ca",
-        "ca ca da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da ca ca",
+        "ca ca da da da ea ea ea ea ea ea ea ea ea ea ea ea ea ea ea da da da ca ca",
         "ca ca da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da ca ca",
         "ca ca da da da da da da da da da da da da da da da da da da da da da ca ca",
         "ca ca da da da da da da da da da da da da da da da da da da da da da ca ca",

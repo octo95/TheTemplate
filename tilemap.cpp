@@ -2,6 +2,7 @@
 #include "surface.h"
 #include "tilemap.h"
 #include "player.h"
+#include "game.h"
 
 #include <stdio.h>
 #include <iostream>
@@ -55,10 +56,11 @@ namespace Tmpl8
 
         TileType tile_type = None;
 
-        if      (a == 'd' && b == 'a')  tile_type = None;
+        if (a == 'd' && b == 'a')       tile_type = None;
         else if (a == 'a' && b == 'a')  tile_type = Damage;
         else if (a == 'b' && b == 'a')  tile_type = End;
         else if (a == 'c' && b == 'a')  tile_type = Collision;
+        else if (a == 'e' && b == 'a')  tile_type = Ice;
 
         Tile tile = Tile
         {

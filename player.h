@@ -16,13 +16,13 @@ namespace Tmpl8
     extern float horizontal_speed;
     extern int spawn_px ;
     extern int spawn_py;
+    extern float friction;                      // How much the player sticks to the ground
 
     // Constants
     const int SCREEN_WIDTH = 800;
     const int SCREEN_HEIGHT = 512;
     const float ACCELERATION = 0.3f;            // How long it will take the player to reach the max horizontal speed.
-    const float MAX_HORIZONTAL_SPEED = 3.0f;    // The max horizontal speed.
-    const float FRICTION = 0.05f;               // How much the player sticks to the ground
+    const float MAX_HORIZONTAL_SPEED = 3.0f;    // The max horizontal speed.            
 
     // Player class
     class Player {
@@ -31,8 +31,9 @@ namespace Tmpl8
         TileType Player::CheckCollisionSides(int x, int y);
         void movePlayer(int& x, int& y);
         void manageCollisions(int& nx, int& ny, Surface* screen);
-        int getPlayerPos();
-        void setPlayerPos(int& x, int& y);
+        void getPlayerPos(int& x, int& y);
+        void setPlayerPos(int x, int y);
+        void offsetPlayerPos(int player_offset_x, int player_offset_y);
         void setMapDefaultPos();
     };
 };

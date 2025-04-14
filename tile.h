@@ -13,7 +13,8 @@ namespace Tmpl8
         None,
         Damage,
         End,
-        Collision
+        Collision,
+        Ice
     };
 
     // Tile struct
