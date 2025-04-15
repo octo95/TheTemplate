@@ -22,7 +22,7 @@
 #include "player.h"
 #include "debug.h"
 #include "menu.h"
-
+#include "camera.h"
 
 namespace Tmpl8
 {
@@ -52,8 +52,9 @@ namespace Tmpl8
 
             // * Player logic.
             int nx = px, ny = py; // Update the player's new position every tick.
+            player.camFollowPlayer();
             player.movePlayer(nx, ny);
-            player_img.Draw(screen, px + CAM_OFFSET_X, py + CAM_OFFSET_Y);
+            player_img.Draw(screen, px + cam_offset_x, py + cam_offset_y);
             player.manageCollisions(nx, ny, screen);
 
             // * DEBUG: Enabled if pressing <spacebar>.

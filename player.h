@@ -33,5 +33,6 @@ namespace Tmpl8
         void setPlayerPos(int x, int y);
         void offsetPlayerPos(int player_offset_x, int player_offset_y);
         void setMapDefaultPos();
+        void camFollowPlayer();
     };
 };

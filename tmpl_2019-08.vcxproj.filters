@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="game.cpp" />
     <ClCompile Include="surface.cpp">
       <Filter>template</Filter>
     </ClCompile>
@@ -23,9 +22,14 @@
     <ClCompile Include="menu.cpp">
       <Filter>menu</Filter>
     </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="game.h" />
     <ClInclude Include="surface.h">
       <Filter>template</Filter>
     </ClInclude>
@@ -47,6 +51,12 @@
     <ClInclude Include="menu.h">
       <Filter>menu</Filter>
     </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>main</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tile">
@@ -63,6 +73,9 @@
     </Filter>
     <Filter Include="menu">
       <UniqueIdentifier>{c10184aa-9554-4fdb-b672-4ecc27cfdd57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main">
+      <UniqueIdentifier>{6559c149-19d4-40fe-b386-c735634378b7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

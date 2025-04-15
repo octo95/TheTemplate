@@ -4,6 +4,7 @@
 #include "game.h"
 #include "tile.h"
 #include "tilemap.h"
+#include "camera.h"
 #include <stdio.h>
 
 namespace Tmpl8
@@ -11,7 +12,7 @@ namespace Tmpl8
     // Variables
     Sprite player_img(new Surface("assets/tangerine.png"), 1);
 
-    int hitbox_size = 16 - 1; // Radius of the hitbox with a tolerance of 1 pixel
+    int hitbox_size = 16 - 2; // Radius of the hitbox with a tolerance of 2 pixels
     int px = spawn_px;
     int py = spawn_py;
     int player_img_width = player_img.GetWidth();
@@ -101,11 +102,9 @@ namespace Tmpl8
 
         // offsetPlayerPos(CAM_OFFSET_X, CAM_OFFSET_Y);
 
-        // Clamp coordinates to make the player not go outside of the screen boundaries.
+        // Clamp coordinates to make the player not go outside of the screen boundaries horizontally.
         if (x < 0) x = 0;
-        if (y < 0) y = 0;
         if (x + player_img_width > SCREEN_WIDTH) x = SCREEN_WIDTH - player_img_width;
-        if (y + player_img_height > SCREEN_HEIGHT) y = SCREEN_HEIGHT - player_img_height;
     }
 
     void Player::setMapDefaultPos()
@@ -200,5 +199,29 @@ namespace Tmpl8
     {
         px = x;
         py = y;
+    }
+
+    void Player::camFollowPlayer()
+    {
+        int camX = -TILE_SIZE;  // Offset by 1 tile to the left as we make the map 1 tile bigger on the sides for shaking.
+        int camY = 0;
+        int playerCenterY = py + player_img_height / 2;
+        int screenCenterY = SCREEN_HEIGHT / 2;
+        int mapHeight = TILE_ROWS * TILE_SIZE;
+        int maxCamY = SCREEN_HEIGHT - mapHeight;
+
+        // If player goes above the top half
+        if (playerCenterY < screenCenterY)
+            camY = 0;
+        // If player goes below the screen center, follow
+        else
+        {
+            camY = -(playerCenterY - screenCenterY);
+            if (camY < maxCamY)
+                camY = maxCamY;
+        }
+
+        Camera camera;
+        camera.setCamPos(camX, camY);
     }
 };

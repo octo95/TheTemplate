@@ -8,8 +8,7 @@ namespace Tmpl8
 		extern bool start_game;
 	
 		// Constants
-		const int CAM_OFFSET_X = -200;
-		const int CAM_OFFSET_Y = 30;
+
 
 	class Surface;
 	class Game

@@ -6,6 +6,7 @@
 #include "tilemap.h"
 #include "game.h"
 #include "tile.h"
+#include "camera.h"
 #include <stdio.h>
 
 namespace Tmpl8
@@ -13,10 +14,10 @@ namespace Tmpl8
     // Debug functions
     void Debug::drawHitbox(int x, int y, Surface* screen)
     {
-        int squareTop = y + player_img_width / 2 - hitbox_size + CAM_OFFSET_Y;
-        int squareRight = x + player_img_width / 2 + hitbox_size + CAM_OFFSET_X;
-        int squareBottom = y + player_img_width / 2 + hitbox_size + CAM_OFFSET_Y;
-        int squareLeft = x + player_img_width / 2 - hitbox_size + CAM_OFFSET_X;
+        int squareTop = y + player_img_width / 2 - hitbox_size + cam_offset_y;
+        int squareRight = x + player_img_width / 2 + hitbox_size + cam_offset_x;
+        int squareBottom = y + player_img_width / 2 + hitbox_size + cam_offset_y;
+        int squareLeft = x + player_img_width / 2 - hitbox_size + cam_offset_x;
 
         screen->Box(squareLeft, squareTop, squareRight, squareBottom, 0xFF0000);
     }
