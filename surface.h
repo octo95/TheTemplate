@@ -9,6 +9,10 @@ constexpr int RedMask = 0xff0000;
 constexpr int GreenMask = 0x00ff00;
 constexpr int BlueMask = 0x0000ff;
 
+// Constants
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 512;
+
 typedef unsigned int Pixel; // unsigned int is assumed to be 32-bit, which seems a safe assumption.
 
 inline Pixel AddBlend( Pixel a_Color1, Pixel a_Color2 )

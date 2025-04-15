@@ -3,28 +3,30 @@
 
 namespace Tmpl8 
 {
-	// External variables
-	extern TileMap map;
+		// External variables
+		extern TileMap map;
+		extern bool start_game;
 	
-	// Constants
-	const int OFFSET_X = 0;
-	const int OFFSET_Y = -10;
+		// Constants
+		const int CAM_OFFSET_X = -200;
+		const int CAM_OFFSET_Y = 30;
 
-class Surface;
-class Game
-{
-public:
-	void SetTarget( Surface* surface ) { screen = surface; }
-	void Init();
-	void Shutdown();
-	void Tick( float deltaTime );
-	void MouseUp( int button ) { /* implement if you want to detect mouse button presses */ }
-	void MouseDown( int button ) { /* implement if you want to detect mouse button presses */ }
-	void MouseMove( int x, int y ) { /* implement if you want to detect mouse movement */ }
-	void KeyUp( int key ) { /* implement if you want to handle keys */ }
-	void KeyDown( int key ) { /* implement if you want to handle keys */ }
-private:
-	Surface* screen;
+	class Surface;
+	class Game
+	{
+	public:
+		void SetTarget( Surface* surface ) { screen = surface; }
+		void Init();
+		void Shutdown();
+		void Tick( float deltaTime );
+		void MouseUp( int button ) { /* implement if you want to detect mouse button presses */ }
+		void MouseDown( int button ) { /* implement if you want to detect mouse button presses */ }
+		void MouseMove(int x, int y) { mousex = x, mousey = y; }
+		void KeyUp( int key ) { /* implement if you want to handle keys */ }
+		void KeyDown( int key ) { /* implement if you want to handle keys */ }
+	private:
+		Surface* screen;
+		int mousex, mousey;
 };
 
 }; // namespace Tmpl8

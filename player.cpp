@@ -17,10 +17,10 @@ namespace Tmpl8
     int player_img_width = player_img.GetWidth();
     int player_img_height = player_img.GetHeight();
     int gravity = 3;
-    int vertical_speed = 0;
     int spawn_px = 400;
     int spawn_py = 10;
-    float horizontal_speed = 0.0f;
+    float vertical_speed = 0;
+    float horizontal_speed = 0;
     float friction = 0.05f;
 
     // Player functions
@@ -72,12 +72,12 @@ namespace Tmpl8
             horizontal_speed += ACCELERATION;
             if (horizontal_speed > MAX_HORIZONTAL_SPEED) horizontal_speed = MAX_HORIZONTAL_SPEED;
         }
-        bool upPressedLastFrame = false;
-        bool isUpDown = GetAsyncKeyState(VK_UP) & 0x8000;
-        if (isUpDown && !upPressedLastFrame)
-        {
-            // JUMP LOGIC TODO
-        }
+        //bool upPressedLastFrame = false;
+        //bool isUpDown = GetAsyncKeyState(VK_UP) & 0x8000;
+        //if (isUpDown && !upPressedLastFrame)
+        //{
+        //    // JUMP LOGIC TODO
+        //}
         else // When there is no movement left, the player slides depending on the friction.
         {
             if (horizontal_speed > 0)
@@ -97,9 +97,9 @@ namespace Tmpl8
 
         // Vertical movement (gravity)
         vertical_speed = gravity;
-        y += vertical_speed;
+        y += static_cast<int>(vertical_speed);
 
-       //  offsetPlayerPos(OFFSET_X, OFFSET_Y);
+        // offsetPlayerPos(CAM_OFFSET_X, CAM_OFFSET_Y);
 
         // Clamp coordinates to make the player not go outside of the screen boundaries.
         if (x < 0) x = 0;
@@ -201,6 +201,4 @@ namespace Tmpl8
         px = x;
         py = y;
     }
-
-    
 };

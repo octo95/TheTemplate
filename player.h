@@ -12,15 +12,13 @@ namespace Tmpl8
     extern int player_img_width;
     extern int player_img_height;
     extern int gravity;
-    extern int vertical_speed;
+    extern float vertical_speed;
     extern float horizontal_speed;
     extern int spawn_px ;
     extern int spawn_py;
     extern float friction;                      // How much the player sticks to the ground
 
     // Constants
-    const int SCREEN_WIDTH = 800;
-    const int SCREEN_HEIGHT = 512;
     const float ACCELERATION = 0.3f;            // How long it will take the player to reach the max horizontal speed.
     const float MAX_HORIZONTAL_SPEED = 3.0f;    // The max horizontal speed.            
 

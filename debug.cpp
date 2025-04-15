@@ -13,13 +13,14 @@ namespace Tmpl8
     // Debug functions
     void Debug::drawHitbox(int x, int y, Surface* screen)
     {
-        int squareTop = y + player_img_width / 2 - hitbox_size;
-        int squareRight = x + player_img_width / 2 + hitbox_size;
-        int squareBottom = y + player_img_width / 2 + hitbox_size;
-        int squareLeft = x + player_img_width / 2 - hitbox_size;
+        int squareTop = y + player_img_width / 2 - hitbox_size + CAM_OFFSET_Y;
+        int squareRight = x + player_img_width / 2 + hitbox_size + CAM_OFFSET_X;
+        int squareBottom = y + player_img_width / 2 + hitbox_size + CAM_OFFSET_Y;
+        int squareLeft = x + player_img_width / 2 - hitbox_size + CAM_OFFSET_X;
 
         screen->Box(squareLeft, squareTop, squareRight, squareBottom, 0xFF0000);
     }
+
     void Debug::displayDebug(Surface* screen)
     {
         if (GetAsyncKeyState(VK_SPACE))
@@ -69,8 +70,6 @@ namespace Tmpl8
             map.setMapIndex(map.incrementMapIndex());
             defaultPos();
         }
-
         tabPressedLastFrame = isTabDown;
     }
-
 };
