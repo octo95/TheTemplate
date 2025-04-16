@@ -39,27 +39,33 @@ namespace Tmpl8
 
     // + MAIN OBJECTS
     Player player;
-    Debug debug;
+    // Debug debug;
     TileMap map;
     Menu menu;
 
-    void startGame(Surface* screen)
+    void Game::startGame(float deltaTime)
     {
         if (GetAsyncKeyState(VK_RETURN)) start_game = true;
         if (start_game)
         {
-            // * Draw the map
-            map.drawMap(screen);
 
-            // * Player logic.
+            camera.setCamPos(player.camFollowPlayer());
+
             int nx = px, ny = py; // Update the player's new position every tick.
-            player.camFollowPlayer();
+     
             player.movePlayer(nx, ny);
-            player_img.Draw(screen, px + cam_offset_x, py + cam_offset_y);
             player.manageCollisions(nx, ny, screen);
+            if (player.manageCollisions(nx, ny, screen))
+            {
+                camera.Shake();
+            }
+            camera.camShake(deltaTime);
 
-            // * DEBUG: Enabled if pressing <spacebar>.
-            debug.displayDebug(screen);
+            map.drawMap(screen, camera);
+            player_img.Draw(screen, px + camera.getCamPos().x, py + camera.getCamPos().y);
+
+            //// * DEBUG: Enabled if pressing <spacebar>.
+            //debug.displayDebug(screen);
         }
         else menu.drawMenu(screen);
     }
@@ -68,7 +74,8 @@ namespace Tmpl8
     void Game::Tick(float deltaTime)
     {
         // * Clear the screen black every tick and start the game.
+        deltaTime /= 1000.0f;
         screen->Clear(0);
-        startGame(screen);
+        startGame(deltaTime);
     }
 }

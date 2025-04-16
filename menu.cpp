@@ -26,6 +26,7 @@ namespace Tmpl8
 		int startY = SCREEN_HEIGHT / 2 - START_BUTTON_HEIGHT / 2 + 80;
 		img_start_button.Draw(screen, startX, startY);
 
+		// Draw the 3 level buttons (WIP)
 		int spacing = 20;
 		int lvlButtonWidth = img_lvl1_button.GetWidth();
 		int totalWidth = 3 * lvlButtonWidth + 2 * spacing;
@@ -37,7 +38,7 @@ namespace Tmpl8
 		img_lvl3_button.Draw(screen, groupStartX + 2 * (lvlButtonWidth + spacing), lvlY);
 	}
 
-	void Menu::loadLevelMenu()
+	void Menu::loadLevelMenu() // TODO
 	{
 		TileMap map;
 		int level = 0;

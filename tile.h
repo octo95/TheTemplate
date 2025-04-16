@@ -1,5 +1,6 @@
 #pragma once
 #include "surface.h"
+#include "camera.h"
 
 namespace Tmpl8
 {
@@ -23,6 +24,6 @@ namespace Tmpl8
         int ty;
         TileType type;
 
-        void DrawTile(Surface* screen, int x, int y);
+        void DrawTile(Surface* screen, int x, int y, const Camera& camera);
     };
 };

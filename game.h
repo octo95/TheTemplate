@@ -3,13 +3,10 @@
 
 namespace Tmpl8 
 {
-		// External variables
-		extern TileMap map;
-		extern bool start_game;
+	// External variables
+	extern TileMap map;
+	extern bool start_game;
 	
-		// Constants
-
-
 	class Surface;
 	class Game
 	{
@@ -23,8 +20,10 @@ namespace Tmpl8
 		void MouseMove(int x, int y) { mousex = x, mousey = y; }
 		void KeyUp( int key ) { /* implement if you want to handle keys */ }
 		void KeyDown( int key ) { /* implement if you want to handle keys */ }
+		void startGame( float deltaTime );
 	private:
 		Surface* screen;
+		Camera camera;
 		int mousex, mousey;
 };
 

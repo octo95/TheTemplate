@@ -1,6 +1,7 @@
 #pragma once
 #include "surface.h"
 #include "tilemap.h"
+#include "template.h"
 
 namespace Tmpl8
 {
@@ -9,6 +10,7 @@ namespace Tmpl8
     extern int hitbox_size;
     extern int px;
     extern int py;
+    extern int rotation;
     extern int player_img_width;
     extern int player_img_height;
     extern int gravity;
@@ -28,11 +30,10 @@ namespace Tmpl8
         TileType Player::CheckCollisionBottom(int x, int y);
         TileType Player::CheckCollisionSides(int x, int y);
         void movePlayer(int& x, int& y);
-        void manageCollisions(int& nx, int& ny, Surface* screen);
+        bool manageCollisions(int& nx, int& ny, Surface* screen);
         void getPlayerPos(int& x, int& y);
         void setPlayerPos(int x, int y);
-        void offsetPlayerPos(int player_offset_x, int player_offset_y);
         void setMapDefaultPos();
-        void camFollowPlayer();
+        vec2 camFollowPlayer();
     };
 };

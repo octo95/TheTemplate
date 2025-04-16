@@ -17,6 +17,7 @@ namespace Tmpl8
     int py = spawn_py;
     int player_img_width = player_img.GetWidth();
     int player_img_height = player_img.GetHeight();
+    int rotation = 0;
     int gravity = 3;
     int spawn_px = 400;
     int spawn_py = 10;
@@ -73,12 +74,6 @@ namespace Tmpl8
             horizontal_speed += ACCELERATION;
             if (horizontal_speed > MAX_HORIZONTAL_SPEED) horizontal_speed = MAX_HORIZONTAL_SPEED;
         }
-        //bool upPressedLastFrame = false;
-        //bool isUpDown = GetAsyncKeyState(VK_UP) & 0x8000;
-        //if (isUpDown && !upPressedLastFrame)
-        //{
-        //    // JUMP LOGIC TODO
-        //}
         else // When there is no movement left, the player slides depending on the friction.
         {
             if (horizontal_speed > 0)
@@ -93,14 +88,23 @@ namespace Tmpl8
             }
         }
 
+        bool upPressedLastFrame = false;
+        bool isUpDown = GetAsyncKeyState(VK_UP) & 0x8000;
+        if (isUpDown && !upPressedLastFrame)
+        {
+            // JUMP LOGIC TODO
+        }
+
+        // Rotation
+        rotation += horizontal_speed;
+        printf("rotation: %d\n", rotation);
+
         // Horizontal movement (converting horizontal_speed < float->int >)
         x += static_cast<int>(horizontal_speed);
 
         // Vertical movement (gravity)
         vertical_speed = gravity;
         y += static_cast<int>(vertical_speed);
-
-        // offsetPlayerPos(CAM_OFFSET_X, CAM_OFFSET_Y);
 
         // Clamp coordinates to make the player not go outside of the screen boundaries horizontally.
         if (x < 0) x = 0;
@@ -126,10 +130,15 @@ namespace Tmpl8
         }
     }
     
-    void Player::manageCollisions(int& nx, int& ny, Surface* screen)
+    bool Player::manageCollisions(int& nx, int& ny, Surface* screen)
     {
+        TileType CheckSides = CheckCollisionSides(nx, py);
+        TileType CheckBottom = CheckCollisionBottom(px, ny);
+
+        bool camShake = false;
+
         // Horizontal collisions
-        switch (CheckCollisionSides(nx, py))
+        switch (CheckSides)
         {
         case TileType::None:
             px = nx;
@@ -142,7 +151,7 @@ namespace Tmpl8
             map.setMapIndex(map.incrementMapIndex());
             px = spawn_px;
             py = spawn_py;
-            return;
+            break;
         case TileType::Collision:
             friction = 0.05f;
             vertical_speed = 0;
@@ -154,9 +163,9 @@ namespace Tmpl8
             py = (ny > py) ? py : ny;
             break;
         }
-
+        
         // Vertical collisions
-        switch (CheckCollisionBottom(px, ny))
+        switch (CheckBottom)
         {
         case TileType::None:
             py = ny;
@@ -164,6 +173,7 @@ namespace Tmpl8
         case TileType::Damage:
             px = spawn_px;
             py = spawn_py;
+            camShake = true;
             break;
         case TileType::End:
             map.setMapIndex(map.incrementMapIndex());
@@ -181,12 +191,8 @@ namespace Tmpl8
             py = (ny > py) ? py : ny;
             break;
         }
-    }
-
-    void Player::offsetPlayerPos(int offset_x, int offset_y)
-    {
-        px += offset_x;
-        py += offset_y;
+        return camShake;
+        
     }
 
     void Player::getPlayerPos(int& x, int& y)
@@ -201,10 +207,10 @@ namespace Tmpl8
         py = y;
     }
 
-    void Player::camFollowPlayer()
+    vec2 Player::camFollowPlayer()
     {
-        int camX = -TILE_SIZE;  // Offset by 1 tile to the left as we make the map 1 tile bigger on the sides for shaking.
-        int camY = 0;
+        float camX = -TILE_SIZE;  // Offset by 1 tile to the left as we make the map 1 tile bigger on the sides for shaking.
+        float camY = 0;
         int playerCenterY = py + player_img_height / 2;
         int screenCenterY = SCREEN_HEIGHT / 2;
         int mapHeight = TILE_ROWS * TILE_SIZE;
@@ -217,11 +223,49 @@ namespace Tmpl8
         else
         {
             camY = -(playerCenterY - screenCenterY);
+
+            // If player goes bottom half
             if (camY < maxCamY)
                 camY = maxCamY;
         }
 
-        Camera camera;
-        camera.setCamPos(camX, camY);
+        return { camX, camY };
     }
 };
+
+/*
+if (CheckSides == None)
+{
+    px = nx;
+}
+if (CheckBottom == None)
+{
+    py = ny;
+}
+if (CheckSides == TileType::Damage || CheckBottom == TileType::Damage)
+{
+    px = spawn_px;
+    py = spawn_py;
+}
+if (CheckSides == TileType::End || CheckBottom == TileType::End)
+{
+    map.setMapIndex(map.incrementMapIndex());
+    px = spawn_px;
+    py = spawn_py;
+    return;
+}
+
+if (CheckSides == TileType::Collision || CheckBottom == TileType::Collision)
+{
+    friction = 0.05f;
+    vertical_speed = 0;
+    py = (ny > py) ? py : ny;
+}
+
+if (CheckSides == TileType::Ice || CheckBottom == TileType::Ice)
+{
+    friction = 0.0f;
+    vertical_speed = 0;
+    py = (ny > py) ? py : ny;
+}
+*/
