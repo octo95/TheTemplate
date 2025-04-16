@@ -4,9 +4,10 @@
 
 /*
 * - Fix git missing sdl2.lib
-* - Do camera.cpp / camera.h
 * - Better physics
 * - Jump button
+* - Add timer
+* - Add collectible
 */
 
 #define WIN32_LEAN_AND_MEAN

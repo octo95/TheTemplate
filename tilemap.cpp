@@ -11,6 +11,24 @@ namespace Tmpl8
 {
     TileMap::TileMap() {}
 
+    Sprite img_map1(new Surface("assets/map1.png"), 1);
+
+    char TileMap::readMap(Sprite img_map) // TODO
+    {
+        // A buffer to read the pixel
+        char (*map)[TILE_COLUMNS * 3];
+        for (int y = 0; y < TILE_ROWS; y++)
+            for (int x = 0; x < TILE_COLUMNS; x++)
+            {
+                // If the tile is red, add "aa" to the (*map) charmap
+                // green -> "ba"
+                // blue -> "ca"
+                // black  -> "da"
+                // (00deff) light blue -> "ea"
+            }
+        return char (*map);
+    }
+
     int TileMap::getCurrentLevel() const
     {
         return (current_level - 1) % 3 + 1;
