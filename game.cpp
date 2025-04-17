@@ -3,7 +3,6 @@
 // +------------+
 
 /*
-* - Fix git missing sdl2.lib
 * - Better physics
 * - Jump button
 * - Add timer
@@ -24,6 +23,7 @@
 #include "debug.h"
 #include "menu.h"
 #include "camera.h"
+#include "collectible.h"
 
 namespace Tmpl8
 {
@@ -39,43 +39,42 @@ namespace Tmpl8
 
     // + MAIN OBJECTS
     Player player;
-    // Debug debug;
+    Debug debug;
     TileMap map;
     Menu menu;
-
-    void Game::startGame(float deltaTime)
-    {
-        if (GetAsyncKeyState(VK_RETURN)) start_game = true;
-        if (start_game)
-        {
-
-            camera.setCamPos(player.camFollowPlayer());
-
-            int nx = px, ny = py; // Update the player's new position every tick.
-     
-            player.movePlayer(nx, ny);
-            player.manageCollisions(nx, ny, screen);
-            if (player.manageCollisions(nx, ny, screen))
-            {
-                camera.Shake();
-            }
-            camera.camShake(deltaTime);
-
-            map.drawMap(screen, camera);
-            player_img.Draw(screen, px + camera.getCamPos().x, py + camera.getCamPos().y);
-
-            //// * DEBUG: Enabled if pressing <spacebar>.
-            //debug.displayDebug(screen);
-        }
-        else menu.drawMenu(screen);
-    }
+    Collectible collectible;
 
     // + MAIN GAME LOGIC 
     void Game::Tick(float deltaTime)
     {
-        // * Clear the screen black every tick and start the game.
-        deltaTime /= 1000.0f;
+        deltaTime /= 1000.0f; // Convert deltaTime in seconds.
+
+        // * Clear the screen black every tick.
         screen->Clear(0);
-        startGame(deltaTime);
+
+        // * Stay in the menu until the player starts the game.
+        if (GetAsyncKeyState(VK_RETURN)) start_game = true;
+
+        // * Starting the game logic.
+        if (start_game)
+        {
+            int nx = px, ny = py; // Update the player's new position every tick.
+
+            // * Initialize game logic
+            camera.setCamPos(player.camFollowPlayer());
+            player.movePlayer(nx, ny);
+            player.manageCollisions(nx, ny, screen);
+            if (player.manageCollisions(nx, ny, screen)) camera.Shake();
+            camera.camShake(deltaTime);
+
+            // * Draw the objects on screen
+            map.drawMap(screen, camera);
+            player_img.Draw(screen, px + camera.getCamPos().x, py + camera.getCamPos().y);
+            collectible.drawCollectible(screen, 3, 0);
+
+            // * DEBUG: Enabled if pressing <spacebar>.
+            debug.displayDebug(screen, deltaTime);
+        }
+        else menu.drawMenu(screen); // As long as we don't start the game, stay in the menu screen.
     }
 }

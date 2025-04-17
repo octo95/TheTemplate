@@ -28,6 +28,12 @@
     <ClCompile Include="game.cpp">
       <Filter>main</Filter>
     </ClCompile>
+    <ClCompile Include="collectible.cpp">
+      <Filter>collectible</Filter>
+    </ClCompile>
+    <ClCompile Include="physics.cpp">
+      <Filter>physics %28unused%29</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="surface.h">
@@ -57,6 +63,12 @@
     <ClInclude Include="game.h">
       <Filter>main</Filter>
     </ClInclude>
+    <ClInclude Include="collectible.h">
+      <Filter>collectible</Filter>
+    </ClInclude>
+    <ClInclude Include="physics.h">
+      <Filter>physics %28unused%29</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tile">
@@ -76,6 +88,12 @@
     </Filter>
     <Filter Include="main">
       <UniqueIdentifier>{6559c149-19d4-40fe-b386-c735634378b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="collectible">
+      <UniqueIdentifier>{ca09774e-7d53-4b29-a1ee-dfc01efeec8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics %28unused%29">
+      <UniqueIdentifier>{19be942a-7ccf-4e24-9553-b3fa0d247f5a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

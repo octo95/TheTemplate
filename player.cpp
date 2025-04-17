@@ -4,7 +4,6 @@
 #include "game.h"
 #include "tile.h"
 #include "tilemap.h"
-#include "camera.h"
 #include <stdio.h>
 
 namespace Tmpl8
@@ -97,7 +96,7 @@ namespace Tmpl8
 
         // Rotation
         rotation += horizontal_speed;
-        printf("rotation: %d\n", rotation);
+        // printf("rotation: %d\n", rotation);
 
         // Horizontal movement (converting horizontal_speed < float->int >)
         x += static_cast<int>(horizontal_speed);
@@ -113,23 +112,23 @@ namespace Tmpl8
 
     void Player::setMapDefaultPos()
     {
-        switch(map.getCurrentLevel())
+        switch (map.getCurrentLevel())
         {
-            case 1:
-                spawn_px = 400;
-                spawn_py = 10;
-                break;
-            case 2:
-                spawn_px = 300;
-                spawn_py = 10;
-                break;
-            case 3:
-                spawn_px = 600;
-                spawn_py = 10;
-                break;
+        case 1:
+            spawn_px = 400;
+            spawn_py = 10;
+            break;
+        case 2:
+            spawn_px = 300;
+            spawn_py = 10;
+            break;
+        case 3:
+            spawn_px = 600;
+            spawn_py = 10;
+            break;
         }
     }
-    
+
     bool Player::manageCollisions(int& nx, int& ny, Surface* screen)
     {
         TileType CheckSides = CheckCollisionSides(nx, py);
@@ -137,75 +136,43 @@ namespace Tmpl8
 
         bool camShake = false;
 
-        // Horizontal collisions
-        switch (CheckSides)
+        bool isNoneX = (CheckSides == TileType::None);
+        bool isNoneY = (CheckBottom == TileType::None);
+        bool isDamage = (CheckSides == TileType::Damage || CheckBottom == TileType::Damage);
+        bool isEnd = (CheckSides == TileType::End || CheckBottom == TileType::End);
+        bool isCollision = (CheckSides == TileType::Collision || CheckBottom == TileType::Collision);
+        bool isIce = (CheckSides == TileType::Ice || CheckBottom == TileType::Ice);
+
+        if (isNoneX) { px = nx; }
+        if (isNoneY) { py = ny; }
+        if (isDamage)
         {
-        case TileType::None:
-            px = nx;
-            break;
-        case TileType::Damage:
-            px = spawn_px;
-            py = spawn_py;
-            break;
-        case TileType::End:
-            map.setMapIndex(map.incrementMapIndex());
-            px = spawn_px;
-            py = spawn_py;
-            break;
-        case TileType::Collision:
-            friction = 0.05f;
-            vertical_speed = 0;
-            py = (ny > py) ? py : ny;
-            break;
-        case TileType::Ice:
-            friction = 0.0f;
-            vertical_speed = 0;
-            py = (ny > py) ? py : ny;
-            break;
-        }
-        
-        // Vertical collisions
-        switch (CheckBottom)
-        {
-        case TileType::None:
-            py = ny;
-            break;
-        case TileType::Damage:
             px = spawn_px;
             py = spawn_py;
             camShake = true;
-            break;
-        case TileType::End:
+        }
+        if (isEnd)
+        {
             map.setMapIndex(map.incrementMapIndex());
             px = spawn_px;
             py = spawn_py;
-            break;
-        case TileType::Collision:
-            friction = 0.05f;
-            vertical_speed = 0;
-            py = (ny > py) ? py : ny;
-            break;
-        case TileType::Ice:
-            friction = 0.0f;
-            vertical_speed = 0;
-            py = (ny > py) ? py : ny;
-            break;
         }
+        if (isCollision || isIce)
+        {
+            if (isIce)
+                friction = 0.0f;
+            else
+                friction = 0.05f;
+
+            vertical_speed = 0;
+            py = (ny > py) ? py : ny;
+        }
+
         return camShake;
-        
+
     }
 
-    void Player::getPlayerPos(int& x, int& y)
-    {
-        x = px;
-        y = py;
-    }
-
-    void Player::setPlayerPos(int x, int y)
-    {
-        px = x;
-        py = y;
-    }
+    void Player::setPlayerPos(int x, int y) { px = x, py = y; }
 
     vec2 Player::camFollowPlayer()
     {
@@ -232,40 +199,3 @@ namespace Tmpl8
         return { camX, camY };
     }
 };
-
-/*
-if (CheckSides == None)
-{
-    px = nx;
-}
-if (CheckBottom == None)
-{
-    py = ny;
-}
-if (CheckSides == TileType::Damage || CheckBottom == TileType::Damage)
-{
-    px = spawn_px;
-    py = spawn_py;
-}
-if (CheckSides == TileType::End || CheckBottom == TileType::End)
-{
-    map.setMapIndex(map.incrementMapIndex());
-    px = spawn_px;
-    py = spawn_py;
-    return;
-}
-
-if (CheckSides == TileType::Collision || CheckBottom == TileType::Collision)
-{
-    friction = 0.05f;
-    vertical_speed = 0;
-    py = (ny > py) ? py : ny;
-}
-
-if (CheckSides == TileType::Ice || CheckBottom == TileType::Ice)
-{
-    friction = 0.0f;
-    vertical_speed = 0;
-    py = (ny > py) ? py : ny;
-}
-*/
