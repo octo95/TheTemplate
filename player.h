@@ -2,6 +2,7 @@
 #include "surface.h"
 #include "tilemap.h"
 #include "template.h"
+#include "game.h"
 
 namespace Tmpl8
 {
@@ -26,14 +27,15 @@ namespace Tmpl8
 
     // Player class
     class Player {
-    public:
-        TileType Player::CheckCollisionBottom(int x, int y);
-        TileType Player::CheckCollisionSides(int x, int y);
-        void movePlayer(int& x, int& y);
-        bool manageCollisions(int& nx, int& ny, Surface* screen);
-        void getPlayerPos(int& x, int& y);
-        void setPlayerPos(int x, int y);
-        void setMapDefaultPos();
-        vec2 camFollowPlayer();
-    };
+        public:
+            TileType Player::CheckCollisionBottom(int x, int y);
+            TileType Player::CheckCollisionSides(int x, int y);
+            void movePlayer(int& x, int& y);
+            bool manageCollisions(int& nx, int& ny, Surface* screen);
+            void setPlayerPos(int x, int y);
+            void setMapDefaultPos();
+            vec2 camFollowPlayer();
+        private:
+            TileMap map;
+        };
 };

@@ -40,7 +40,6 @@ namespace Tmpl8
 
 	void Menu::loadLevelMenu() // TODO
 	{
-		TileMap map;
 		int level = 0;
 		switch (level)
 		{

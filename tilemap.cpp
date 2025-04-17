@@ -10,9 +10,10 @@
 
 namespace Tmpl8
 {
-    TileMap::TileMap() {}
+    TileMap::TileMap()
+    {
+    }
 
-    Sprite img_map1(new Surface("assets/map1.png"), 1);
 
     int TileMap::getCurrentLevel() const
     {
@@ -27,7 +28,6 @@ namespace Tmpl8
 
     void TileMap::setMapIndex(int index)
     {
-        Player player;
         switch (index)
         {
         case 1:
@@ -75,12 +75,12 @@ namespace Tmpl8
     }
     void TileMap::drawMap(Surface* screen, const Camera& camera) // TODO
     {
-        TileMap tile_map = *this;
+  
 
         for (int y = 0; y < TILE_ROWS; y++)
             for (int x = 0; x < TILE_COLUMNS; x++)
             {
-                Tile tile = tile_map.tile_at(x * TILE_SIZE, y * TILE_SIZE);
+                Tile tile = tile_at(x * TILE_SIZE, y * TILE_SIZE);
                 tile.DrawTile(screen, x * TILE_SIZE, y * TILE_SIZE, camera);
             }
     }

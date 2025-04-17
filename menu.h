@@ -1,9 +1,12 @@
 #pragma once
 #include "surface.h"
+#include "camera.h"
+#include "tilemap.h"
 
 namespace Tmpl8
 {
-	// Extern variables
+	// 
+	// variables
 	extern Sprite img_menu_bg;
 	extern Sprite img_start_button;
 
@@ -14,5 +17,8 @@ namespace Tmpl8
 	public:
 		void drawMenu(Surface* screen);
 		void loadLevelMenu();
+	private:
+		Camera camera;
+		TileMap map;
 	};
 }

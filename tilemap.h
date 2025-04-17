@@ -1,6 +1,7 @@
 #pragma once
 #include "surface.h"
 #include "tile.h"
+#include "player.h"
 
 namespace Tmpl8
 {
@@ -12,7 +13,7 @@ namespace Tmpl8
     const char MAP1[TILE_ROWS][TILE_COLUMNS * 3] = {
         "ca ca da da da da da da da da da da da da da da da da da da da da da da da ca ca",
         "ca ca da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-        "ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca",
+        "ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca aa ca ca",
         "ca ca da da da da da da da ca ca da da da da da da da da da da da da da da ca ca",
         "ca ca da da da da da da da da ca da da da da da da da da da da da da da da ca ca",
         "ca ca ca ca ca ca ca da da da da da da da da da da da da da da da da da da ca ca",
@@ -124,6 +125,7 @@ namespace Tmpl8
         void drawMap(Surface* screen, const Camera& camera);
     private:
         int current_level = 1;
+        Player player;
     };
-};
+}
 
