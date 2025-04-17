@@ -13,7 +13,6 @@ namespace Tmpl8
         int squareRight = x + player_img_width / 2 + hitbox_size + camera->getCamPos().x;
         int squareBottom = y + player_img_width / 2 + hitbox_size + camera->getCamPos().y;
         int squareLeft = x + player_img_width / 2 - hitbox_size + camera->getCamPos().x;
-
         screen->Box(squareLeft, squareTop, squareRight, squareBottom, 0xFF0000);
     }
 

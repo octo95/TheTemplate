@@ -23,9 +23,6 @@
 
 namespace Tmpl8
 {
-    // Variables
-    bool start_game = false;
-
     // + Initializer / Shutdown
     void Game::Init() 
     {
@@ -33,12 +30,8 @@ namespace Tmpl8
     }
     void Game::Shutdown() {}
 
-    // + MAIN OBJECTS
-    Player player;
-    Debug debug;
+    // + Create map
     TileMap map;
-    Menu menu;
-    Collectible collectible;
 
     // + MAIN GAME LOGIC 
     void Game::Tick(float deltaTime)

@@ -1,11 +1,14 @@
 #pragma once
 #include "tilemap.h"
+#include "menu.h"
+#include "collectible.h"
+#include "debug.h"
+#include "player.h"
 
 namespace Tmpl8 
 {
 	// External variables
 	extern TileMap map;
-	extern bool start_game;
 	
 	class Surface;
 	class Game
@@ -23,7 +26,12 @@ namespace Tmpl8
 	private:
 		Surface* screen;
 		Camera camera;
-		int mousex, mousey;
-};
+		Menu menu;
+		Collectible collectible;
+		Player player;
+		Debug debug;
+		int mousex, mousey; // TODO
+		bool start_game = false;
+	};
 
-}; // namespace Tmpl8
+}
