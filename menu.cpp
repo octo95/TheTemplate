@@ -1,6 +1,5 @@
 #define WIN32_LEAN_AND_MEAN
 #include "menu.h"
-#include "surface.h"
 #include "windows.h"
 #include "tilemap.h"
 #include <stdio.h>

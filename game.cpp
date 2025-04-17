@@ -11,19 +11,15 @@
 
 #define WIN32_LEAN_AND_MEAN
 #include "windows.h"
-#include "SDL_events.h"
-#include <stdio.h>
-#include <iostream>
-#include "surface.h"
-#include "template.h"
-#include "game.h"
-#include "tile.h"
-#include "tilemap.h"
-#include "player.h"
-#include "debug.h"
-#include "menu.h"
+
 #include "camera.h"
 #include "collectible.h"
+#include "debug.h"
+#include "game.h"
+#include "menu.h"
+#include "player.h"
+#include "tile.h"
+#include "tilemap.h"
 
 namespace Tmpl8
 {
@@ -73,6 +69,7 @@ namespace Tmpl8
             camera.drawWithCam(&img_collectible, screen, collectible.setCPos(13), collectible.setCPos(5));
 
             // * DEBUG: Enabled if pressing <spacebar>.
+            debug.setCamera(&camera);
             debug.displayDebug(screen, deltaTime);
         }
         else menu.drawMenu(screen); // As long as we don't start the game, stay in the menu screen.

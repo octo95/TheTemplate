@@ -1,9 +1,5 @@
-#define WIN32_LEAN_AND_MEAN
 #include "collectible.h"
-#include "surface.h"
-#include <stdio.h>
 #include "tile.h"
-#include "camera.h"
 
 namespace Tmpl8
 {
@@ -11,8 +7,8 @@ namespace Tmpl8
 
 	void Collectible::drawCollectible(Surface* screen, int x, int y)
 	{
-		int tx = x / TILE_SIZE + camera.getCamPos().x;
-		int ty = y / TILE_SIZE + camera.getCamPos().y;
+		int tx = x / TILE_SIZE;
+		int ty = y / TILE_SIZE;
 		img_collectible.Draw(screen, tx, ty);
 	}
 

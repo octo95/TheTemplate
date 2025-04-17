@@ -1,12 +1,5 @@
-#include "tile.h"
-#include "surface.h"
-#include "tilemap.h"
 #include "player.h"
-#include "game.h"
-#include "camera.h"
-
-#include <stdio.h>
-#include <iostream>
+#include "tilemap.h"
 
 namespace Tmpl8
 {
@@ -32,15 +25,15 @@ namespace Tmpl8
         {
         case 1:
             current_map = MAP1;
-            player.setMapDefaultPos();
+            player.setPlayerDefaultPos();
             break;
         case 2:
             current_map = MAP2;
-            player.setMapDefaultPos();
+            player.setPlayerDefaultPos();
             break;
         case 3:
             current_map = MAP3;
-            player.setMapDefaultPos();
+            player.setPlayerDefaultPos();
             break;
         }
     }

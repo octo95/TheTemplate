@@ -1,7 +1,6 @@
 #pragma once
 #include "surface.h"
 #include "tilemap.h"
-#include "template.h"
 
 namespace Tmpl8
 {
@@ -10,20 +9,11 @@ namespace Tmpl8
     extern int hitbox_size;
     extern int px;
     extern int py;
-    extern int rotation;
     extern int player_img_width;
     extern int player_img_height;
-    extern int gravity;
-    extern float vertical_speed;
-    extern float horizontal_speed;
     extern int spawn_px ;
     extern int spawn_py;
-    extern float friction;                      // How much the player sticks to the ground
-
-    // Constants
-    const float ACCELERATION = 0.3f;            // How long it will take the player to reach the max horizontal speed.
-    const float MAX_HORIZONTAL_SPEED = 3.0f;    // The max horizontal speed.            
-
+                 
     // Player class
     class Player {
     public:
@@ -33,7 +23,15 @@ namespace Tmpl8
         bool manageCollisions(int& nx, int& ny, Surface* screen);
         void getPlayerPos(int& x, int& y);
         void setPlayerPos(int x, int y);
-        void setMapDefaultPos();
+        void setPlayerDefaultPos();
         vec2 camFollowPlayer();
+    private:
+        int rotation = 0;
+        int gravity = 3;
+        float vertical_speed = 0;
+        float horizontal_speed = 0;
+        float friction = 0.05f;                     // How much the player sticks to the ground
+        const float ACCELERATION = 0.3f;            // How long it will take the player to reach the max horizontal speed.
+        const float MAX_HORIZONTAL_SPEED = 3.0f;    // The max horizontal speed.     
     };
 };

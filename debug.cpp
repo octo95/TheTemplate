@@ -1,26 +1,18 @@
 #define WIN32_LEAN_AND_MEAN
-#include "debug.h"
-#include "surface.h"
 #include "windows.h"
-#include "player.h"
-#include "tilemap.h"
+
+#include "debug.h"
 #include "game.h"
-#include "tile.h"
-#include "camera.h"
-#include <stdio.h>
+#include "player.h"
 
 namespace Tmpl8
 {
-    void Debug::drawHitbox(int x, int y, Surface* screen) // NEED FIX
+    void Debug::drawHitbox(int x, int y, Surface* screen)
     {
-        int player_center = player_img_width / 2;
-
-        int squareTop = y + player_center - hitbox_size + camera.getCamPos().y;
-        int squareRight = x + player_center + hitbox_size + camera.getCamPos().x;
-        int squareBottom = y + player_center + hitbox_size + camera.getCamPos().y;
-        int squareLeft = x + player_center - hitbox_size + camera.getCamPos().x;
-
-        printf("camera y: %d\n", camera.getCamPos().y);
+        int squareTop = y + player_img_width / 2 - hitbox_size + camera->getCamPos().y;
+        int squareRight = x + player_img_width / 2 + hitbox_size + camera->getCamPos().x;
+        int squareBottom = y + player_img_width / 2 + hitbox_size + camera->getCamPos().y;
+        int squareLeft = x + player_img_width / 2 - hitbox_size + camera->getCamPos().x;
 
         screen->Box(squareLeft, squareTop, squareRight, squareBottom, 0xFF0000);
     }

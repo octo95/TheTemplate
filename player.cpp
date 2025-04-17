@@ -1,10 +1,9 @@
 #define WIN32_LEAN_AND_MEAN
-#include "player.h"
 #include "windows.h"
-#include "game.h"
-#include "tile.h"
-#include "tilemap.h"
 #include <stdio.h>
+
+#include "game.h"
+#include "player.h"
 
 namespace Tmpl8
 {
@@ -16,13 +15,8 @@ namespace Tmpl8
     int py = spawn_py;
     int player_img_width = player_img.GetWidth();
     int player_img_height = player_img.GetHeight();
-    int rotation = 0;
-    int gravity = 3;
     int spawn_px = 400;
     int spawn_py = 10;
-    float vertical_speed = 0;
-    float horizontal_speed = 0;
-    float friction = 0.05f;
 
     // Player functions
     TileType Player::CheckCollisionBottom(int x, int y)
@@ -110,7 +104,7 @@ namespace Tmpl8
         if (x + player_img_width > SCREEN_WIDTH) x = SCREEN_WIDTH - player_img_width;
     }
 
-    void Player::setMapDefaultPos()
+    void Player::setPlayerDefaultPos()
     {
         switch (map.getCurrentLevel())
         {

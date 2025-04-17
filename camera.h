@@ -1,6 +1,6 @@
 #pragma once
-#include "template.h"
 #include "surface.h"
+#include "template.h"
 
 namespace Tmpl8
 {

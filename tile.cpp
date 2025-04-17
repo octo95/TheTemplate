@@ -1,7 +1,4 @@
-#include "game.h"
-#include "surface.h"
 #include "tile.h"
-#include "camera.h"
 
 namespace Tmpl8
 {
