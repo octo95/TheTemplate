@@ -69,8 +69,8 @@ namespace Tmpl8
 
             // * Draw the objects on screen
             map.drawMap(screen, camera);
-            player_img.Draw(screen, px + camera.getCamPos().x, py + camera.getCamPos().y);
-            collectible.drawCollectible(screen, 3, 0);
+            camera.drawWithCam(&player_img, screen, px, py);
+            camera.drawWithCam(&img_collectible, screen, collectible.setCPos(13), collectible.setCPos(5));
 
             // * DEBUG: Enabled if pressing <spacebar>.
             debug.displayDebug(screen, deltaTime);

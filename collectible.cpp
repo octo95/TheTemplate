@@ -15,4 +15,9 @@ namespace Tmpl8
 		int ty = y / TILE_SIZE + camera.getCamPos().y;
 		img_collectible.Draw(screen, tx, ty);
 	}
+
+	int Collectible::setCPos(int value)
+	{
+		return value * TILE_SIZE + TILE_SIZE / 2;
+	}
 }

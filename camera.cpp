@@ -16,12 +16,12 @@ namespace Tmpl8
     void Camera::camShake(float deltatime)
     {
         total_time -= deltatime;
-        const float frequency = 10.0f;
-        const float amplitude = 10.0f;
+        const float frequency = 20.0f;
+        const float amplitude = 2.5f;
         if (total_time > 0.0f)
         {
-            shake.x = std::sin(total_time * frequency) * amplitude; // TODO : total_time / max_time
-            shake.y = std::cos(total_time * frequency) * amplitude;
+            shake.x = std::sin(exp(total_time) * frequency) * amplitude; // TODO : total_time / max_time
+            shake.y = std::cos(exp(total_time) * frequency) * amplitude;
         }
         else
         {
@@ -31,6 +31,14 @@ namespace Tmpl8
 
     void Camera::Shake()
     {
-        total_time = 2.0f;
+        total_time = 0.6f;
     }
+
+    void Camera::drawWithCam(Sprite* img, Surface* screen, int x, int y)
+    {
+        x += getCamPos().x;
+        y += getCamPos().y;
+        img->Draw(screen, x, y);
+    }
+
 };

@@ -20,7 +20,7 @@ namespace Tmpl8
             for (int xl = 0; xl < TILE_SIZE; xl++) 
             {
                 // Cut out of the screen pixels
-                int x_t = x + xl + camera.getCamPos().x + 1; // Note: doing +1 makes it a bit better?
+                int x_t = x + xl + camera.getCamPos().x;
                 int y_t = y + yl + camera.getCamPos().y;
 
                 if (x_t <= SCREEN_WIDTH && x_t >= 0 && y_t <= SCREEN_HEIGHT && y_t >= 0) {
