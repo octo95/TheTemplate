@@ -104,24 +104,16 @@ namespace Tmpl8
         if (x + player_img_width > SCREEN_WIDTH) x = SCREEN_WIDTH - player_img_width;
     }
 
-    void Player::setPlayerDefaultPos()
+    void Player::setPlayerDefaultPos(int x, int y)
     {
-        // int level = map->getCurrentLevel();
-        switch (true)
-        {
-        case 1:
-            spawn_px = 400;
-            spawn_py = 10;
-            break;
-        case 2:
-            spawn_px = 300;
-            spawn_py = 10;
-            break;
-        case 3:
-            spawn_px = 600;
-            spawn_py = 10;
-            break;
-        }
+        px = x;
+        py = y;
+    }
+
+    void Player::getPlayerDefaultPos(int& x, int& y)
+    {
+        x = px;
+        y = py;
     }
 
     bool Player::manageCollisions(int& nx, int& ny, Surface* screen)

@@ -3,10 +3,12 @@
 // +------------+
 
 /*
+* - Fix defaultPos() (might need to add a getter for defaultPos too)
+* - Move coordinates logic in vec2 instead of double int? Not sure as it can take a long time to change the logic
 * - Better physics
 * - Jump button
 * - Add timer
-* - Add collectible
+* - Add collectible logic
 */
 
 #define WIN32_LEAN_AND_MEAN

@@ -26,7 +26,8 @@ namespace Tmpl8
         bool manageCollisions(int& nx, int& ny, Surface* screen);
         void getPlayerPos(int& x, int& y);
         void setPlayerPos(int x, int y);
-        void setPlayerDefaultPos();
+        void setPlayerDefaultPos(int x, int y);
+        void getPlayerDefaultPos(int& x, int& y);
         vec2 camFollowPlayer();
     private:
         TileMap* map;

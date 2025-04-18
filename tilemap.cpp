@@ -25,15 +25,15 @@ namespace Tmpl8
         {
         case 1:
             current_map = MAP1;
-            player->setPlayerDefaultPos();
+            player->setPlayerDefaultPos(400, 10); // Values not working with the function yet
             break;
         case 2:
             current_map = MAP2;
-            player->setPlayerDefaultPos();
+            player->setPlayerDefaultPos(80, 10);
             break;
         case 3:
             current_map = MAP3;
-            player->setPlayerDefaultPos();
+            player->setPlayerDefaultPos(600, 10);
             break;
         }
     }
