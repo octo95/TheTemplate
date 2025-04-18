@@ -14,9 +14,9 @@ namespace Tmpl8
         return position + shake;
     }
 
-    void Camera::camShake(float deltatime)
+    void Camera::camShake(float deltaTime)
     {
-        total_time -= deltatime;
+        total_time -= deltaTime;
         const float frequency = 20.0f;
         const float amplitude = 2.5f;
         if (total_time > 0.0f)
@@ -41,5 +41,4 @@ namespace Tmpl8
         y += getCamPos().y;
         img->Draw(screen, x, y);
     }
-
 };

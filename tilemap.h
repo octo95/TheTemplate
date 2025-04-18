@@ -1,12 +1,10 @@
 #pragma once
 #include "surface.h"
 #include "tile.h"
-
+#include "player.h"
 
 namespace Tmpl8
 {
-    class Player;
-    // Constants
     const int TOTAL_MAPS = 3;
     const int TILE_ROWS = 32;
     const int TILE_COLUMNS = 27;
@@ -113,6 +111,8 @@ namespace Tmpl8
     "ca ca ca ca ca ca ca ca ca ca ca ba ba ba ba ba ca ca ca ca ca ca ca ca ca ca ca",
     "ca ca ca ca ca ca ca ca ca ca ca ba ba ba ba ba ca ca ca ca ca ca ca ca ca ca ca"
     };
+
+    class Player;
 
     class TileMap {
     public:

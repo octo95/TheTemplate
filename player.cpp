@@ -10,52 +10,48 @@ namespace Tmpl8
     // Variables
     Sprite player_img(new Surface("assets/tangerine.png"), 1);
 
-    int hitbox_size = 16 - 2; // Radius of the hitbox with a tolerance of 2 pixels
+    int hitbox_size = 16 - 2;
     int player_img_width = player_img.GetWidth();
     int player_img_height = player_img.GetHeight();
-    int spawn_px = 400;
-    int spawn_py = 10;
-    int px = spawn_px;
-    int py = spawn_py;
 
     // Player functions
-    TileType Player::CheckCollisionBottom(int x, int y)
+    TileType Player::CheckCollisionBottom(const vec2& pos)
     {
         TileType type = None;
 
         // Bottom-left
-        auto tile = map->tile_at(x, y + hitbox_size * 2);
+        auto tile = map->tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y) + hitbox_size * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         // Bottom-right
-        tile = map->tile_at(x + hitbox_size * 2, y + hitbox_size * 2);
+        tile = map->tile_at(static_cast<int>(pos.x) + hitbox_size * 2, static_cast<int>(pos.y) + hitbox_size * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         return type;
     }
 
-    TileType Player::CheckCollisionSides(int x, int y)
+    TileType Player::CheckCollisionSides(const vec2& pos)
     {
         TileType type = None;
 
         // Left
-        auto tile = map->tile_at(x, y);
+        auto tile = map->tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y));
         if (tile.type != TileType::None) type = tile.type;
 
-        tile = map->tile_at(x, y + hitbox_size * 2);
+        tile = map->tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y) + hitbox_size * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         // Right
-        tile = map->tile_at(x + hitbox_size * 2, y);
+        tile = map->tile_at(static_cast<int>(pos.x) + hitbox_size * 2, static_cast<int>(pos.y));
         if (tile.type != TileType::None) type = tile.type;
 
-        tile = map->tile_at(x + hitbox_size * 2, y + hitbox_size * 2);
+        tile = map->tile_at(static_cast<int>(pos.x) + hitbox_size * 2, static_cast<int>(pos.y) + hitbox_size * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         return type;
     }
 
-    void Player::movePlayer(int& x, int& y)
+    void Player::movePlayer(vec2& new_pos)
     {
         if (GetAsyncKeyState(VK_LEFT))
         {
@@ -67,7 +63,7 @@ namespace Tmpl8
             horizontal_speed += ACCELERATION;
             if (horizontal_speed > MAX_HORIZONTAL_SPEED) horizontal_speed = MAX_HORIZONTAL_SPEED;
         }
-        else // When there is no movement left, the player slides depending on the friction.
+        else
         {
             if (horizontal_speed > 0)
             {
@@ -85,41 +81,49 @@ namespace Tmpl8
         bool isUpDown = GetAsyncKeyState(VK_UP) & 0x8000;
         if (isUpDown && !upPressedLastFrame)
         {
-            // JUMP LOGIC TODO
+            // TODO: Jump Logic
         }
 
         // Rotation
         rotation += horizontal_speed;
-        // printf("rotation: %d\n", rotation);
 
-        // Horizontal movement (converting horizontal_speed < float->int >)
-        x += static_cast<int>(horizontal_speed);
+        // Horizontal movement
+        new_pos.x += static_cast<int>(horizontal_speed);
 
-        // Vertical movement (gravity)
+        // Vertical movement
         vertical_speed = gravity;
-        y += static_cast<int>(vertical_speed);
+        new_pos.y += static_cast<int>(vertical_speed);
 
-        // Clamp coordinates to make the player not go outside of the screen boundaries horizontally.
-        if (x < 0) x = 0;
-        if (x + player_img_width > SCREEN_WIDTH) x = SCREEN_WIDTH - player_img_width;
+        // Clamp horizontally
+        if (new_pos.x < 0) new_pos.x = 0;
+        if (new_pos.x + player_img_width > SCREEN_WIDTH)
+            new_pos.x = SCREEN_WIDTH - player_img_width;
     }
 
-    void Player::setPlayerDefaultPos(int x, int y)
+    void Player::setPlayerDefaultPos(const vec2& pos)
     {
-        px = x;
-        py = y;
+        default_pos = pos;
     }
 
-    void Player::getPlayerDefaultPos(int& x, int& y)
+    void Player::getPlayerDefaultPos(vec2& pos)
     {
-        x = px;
-        y = py;
+        pos = default_pos;
     }
 
-    bool Player::manageCollisions(int& nx, int& ny, Surface* screen)
+    void Player::getPlayerPos(vec2& pos)
     {
-        TileType CheckSides = CheckCollisionSides(nx, py);
-        TileType CheckBottom = CheckCollisionBottom(px, ny);
+        pos = position;
+    }
+
+    void Player::setPlayerPos(const vec2& pos)
+    {
+        position = pos;
+    }
+
+    bool Player::manageCollisions(vec2& new_pos, Surface* screen)
+    {
+        TileType CheckSides = CheckCollisionSides({ new_pos.x, position.y });
+        TileType CheckBottom = CheckCollisionBottom({ position.x, new_pos.y });
 
         bool camShake = false;
 
@@ -130,19 +134,17 @@ namespace Tmpl8
         bool isCollision = (CheckSides == TileType::Collision || CheckBottom == TileType::Collision);
         bool isIce = (CheckSides == TileType::Ice || CheckBottom == TileType::Ice);
 
-        if (isNoneX) { px = nx; }
-        if (isNoneY) { py = ny; }
+        if (isNoneX) position.x = new_pos.x;
+        if (isNoneY) position.y = new_pos.y;
         if (isDamage)
         {
-            px = spawn_px;
-            py = spawn_py;
+            position = default_pos;
             camShake = true;
         }
         if (isEnd)
         {
             map->setMapIndex(map->incrementMapIndex());
-            px = spawn_px;
-            py = spawn_py;
+            position = default_pos;
         }
         if (isCollision || isIce)
         {
@@ -152,33 +154,27 @@ namespace Tmpl8
                 friction = 0.05f;
 
             vertical_speed = 0;
-            py = (ny > py) ? py : ny;
+            position.y = (new_pos.y > position.y) ? position.y : new_pos.y;
         }
 
         return camShake;
-
     }
-
-    void Player::setPlayerPos(int x, int y) { px = x, py = y; }
 
     vec2 Player::camFollowPlayer()
     {
-        float camX = -TILE_SIZE;  // Offset by 1 tile to the left as we make the map 1 tile bigger on the sides for shaking.
+        float camX = -TILE_SIZE;
         float camY = 0;
-        int playerCenterY = py + player_img_height / 2;
+        int playerCenterY = static_cast<int>(position.y) + player_img_height / 2;
         int screenCenterY = SCREEN_HEIGHT / 2;
         int mapHeight = TILE_ROWS * TILE_SIZE;
         int maxCamY = SCREEN_HEIGHT - mapHeight;
 
-        // If player goes above the top half
         if (playerCenterY < screenCenterY)
             camY = 0;
-        // If player goes below the screen center, follow
         else
         {
             camY = -(playerCenterY - screenCenterY);
 
-            // If player goes bottom half
             if (camY < maxCamY)
                 camY = maxCamY;
         }

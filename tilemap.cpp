@@ -16,7 +16,6 @@ namespace Tmpl8
     int TileMap::incrementMapIndex()
     {
         return current_level = current_level % 3 + 1;
-        
     }
 
     void TileMap::setMapIndex(int index)
@@ -25,15 +24,15 @@ namespace Tmpl8
         {
         case 1:
             current_map = MAP1;
-            player->setPlayerDefaultPos(400, 10); // Values not working with the function yet
+            // player->setPlayerDefaultPos(vec2(400.0f, 10.0f));
             break;
         case 2:
             current_map = MAP2;
-            player->setPlayerDefaultPos(80, 10);
+            // player->setPlayerDefaultPos(vec2(80.0f, 10.0f));
             break;
         case 3:
             current_map = MAP3;
-            player->setPlayerDefaultPos(600, 10);
+            // player->setPlayerDefaultPos(vec2(600.0f, 10.0f));
             break;
         }
     }
@@ -66,6 +65,7 @@ namespace Tmpl8
 
         return tile;
     }
+
     void TileMap::drawMap(Surface* screen, const Camera& camera)
     {
         for (int y = 0; y < TILE_ROWS; ++y)
@@ -77,4 +77,4 @@ namespace Tmpl8
             }
         }
     }
-};
+}
