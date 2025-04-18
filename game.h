@@ -4,11 +4,12 @@
 #include "collectible.h"
 #include "debug.h"
 #include "player.h"
+#include "tilemap.h"
 
 namespace Tmpl8 
 {
 	// External variables
-	extern TileMap map;
+	// extern TileMap map;
 	
 	class Surface;
 	class Game
@@ -30,6 +31,7 @@ namespace Tmpl8
 		Collectible collectible;
 		Player player;
 		Debug debug;
+		TileMap map;
 		int mousex, mousey; // TODO
 		bool start_game = false;
 	};

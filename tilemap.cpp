@@ -1,5 +1,6 @@
 #include "player.h"
 #include "tilemap.h"
+#include "game.h"
 
 namespace Tmpl8
 {
@@ -20,20 +21,19 @@ namespace Tmpl8
 
     void TileMap::setMapIndex(int index)
     {
-        Player player;
         switch (index)
         {
         case 1:
             current_map = MAP1;
-            player.setPlayerDefaultPos();
+            player->setPlayerDefaultPos();
             break;
         case 2:
             current_map = MAP2;
-            player.setPlayerDefaultPos();
+            player->setPlayerDefaultPos();
             break;
         case 3:
             current_map = MAP3;
-            player.setPlayerDefaultPos();
+            player->setPlayerDefaultPos();
             break;
         }
     }
@@ -66,15 +66,15 @@ namespace Tmpl8
 
         return tile;
     }
-    void TileMap::drawMap(Surface* screen, const Camera& camera) // TODO
+    void TileMap::drawMap(Surface* screen, const Camera& camera)
     {
-        TileMap tile_map = *this;
-
-        for (int y = 0; y < TILE_ROWS; y++)
-            for (int x = 0; x < TILE_COLUMNS; x++)
+        for (int y = 0; y < TILE_ROWS; ++y)
+        {
+            for (int x = 0; x < TILE_COLUMNS; ++x)
             {
-                Tile tile = tile_map.tile_at(x * TILE_SIZE, y * TILE_SIZE);
+                Tile tile = tile_at(x * TILE_SIZE, y * TILE_SIZE);
                 tile.DrawTile(screen, x * TILE_SIZE, y * TILE_SIZE, camera);
             }
+        }
     }
 };

@@ -15,8 +15,11 @@ namespace Tmpl8
     extern int spawn_py;
                  
     // Player class
+    class TileMap;
+
     class Player {
     public:
+        void setMap(TileMap* tilemap) { map = tilemap; }
         TileType Player::CheckCollisionBottom(int x, int y);
         TileType Player::CheckCollisionSides(int x, int y);
         void movePlayer(int& x, int& y);
@@ -26,6 +29,7 @@ namespace Tmpl8
         void setPlayerDefaultPos();
         vec2 camFollowPlayer();
     private:
+        TileMap* map;
         int rotation = 0;
         int gravity = 3;
         float vertical_speed = 0;

@@ -31,7 +31,7 @@ namespace Tmpl8
     void Game::Shutdown() {}
 
     // + Create map
-    TileMap map;
+    // TileMap map;
 
     // + MAIN GAME LOGIC 
     void Game::Tick(float deltaTime)
@@ -50,7 +50,10 @@ namespace Tmpl8
             int nx = px, ny = py; // Update the player's new position every tick.
 
             // * Initialize game logic
-            camera.setCamPos(player.camFollowPlayer());
+            player.setMap(&map);
+            debug.setMap(&map);
+            map.setPlayer(&player);
+            camera.setCamPos(player.camFollowPlayer());        
             player.movePlayer(nx, ny);
             player.manageCollisions(nx, ny, screen);
             if (player.manageCollisions(nx, ny, screen)) camera.Shake();
@@ -60,8 +63,8 @@ namespace Tmpl8
             map.drawMap(screen, camera);
             camera.drawWithCam(&player_img, screen, px, py);
             camera.drawWithCam(&img_collectible, screen, collectible.setCPos(13), collectible.setCPos(5));
-
             // * DEBUG: Enabled if pressing <spacebar>.
+ 
             debug.setCamera(&camera);
             debug.displayDebug(screen, deltaTime);
         }

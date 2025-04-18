@@ -11,12 +11,12 @@ namespace Tmpl8
     Sprite player_img(new Surface("assets/tangerine.png"), 1);
 
     int hitbox_size = 16 - 2; // Radius of the hitbox with a tolerance of 2 pixels
-    int px = spawn_px;
-    int py = spawn_py;
     int player_img_width = player_img.GetWidth();
     int player_img_height = player_img.GetHeight();
     int spawn_px = 400;
     int spawn_py = 10;
+    int px = spawn_px;
+    int py = spawn_py;
 
     // Player functions
     TileType Player::CheckCollisionBottom(int x, int y)
@@ -24,11 +24,11 @@ namespace Tmpl8
         TileType type = None;
 
         // Bottom-left
-        auto tile = map.tile_at(x, y + hitbox_size * 2);
+        auto tile = map->tile_at(x, y + hitbox_size * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         // Bottom-right
-        tile = map.tile_at(x + hitbox_size * 2, y + hitbox_size * 2);
+        tile = map->tile_at(x + hitbox_size * 2, y + hitbox_size * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         return type;
@@ -39,17 +39,17 @@ namespace Tmpl8
         TileType type = None;
 
         // Left
-        auto tile = map.tile_at(x, y);
+        auto tile = map->tile_at(x, y);
         if (tile.type != TileType::None) type = tile.type;
 
-        tile = map.tile_at(x, y + hitbox_size * 2);
+        tile = map->tile_at(x, y + hitbox_size * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         // Right
-        tile = map.tile_at(x + hitbox_size * 2, y);
+        tile = map->tile_at(x + hitbox_size * 2, y);
         if (tile.type != TileType::None) type = tile.type;
 
-        tile = map.tile_at(x + hitbox_size * 2, y + hitbox_size * 2);
+        tile = map->tile_at(x + hitbox_size * 2, y + hitbox_size * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         return type;
@@ -106,7 +106,8 @@ namespace Tmpl8
 
     void Player::setPlayerDefaultPos()
     {
-        switch (map.getCurrentLevel())
+        // int level = map->getCurrentLevel();
+        switch (true)
         {
         case 1:
             spawn_px = 400;
@@ -147,7 +148,7 @@ namespace Tmpl8
         }
         if (isEnd)
         {
-            map.setMapIndex(map.incrementMapIndex());
+            map->setMapIndex(map->incrementMapIndex());
             px = spawn_px;
             py = spawn_py;
         }

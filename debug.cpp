@@ -41,7 +41,7 @@ namespace Tmpl8
 
             // Display the current map level alongside its default spawn coordinates
             char map_lvl_coords[100];
-            sprintf(map_lvl_coords, "current map: %d - (%d, %d)", map.getCurrentLevel(), spawn_px, spawn_py);
+            sprintf(map_lvl_coords, "current map: %d - (%d, %d)", map->getCurrentLevel(), spawn_px, spawn_py);
             screen->Print(map_lvl_coords, 10, 50, 0xFFFF00);
 
             // Display the FPS
@@ -86,7 +86,7 @@ namespace Tmpl8
         bool isTabDown = GetAsyncKeyState(VK_TAB) & 0x8000;
         if (isTabDown && !tabPressedLastFrame)
         {
-            map.setMapIndex(map.incrementMapIndex());
+            map->setMapIndex(map->incrementMapIndex());
             defaultPos();
         }
         tabPressedLastFrame = isTabDown;
