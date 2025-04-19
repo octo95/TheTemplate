@@ -16,7 +16,7 @@ constexpr int ScreenHeight = 512;
 // #define FULLSCREEN
 // #define ADVANCEDGL	// faster if your system supports it. Switches SDL2's texture buffer out for OpenGL texture buffer with mappings to CPU Memory. 
 
-static const char* TemplateVersion = "Fruits Collide Game";
+static const char* TemplateVersion = "UltraGigaBallSimulator4000";
 
 //SIMD Intrinsics headers.
 //#include "emmintrin.h"
@@ -92,6 +92,7 @@ public:
 	void operator += ( const vec2& a ) { x += a.x; y += a.y; }
 	void operator *= ( const vec2& a ) { x *= a.x; y *= a.y; }
 	void operator *= ( float a ) { x *= a; y *= a; }
+	bool operator == ( vec2 rhs ) const { return this->x == rhs.x && this->y == rhs.y; }
 	float& operator [] ( const int idx ) { return cell[idx]; }
 	float length() { return sqrtf( x * x + y * y ); }
 	float sqrLentgh() { return x * x + y * y; }

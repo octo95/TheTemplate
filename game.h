@@ -4,7 +4,8 @@
 #include "collectible.h"
 #include "debug.h"
 #include "player.h"
-#include "tilemap.h"
+
+#include <unordered_map>
 
 namespace Tmpl8 
 {
@@ -24,14 +25,19 @@ namespace Tmpl8
 		void MouseMove(int x, int y) { mousex = x, mousey = y; }
 		void KeyUp( int key ) { /* implement if you want to handle keys */ }
 		void KeyDown( int key ) { /* implement if you want to handle keys */ }
+		// void setTileMap (TileMap tilemap) {  }
 	private:
+		// Graphics
 		Surface* screen;
 		Camera camera;
-		Menu menu;
-		Collectible collectible;
-		Player player;
 		Debug debug;
-		TileMap map;
+		Menu menu;
+		
+		// Gameplay
+		CollectibleMap collectibles = CollectibleMap();
+		Player player;
+		TileMap tilemap;
+		
 		int mousex, mousey; // TODO
 		bool start_game = false;
 	};

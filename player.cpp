@@ -55,49 +55,74 @@ namespace Tmpl8
     {
         if (GetAsyncKeyState(VK_LEFT))
         {
-            horizontal_speed -= ACCELERATION;
-            if (horizontal_speed < -MAX_HORIZONTAL_SPEED) horizontal_speed = -MAX_HORIZONTAL_SPEED;
+            velocity.x -= ACCELERATION;
+            if (velocity.x < -MAX_HORIZONTAL_SPEED) velocity.x = -MAX_HORIZONTAL_SPEED;
         }
         else if (GetAsyncKeyState(VK_RIGHT))
         {
-            horizontal_speed += ACCELERATION;
-            if (horizontal_speed > MAX_HORIZONTAL_SPEED) horizontal_speed = MAX_HORIZONTAL_SPEED;
+            velocity.x += ACCELERATION;
+            if (velocity.x > MAX_HORIZONTAL_SPEED) velocity.x = MAX_HORIZONTAL_SPEED;
         }
         else
         {
-            if (horizontal_speed > 0)
+            if (velocity.x > 0)
             {
-                horizontal_speed -= friction;
-                if (horizontal_speed < 0) horizontal_speed = 0;
+                velocity.x -= friction;
+                if (velocity.x < 0) velocity.x = 0;
             }
-            else if (horizontal_speed < 0)
+            else if (velocity.x < 0)
             {
-                horizontal_speed += friction;
-                if (horizontal_speed > 0) horizontal_speed = 0;
+                velocity.x += friction;
+                if (velocity.x > 0) velocity.x = 0;
             }
         }
 
-        bool upPressedLastFrame = false;
-        bool isUpDown = GetAsyncKeyState(VK_UP) & 0x8000;
-        if (isUpDown && !upPressedLastFrame)
+        TileType CheckSides = CheckCollisionSides({ new_pos.x + velocity.x, position.y });
+        TileType CheckBottom = CheckCollisionBottom({ position.x, new_pos.y + velocity.y });
+        
+        bool isCollision = (CheckSides == TileType::Collision || CheckBottom == TileType::Collision);
+        bool isIce = (CheckSides == TileType::Ice || CheckBottom == TileType::Ice);
+        
+        if (isCollision || isIce)
         {
-            // TODO: Jump Logic
+            //if (CheckSides) {
+            //    float norm = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2));
+            //    float angle = acos(velocity.x / norm);
+            //
+            //    velocity.x = norm * -cos(angle);
+            //    velocity.y = -norm * sin(angle);                
+            //}
+            //else if (CheckBottom != TileType::None) {
+            //    float norm = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2));
+            //    float angle = acos(velocity.y / norm);
+            //
+            //    velocity.x = norm * cos(angle);
+            //    velocity.y = -norm * -sin(angle);
+            //}
+            //else if (!CheckBottom) {
+            //    velocity.y += gravity * 0.3;
+            //    if (velocity.y > 5) velocity.y = 5;
+            //}
+       
+            //velocity.x *= pow(ENERGY_LOSS, 2);
+            //velocity.y *= pow(ENERGY_LOSS, 2);
         }
-
-        // Rotation
-        rotation += horizontal_speed;
 
         // Horizontal movement
-        new_pos.x += static_cast<int>(horizontal_speed);
+        new_pos.x += static_cast<int>(velocity.x);
 
-        // Vertical movement
-        vertical_speed = gravity;
-        new_pos.y += static_cast<int>(vertical_speed);
+        // Vertical movement        
+        velocity.y = gravity;
+        new_pos.y += static_cast<int>(velocity.y);
 
         // Clamp horizontally
         if (new_pos.x < 0) new_pos.x = 0;
-        if (new_pos.x + player_img_width > SCREEN_WIDTH)
-            new_pos.x = SCREEN_WIDTH - player_img_width;
+        if (new_pos.x + player_img_width > SCREEN_WIDTH + TILE_SIZE)
+            new_pos.x = SCREEN_WIDTH - player_img_width + TILE_SIZE;
+
+        printf("--------------\n");
+        printf("velocity x: %f\n", velocity.x);
+        printf("CheckSides (move): %d\n", (int)CheckSides);
     }
 
     void Player::setPlayerDefaultPos(const vec2& pos)
@@ -120,10 +145,12 @@ namespace Tmpl8
         position = pos;
     }
 
-    bool Player::manageCollisions(vec2& new_pos, Surface* screen)
+    bool Player::manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles)
     {
         TileType CheckSides = CheckCollisionSides({ new_pos.x, position.y });
         TileType CheckBottom = CheckCollisionBottom({ position.x, new_pos.y });
+
+        printf("CheckSides (managecol): %d\n", (int)CheckSides);
 
         bool camShake = false;
 
@@ -136,24 +163,25 @@ namespace Tmpl8
 
         if (isNoneX) position.x = new_pos.x;
         if (isNoneY) position.y = new_pos.y;
-        if (isDamage)
+        else if (isDamage)
         {
             position = default_pos;
             camShake = true;
         }
-        if (isEnd)
+        else if (isEnd)
         {
             map->setMapIndex(map->incrementMapIndex());
+            *collectibles = initializeCollectibleMap(map->getCurrentLevel());
             position = default_pos;
         }
-        if (isCollision || isIce)
+        else if (isCollision || isIce)
         {
             if (isIce)
                 friction = 0.0f;
             else
                 friction = 0.05f;
 
-            vertical_speed = 0;
+            velocity.y = 0;
             position.y = (new_pos.y > position.y) ? position.y : new_pos.y;
         }
 
