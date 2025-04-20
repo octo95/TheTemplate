@@ -4,11 +4,13 @@
 
 #include "game.h"
 #include "player.h"
+#include "camera.h"
 
 namespace Tmpl8
 {
-    Player::Player(TileMap& tmap) : 
-        map(tmap) 
+    Player::Player(TileMap& mapRef, Camera& cameraRef) :
+        tilemap(mapRef),
+        camera(cameraRef)
     {}
 
     // Variables
@@ -25,11 +27,11 @@ namespace Tmpl8
         TileType type = None;
 
         // Bottom-left
-        auto tile = map.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y) + hitbox_size * 2);
+        auto tile = tilemap.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y) + hitbox_size * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         // Bottom-right
-        tile = map.tile_at(static_cast<int>(pos.x) + hitbox_size * 2, static_cast<int>(pos.y) + hitbox_size * 2);
+        tile = tilemap.tile_at(static_cast<int>(pos.x) + hitbox_size * 2, static_cast<int>(pos.y) + hitbox_size * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         return type;
@@ -40,17 +42,17 @@ namespace Tmpl8
         TileType type = None;
 
         // Left
-        auto tile = map.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y));
+        auto tile = tilemap.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y));
         if (tile.type != TileType::None) type = tile.type;
 
-        tile = map.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y) + hitbox_size * 2);
+        tile = tilemap.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y) + hitbox_size * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         // Right
-        tile = map.tile_at(static_cast<int>(pos.x) + hitbox_size * 2, static_cast<int>(pos.y));
+        tile = tilemap.tile_at(static_cast<int>(pos.x) + hitbox_size * 2, static_cast<int>(pos.y));
         if (tile.type != TileType::None) type = tile.type;
 
-        tile = map.tile_at(static_cast<int>(pos.x) + hitbox_size * 2, static_cast<int>(pos.y) + hitbox_size * 2);
+        tile = tilemap.tile_at(static_cast<int>(pos.x) + hitbox_size * 2, static_cast<int>(pos.y) + hitbox_size * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         return type;
@@ -123,6 +125,8 @@ namespace Tmpl8
             //velocity.y *= pow(ENERGY_LOSS, 2);
         }
 
+        camera.setAngleAcceleration(velocity.x * rotation_speed);
+
         // Horizontal movement
         new_pos.x += velocity.x;
 
@@ -174,14 +178,14 @@ namespace Tmpl8
         if (isNoneY) position.y = new_pos.y;
         else if (isDamage)
         {
-            loadCollectiblesForMap(map.getCurrentLevel());
+            loadCollectiblesForMap(tilemap.getCurrentLevel());
             position = default_pos;
             camShake = true;
         }
         else if (isEnd)
         {
-            map.setMapIndex(map.incrementMapIndex());
-            loadCollectiblesForMap(map.getCurrentLevel());
+            tilemap.setMapIndex(tilemap.incrementMapIndex());
+            loadCollectiblesForMap(tilemap.getCurrentLevel());
             position = default_pos;
         }
         else if (isCollision || isIce)

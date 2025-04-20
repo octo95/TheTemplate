@@ -13,10 +13,13 @@ namespace Tmpl8
 		void Shake();
 		void drawWithCam(Sprite* img, Surface* screen, int x, int y);
 		void drawWithCamAndAngle(Sprite* img, Surface* screen, int x, int y, float deltaTime);
+		void Camera::setAngleAcceleration(float value) { acceleration = value; }
+		float getAngleAcceleration(float value) { return value; }
 	private:
 		vec2 position = { 0, 0 };
 		vec2 shake = { 0, 0 };
 		float total_time = 0;
 		float dynamic_angle = 0;
+		float acceleration = 0;
 	};
 }

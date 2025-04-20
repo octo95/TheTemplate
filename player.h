@@ -3,6 +3,7 @@
 #include "tilemap.h"
 #include "collectible.h"
 #include <unordered_map>
+#include "camera.h"
 
 namespace Tmpl8
 {
@@ -15,7 +16,7 @@ namespace Tmpl8
 
     class Player {
     public:
-        Player(TileMap& tmap);
+        Player(TileMap& mapRef, Camera& cameraRef);
         vec2 velocity = { 0, 0 };
         vec2 position = { 400, 10 };
         vec2 default_pos = { 400, 10 };
@@ -32,13 +33,14 @@ namespace Tmpl8
         void manageDefaultPos(int index);
         void rotatePlayer(Surface* screen, float deltaTime);
     private:
-        TileMap& map;
+        TileMap& tilemap;
+        Camera& camera;
         float gravity = 0.5f;
         float vertical_speed = 0;
         float horizontal_speed = 0;
         float friction = 0.05f;
         float wall_force = 7.0f;
-        float dynamic_angle = 0.0f;
+        float rotation_speed = 90.0f;
         const float ENERGY_LOSS = 0.15f;
         const float ACCELERATION = 0.3f;
         const float MAX_HORIZONTAL_SPEED = 3.0f;

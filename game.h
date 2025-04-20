@@ -18,7 +18,7 @@ namespace Tmpl8
 	public:
 
 		Game() : 
-			player(tilemap),
+			player(tilemap, camera),
 			debug(camera, tilemap, player, collectible, wall),
 			menu(tilemap, player),
 			tilemap(player, collectible, wall)

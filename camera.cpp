@@ -43,7 +43,7 @@ namespace Tmpl8
 
     void Camera::drawWithCamAndAngle(Sprite* img, Surface* screen, int x, int y, float deltaTime)
     {
-        dynamic_angle += deltaTime * 90.0f;
+        dynamic_angle += deltaTime * acceleration;
         x += getCamPos().x;
         y += getCamPos().y;
         img->DrawRotated(screen, x, y, dynamic_angle);
