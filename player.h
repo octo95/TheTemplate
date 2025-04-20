@@ -32,7 +32,7 @@ namespace Tmpl8
     private:
         TileMap& map;
         int rotation = 0;
-        int gravity = 3;
+        float gravity = 0.5f;
         float vertical_speed = 0;
         float horizontal_speed = 0;
         float friction = 0.05f;

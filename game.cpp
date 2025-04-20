@@ -19,8 +19,9 @@ namespace Tmpl8
     // + Initializer / Shutdown
     void Game::Init()
     {
-        tilemap.setMapIndex(1); // Default: start on the map of Level 1
-        this->collectible = initializeCollectibleMap(1);
+        loadAllCollectibles(); 
+        tilemap.setMapIndex(1);
+        loadCollectiblesForMap(1);
     }
 
     void Game::Shutdown() {}
@@ -65,15 +66,3 @@ namespace Tmpl8
         }
     }
 }
-
-/*
-Dream:
-
-- War france invaded, I'm at my apartment and get ready to leave or smt smt
-- Battle with groups of 3 like hunger games levels, with you and my friend. 1 of them is on water around a swirling thing like pirate of the carabeans
-We win even tho everyone else was super good just bcse we lucky and others' hubris or smt
-- Mario Kart World, Mario has a new skin that's with colors that are not very saturated or anything, more bland and someone complains a lot bcse usually
-Nintendo makes colors super flashy and all. Also it releases tmr
-- Had to write down my notes on fucking VSC bcse Obsidian not working, Discord you see it and Obsidian on PC too and notepad too somehow???
-
-*/

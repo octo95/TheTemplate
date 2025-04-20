@@ -19,6 +19,7 @@ namespace Tmpl8
         void nextDebugMap();
         int getFPS(float deltaTime);
         void drawVelocityNorm(Surface* screen);
+        void restartCurrentLevel();
     private:
         Camera& camera;
         TileMap& tilemap;

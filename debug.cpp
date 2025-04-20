@@ -26,8 +26,8 @@ namespace Tmpl8
     {
         if (GetAsyncKeyState(VK_SPACE))
         {
-            // PRESS <R> : Teleports player back to default position of the level.
-            if (GetAsyncKeyState('R') & 0x8000) defaultPos();
+            // PRESS <R> : Teleports player back to restart the current level.
+            restartCurrentLevel();
 
             // PRESS <TAB> : Switches to the next level.
             nextDebugMap();
@@ -59,10 +59,15 @@ namespace Tmpl8
             // Display velocity on the player as a line and print it on screen
             drawVelocityNorm(screen);
 
+            // Display the collectibles collected
+            char collectibles_coords[100];
+            sprintf(collectibles_coords, "Jumps left: %d", collectibles_collected);
+            screen->Print(collectibles_coords, 10, 90, 0xFFFF00);
+            
             // Display FPS
             char FPS_coords[100];
             sprintf(FPS_coords, "FPS: %d", getFPS(deltaTime));
-            screen->Print(FPS_coords, 10, 90, 0xFFFF00);
+            screen->Print(FPS_coords, 10, 110, 0xFFFF00);
         }
     }
 
@@ -97,12 +102,17 @@ namespace Tmpl8
 
     void Debug::nextDebugMap()
     {
+        int index = tilemap.getCurrentLevel();
         bool isTabDown = GetAsyncKeyState(VK_TAB) & 0x8000;
         if (isTabDown && !tabPressedLastFrame)
         {
-            tilemap.setMapIndex(tilemap.incrementMapIndex());
+            clearCollectibles();
+            tilemap.incrementMapIndex();
+            index = tilemap.getCurrentLevel();
             defaultPos();
-            collectible = initializeCollectibleMap(tilemap.incrementMapIndex());
+            loadAllCollectibles();
+            tilemap.setMapIndex(index);
+            loadCollectiblesForMap(index);
         }
         tabPressedLastFrame = isTabDown;
     }
@@ -121,5 +131,14 @@ namespace Tmpl8
         screen->Print(velocity_coords, 10, 70, 0xFFFF00);
 
         screen->Line(start_x, start_y, end_x, end_y, 0x33F8FF);
+    }
+
+    void Debug::restartCurrentLevel()
+    {
+        if (GetAsyncKeyState('R') & 0x8000)
+        {
+            loadCollectiblesForMap(tilemap.getCurrentLevel());
+            defaultPos();
+        }
     }
 }

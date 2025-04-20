@@ -17,6 +17,7 @@ namespace Tmpl8
     int hitbox_size = 16 - 2; // Tolerance of 2 pixels on the hitbox
     int player_img_width = player_img.GetWidth();
     int player_img_height = player_img.GetHeight();
+    bool canJump = false;
 
     // Player functions
     TileType Player::CheckCollisionBottom(const vec2& pos)
@@ -81,12 +82,22 @@ namespace Tmpl8
             }
         }
 
+        velocity.y += gravity;
+        if (velocity.y > 5) velocity.y = 5; // Clamp fall speed
+
         TileType CheckSides = CheckCollisionSides({ new_pos.x + velocity.x, position.y });
         TileType CheckBottom = CheckCollisionBottom({ position.x, new_pos.y + velocity.y });
-        
+
         bool isCollision = (CheckSides == TileType::Collision || CheckBottom == TileType::Collision);
         bool isIce = (CheckSides == TileType::Ice || CheckBottom == TileType::Ice);
-        
+        canJump = GetAsyncKeyState(VK_UP) && (CheckBottom == 3 || CheckBottom == 4) && collectibles_collected > 0;
+
+        if (canJump)
+        {
+            velocity.y += -6.0f;
+            collectibles_collected--;
+        }
+
         if (isCollision || isIce)
         {
             //if (CheckSides) {
@@ -107,27 +118,23 @@ namespace Tmpl8
             //    velocity.y += gravity * 0.3;
             //    if (velocity.y > 5) velocity.y = 5;
             //}
-       
+
             //velocity.x *= pow(ENERGY_LOSS, 2);
             //velocity.y *= pow(ENERGY_LOSS, 2);
         }
 
         // Horizontal movement
-        new_pos.x += static_cast<int>(velocity.x);
+        new_pos.x += velocity.x;
 
         // Vertical movement        
-        velocity.y = gravity;
-        new_pos.y += static_cast<int>(velocity.y);
+        new_pos.y += velocity.y;
 
         // Clamp horizontally
         if (new_pos.x < 0) new_pos.x = 0;
         if (new_pos.x + player_img_width > SCREEN_WIDTH + TILE_SIZE)
             new_pos.x = SCREEN_WIDTH - player_img_width + TILE_SIZE;
-
-        printf("--------------\n");
-        printf("velocity x: %f\n", velocity.x);
-        printf("CheckSides (move): %d\n", (int)CheckSides);
     }
+
 
     void Player::setPlayerDefaultPos(const vec2& pos)
     {
@@ -154,8 +161,6 @@ namespace Tmpl8
         TileType CheckSides = CheckCollisionSides({ new_pos.x, position.y });
         TileType CheckBottom = CheckCollisionBottom({ position.x, new_pos.y });
 
-        printf("CheckSides (managecol): %d\n", (int)CheckSides);
-
         bool camShake = false;
 
         bool isNoneX = (CheckSides == TileType::None);
@@ -169,13 +174,14 @@ namespace Tmpl8
         if (isNoneY) position.y = new_pos.y;
         else if (isDamage)
         {
+            loadCollectiblesForMap(map.getCurrentLevel());
             position = default_pos;
             camShake = true;
         }
         else if (isEnd)
         {
             map.setMapIndex(map.incrementMapIndex());
-            *collectibles = initializeCollectibleMap(map.getCurrentLevel());
+            loadCollectiblesForMap(map.getCurrentLevel());
             position = default_pos;
         }
         else if (isCollision || isIce)

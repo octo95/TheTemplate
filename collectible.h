@@ -21,6 +21,7 @@ public:
 namespace Tmpl8
 {
 	extern Sprite img_collectible;
+	extern int collectibles_collected;
 
 	struct Collectible
 	{
@@ -35,6 +36,7 @@ namespace Tmpl8
 		Collectible(Tmpl8::vec2 _pos) :
 			pos(_pos)
 		{};
+
 		// Overloading == operator. Collectible are equal if the coordinates are the same.
 		bool operator==(const Collectible& rhs) const noexcept
 		{
@@ -47,7 +49,9 @@ namespace Tmpl8
 
 	typedef std::unordered_map<vec2, Collectible> CollectibleMap;
 
-	CollectibleMap initializeCollectibleMap(int map);
+	void loadAllCollectibles();
 	void drawCollectibleMap(Camera* camera, Surface* screen, CollectibleMap* collectibles);
 	void manageCollectibleCollision(vec2 player_pos, CollectibleMap* collectibles);
+	void loadCollectiblesForMap(int map);
+	void clearCollectibles();
 }
