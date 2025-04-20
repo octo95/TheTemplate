@@ -4,6 +4,7 @@
 #include "template.h"
 #include "player.h"
 #include "collectible.h"
+#include "tilemap.h"
 
 namespace Tmpl8
 {
@@ -11,19 +12,17 @@ namespace Tmpl8
 
     class Debug {
     public:
-        void setCamera(Camera* cam) { camera = cam; }
-        void setMap(TileMap* tilemap) { map = tilemap; }
-        void setPlayer(Player* p) { player = p; }
-        void setCollectible(CollectibleMap* c) { collectible = c; }
+        Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef);
         void drawHitbox(const vec2& pos, Surface* screen);
         void displayDebug(Surface* screen, float deltaTime);
         void defaultPos();
         void nextDebugMap();
         int getFPS(float deltaTime);
+        void drawVelocityNorm(Surface* screen);
     private:
-        Camera* camera;
-        TileMap* map;
-        Player* player;
-        CollectibleMap* collectible;
+        Camera& camera;
+        TileMap& tilemap;
+        Player& player;
+        CollectibleMap& collectible;
     };
 }

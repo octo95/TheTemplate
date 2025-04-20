@@ -20,13 +20,7 @@ namespace Tmpl8
     void Game::Init()
     {
         tilemap.setMapIndex(1); // Default: start on the map of Level 1
-        this->collectibles = initializeCollectibleMap(1);
-        //player.setMap(&tilemap);
-        tilemap.setPlayer(&player);
-        debug.setMap(&tilemap);
-        debug.setPlayer(&player);
-        debug.setCamera(&camera);
-        debug.setCollectible(&collectibles);
+        this->collectible = initializeCollectibleMap(1);
     }
 
     void Game::Shutdown() {}
@@ -51,16 +45,16 @@ namespace Tmpl8
             // * Initialize game logic
             camera.setCamPos(player.camFollowPlayer());
             player.movePlayer(new_pos);
-            bool is_colliding = player.manageCollisions(new_pos, screen, &collectibles);
+            bool is_colliding = player.manageCollisions(new_pos, screen, &collectible);
 
-            manageCollectibleCollision(new_pos, &collectibles);
+            manageCollectibleCollision(new_pos, &collectible);
             if (is_colliding) camera.Shake();
             camera.camShake(deltaTime);  
 
             // * Draw the objects on screen
             tilemap.drawMap(screen, camera);
             camera.drawWithCam(&player_img, screen, static_cast<int>(new_pos.x), static_cast<int>(new_pos.y-4));
-            drawCollectibleMap(&camera, screen, &this->collectibles);
+            drawCollectibleMap(&camera, screen, &this->collectible);
 
             // * DEBUG: Enabled if pressing <spacebar>
             debug.displayDebug(screen, deltaTime);

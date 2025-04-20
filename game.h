@@ -14,10 +14,17 @@ namespace Tmpl8
 	{
 	public:
 		Game() : 
-			player(tilemap) 
+			player(tilemap),
+			debug(camera, tilemap, player, collectible)
 		{}
 
-		TileMap& GetTilemap() { return tilemap; }
+		Camera& GetCamera() { return camera; }
+		Debug& GetDebug() { return debug; }
+		Menu& GetMenu() { return menu;  }
+		Player& GetPlayer() { return player; }
+		TileMap& GetTileMap() { return tilemap; }
+		CollectibleMap& GetCollectible() { return collectible; }
+
 		void SetTarget( Surface* surface ) { screen = surface; }
 		void Init();
 		void Shutdown();
@@ -27,6 +34,8 @@ namespace Tmpl8
 		void MouseMove(int x, int y) { mousex = x, mousey = y; }
 		void KeyUp( int key ) { /* implement if you want to handle keys */ }
 		void KeyDown( int key ) { /* implement if you want to handle keys */ }
+
+		~Game(){}
 	private:
 		// Graphics
 		Surface* screen;
@@ -35,7 +44,7 @@ namespace Tmpl8
 		Menu menu;
 		
 		// Gameplay
-		CollectibleMap collectibles = CollectibleMap();
+		CollectibleMap collectible = CollectibleMap();
 		Player player;
 		TileMap tilemap;
 		

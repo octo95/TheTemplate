@@ -26,21 +26,23 @@ namespace Tmpl8
 	{
 		Tmpl8::vec2 pos;
 
+		// Default Constructor
 		Collectible() :
 			pos(vec2{ 0,0 })
 		{};
+
 		// Constructor
 		Collectible(Tmpl8::vec2 _pos) :
 			pos(_pos)
 		{};
-
-		~Collectible() {};
-
 		// Overloading == operator. Collectible are equal if the coordinates are the same.
 		bool operator==(const Collectible& rhs) const noexcept
 		{
 			return this->pos == rhs.pos;
 		}
+
+		// Destructor
+		~Collectible() {};
 	};
 
 	typedef std::unordered_map<vec2, Collectible> CollectibleMap;

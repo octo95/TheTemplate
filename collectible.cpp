@@ -17,19 +17,23 @@ namespace Tmpl8
 	{
 		CollectibleMap collectibles;
 		
+		size_t map1_size = sizeof(MAP1_COLLECTIBLES) / sizeof(MAP1_COLLECTIBLES[0]);
+		size_t map2_size = sizeof(MAP2_COLLECTIBLES) / sizeof(MAP2_COLLECTIBLES[0]);
+		size_t map3_size = sizeof(MAP3_COLLECTIBLES) / sizeof(MAP3_COLLECTIBLES[0]);
+
 		switch (map) {
 		case 1:
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < map1_size; i++) {
 				collectibles.insert({ MAP1_COLLECTIBLES[i], Collectible(MAP1_COLLECTIBLES[i]) });
 			}
 			break;
 		case 2:
-			for (int i = 0; i < 2; i++) {
+			for (int i = 0; i < map2_size; i++) {
 				collectibles.insert({ MAP2_COLLECTIBLES[i], Collectible(MAP2_COLLECTIBLES[i]) });
 			}
 			break;
 		case 3:
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < map3_size; i++) {
 				collectibles.insert({ MAP3_COLLECTIBLES[i], Collectible(MAP3_COLLECTIBLES[i]) });
 			}
 			break;

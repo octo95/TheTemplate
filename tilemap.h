@@ -146,7 +146,6 @@ namespace Tmpl8
         const char (*current_map)[TILE_COLUMNS * 3];
 
         TileMap();
-        void setPlayer(Player* p) { player = p; }
         int getCurrentLevel() const;
         void setMapIndex(int index);
         int incrementMapIndex();

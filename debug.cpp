@@ -6,12 +6,19 @@
 
 namespace Tmpl8
 {
+    Debug::Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef) :
+        camera(cameraRef),
+        tilemap(tilemapRef),
+        player(playerRef),
+        collectible(collectibleRef)
+    {}
+    
     void Debug::drawHitbox(const vec2& pos, Surface* screen)
     {
-        int squareTop = (int)(pos.y + player_img_width / 2 - hitbox_size + camera->getCamPos().y);
-        int squareRight = (int)(pos.x + player_img_width / 2 + hitbox_size + camera->getCamPos().x);
-        int squareBottom = (int)(pos.y + player_img_width / 2 + hitbox_size + camera->getCamPos().y);
-        int squareLeft = (int)(pos.x + player_img_width / 2 - hitbox_size + camera->getCamPos().x);
+        int squareTop = (int)(pos.y + player_img_width / 2 - hitbox_size + camera.getCamPos().y);
+        int squareRight = (int)(pos.x + player_img_width / 2 + hitbox_size + camera.getCamPos().x);
+        int squareBottom = (int)(pos.y + player_img_width / 2 + hitbox_size + camera.getCamPos().y);
+        int squareLeft = (int)(pos.x + player_img_width / 2 - hitbox_size + camera.getCamPos().x);
         screen->Box(squareLeft, squareTop, squareRight, squareBottom, 0xFF0000);
     }
 
@@ -27,7 +34,7 @@ namespace Tmpl8
 
             // Get the player position
             vec2 playerPos;
-            player->getPlayerPos(playerPos);
+            player.getPlayerPos(playerPos);
 
             // Display the player's hitbox
             drawHitbox(playerPos, screen);
@@ -45,14 +52,17 @@ namespace Tmpl8
             // Display current map level and spawn point
             char map_lvl_coords[100];
             vec2 defaultPos;
-            player->getPlayerDefaultPos(defaultPos);
-            sprintf(map_lvl_coords, "current map: %d - (%.0f, %.0f)", map->getCurrentLevel(), defaultPos.x, defaultPos.y);
+            player.getPlayerDefaultPos(defaultPos);
+            sprintf(map_lvl_coords, "current map: %d - (%.0f, %.0f)", tilemap.getCurrentLevel(), defaultPos.x, defaultPos.y);
             screen->Print(map_lvl_coords, 10, 50, 0xFFFF00);
+
+            // Display velocity on the player as a line and print it on screen
+            drawVelocityNorm(screen);
 
             // Display FPS
             char FPS_coords[100];
             sprintf(FPS_coords, "FPS: %d", getFPS(deltaTime));
-            screen->Print(FPS_coords, 10, 70, 0xFFFF00);
+            screen->Print(FPS_coords, 10, 90, 0xFFFF00);
         }
     }
 
@@ -79,8 +89,8 @@ namespace Tmpl8
     void Debug::defaultPos()
     {
         vec2 defaultPos;
-        player->getPlayerDefaultPos(defaultPos);
-        player->setPlayerPos(defaultPos);
+        player.getPlayerDefaultPos(defaultPos);
+        player.setPlayerPos(defaultPos);
     }
 
     bool tabPressedLastFrame = false;
@@ -90,10 +100,26 @@ namespace Tmpl8
         bool isTabDown = GetAsyncKeyState(VK_TAB) & 0x8000;
         if (isTabDown && !tabPressedLastFrame)
         {
-            map->setMapIndex(map->incrementMapIndex());
+            tilemap.setMapIndex(tilemap.incrementMapIndex());
             defaultPos();
- 
+            collectible = initializeCollectibleMap(tilemap.incrementMapIndex());
         }
         tabPressedLastFrame = isTabDown;
+    }
+
+    void Debug::drawVelocityNorm(Surface* screen)
+    { 
+        float lineSize = 10.0f;
+        float start_x = player.position.x + camera.getCamPos().x + player_img_width / 2;
+        float start_y = player.position.y + camera.getCamPos().y + player_img_height / 2 - 4;
+        float end_x = start_x + player.velocity.x * lineSize;
+        float end_y = start_y + player.velocity.y * lineSize;
+
+        // Display velocity on screen
+        char velocity_coords[100];
+        sprintf(velocity_coords, "velocity: (x : %.2f, y : %.2f)", player.velocity.x, player.velocity.y);
+        screen->Print(velocity_coords, 10, 70, 0xFFFF00);
+
+        screen->Line(start_x, start_y, end_x, end_y, 0x33F8FF);
     }
 }
