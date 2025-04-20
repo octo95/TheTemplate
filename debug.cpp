@@ -102,17 +102,12 @@ namespace Tmpl8
 
     void Debug::nextDebugMap()
     {
-        int index = tilemap.getCurrentLevel();
         bool isTabDown = GetAsyncKeyState(VK_TAB) & 0x8000;
         if (isTabDown && !tabPressedLastFrame)
         {
-            clearCollectibles();
-            tilemap.incrementMapIndex();
-            index = tilemap.getCurrentLevel();
             defaultPos();
-            loadAllCollectibles();
-            tilemap.setMapIndex(index);
-            loadCollectiblesForMap(index);
+            tilemap.incrementMapIndex();
+            tilemap.loadLevel(tilemap.getCurrentLevel());
         }
         tabPressedLastFrame = isTabDown;
     }

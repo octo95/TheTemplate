@@ -29,6 +29,7 @@ namespace Tmpl8
         void setPlayerDefaultPos(const vec2& pos);
         void getPlayerDefaultPos(vec2& pos);
         vec2 camFollowPlayer();
+        void manageDefaultPos(int index);
     private:
         TileMap& map;
         int rotation = 0;

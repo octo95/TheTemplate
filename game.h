@@ -19,7 +19,7 @@ namespace Tmpl8
 			player(tilemap),
 			debug(camera, tilemap, player, collectible),
 			menu(tilemap, player),
-			tilemap(player)
+			tilemap(player, collectible)
 		{}
 
 		Camera& GetCamera() { return camera; }

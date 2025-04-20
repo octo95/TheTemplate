@@ -19,9 +19,7 @@ namespace Tmpl8
     // + Initializer / Shutdown
     void Game::Init()
     {
-        loadAllCollectibles(); 
-        tilemap.setMapIndex(1);
-        loadCollectiblesForMap(1);
+        tilemap.loadLevel(1);
     }
 
     void Game::Shutdown() {}

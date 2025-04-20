@@ -219,4 +219,20 @@ namespace Tmpl8
 
         return { camX, camY };
     }
+
+    void Player::manageDefaultPos(int index)
+    {
+        switch(index)
+        {
+            case 1: 
+                setPlayerDefaultPos(vec2(400.0f, 10.0f));
+                break;      
+            case 2:
+                setPlayerDefaultPos(vec2(80.0f, 10.0f));
+                break;
+            case 3:
+                setPlayerDefaultPos(vec2(600.0f, 10.0f));
+                break;
+        }
+    }
 };

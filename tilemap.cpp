@@ -4,8 +4,9 @@
 
 namespace Tmpl8
 {
-    TileMap::TileMap(Player& playerRef) :
-        player(playerRef)
+    TileMap::TileMap(Player& playerRef, CollectibleMap& collectibleRef) :
+        player(playerRef),
+        collectible(collectibleRef)
     {}
 
     Sprite img_map1(new Surface("assets/map1.png"), 1);
@@ -25,20 +26,15 @@ namespace Tmpl8
         switch (index)
         {
         case 1:
-            current_level = 1;
             current_map = MAP1;
-            player.setPlayerDefaultPos(vec2(400.0f, 10.0f));
             break;
         case 2:
-            current_level = 2;
             current_map = MAP2;
-            player.setPlayerDefaultPos(vec2(80.0f, 10.0f));
             break;
         case 3:
-            current_level = 3;
             current_map = MAP3;
-            player.setPlayerDefaultPos(vec2(600.0f, 10.0f));
             break;
+        current_level = index;
         }
     }
 
@@ -81,5 +77,14 @@ namespace Tmpl8
                 tile.DrawTile(screen, x * TILE_SIZE, y * TILE_SIZE, camera);
             }
         }
+    }
+
+    void TileMap::loadLevel(int i)
+    {
+        clearCollectibles();
+        player.manageDefaultPos(i);
+        loadAllCollectibles();
+        setMapIndex(i);
+        loadCollectiblesForMap(i);
     }
 }

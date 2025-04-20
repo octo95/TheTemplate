@@ -59,26 +59,17 @@ namespace Tmpl8
         if (isHoveringLVL1 && isMousePressed)
         {
             start_game = true;
-            loadAllCollectibles();
-            loadCollectiblesForMap(1);
-            tilemap.setMapIndex(1);
-            player.setPlayerDefaultPos(vec2(400.0f, 10.0f));
+            tilemap.loadLevel(1);
         }
         else if (isHoveringLVL2 && isMousePressed)
         {
             start_game = true;
-            loadAllCollectibles();
-            loadCollectiblesForMap(2);
-            tilemap.setMapIndex(2);
-            player.setPlayerDefaultPos(vec2(80.0f, 10.0f));
+            tilemap.loadLevel(2);
         }
         else if (isHoveringLVL3 && isMousePressed)
         {
             start_game = true;
-            loadAllCollectibles();
-            loadCollectiblesForMap(3);
-            tilemap.setMapIndex(3);
-            player.setPlayerDefaultPos(vec2(600.0f, 10.0f));
+            tilemap.loadLevel(3);
         }
     }
 
