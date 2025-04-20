@@ -145,14 +145,14 @@ namespace Tmpl8
     public:
         const char (*current_map)[TILE_COLUMNS * 3];
 
-        TileMap();
+        TileMap(Player& playerRef);
         int getCurrentLevel() const;
         void setMapIndex(int index);
         int incrementMapIndex();
         Tile tile_at(int x, int y);
         void drawMap(Surface* screen, const Camera& camera);
     private:
-        Player* player;
+        Player& player;
         int current_level = 1;
     };
 };

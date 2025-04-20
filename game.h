@@ -11,11 +11,15 @@ namespace Tmpl8
 {
 	class Surface;
 	class Game
+
 	{
 	public:
+
 		Game() : 
 			player(tilemap),
-			debug(camera, tilemap, player, collectible)
+			debug(camera, tilemap, player, collectible),
+			menu(tilemap, player),
+			tilemap(player)
 		{}
 
 		Camera& GetCamera() { return camera; }
@@ -29,9 +33,14 @@ namespace Tmpl8
 		void Init();
 		void Shutdown();
 		void Tick( float deltaTime );
-		void MouseUp( int button ) { /* implement if you want to detect mouse button presses */ }
-		void MouseDown( int button ) { /* implement if you want to detect mouse button presses */ }
-		void MouseMove(int x, int y) { mousex = x, mousey = y; }
+		void MouseUp( int button ) { menu.setMouseState(false); }
+		void MouseDown(int button) { menu.setMouseState(true); }
+		void MouseMove(int x, int y) 
+		{ 
+			mousex = x;
+			mousey = y;
+			menu.setMousePosition(mousex, mousey);
+		}
 		void KeyUp( int key ) { /* implement if you want to handle keys */ }
 		void KeyDown( int key ) { /* implement if you want to handle keys */ }
 
@@ -47,8 +56,8 @@ namespace Tmpl8
 		CollectibleMap collectible = CollectibleMap();
 		Player player;
 		TileMap tilemap;
-		
-		int mousex, mousey; // TODO
+
+		int mousex, mousey;
 		bool start_game = false;
 	};
 }

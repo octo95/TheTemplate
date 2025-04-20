@@ -35,10 +35,10 @@ namespace Tmpl8
         screen->Clear(0);
 
         // * Stay in the menu until the player starts the game
-        if (GetAsyncKeyState(VK_RETURN)) start_game = true;
+        // if (GetAsyncKeyState(VK_RETURN)) start_game = true;
 
         // * Starting the game logic
-        if (start_game)
+        if (menu.startGame())
         {
             vec2 new_pos;
             player.getPlayerPos(new_pos); // Fetch current player position to modify it
