@@ -9,13 +9,15 @@
 
 namespace Tmpl8 
 {
-	// External variables
-	// extern TileMap map;
-	
 	class Surface;
 	class Game
 	{
 	public:
+		Game() : 
+			player(tilemap) 
+		{}
+
+		TileMap& GetTilemap() { return tilemap; }
 		void SetTarget( Surface* surface ) { screen = surface; }
 		void Init();
 		void Shutdown();
@@ -25,7 +27,6 @@ namespace Tmpl8
 		void MouseMove(int x, int y) { mousex = x, mousey = y; }
 		void KeyUp( int key ) { /* implement if you want to handle keys */ }
 		void KeyDown( int key ) { /* implement if you want to handle keys */ }
-		// void setTileMap (TileMap tilemap) {  }
 	private:
 		// Graphics
 		Surface* screen;
@@ -41,5 +42,4 @@ namespace Tmpl8
 		int mousex, mousey; // TODO
 		bool start_game = false;
 	};
-
 }

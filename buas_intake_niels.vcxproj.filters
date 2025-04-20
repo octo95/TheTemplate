@@ -1,104 +1,89 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="surface.cpp">
-      <Filter>template</Filter>
-    </ClCompile>
-    <ClCompile Include="template.cpp">
-      <Filter>template</Filter>
-    </ClCompile>
-    <ClCompile Include="tile.cpp">
-      <Filter>tile</Filter>
-    </ClCompile>
-    <ClCompile Include="tilemap.cpp">
-      <Filter>tile</Filter>
-    </ClCompile>
-    <ClCompile Include="debug.cpp">
-      <Filter>debug</Filter>
-    </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>player</Filter>
-    </ClCompile>
-    <ClCompile Include="menu.cpp">
-      <Filter>menu</Filter>
-    </ClCompile>
-    <ClCompile Include="camera.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
-    <ClCompile Include="game.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
     <ClCompile Include="collectible.cpp">
-      <Filter>collectible</Filter>
+      <Filter>Solutions</Filter>
     </ClCompile>
     <ClCompile Include="physics.cpp">
-      <Filter>physics %28unused%29</Filter>
+      <Filter>Other</Filter>
+    </ClCompile>
+    <ClCompile Include="debug.cpp">
+      <Filter>Solutions</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Solutions</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Solutions</Filter>
+    </ClCompile>
+    <ClCompile Include="menu.cpp">
+      <Filter>Solutions</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Solutions</Filter>
+    </ClCompile>
+    <ClCompile Include="surface.cpp">
+      <Filter>Solutions</Filter>
+    </ClCompile>
+    <ClCompile Include="template.cpp">
+      <Filter>Solutions</Filter>
+    </ClCompile>
+    <ClCompile Include="tile.cpp">
+      <Filter>Solutions</Filter>
+    </ClCompile>
+    <ClCompile Include="tilemap.cpp">
+      <Filter>Solutions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="surface.h">
-      <Filter>template</Filter>
-    </ClInclude>
-    <ClInclude Include="template.h">
-      <Filter>template</Filter>
-    </ClInclude>
-    <ClInclude Include="tile.h">
-      <Filter>tile</Filter>
-    </ClInclude>
-    <ClInclude Include="tilemap.h">
-      <Filter>tile</Filter>
-    </ClInclude>
-    <ClInclude Include="debug.h">
-      <Filter>debug</Filter>
+    <ClInclude Include="physics.h">
+      <Filter>Other</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
-      <Filter>player</Filter>
+      <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="menu.h">
-      <Filter>menu</Filter>
+    <ClInclude Include="surface.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="template.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="tile.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="tilemap.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="debug.h">
+      <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="camera.h">
-      <Filter>main</Filter>
+      <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="game.h">
-      <Filter>main</Filter>
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="menu.h">
+      <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="collectible.h">
-      <Filter>collectible</Filter>
-    </ClInclude>
-    <ClInclude Include="physics.h">
-      <Filter>physics %28unused%29</Filter>
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="tile">
-      <UniqueIdentifier>{88ec49ad-c030-482e-b1a0-15b7ba00c70d}</UniqueIdentifier>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{55951a9c-3e10-4312-9f89-25e56a567b74}</UniqueIdentifier>
     </Filter>
-    <Filter Include="template">
-      <UniqueIdentifier>{bf32dd6e-4be7-4889-8ac6-49e7ee163c40}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="debug">
-      <UniqueIdentifier>{03025e6a-b6ad-4f0b-a5eb-cfb32a912709}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="player">
-      <UniqueIdentifier>{53d83d1c-b763-434b-adb6-96fa54c09d44}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="menu">
-      <UniqueIdentifier>{c10184aa-9554-4fdb-b672-4ecc27cfdd57}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main">
-      <UniqueIdentifier>{6559c149-19d4-40fe-b386-c735634378b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="collectible">
+    <Filter Include="Solutions">
       <UniqueIdentifier>{ca09774e-7d53-4b29-a1ee-dfc01efeec8f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="physics %28unused%29">
+    <Filter Include="Other">
       <UniqueIdentifier>{19be942a-7ccf-4e24-9553-b3fa0d247f5a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="_readme.txt">
-      <Filter>template</Filter>
+      <Filter>Other</Filter>
     </Text>
   </ItemGroup>
 </Project>

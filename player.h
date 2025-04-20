@@ -15,11 +15,11 @@ namespace Tmpl8
 
     class Player {
     public:
+        Player(TileMap& tmap);
         vec2 velocity = { 0, 0 };
         vec2 position = { 400, 10 };
         vec2 default_pos = { 400, 10 };
 
-        void setMap(TileMap* tilemap) { map = tilemap; }
         TileType CheckCollisionBottom(const vec2& pos);
         TileType CheckCollisionSides(const vec2& pos);
         void movePlayer(vec2& new_pos);
@@ -30,7 +30,7 @@ namespace Tmpl8
         void getPlayerDefaultPos(vec2& pos);
         vec2 camFollowPlayer();
     private:
-        TileMap* map;
+        TileMap& map;
         int rotation = 0;
         int gravity = 3;
         float vertical_speed = 0;

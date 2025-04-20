@@ -1,6 +1,5 @@
 #define WIN32_LEAN_AND_MEAN
 #include "windows.h"
-
 #include "debug.h"
 #include "game.h"
 #include "player.h"
@@ -93,6 +92,7 @@ namespace Tmpl8
         {
             map->setMapIndex(map->incrementMapIndex());
             defaultPos();
+ 
         }
         tabPressedLastFrame = isTabDown;
     }

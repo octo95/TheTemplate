@@ -4,7 +4,6 @@
 #include <map>
 #include <iostream>
 #include <functional>
-
 #include <unordered_map>
 
 template<>

@@ -9,6 +9,7 @@ namespace Tmpl8
     const int TILE_ROWS = 32;
     const int TILE_COLUMNS = 27;
 
+    // MAP1
     const char MAP1[TILE_ROWS][TILE_COLUMNS * 3] = {
     "ca ca da da da da da da da da da da da da da da da da da da da da ca ca ca ca ca",
     "ca ca da da da da da da da da da da da da da da da da da da da da da da da ca ca",
@@ -55,7 +56,8 @@ namespace Tmpl8
         vec2 {11,11},
         vec2 {12,21}
     };
-
+    
+    // MAP2
     const char MAP2[TILE_ROWS][TILE_COLUMNS * 3] = {
     "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
     "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
@@ -94,6 +96,8 @@ namespace Tmpl8
         vec2 {3,2},
         vec2 {12,1}
     };
+
+    // MAP3
     const char MAP3[TILE_ROWS][TILE_COLUMNS * 3] = {
     "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
     "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",

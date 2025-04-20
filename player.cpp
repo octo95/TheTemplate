@@ -7,10 +7,14 @@
 
 namespace Tmpl8
 {
+    Player::Player(TileMap& tmap) : 
+        map(tmap) 
+    {}
+
     // Variables
     Sprite player_img(new Surface("assets/tangerine.png"), 1);
 
-    int hitbox_size = 16 - 2;
+    int hitbox_size = 16 - 2; // Tolerance of 2 pixels on the hitbox
     int player_img_width = player_img.GetWidth();
     int player_img_height = player_img.GetHeight();
 
@@ -20,11 +24,11 @@ namespace Tmpl8
         TileType type = None;
 
         // Bottom-left
-        auto tile = map->tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y) + hitbox_size * 2);
+        auto tile = map.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y) + hitbox_size * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         // Bottom-right
-        tile = map->tile_at(static_cast<int>(pos.x) + hitbox_size * 2, static_cast<int>(pos.y) + hitbox_size * 2);
+        tile = map.tile_at(static_cast<int>(pos.x) + hitbox_size * 2, static_cast<int>(pos.y) + hitbox_size * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         return type;
@@ -35,17 +39,17 @@ namespace Tmpl8
         TileType type = None;
 
         // Left
-        auto tile = map->tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y));
+        auto tile = map.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y));
         if (tile.type != TileType::None) type = tile.type;
 
-        tile = map->tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y) + hitbox_size * 2);
+        tile = map.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y) + hitbox_size * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         // Right
-        tile = map->tile_at(static_cast<int>(pos.x) + hitbox_size * 2, static_cast<int>(pos.y));
+        tile = map.tile_at(static_cast<int>(pos.x) + hitbox_size * 2, static_cast<int>(pos.y));
         if (tile.type != TileType::None) type = tile.type;
 
-        tile = map->tile_at(static_cast<int>(pos.x) + hitbox_size * 2, static_cast<int>(pos.y) + hitbox_size * 2);
+        tile = map.tile_at(static_cast<int>(pos.x) + hitbox_size * 2, static_cast<int>(pos.y) + hitbox_size * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         return type;
@@ -170,8 +174,8 @@ namespace Tmpl8
         }
         else if (isEnd)
         {
-            map->setMapIndex(map->incrementMapIndex());
-            *collectibles = initializeCollectibleMap(map->getCurrentLevel());
+            map.setMapIndex(map.incrementMapIndex());
+            *collectibles = initializeCollectibleMap(map.getCurrentLevel());
             position = default_pos;
         }
         else if (isCollision || isIce)

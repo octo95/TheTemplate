@@ -3,6 +3,7 @@
 #include "surface.h"
 #include "template.h"
 #include "player.h"
+#include "collectible.h"
 
 namespace Tmpl8
 {
@@ -13,6 +14,7 @@ namespace Tmpl8
         void setCamera(Camera* cam) { camera = cam; }
         void setMap(TileMap* tilemap) { map = tilemap; }
         void setPlayer(Player* p) { player = p; }
+        void setCollectible(CollectibleMap* c) { collectible = c; }
         void drawHitbox(const vec2& pos, Surface* screen);
         void displayDebug(Surface* screen, float deltaTime);
         void defaultPos();
@@ -22,5 +24,6 @@ namespace Tmpl8
         Camera* camera;
         TileMap* map;
         Player* player;
+        CollectibleMap* collectible;
     };
 }
