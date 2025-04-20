@@ -5,6 +5,7 @@
 #include "player.h"
 #include "collectible.h"
 #include "tilemap.h"
+#include "wall.h"
 
 namespace Tmpl8
 {
@@ -12,7 +13,7 @@ namespace Tmpl8
 
     class Debug {
     public:
-        Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef);
+        Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef);
         void drawHitbox(const vec2& pos, Surface* screen);
         void displayDebug(Surface* screen, float deltaTime);
         void defaultPos();
@@ -25,5 +26,6 @@ namespace Tmpl8
         TileMap& tilemap;
         Player& player;
         CollectibleMap& collectible;
+        WallMap& wall;
     };
 }

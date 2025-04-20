@@ -234,6 +234,7 @@
     <ClCompile Include="template.cpp" />
     <ClCompile Include="tile.cpp" />
     <ClCompile Include="tilemap.cpp" />
+    <ClCompile Include="wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
@@ -247,6 +248,8 @@
     <ClInclude Include="template.h" />
     <ClInclude Include="tile.h" />
     <ClInclude Include="tilemap.h" />
+    <ClInclude Include="vec2_hash.h" />
+    <ClInclude Include="wall.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="_readme.txt" />

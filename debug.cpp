@@ -6,11 +6,12 @@
 
 namespace Tmpl8
 {
-    Debug::Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef) :
+    Debug::Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef) :
         camera(cameraRef),
         tilemap(tilemapRef),
         player(playerRef),
-        collectible(collectibleRef)
+        collectible(collectibleRef),
+        wall(wallRef)
     {}
     
     void Debug::drawHitbox(const vec2& pos, Surface* screen)
@@ -49,12 +50,17 @@ namespace Tmpl8
             sprintf(player_pos_coords, "px: %.0f, py: %.0f", playerPos.x, playerPos.y);
             screen->Print(player_pos_coords, 10, 30, 0xFFFF00);
 
+            // Display player's position
+            char player_tpos_coords[100];
+            sprintf(player_tpos_coords, "tx: %.0f, ty: %.0f", playerPos.x / 32, playerPos.y / 32);
+            screen->Print(player_tpos_coords, 10, 50, 0xFFFF00);
+
             // Display current map level and spawn point
             char map_lvl_coords[100];
             vec2 defaultPos;
             player.getPlayerDefaultPos(defaultPos);
             sprintf(map_lvl_coords, "current map: %d - (%.0f, %.0f)", tilemap.getCurrentLevel(), defaultPos.x, defaultPos.y);
-            screen->Print(map_lvl_coords, 10, 50, 0xFFFF00);
+            screen->Print(map_lvl_coords, 10, 70, 0xFFFF00);
 
             // Display velocity on the player as a line and print it on screen
             drawVelocityNorm(screen);
@@ -62,12 +68,12 @@ namespace Tmpl8
             // Display the collectibles collected
             char collectibles_coords[100];
             sprintf(collectibles_coords, "Jumps left: %d", collectibles_collected);
-            screen->Print(collectibles_coords, 10, 90, 0xFFFF00);
+            screen->Print(collectibles_coords, 10, 110, 0xFFFF00);
             
             // Display FPS
             char FPS_coords[100];
             sprintf(FPS_coords, "FPS: %d", getFPS(deltaTime));
-            screen->Print(FPS_coords, 10, 110, 0xFFFF00);
+            screen->Print(FPS_coords, 10, 130, 0xFFFF00);
         }
     }
 
@@ -123,7 +129,7 @@ namespace Tmpl8
         // Display velocity on screen
         char velocity_coords[100];
         sprintf(velocity_coords, "velocity: (x : %.2f, y : %.2f)", player.velocity.x, player.velocity.y);
-        screen->Print(velocity_coords, 10, 70, 0xFFFF00);
+        screen->Print(velocity_coords, 10, 90, 0xFFFF00);
 
         screen->Line(start_x, start_y, end_x, end_y, 0x33F8FF);
     }
@@ -133,6 +139,7 @@ namespace Tmpl8
         if (GetAsyncKeyState('R') & 0x8000)
         {
             loadCollectiblesForMap(tilemap.getCurrentLevel());
+            loadWallsForMap(tilemap.getCurrentLevel());
             defaultPos();
         }
     }

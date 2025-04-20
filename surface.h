@@ -105,6 +105,7 @@ public:
 	// Methods
 	void Draw( Surface* a_Target, int a_X, int a_Y );
 	void DrawScaled( int a_X, int a_Y, int a_Width, int a_Height, Surface* a_Target );
+	void DrawRotated(Surface* a_Target, int a_X, int a_Y, float a_Angle);
 	void SetFlags( unsigned int a_Flags ) { m_Flags = a_Flags; }
 	void SetFrame( unsigned int a_Index ) { m_CurrentFrame = a_Index; }
 	unsigned int GetFlags() const { return m_Flags; }

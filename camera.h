@@ -12,9 +12,11 @@ namespace Tmpl8
 		vec2 getCamPos() const;
 		void Shake();
 		void drawWithCam(Sprite* img, Surface* screen, int x, int y);
+		void drawWithCamAndAngle(Sprite* img, Surface* screen, int x, int y, float deltaTime);
 	private:
 		vec2 position = { 0, 0 };
 		vec2 shake = { 0, 0 };
 		float total_time = 0;
+		float dynamic_angle = 0;
 	};
 }

@@ -1,5 +1,4 @@
 #include <cmath>
-
 #include "camera.h"
 
 namespace Tmpl8
@@ -21,7 +20,7 @@ namespace Tmpl8
         const float amplitude = 2.5f;
         if (total_time > 0.0f)
         {
-            shake.x = std::sin(exp(total_time) * frequency) * amplitude; // TODO : total_time / max_time
+            shake.x = std::sin(exp(total_time) * frequency) * amplitude;
             shake.y = std::cos(exp(total_time) * frequency) * amplitude;
         }
         else
@@ -40,5 +39,13 @@ namespace Tmpl8
         x += getCamPos().x;
         y += getCamPos().y;
         img->Draw(screen, x, y);
+    }
+
+    void Camera::drawWithCamAndAngle(Sprite* img, Surface* screen, int x, int y, float deltaTime)
+    {
+        dynamic_angle += deltaTime * 90.0f;
+        x += getCamPos().x;
+        y += getCamPos().y;
+        img->DrawRotated(screen, x, y, dynamic_angle);
     }
 };

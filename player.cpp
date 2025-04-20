@@ -195,6 +195,19 @@ namespace Tmpl8
             position.y = (new_pos.y > position.y) ? position.y : new_pos.y;
         }
 
+        if (walls_collected > 0)
+        {
+            walls_collected--;
+            if (velocity.x <= 0)
+            {
+                velocity.x += wall_force;
+            }
+            else if (velocity.x > 0)
+            {
+                velocity.x -= wall_force;
+            }
+        }
+
         return camShake;
     }
 

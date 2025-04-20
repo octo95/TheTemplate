@@ -30,13 +30,15 @@ namespace Tmpl8
         void getPlayerDefaultPos(vec2& pos);
         vec2 camFollowPlayer();
         void manageDefaultPos(int index);
+        void rotatePlayer(Surface* screen, float deltaTime);
     private:
         TileMap& map;
-        int rotation = 0;
         float gravity = 0.5f;
         float vertical_speed = 0;
         float horizontal_speed = 0;
         float friction = 0.05f;
+        float wall_force = 7.0f;
+        float dynamic_angle = 0.0f;
         const float ENERGY_LOSS = 0.15f;
         const float ACCELERATION = 0.3f;
         const float MAX_HORIZONTAL_SPEED = 3.0f;

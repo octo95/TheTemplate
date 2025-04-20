@@ -1,9 +1,11 @@
 #pragma once
+#include "camera.h"
 #include "tilemap.h"
 #include "menu.h"
 #include "collectible.h"
 #include "debug.h"
 #include "player.h"
+#include "wall.h"
 
 #include <unordered_map>
 
@@ -17,9 +19,9 @@ namespace Tmpl8
 
 		Game() : 
 			player(tilemap),
-			debug(camera, tilemap, player, collectible),
+			debug(camera, tilemap, player, collectible, wall),
 			menu(tilemap, player),
-			tilemap(player, collectible)
+			tilemap(player, collectible, wall)
 		{}
 
 		Camera& GetCamera() { return camera; }
@@ -54,6 +56,7 @@ namespace Tmpl8
 		
 		// Gameplay
 		CollectibleMap collectible = CollectibleMap();
+		WallMap wall = WallMap();
 		Player player;
 		TileMap tilemap;
 

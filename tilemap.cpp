@@ -1,12 +1,14 @@
 #include "player.h"
 #include "tilemap.h"
 #include "game.h"
+#include "wall.h"
 
 namespace Tmpl8
 {
-    TileMap::TileMap(Player& playerRef, CollectibleMap& collectibleRef) :
+    TileMap::TileMap(Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef) :
         player(playerRef),
-        collectible(collectibleRef)
+        collectible(collectibleRef),
+        wall(wallRef)
     {}
 
     Sprite img_map1(new Surface("assets/map1.png"), 1);
@@ -82,9 +84,12 @@ namespace Tmpl8
     void TileMap::loadLevel(int i)
     {
         clearCollectibles();
+        clearWalls();
         player.manageDefaultPos(i);
+        loadAllWalls();
         loadAllCollectibles();
         setMapIndex(i);
         loadCollectiblesForMap(i);
+        loadWallsForMap(i);
     }
 }

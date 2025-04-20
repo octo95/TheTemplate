@@ -46,17 +46,22 @@ namespace Tmpl8
             player.movePlayer(new_pos);
             bool is_colliding = player.manageCollisions(new_pos, screen, &collectible);
 
+            manageWallCollision(new_pos, &wall);
             manageCollectibleCollision(new_pos, &collectible);
             if (is_colliding) camera.Shake();
             camera.camShake(deltaTime);  
 
             // * Draw the objects on screen
             tilemap.drawMap(screen, camera);
-            camera.drawWithCam(&player_img, screen, static_cast<int>(new_pos.x), static_cast<int>(new_pos.y-4));
+            camera.drawWithCamAndAngle(&player_img, screen, static_cast<int>(new_pos.x), static_cast<int>(new_pos.y - 4), deltaTime);
             drawCollectibleMap(&camera, screen, &this->collectible);
+            drawWallMap(&camera, screen, &this->wall);
 
             // * DEBUG: Enabled if pressing <spacebar>
             debug.displayDebug(screen, deltaTime);
+
+            // ROTATION TEST
+            // player.rotatePlayer(screen, deltaTime * 40.0f);
         }
         else
         {
