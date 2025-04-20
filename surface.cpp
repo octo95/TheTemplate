@@ -435,12 +435,13 @@ void Sprite::DrawScaled( int a_X, int a_Y, int a_Width, int a_Height, Surface* a
 	}
 }
 
+// NEED TO REDO MYSELF AND FIX MISSING PIXELS
 void Sprite::DrawRotated(Surface* a_Target, int a_X, int a_Y, float a_Angle)
 {
 	if ((a_X < -m_Width) || (a_X > (a_Target->GetWidth() + m_Width))) return;
 	if ((a_Y < -m_Height) || (a_Y > (a_Target->GetHeight() + m_Height))) return;
 
-	float radians = a_Angle * (3.14159265f / 180.0f);
+	float radians = a_Angle * (PI / 180.0f);
 	float cosAngle = cosf(radians);
 	float sinAngle = sinf(radians);
 

@@ -12,7 +12,14 @@
 
 #include <unordered_map>
 
-
+// +-----------------------+
+// |        TODO           |
+// +-----------------------+
+// 
+// - drawRotated redo to fix black pixels and redo from the ground up
+// - fix defaultPos (for the 10th time)
+// - work on physics bounces
+// - do the evil AI
 
 namespace Tmpl8
 {

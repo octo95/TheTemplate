@@ -86,9 +86,9 @@ namespace Tmpl8
         clearCollectibles();
         clearWalls();
         player.manageDefaultPos(i);
+        setMapIndex(i);
         loadAllWalls();
         loadAllCollectibles();
-        setMapIndex(i);
         loadCollectiblesForMap(i);
         loadWallsForMap(i);
     }
