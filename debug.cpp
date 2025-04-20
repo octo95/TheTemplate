@@ -93,7 +93,6 @@ namespace Tmpl8
             timeAccumulator = 0.0f;
             frameCounter = 0;
         }
-
         return lastFPS;
     }
 
@@ -111,9 +110,9 @@ namespace Tmpl8
         bool isTabDown = GetAsyncKeyState(VK_TAB) & 0x8000;
         if (isTabDown && !tabPressedLastFrame)
         {
-            defaultPos();
             tilemap.incrementMapIndex();
             tilemap.loadLevel(tilemap.getCurrentLevel());
+            defaultPos();
         }
         tabPressedLastFrame = isTabDown;
     }

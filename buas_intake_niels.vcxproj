@@ -223,6 +223,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ai_follow.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="collectible.cpp" />
     <ClCompile Include="debug.cpp" />
@@ -237,6 +238,7 @@
     <ClCompile Include="wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ai_follow.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="collectible.h" />
     <ClInclude Include="debug.h" />

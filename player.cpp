@@ -15,7 +15,6 @@ namespace Tmpl8
 
     // Variables
     Sprite player_img(new Surface("assets/tangerine.png"), 1);
-
     int hitbox_size = 16 - 2; // Tolerance of 2 pixels on the hitbox
     int player_img_width = player_img.GetWidth();
     int player_img_height = player_img.GetHeight();
@@ -245,7 +244,7 @@ namespace Tmpl8
                 setPlayerDefaultPos(vec2(400.0f, 10.0f));
                 break;      
             case 2:
-                setPlayerDefaultPos(vec2(80.0f, 10.0f));
+                setPlayerDefaultPos(vec2(500.0f, 10.0f));
                 break;
             case 3:
                 setPlayerDefaultPos(vec2(600.0f, 10.0f));

@@ -9,23 +9,31 @@
 #include "player.h"
 #include "tile.h"
 #include "tilemap.h"
+#include "ai_follow.h"
 
 #include <unordered_map>
 
 // +-----------------------+
 // |        TODO           |
 // +-----------------------+
-// 
-// - drawRotated redo to fix black pixels and redo from the ground up
-// - fix defaultPos (for the 10th time)
-// - work on physics bounces
-// - do the evil AI
+
+/*
+* - drawRotated redo to fix black pixels and redo from the ground up
+* - make setPlayerPos and getPlayerPos (same for default functions) cleaner, the default ones should have in parameter the index of the map to remove the vec2 in init
+* - work on physics bounces
+* - do the evil AI
+* - put playerDefaultPos and aiDefaultPos in arrays in tilemap.h
+* - load a font to do a counter (otherwise if too hard to do, will do UI with sprites
+*/
 
 namespace Tmpl8
 {
     // + Initializer / Shutdown
     void Game::Init()
     {
+        vec2 initial_pos = { 400, 10 };
+        player.setPlayerDefaultPos(initial_pos);
+        player.setPlayerPos(initial_pos);
         tilemap.loadLevel(1);
     }
 
@@ -39,17 +47,15 @@ namespace Tmpl8
         // * Clear the screen black every tick
         screen->Clear(0);
 
-        // * Stay in the menu until the player starts the game
-        // if (GetAsyncKeyState(VK_RETURN)) start_game = true;
-
         // * Starting the game logic
         if (menu.startGame())
         {
             vec2 new_pos;
-            player.getPlayerPos(new_pos); // Fetch current player position to modify it
+            player.getPlayerPos(new_pos);
 
             // * Initialize game logic
             camera.setCamPos(player.camFollowPlayer());
+            ai_follow.followPlayer(deltaTime);
             player.movePlayer(new_pos);
             bool is_colliding = player.manageCollisions(new_pos, screen, &collectible);
 
@@ -61,14 +67,12 @@ namespace Tmpl8
             // * Draw the objects on screen
             tilemap.drawMap(screen, camera);
             camera.drawWithCamAndAngle(&player_img, screen, static_cast<int>(new_pos.x), static_cast<int>(new_pos.y - 4), deltaTime);
+            camera.drawWithCamAndAngle(&img_ai_follow, screen, static_cast<int>(ai_follow_pos.x), static_cast<int>(ai_follow_pos.y - 4), deltaTime);
             drawCollectibleMap(&camera, screen, &this->collectible);
             drawWallMap(&camera, screen, &this->wall);
 
             // * DEBUG: Enabled if pressing <spacebar>
             debug.displayDebug(screen, deltaTime);
-
-            // ROTATION TEST
-            // player.rotatePlayer(screen, deltaTime * 40.0f);
         }
         else
         {

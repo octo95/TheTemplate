@@ -45,7 +45,7 @@ namespace Tmpl8
         int tile_row = y / TILE_SIZE;
         int tile_col = x / TILE_SIZE;
 
-         char a = current_map[tile_row][tile_col * 3];
+        char a = current_map[tile_row][tile_col * 3];
         char b = current_map[tile_row][tile_col * 3 + 1];
 
         int tx = a - 'a';
@@ -83,9 +83,10 @@ namespace Tmpl8
 
     void TileMap::loadLevel(int i)
     {
+        printf("index: %d\n", i);
+        player.manageDefaultPos(i);
         clearCollectibles();
         clearWalls();
-        player.manageDefaultPos(i);
         setMapIndex(i);
         loadAllWalls();
         loadAllCollectibles();

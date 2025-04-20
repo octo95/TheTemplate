@@ -6,6 +6,7 @@
 #include "debug.h"
 #include "player.h"
 #include "wall.h"
+#include "ai_follow.h"
 
 #include <unordered_map>
 
@@ -21,7 +22,8 @@ namespace Tmpl8
 			player(tilemap, camera),
 			debug(camera, tilemap, player, collectible, wall),
 			menu(tilemap, player),
-			tilemap(player, collectible, wall)
+			tilemap(player, collectible, wall),
+			ai_follow(player, camera)
 		{}
 
 		Camera& GetCamera() { return camera; }
@@ -59,6 +61,7 @@ namespace Tmpl8
 		WallMap wall = WallMap();
 		Player player;
 		TileMap tilemap;
+		AI_Follow ai_follow;
 
 		int mousex, mousey;
 		bool start_game = false;

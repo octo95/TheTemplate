@@ -37,6 +37,9 @@
     <ClCompile Include="wall.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
+    <ClCompile Include="ai_follow.cpp">
+      <Filter>Solutions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="physics.h">
@@ -76,6 +79,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="vec2_hash.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ai_follow.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

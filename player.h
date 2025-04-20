@@ -18,8 +18,8 @@ namespace Tmpl8
     public:
         Player(TileMap& mapRef, Camera& cameraRef);
         vec2 velocity = { 0, 0 };
-        vec2 position = { 400, 10 };
-        vec2 default_pos = { 400, 10 };
+        vec2 position = { 0, 0 };
+        vec2 default_pos = { 0, 0 };
 
         TileType CheckCollisionBottom(const vec2& pos);
         TileType CheckCollisionSides(const vec2& pos);
