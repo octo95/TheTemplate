@@ -22,6 +22,7 @@ namespace Tmpl8
             vec2 {500,10},
             vec2 {600,10}
         };
+
         Level(TileMap& tilemapRef, Player& playerRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef);
         void loadLevel(int i);
         void manageDefaultPos(int map_index);

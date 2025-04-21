@@ -3,7 +3,6 @@
 #include "tilemap.h"
 #include "ai_follow.h"
 #include "collectible.h"
-#include "collisions.h"
 #include "wall.h"
 #include "level.h"
 

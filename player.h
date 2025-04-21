@@ -14,6 +14,8 @@ namespace Tmpl8
 
     class TileMap;
 
+    class Collisions;
+
     class Player {
     public:
         Player(Camera& cameraRef);
@@ -21,7 +23,7 @@ namespace Tmpl8
         vec2 position = { 0, 0 };
         vec2 default_pos = { 0, 0 };
 
-        void movePlayer(vec2& new_pos);
+        void movePlayer(vec2& new_pos, Collisions* collisions);
         vec2 camFollowPlayer();
 
         void setPlayerDefaultPos(const vec2& pos) { default_pos = pos; }
@@ -34,14 +36,15 @@ namespace Tmpl8
         Camera& camera;
         bool is_touched_follow_ai = false;
         bool can_jump = false;
-        float gravity = 0.5f;
+        float gravity = 0.28f;
         float vertical_speed = 0;
         float horizontal_speed = 0;
         float friction = 0.05f;
         float wall_force = 7.0f;
         float rotation_speed = 90.0f;
-        const float ENERGY_LOSS = 0.15f;
+        const float ENERGY_LOSS = 0.7f;
         const float ACCELERATION = 0.3f;
         const float MAX_HORIZONTAL_SPEED = 3.0f;
+        const float MAX_VERTICAL_SPEED = 10.0f;
     };
 }

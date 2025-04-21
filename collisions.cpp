@@ -54,14 +54,17 @@ namespace Tmpl8
     {
         TileType CheckSides = CheckCollisionSides({ new_pos.x, player.position.y });
         TileType CheckBottom = CheckCollisionBottom({ player.position.x, new_pos.y });
+        TileType CheckCenter = TileType::None;
+        auto tile = tilemap.tile_at(static_cast<int>(new_pos.x) + hitbox_size / 2, static_cast<int>(new_pos.y) + hitbox_size / 2);
+        if (tile.type != TileType::None) CheckCenter = tile.type;
 
         bool camShake = false;
 
         bool isNoneX = (CheckSides == TileType::None);
         bool isNoneY = (CheckBottom == TileType::None);
-        bool isDamage = (CheckSides == TileType::Damage || CheckBottom == TileType::Damage || playerHitAI); // need to add AI touch condition
-        bool isEnd = (CheckSides == TileType::End || CheckBottom == TileType::End);
-        bool isCollision = (CheckSides == TileType::Collision || CheckBottom == TileType::Collision);
+        bool isDamage = (CheckCenter == TileType::Damage || CheckSides == TileType::Damage || CheckBottom == TileType::Damage || playerHitAI); // need to add AI touch condition
+        bool isEnd = (CheckCenter == TileType::End || CheckSides == TileType::End || CheckBottom == TileType::End);
+        bool isCollision = (CheckCenter == TileType::Collision || CheckSides == TileType::Collision || CheckBottom == TileType::Collision);
         bool isIce = (CheckSides == TileType::Ice || CheckBottom == TileType::Ice);
 
         if (isNoneX) player.position.x = new_pos.x;
@@ -82,11 +85,7 @@ namespace Tmpl8
         }
         else if (isCollision || isIce)
         {
-            if (isIce)
-                friction = 0.0f;
-            else
-                friction = 0.05f;
-
+            friction = isIce ? 0.0f : 0.05f;
             player.velocity.y = 0;
             player.position.y = (new_pos.y > player.position.y) ? player.position.y : new_pos.y;
         }
@@ -94,14 +93,7 @@ namespace Tmpl8
         if (walls_collected > 0)
         {
             walls_collected--;
-            if (player.velocity.x <= 0)
-            {
-                player.velocity.x += wall_force;
-            }
-            else if (player.velocity.x > 0)
-            {
-                player.velocity.x -= wall_force;
-            }
+            player.velocity += (player.velocity.x <= 0) ? wall_force : -wall_force;
         }
 
         return camShake;

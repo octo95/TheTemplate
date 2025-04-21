@@ -23,6 +23,11 @@
 * - do the evil AI
 * - load a font to do a counter (otherwise if too hard to do, will do UI with sprites
 * - CheckTop collisions
+* 
+* + Homework:
+* CheckCenter in a function
+* Print on screen collision
+* Stop frame by frame logic or do a menu
 */
 
 namespace Tmpl8
@@ -30,7 +35,6 @@ namespace Tmpl8
     // + Initializer / Shutdown
     void Game::Init()
     {
-        //player.setPlayerPos({ 400, 10 });
         level.loadLevel(1);
     }
 
@@ -47,6 +51,15 @@ namespace Tmpl8
         // * Starting the game logic
         if (menu.startGame())
         {
+
+            //if (!is_paused()) {
+            //    game logic
+            //}
+            //else {
+            //    draw game
+            //}
+
+
             // * Initialize game logic
             vec2 player_pos;
 
@@ -54,7 +67,7 @@ namespace Tmpl8
 
             camera.setCamPos(player.camFollowPlayer());
             ai_follow.followPlayer(deltaTime);
-            player.movePlayer(player_pos);
+            player.movePlayer(player_pos, &collisions);
             collisions.playerCollisionsAI();
             player.setJumpState(collisions.getJumpState(player_pos));
             bool is_colliding = collisions.manageCollisions(player_pos, screen, &collectible);
