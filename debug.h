@@ -7,6 +7,7 @@
 #include "tilemap.h"
 #include "wall.h"
 #include "ai_follow.h"
+#include "level.h"
 
 namespace Tmpl8
 {
@@ -14,7 +15,7 @@ namespace Tmpl8
 
     class Debug {
     public:
-        Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef);
+        Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef, Level& levelRef);
         void drawHitbox(const vec2& pos, Surface* screen);
         void displayDebug(Surface* screen, float deltaTime);
         void defaultPos();
@@ -30,5 +31,6 @@ namespace Tmpl8
         CollectibleMap& collectible;
         WallMap& wall;
         AI_Follow& ai_follow;
+        Level& level;
     };
 }

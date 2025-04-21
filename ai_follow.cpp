@@ -13,31 +13,29 @@ namespace Tmpl8
 
     Sprite img_ai_follow(new Surface("assets/evil_tangerine.png"), 1);
 
-    vec2 ai_follow_pos = { 0, 0 };
-
     void AI_Follow::followPlayer(float deltaTime) // TODO
     {
         const float delayAmplifier = 0.5f;
 
-        float diffX = player.position.x - ai_follow_pos.x;
-        float diffY = player.position.y - ai_follow_pos.y;
+        float diffX = player.position.x - this->position.x;
+        float diffY = player.position.y - this->position.y;
 
-        ai_follow_pos.x += diffX * deltaTime * delayAmplifier;
-        ai_follow_pos.y += diffY * deltaTime * delayAmplifier;
+        this->position.x += diffX * deltaTime * delayAmplifier;
+        this->position.y += diffY * deltaTime * delayAmplifier;
     }
 
-    void AI_Follow::manageDefaultPosAI_Follow(int index)
-    {
-        switch (index)
-        {
-        case 1 :
-            ai_follow_pos = AI_FOLLOW_DEFAULT_POS[0];
-        case 2 :
-            ai_follow_pos = AI_FOLLOW_DEFAULT_POS[1];
-        case 3:
-            ai_follow_pos = AI_FOLLOW_DEFAULT_POS[2];
-        }
-    }
+    //void AI_Follow::manageDefaultPosAI_Follow(int index)
+    //{
+    //    switch (index)
+    //    {
+    //    case 1 :
+    //        ai_follow_pos = AI_FOLLOW_DEFAULT_POS[0];
+    //    case 2 :
+    //        ai_follow_pos = AI_FOLLOW_DEFAULT_POS[1];
+    //    case 3:
+    //        ai_follow_pos = AI_FOLLOW_DEFAULT_POS[2];
+    //    }
+    //}
 
 }
 

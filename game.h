@@ -8,6 +8,7 @@
 #include "wall.h"
 #include "ai_follow.h"
 #include "collisions.h"
+#include "level.h"
 
 #include <unordered_map>
 
@@ -19,21 +20,15 @@ namespace Tmpl8
 	{
 	public:
 
-		Game() : 
+		Game() :
 			player(camera),
-			debug(camera, tilemap, player, collectible, wall, ai_follow),
-			menu(tilemap, player),
-			tilemap(player, collectible, wall), // need to add ai_follow here after finishing collisions.cpp
 			ai_follow(player, camera),
-			collisions(player, tilemap, ai_follow)
+			debug(camera, tilemap, player, collectible, wall, ai_follow, level),
+			menu(level, player),
+			tilemap(player),
+			collisions(player, tilemap, ai_follow, collectible, wall, level),
+			level(tilemap, player, ai_follow, collectible, wall)
 		{}
-
-		Camera& GetCamera() { return camera; }
-		Debug& GetDebug() { return debug; }
-		Menu& GetMenu() { return menu;  }
-		Player& GetPlayer() { return player; }
-		TileMap& GetTileMap() { return tilemap; }
-		CollectibleMap& GetCollectible() { return collectible; }
 
 		void SetTarget( Surface* surface ) { screen = surface; }
 		void Init();
@@ -62,9 +57,10 @@ namespace Tmpl8
 		CollectibleMap collectible = CollectibleMap();
 		WallMap wall = WallMap();
 		Player player;
-		TileMap tilemap;
 		AI_Follow ai_follow;
+		TileMap tilemap;
 		Collisions collisions;
+		Level level;
 
 		int mousex, mousey;
 		bool start_game = false;

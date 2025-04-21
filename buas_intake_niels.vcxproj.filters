@@ -43,6 +43,9 @@
     <ClCompile Include="collisions.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
+    <ClCompile Include="level.cpp">
+      <Filter>Solutions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="physics.h">
@@ -88,6 +91,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="collisions.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="level.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

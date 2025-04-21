@@ -6,13 +6,14 @@
 
 namespace Tmpl8
 {
-    Debug::Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef) :
+    Debug::Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef, Level& levelRef) :
         camera(cameraRef),
         tilemap(tilemapRef),
         player(playerRef),
         collectible(collectibleRef),
         wall(wallRef),
-        ai_follow(ai_followRef)
+        ai_follow(ai_followRef),
+        level(levelRef)
     {}
     
     void Debug::drawHitbox(const vec2& pos, Surface* screen)
@@ -40,10 +41,10 @@ namespace Tmpl8
 
             // Display the entities' hitboxes
             drawHitbox(playerPos, screen);
-            drawHitbox(ai_follow_pos, screen);
+            drawHitbox(ai_follow.position, screen);
 
             // Draw the distance between the player and an AI to specify below
-            drawDistancePlayerToAI(ai_follow_pos, screen);
+            drawDistancePlayerToAI(ai_follow.position, screen);
 
             // Display debug text
             char debug_active_coords[100];
@@ -116,7 +117,7 @@ namespace Tmpl8
         if (isTabDown && !tabPressedLastFrame)
         {
             tilemap.incrementMapIndex();
-            tilemap.loadLevel(tilemap.getCurrentLevel());
+            level.loadLevel(tilemap.getCurrentLevel());
             defaultPos();
         }
         tabPressedLastFrame = isTabDown;
@@ -142,6 +143,7 @@ namespace Tmpl8
     {
         if (GetAsyncKeyState('R') & 0x8000)
         {
+            ai_follow.setAIFollowPos(level.AI_FOLLOW_DEFAULT_POS[tilemap.getCurrentLevel()-1]);
             loadCollectiblesForMap(tilemap.getCurrentLevel());
             loadWallsForMap(tilemap.getCurrentLevel());
             defaultPos();

@@ -23,7 +23,6 @@ namespace Tmpl8
 
         void movePlayer(vec2& new_pos);
         vec2 camFollowPlayer();
-        void manageDefaultPos(int index);
 
         void setPlayerDefaultPos(const vec2& pos) { default_pos = pos; }
         void getPlayerDefaultPos(vec2& pos) { pos = default_pos; }

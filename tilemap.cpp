@@ -5,23 +5,9 @@
 
 namespace Tmpl8
 {
-    TileMap::TileMap(Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef) :
-        player(playerRef),
-        collectible(collectibleRef),
-        wall(wallRef)
+    TileMap::TileMap(Player& playerRef) :
+        player(playerRef)
     {}
-
-    Sprite img_map1(new Surface("assets/map1.png"), 1);
-
-    int TileMap::getCurrentLevel() const
-    {
-        return (current_level - 1) % MAP_AMOUNT + 1;
-    }
-
-    int TileMap::incrementMapIndex()
-    {
-        return current_level = current_level % 3 + 1;
-    }
 
     void TileMap::setMapIndex(int index)
     {
@@ -79,19 +65,5 @@ namespace Tmpl8
                 tile.DrawTile(screen, x * TILE_SIZE, y * TILE_SIZE, camera);
             }
         }
-    }
-
-    void TileMap::loadLevel(int i)
-    {
-        printf("index: %d\n", i);
-        //ai_follow.manageDefaultPosAI_Follow(i);
-        player.manageDefaultPos(i);
-        clearCollectibles();
-        clearWalls();
-        setMapIndex(i);
-        loadAllWalls();
-        loadAllCollectibles();
-        loadCollectiblesForMap(i);
-        loadWallsForMap(i);
     }
 }

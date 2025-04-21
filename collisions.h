@@ -2,12 +2,16 @@
 #include "player.h"
 #include "tilemap.h"
 #include "ai_follow.h"
+#include "collectible.h"
+#include "collisions.h"
+#include "wall.h"
+#include "level.h"
 
 namespace Tmpl8
 {
     class Collisions {
     public:
-        Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef);
+        Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef);
         TileType CheckCollisionBottom(const vec2& pos);
         TileType CheckCollisionSides(const vec2& pos);
         bool manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles);
@@ -18,6 +22,9 @@ namespace Tmpl8
         Player& player;
         TileMap& tilemap;
         AI_Follow& ai_follow;
+        CollectibleMap& collectible;
+        WallMap& wall;
+        Level& level;
 
         bool playerHitAI = false;
         bool canPlayerJump = false;

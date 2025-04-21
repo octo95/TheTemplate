@@ -1,6 +1,6 @@
 #pragma once
 #include "surface.h"
-#include "tilemap.h"
+#include "level.h"
 #include "player.h"
 
 namespace Tmpl8
@@ -13,7 +13,7 @@ namespace Tmpl8
 	class Menu
 	{
 	public:
-		Menu(TileMap& tilemap, Player& playerRef);
+		Menu(Level& levelRef, Player& playerRef);
 		void drawMenu(Surface* screen);
 		void setMousePosition(int x, int y); 
 		void detectLevelHover();
@@ -21,7 +21,7 @@ namespace Tmpl8
 		bool startGame();
 
 	private:
-		TileMap& tilemap;
+		Level& level;
 		Player& player;
 		int mouseX, mouseY; 
 		bool start_game = false;

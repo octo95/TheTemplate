@@ -8,8 +8,8 @@
 #include "menu.h"
 #include "player.h"
 #include "tile.h"
-#include "tilemap.h"
 #include "ai_follow.h"
+#include "tilemap.h"
 
 #include <unordered_map>
 
@@ -21,8 +21,8 @@
 * - drawRotated redo to fix black pixels and redo from the ground up
 * - work on physics bounces
 * - do the evil AI
-* - put playerDefaultPos and aiDefaultPos in arrays in tilemap.h
 * - load a font to do a counter (otherwise if too hard to do, will do UI with sprites
+* - CheckTop collisions
 */
 
 namespace Tmpl8
@@ -30,10 +30,8 @@ namespace Tmpl8
     // + Initializer / Shutdown
     void Game::Init()
     {
-        vec2 initial_pos = { 400, 10 };
-        player.setPlayerDefaultPos(initial_pos);
-        player.setPlayerPos(initial_pos);
-        tilemap.loadLevel(1);
+        //player.setPlayerPos({ 400, 10 });
+        level.loadLevel(1);
     }
 
     void Game::Shutdown() {}
@@ -50,24 +48,25 @@ namespace Tmpl8
         if (menu.startGame())
         {
             // * Initialize game logic
-            vec2 new_pos;
-            player.getPlayerPos(new_pos);
+            vec2 player_pos;
+
+            player.getPlayerPos(player_pos);
 
             camera.setCamPos(player.camFollowPlayer());
             ai_follow.followPlayer(deltaTime);
-            player.movePlayer(new_pos);
+            player.movePlayer(player_pos);
             collisions.playerCollisionsAI();
-            player.setJumpState(collisions.getJumpState(new_pos));
-            bool is_colliding = collisions.manageCollisions(new_pos, screen, &collectible);
-            manageWallCollision(new_pos, &wall);
-            manageCollectibleCollision(new_pos, &collectible);
+            player.setJumpState(collisions.getJumpState(player_pos));
+            bool is_colliding = collisions.manageCollisions(player_pos, screen, &collectible);
+            manageWallCollision(player_pos, &wall);
+            manageCollectibleCollision(player_pos, &collectible);
             if (is_colliding) camera.Shake();
             camera.camShake(deltaTime);  
 
             // * Draw the objects on screen
             tilemap.drawMap(screen, camera);
-            camera.drawWithCamAndAngle(&player_img, screen, static_cast<int>(new_pos.x), static_cast<int>(new_pos.y - 4), deltaTime);
-            camera.drawWithCamAndAngle(&img_ai_follow, screen, static_cast<int>(ai_follow_pos.x), static_cast<int>(ai_follow_pos.y - 4), deltaTime);
+            camera.drawWithCamAndAngle(&player_img, screen, static_cast<int>(player_pos.x), static_cast<int>(player_pos.y - 4), deltaTime);
+            camera.drawWithCamAndAngle(&img_ai_follow, screen, static_cast<int>(ai_follow.position.x), static_cast<int>(ai_follow.position.y - 4), deltaTime);
             drawCollectibleMap(&camera, screen, &this->collectible);
             drawWallMap(&camera, screen, &this->wall);
 

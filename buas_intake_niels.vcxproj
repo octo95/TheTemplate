@@ -229,6 +229,7 @@
     <ClCompile Include="collisions.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="level.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="physics.cpp" />
     <ClCompile Include="player.cpp" />
@@ -245,6 +246,7 @@
     <ClInclude Include="collisions.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="level.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="physics.h" />
     <ClInclude Include="player.h" />

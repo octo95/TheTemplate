@@ -2,8 +2,7 @@
 #include "surface.h"
 #include "tile.h"
 #include "player.h"
-#include "collectible.h"
-#include "wall.h"
+
 
 namespace Tmpl8
 {
@@ -11,6 +10,7 @@ namespace Tmpl8
     const int TILE_ROWS = 32;
     const int TILE_COLUMNS = 27;
     const int MAP_AMOUNT = 3;
+
 
     // MAP1
     const char MAP1[TILE_ROWS][TILE_COLUMNS * 3] = {
@@ -162,17 +162,15 @@ namespace Tmpl8
     public:
         const char (*current_map)[TILE_COLUMNS * 3];
 
-        TileMap(Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef);
-        int getCurrentLevel() const;
+        TileMap(Player& playerRef);
         void setMapIndex(int index);
-        int incrementMapIndex();
         Tile tile_at(int x, int y);
         void drawMap(Surface* screen, const Camera& camera);
         void loadLevel(int i);
+        int getCurrentLevel() const { return (current_level - 1) % MAP_AMOUNT + 1; }
+        int incrementMapIndex() { return current_level = current_level % MAP_AMOUNT + 1; }
     private:
         Player& player;
-        CollectibleMap& collectible;
-        WallMap& wall;
         int current_level = 1;
     };
 };

@@ -4,10 +4,13 @@
 
 namespace Tmpl8
 {
-    Collisions::Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef) :
+    Collisions::Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef) :
         player(playerRef),
         tilemap(tilemapRef),
-        ai_follow(ai_followRef)
+        ai_follow(ai_followRef),
+        collectible(collectibleRef),
+        wall(wallRef),
+        level(levelRef)
     {}
 
     // Player functions
@@ -65,12 +68,14 @@ namespace Tmpl8
         if (isNoneY) player.position.y = new_pos.y;
         else if (isDamage)
         {
+            ai_follow.setAIFollowPos(level.AI_FOLLOW_DEFAULT_POS[tilemap.getCurrentLevel()-1]);
             loadCollectiblesForMap(tilemap.getCurrentLevel());
             player.position = player.default_pos;
             camShake = true;
         }
         else if (isEnd)
         {
+            ai_follow.setAIFollowPos(level.AI_FOLLOW_DEFAULT_POS[0]);
             tilemap.setMapIndex(tilemap.incrementMapIndex());
             loadCollectiblesForMap(tilemap.getCurrentLevel());
             player.position = player.default_pos;
@@ -123,8 +128,8 @@ namespace Tmpl8
 
         float radii_sum = ai_rad + player_rad;
 
-        float dx = ai_follow_pos.x - player.position.x;
-        float dy = ai_follow_pos.y - player.position.y;
+        float dx = ai_follow.position.x - player.position.x;
+        float dy = ai_follow.position.y - player.position.y;
         float distance = sqrtf(dx * dx + dy * dy);
 
         playerHitAI = (distance <= radii_sum);

@@ -7,8 +7,8 @@
 
 namespace Tmpl8
 {
-    Menu::Menu(TileMap& tilemapRef, Player& playerRef) :
-        tilemap(tilemapRef),
+    Menu::Menu(Level& levelRef, Player& playerRef) :
+        level(levelRef),
         player(playerRef)
     {}
 
@@ -68,17 +68,17 @@ namespace Tmpl8
         if ((isHoveringLVL1 || isHoveringEnter) && isMousePressed)
         {
             start_game = true;
-            tilemap.loadLevel(1);
+            level.loadLevel(1);
         }
         else if (isHoveringLVL2 && isMousePressed)
         {
             start_game = true;
-            tilemap.loadLevel(2);
+            level.loadLevel(2);
         }
         else if (isHoveringLVL3 && isMousePressed)
         {
             start_game = true;
-            tilemap.loadLevel(3);
+            level.loadLevel(3);
         }
     }
 
