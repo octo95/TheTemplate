@@ -32,9 +32,11 @@ namespace Tmpl8
         vec2 camFollowPlayer();
         void manageDefaultPos(int index);
         void rotatePlayer(Surface* screen, float deltaTime);
+        void setTouchStateFollowAI(bool isTouched);
     private:
         TileMap& tilemap;
         Camera& camera;
+        bool is_touched_follow_ai = false;
         float gravity = 0.5f;
         float vertical_speed = 0;
         float horizontal_speed = 0;

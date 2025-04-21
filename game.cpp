@@ -24,6 +24,7 @@
 * - do the evil AI
 * - put playerDefaultPos and aiDefaultPos in arrays in tilemap.h
 * - load a font to do a counter (otherwise if too hard to do, will do UI with sprites
+* - mouse hover enter button
 */
 
 namespace Tmpl8
@@ -59,6 +60,7 @@ namespace Tmpl8
             player.movePlayer(new_pos);
             bool is_colliding = player.manageCollisions(new_pos, screen, &collectible);
 
+            ai_follow.setTouchingPlayer();
             manageWallCollision(new_pos, &wall);
             manageCollectibleCollision(new_pos, &collectible);
             if (is_colliding) camera.Shake();
@@ -73,6 +75,7 @@ namespace Tmpl8
 
             // * DEBUG: Enabled if pressing <spacebar>
             debug.displayDebug(screen, deltaTime);
+
         }
         else
         {

@@ -7,6 +7,7 @@
 #include "player.h"
 #include "wall.h"
 #include "ai_follow.h"
+#include "collisions.h"
 
 #include <unordered_map>
 
@@ -20,10 +21,11 @@ namespace Tmpl8
 
 		Game() : 
 			player(tilemap, camera),
-			debug(camera, tilemap, player, collectible, wall),
+			debug(camera, tilemap, player, collectible, wall, ai_follow),
 			menu(tilemap, player),
-			tilemap(player, collectible, wall),
-			ai_follow(player, camera)
+			tilemap(player, collectible, wall), // need to add ai_follow here after finishing collisions.cpp
+			ai_follow(player, camera),
+			collisions(player, tilemap, ai_follow)
 		{}
 
 		Camera& GetCamera() { return camera; }
@@ -62,6 +64,7 @@ namespace Tmpl8
 		Player player;
 		TileMap tilemap;
 		AI_Follow ai_follow;
+		Collisions collisions;
 
 		int mousex, mousey;
 		bool start_game = false;

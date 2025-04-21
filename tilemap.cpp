@@ -15,7 +15,7 @@ namespace Tmpl8
 
     int TileMap::getCurrentLevel() const
     {
-        return (current_level - 1) % 3 + 1;
+        return (current_level - 1) % MAP_AMOUNT + 1;
     }
 
     int TileMap::incrementMapIndex()
@@ -84,6 +84,7 @@ namespace Tmpl8
     void TileMap::loadLevel(int i)
     {
         printf("index: %d\n", i);
+        //ai_follow.manageDefaultPosAI_Follow(i);
         player.manageDefaultPos(i);
         clearCollectibles();
         clearWalls();

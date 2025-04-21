@@ -6,12 +6,13 @@
 
 namespace Tmpl8
 {
-    Debug::Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef) :
+    Debug::Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef) :
         camera(cameraRef),
         tilemap(tilemapRef),
         player(playerRef),
         collectible(collectibleRef),
-        wall(wallRef)
+        wall(wallRef),
+        ai_follow(ai_followRef)
     {}
     
     void Debug::drawHitbox(const vec2& pos, Surface* screen)
@@ -37,8 +38,12 @@ namespace Tmpl8
             vec2 playerPos;
             player.getPlayerPos(playerPos);
 
-            // Display the player's hitbox
+            // Display the entities' hitboxes
             drawHitbox(playerPos, screen);
+            drawHitbox(ai_follow_pos, screen);
+
+            // Draw the distance between the player and an AI to specify below
+            drawDistancePlayerToAI(ai_follow_pos, screen);
 
             // Display debug text
             char debug_active_coords[100];
@@ -141,5 +146,15 @@ namespace Tmpl8
             loadWallsForMap(tilemap.getCurrentLevel());
             defaultPos();
         }
+    }
+
+    void Debug::drawDistancePlayerToAI(vec2 ai_pos, Surface* screen)
+    {
+        int start_x = player.position.x + player_img_width / 2 + camera.getCamPos().x;
+        int start_y = player.position.y + (player_img_height / 2 - 4) + camera.getCamPos().y;
+        int end_y = ai_pos.y + img_ai_follow.GetHeight() / 2 + camera.getCamPos().y;
+        int end_x = ai_pos.x + img_ai_follow.GetWidth() / 2 + camera.getCamPos().x;
+
+        screen->Line(start_x, start_y, end_x, end_y, 0x00FF00);
     }
 }

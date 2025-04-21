@@ -34,29 +34,38 @@ namespace Tmpl8
         int startY = SCREEN_HEIGHT / 2 - START_BUTTON_HEIGHT / 2 + 80;
         img_start_button.Draw(screen, startX, startY);
 
-        int spacing = 20;
         int lvlButtonWidth = img_lvl1_button.GetWidth();
-        int totalWidth = 3 * lvlButtonWidth + 2 * spacing;
+        int totalWidth = 3 * lvlButtonWidth + 2 * SPACING;
         int groupStartX = SCREEN_WIDTH / 2 - totalWidth / 2;
-        int lvlY = startY + START_BUTTON_HEIGHT + spacing;
+        int lvlY = startY + START_BUTTON_HEIGHT + SPACING;
 
         img_lvl1_button.Draw(screen, groupStartX, lvlY);
-        img_lvl2_button.Draw(screen, groupStartX + lvlButtonWidth + spacing, lvlY);
-        img_lvl3_button.Draw(screen, groupStartX + 2 * (lvlButtonWidth + spacing), lvlY);
+        img_lvl2_button.Draw(screen, groupStartX + lvlButtonWidth + SPACING, lvlY);
+        img_lvl3_button.Draw(screen, groupStartX + 2 * (lvlButtonWidth + SPACING), lvlY);
     }
 
     void Menu::detectLevelHover()
     {
-        int lvl1X = SCREEN_WIDTH / 2 - (3 * LVL_BUTTON_WIDTH + 2 * 20) / 2;
-        int lvl2X = lvl1X + LVL_BUTTON_WIDTH + 20;
-        int lvl3X = lvl2X + LVL_BUTTON_WIDTH + 20;
-        int lvlY = SCREEN_HEIGHT / 2 - START_BUTTON_HEIGHT / 2 + 80 + START_BUTTON_HEIGHT + 20;
+        int lvl1X = SCREEN_WIDTH / 2 - (MAP_AMOUNT * LVL_BUTTON_WIDTH + (MAP_AMOUNT-1) * SPACING) / 2;
+        int lvl2X = lvl1X + LVL_BUTTON_WIDTH + SPACING;
+        int lvl3X = lvl2X + LVL_BUTTON_WIDTH + SPACING;
+        int lvlY = SCREEN_HEIGHT / 2 - START_BUTTON_HEIGHT / 2 + 80 + START_BUTTON_HEIGHT + SPACING;
+        int enterButtonX = SCREEN_WIDTH / 2 - START_BUTTON_WIDTH / 2;
+        int enterButtonY = SCREEN_WIDTH / 2 - START_BUTTON_HEIGHT / 2 - 80;
 
-        bool isHoveringLVL1 = mouseX >= lvl1X && mouseX <= lvl1X + LVL_BUTTON_WIDTH && mouseY >= lvlY && mouseY <= lvlY + LVL_BUTTON_HEIGHT;
-        bool isHoveringLVL2 = mouseX >= lvl2X && mouseX <= lvl2X + LVL_BUTTON_WIDTH && mouseY >= lvlY && mouseY <= lvlY + LVL_BUTTON_HEIGHT;
-        bool isHoveringLVL3 = mouseX >= lvl3X && mouseX <= lvl3X + LVL_BUTTON_WIDTH && mouseY >= lvlY && mouseY <= lvlY + LVL_BUTTON_HEIGHT;
+        bool isHoveringLVL1 =   mouseX >= lvl1X && mouseX <= lvl1X + LVL_BUTTON_WIDTH && 
+                                mouseY >= lvlY && mouseY <= lvlY + LVL_BUTTON_HEIGHT;
+
+        bool isHoveringLVL2 =   mouseX >= lvl2X && mouseX <= lvl2X + LVL_BUTTON_WIDTH && 
+                                mouseY >= lvlY && mouseY <= lvlY + LVL_BUTTON_HEIGHT;
+
+        bool isHoveringLVL3 =   mouseX >= lvl3X && mouseX <= lvl3X + LVL_BUTTON_WIDTH && 
+                                mouseY >= lvlY && mouseY <= lvlY + LVL_BUTTON_HEIGHT;
+
+        bool isHoveringEnter =  mouseX >= enterButtonX && mouseX <= enterButtonX + START_BUTTON_WIDTH &&
+                                mouseY >= enterButtonY && mouseY <= enterButtonY + START_BUTTON_HEIGHT;
         
-        if (isHoveringLVL1 && isMousePressed)
+        if ((isHoveringLVL1 || isHoveringEnter) && isMousePressed)
         {
             start_game = true;
             tilemap.loadLevel(1);

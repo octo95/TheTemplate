@@ -159,6 +159,11 @@ namespace Tmpl8
         position = pos;
     }
 
+    void Player::setTouchStateFollowAI(bool isTouched)
+    {
+        is_touched_follow_ai = isTouched;
+    }
+
     bool Player::manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles)
     {
         TileType CheckSides = CheckCollisionSides({ new_pos.x, position.y });
@@ -168,7 +173,7 @@ namespace Tmpl8
 
         bool isNoneX = (CheckSides == TileType::None);
         bool isNoneY = (CheckBottom == TileType::None);
-        bool isDamage = (CheckSides == TileType::Damage || CheckBottom == TileType::Damage);
+        bool isDamage = (CheckSides == TileType::Damage || CheckBottom == TileType::Damage || is_touched_follow_ai);
         bool isEnd = (CheckSides == TileType::End || CheckBottom == TileType::End);
         bool isCollision = (CheckSides == TileType::Collision || CheckBottom == TileType::Collision);
         bool isIce = (CheckSides == TileType::Ice || CheckBottom == TileType::Ice);

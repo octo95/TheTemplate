@@ -226,6 +226,7 @@
     <ClCompile Include="ai_follow.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="collectible.cpp" />
+    <ClCompile Include="collisions.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="menu.cpp" />
@@ -241,6 +242,7 @@
     <ClInclude Include="ai_follow.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="collectible.h" />
+    <ClInclude Include="collisions.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="menu.h" />

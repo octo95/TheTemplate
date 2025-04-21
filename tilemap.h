@@ -10,6 +10,7 @@ namespace Tmpl8
     const int TOTAL_MAPS = 3;
     const int TILE_ROWS = 32;
     const int TILE_COLUMNS = 27;
+    const int MAP_AMOUNT = 3;
 
     // MAP1
     const char MAP1[TILE_ROWS][TILE_COLUMNS * 3] = {

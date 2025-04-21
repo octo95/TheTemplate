@@ -5,6 +5,8 @@
 
 namespace Tmpl8
 {
+	const int SPACING = 20;
+
 	extern Sprite img_menu_bg;
 	extern Sprite img_start_button;
 

@@ -1,6 +1,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include "windows.h"
 #include "ai_follow.h"
+#include <cmath>
 
 namespace Tmpl8
 {
@@ -11,6 +12,7 @@ namespace Tmpl8
     {}
 
     Sprite img_ai_follow(new Surface("assets/evil_tangerine.png"), 1);
+
     vec2 ai_follow_pos = { 0, 0 };
 
     void AI_Follow::followPlayer(float deltaTime) // TODO
@@ -22,6 +24,33 @@ namespace Tmpl8
 
         ai_follow_pos.x += diffX * deltaTime * delayAmplifier;
         ai_follow_pos.y += diffY * deltaTime * delayAmplifier;
+    }
+
+    void AI_Follow::setTouchingPlayer()
+    {
+        float ai_rad = img_ai_follow.GetWidth() / 2.0f;
+        float player_rad = player_img_width / 2.0f;
+
+        float radii_sum = ai_rad + player_rad;
+
+        float dx = ai_follow_pos.x - player.position.x;
+        float dy = ai_follow_pos.y - player.position.y;
+        float distance = sqrtf(dx * dx + dy * dy);
+
+        player.setTouchStateFollowAI(distance <= radii_sum);
+    }
+
+    void AI_Follow::manageDefaultPosAI_Follow(int index)
+    {
+        switch (index)
+        {
+        case 1 :
+            ai_follow_pos = AI_FOLLOW_DEFAULT_POS[0];
+        case 2 :
+            ai_follow_pos = AI_FOLLOW_DEFAULT_POS[1];
+        case 3:
+            ai_follow_pos = AI_FOLLOW_DEFAULT_POS[2];
+        }
     }
 
 }
