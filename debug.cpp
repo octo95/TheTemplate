@@ -6,14 +6,15 @@
 
 namespace Tmpl8
 {
-    Debug::Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef, Level& levelRef) :
+    Debug::Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef, Level& levelRef, Collisions& collisionRef) :
         camera(cameraRef),
         tilemap(tilemapRef),
         player(playerRef),
         collectible(collectibleRef),
         wall(wallRef),
         ai_follow(ai_followRef),
-        level(levelRef)
+        level(levelRef),
+        collisions(collisionRef)
     {}
     
     void Debug::drawHitbox(const vec2& pos, Surface* screen)
@@ -75,13 +76,24 @@ namespace Tmpl8
             char collectibles_coords[100];
             sprintf(collectibles_coords, "Jumps left: %d", collectibles_collected);
             screen->Print(collectibles_coords, 10, 110, 0xFFFF00);
+
+            // Display Collision status
+            // getCurrentTileStatus(screen);
             
             // Display FPS
             char FPS_coords[100];
             sprintf(FPS_coords, "FPS: %d", getFPS(deltaTime));
-            screen->Print(FPS_coords, 10, 130, 0xFFFF00);
+            screen->Print(FPS_coords, 10, 150, 0xFFFF00);
         }
     }
+
+    // TODO -> Display : "Touching tile : <TYPE> at <SIDE>"
+    //void Debug::getCurrentTileStatus(Surface* screen)
+    //{
+    //    char collision_type_coords[100];
+    //    //sprintf(collision_type_coords, "Touching tile: %d at %d", TODO?);
+    //    screen->Print(collision_type_coords, 10, 130, 0xFFFF00);
+    //}
 
     int Debug::getFPS(float deltaTime)
     {

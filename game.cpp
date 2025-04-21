@@ -22,10 +22,8 @@
 * - work on physics bounces
 * - do the evil AI
 * - load a font to do a counter (otherwise if too hard to do, will do UI with sprites
-* - CheckTop collisions
 * 
 * + Homework:
-* CheckCenter in a function
 * Print on screen collision
 * Stop frame by frame logic or do a menu
 */

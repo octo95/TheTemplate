@@ -29,6 +29,21 @@ namespace Tmpl8
         return type;
     }
 
+    TileType Collisions::CheckCollisionTop(const vec2& pos)
+    {
+        TileType type = None;
+
+        // Top-left
+        auto tile = tilemap.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y));
+        if (tile.type != TileType::None) type = tile.type;
+
+        // Top-right
+        tile = tilemap.tile_at(static_cast<int>(pos.x) + hitbox_size * 2, static_cast<int>(pos.y));
+        if (tile.type != TileType::None) type = tile.type;
+
+        return type;
+    }
+
     TileType Collisions::CheckCollisionSides(const vec2& pos)
     {
         TileType type = None;
@@ -50,22 +65,32 @@ namespace Tmpl8
         return type;
     }
 
+    TileType Collisions::CheckCollisionCenter(const vec2& pos)
+    {
+        TileType type = None;
+
+        // Center point
+        auto tile = tilemap.tile_at(static_cast<int>(pos.x) + hitbox_size / 2, static_cast<int>(pos.y) + hitbox_size / 2);
+        if (tile.type != TileType::None) type = tile.type;
+
+        return type;
+    }
+
     bool Collisions::manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles)
     {
         TileType CheckSides = CheckCollisionSides({ new_pos.x, player.position.y });
         TileType CheckBottom = CheckCollisionBottom({ player.position.x, new_pos.y });
-        TileType CheckCenter = TileType::None;
-        auto tile = tilemap.tile_at(static_cast<int>(new_pos.x) + hitbox_size / 2, static_cast<int>(new_pos.y) + hitbox_size / 2);
-        if (tile.type != TileType::None) CheckCenter = tile.type;
+        TileType CheckCenter = CheckCollisionCenter({ new_pos.x, new_pos.y });
+        TileType CheckTop = CheckCollisionTop({ player.position.x, new_pos.y });
 
         bool camShake = false;
 
         bool isNoneX = (CheckSides == TileType::None);
         bool isNoneY = (CheckBottom == TileType::None);
-        bool isDamage = (CheckCenter == TileType::Damage || CheckSides == TileType::Damage || CheckBottom == TileType::Damage || playerHitAI); // need to add AI touch condition
-        bool isEnd = (CheckCenter == TileType::End || CheckSides == TileType::End || CheckBottom == TileType::End);
-        bool isCollision = (CheckCenter == TileType::Collision || CheckSides == TileType::Collision || CheckBottom == TileType::Collision);
-        bool isIce = (CheckSides == TileType::Ice || CheckBottom == TileType::Ice);
+        bool isDamage = (CheckCenter == TileType::Damage || CheckSides == TileType::Damage || CheckBottom == TileType::Damage || CheckTop == TileType::Damage || playerHitAI);
+        bool isEnd = (CheckCenter == TileType::End || CheckSides == TileType::End || CheckBottom == TileType::End || CheckTop == TileType::End);
+        bool isCollision = (CheckCenter == TileType::Collision || CheckSides == TileType::Collision || CheckBottom == TileType::Collision || CheckTop==TileType::Collision);
+        bool isIce = (CheckSides == TileType::Ice || CheckBottom == TileType::Ice || CheckTop == TileType::Ice);
 
         if (isNoneX) player.position.x = new_pos.x;
         if (isNoneY) player.position.y = new_pos.y;

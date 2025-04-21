@@ -56,32 +56,25 @@ namespace Tmpl8
             collectibles_collected--;
         }
     
-        if (collisions->CheckCollisionSides(vec2 { new_pos.x + velocity.x, new_pos.y }) != TileType::None) {
+        if (collisions->CheckCollisionSides(vec2 { new_pos.x + velocity.x, new_pos.y }) != TileType::None) 
+        {
             float norm = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2));
             float angle = acos(velocity.x / norm); 
             
             velocity.x = norm * -cos(angle);
             velocity.y = norm * sin(angle);
-        
-            //velocity.x *= pow(ENERGY_LOSS, 2);
-            //velocity.y *= pow(ENERGY_LOSS, 2);
         }
-        if (velocity.y > 2.0f && collisions->CheckCollisionBottom(vec2{ new_pos.x, new_pos.y + velocity.y }) != TileType::None) {
+        if (velocity.y > 2.0f && collisions->CheckCollisionBottom(vec2{ new_pos.x, new_pos.y + velocity.y }) != TileType::None) 
+        {
             float norm = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2));
             float angle = acos(velocity.x / norm);
         
             velocity.x = norm * cos(angle);
             velocity.y = -norm * sin(angle);
-            printf("\ngenerated velocity.x = %f & velocity.y = %f\n", velocity.x, velocity.y);
+
             velocity.x *= pow(ENERGY_LOSS, 2);
             velocity.y *= pow(ENERGY_LOSS, 2);
-            printf("reduced velocity.x = %f & velocity.y = %f\n", velocity.x, velocity.y);
         }
-        //else {
-        //    velocity.y += gravity * 0.3;
-        //    if (velocity.y > 5) velocity.y = 5;
-        //}
-
         camera.setAngleAcceleration(velocity.x * rotation_speed);
 
         // Horizontal movement

@@ -8,6 +8,7 @@
 #include "wall.h"
 #include "ai_follow.h"
 #include "level.h"
+#include "collisions.h"
 
 namespace Tmpl8
 {
@@ -15,7 +16,7 @@ namespace Tmpl8
 
     class Debug {
     public:
-        Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef, Level& levelRef);
+        Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef, Level& levelRef, Collisions& collisionRef);
         void drawHitbox(const vec2& pos, Surface* screen);
         void displayDebug(Surface* screen, float deltaTime);
         void defaultPos();
@@ -24,6 +25,7 @@ namespace Tmpl8
         void drawVelocityNorm(Surface* screen);
         void restartCurrentLevel();
         void drawDistancePlayerToAI(vec2 ai_pos, Surface* screen);
+        //void getCurrentTileStatus(Surface* screen);
     private:
         Camera& camera;
         TileMap& tilemap;
@@ -32,5 +34,6 @@ namespace Tmpl8
         WallMap& wall;
         AI_Follow& ai_follow;
         Level& level;
+        Collisions& collisions;
     };
 }

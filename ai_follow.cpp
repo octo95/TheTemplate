@@ -23,20 +23,6 @@ namespace Tmpl8
         this->position.x += diffX * deltaTime * delayAmplifier;
         this->position.y += diffY * deltaTime * delayAmplifier;
     }
-
-    //void AI_Follow::manageDefaultPosAI_Follow(int index)
-    //{
-    //    switch (index)
-    //    {
-    //    case 1 :
-    //        ai_follow_pos = AI_FOLLOW_DEFAULT_POS[0];
-    //    case 2 :
-    //        ai_follow_pos = AI_FOLLOW_DEFAULT_POS[1];
-    //    case 3:
-    //        ai_follow_pos = AI_FOLLOW_DEFAULT_POS[2];
-    //    }
-    //}
-
 }
 
 // follow the player's pos with a delay of deltaTime * k
