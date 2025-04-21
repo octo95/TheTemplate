@@ -58,7 +58,7 @@ namespace Tmpl8
             camera.setCamPos(player.camFollowPlayer());
             ai_follow.followPlayer(deltaTime);
             player.movePlayer(new_pos);
-            bool is_colliding = player.manageCollisions(new_pos, screen, &collectible);
+            bool is_colliding = collisions.manageCollisions(new_pos, screen, &collectible);
 
             ai_follow.setTouchingPlayer();
             manageWallCollision(new_pos, &wall);

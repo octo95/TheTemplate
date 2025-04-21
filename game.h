@@ -20,7 +20,7 @@ namespace Tmpl8
 	public:
 
 		Game() : 
-			player(tilemap, camera),
+			player(camera),
 			debug(camera, tilemap, player, collectible, wall, ai_follow),
 			menu(tilemap, player),
 			tilemap(player, collectible, wall), // need to add ai_follow here after finishing collisions.cpp

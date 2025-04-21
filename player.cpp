@@ -8,8 +8,7 @@
 
 namespace Tmpl8
 {
-    Player::Player(TileMap& mapRef, Camera& cameraRef) :
-        tilemap(mapRef),
+    Player::Player(Camera& cameraRef) :
         camera(cameraRef)
     {}
 
@@ -19,43 +18,6 @@ namespace Tmpl8
     int player_img_width = player_img.GetWidth();
     int player_img_height = player_img.GetHeight();
     bool canJump = false;
-
-    // Player functions
-    TileType Player::CheckCollisionBottom(const vec2& pos)
-    {
-        TileType type = None;
-
-        // Bottom-left
-        auto tile = tilemap.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y) + hitbox_size * 2);
-        if (tile.type != TileType::None) type = tile.type;
-
-        // Bottom-right
-        tile = tilemap.tile_at(static_cast<int>(pos.x) + hitbox_size * 2, static_cast<int>(pos.y) + hitbox_size * 2);
-        if (tile.type != TileType::None) type = tile.type;
-
-        return type;
-    }
-
-    TileType Player::CheckCollisionSides(const vec2& pos)
-    {
-        TileType type = None;
-
-        // Left
-        auto tile = tilemap.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y));
-        if (tile.type != TileType::None) type = tile.type;
-
-        tile = tilemap.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y) + hitbox_size * 2);
-        if (tile.type != TileType::None) type = tile.type;
-
-        // Right
-        tile = tilemap.tile_at(static_cast<int>(pos.x) + hitbox_size * 2, static_cast<int>(pos.y));
-        if (tile.type != TileType::None) type = tile.type;
-
-        tile = tilemap.tile_at(static_cast<int>(pos.x) + hitbox_size * 2, static_cast<int>(pos.y) + hitbox_size * 2);
-        if (tile.type != TileType::None) type = tile.type;
-
-        return type;
-    }
 
     void Player::movePlayer(vec2& new_pos)
     {
@@ -86,6 +48,7 @@ namespace Tmpl8
         velocity.y += gravity;
         if (velocity.y > 5) velocity.y = 5; // Clamp fall speed
 
+        /* + JUMP LOGIC +
         TileType CheckSides = CheckCollisionSides({ new_pos.x + velocity.x, position.y });
         TileType CheckBottom = CheckCollisionBottom({ position.x, new_pos.y + velocity.y });
 
@@ -123,6 +86,7 @@ namespace Tmpl8
             //velocity.x *= pow(ENERGY_LOSS, 2);
             //velocity.y *= pow(ENERGY_LOSS, 2);
         }
+        */
 
         camera.setAngleAcceleration(velocity.x * rotation_speed);
 
@@ -162,61 +126,6 @@ namespace Tmpl8
     void Player::setTouchStateFollowAI(bool isTouched)
     {
         is_touched_follow_ai = isTouched;
-    }
-
-    bool Player::manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles)
-    {
-        TileType CheckSides = CheckCollisionSides({ new_pos.x, position.y });
-        TileType CheckBottom = CheckCollisionBottom({ position.x, new_pos.y });
-
-        bool camShake = false;
-
-        bool isNoneX = (CheckSides == TileType::None);
-        bool isNoneY = (CheckBottom == TileType::None);
-        bool isDamage = (CheckSides == TileType::Damage || CheckBottom == TileType::Damage || is_touched_follow_ai);
-        bool isEnd = (CheckSides == TileType::End || CheckBottom == TileType::End);
-        bool isCollision = (CheckSides == TileType::Collision || CheckBottom == TileType::Collision);
-        bool isIce = (CheckSides == TileType::Ice || CheckBottom == TileType::Ice);
-
-        if (isNoneX) position.x = new_pos.x;
-        if (isNoneY) position.y = new_pos.y;
-        else if (isDamage)
-        {
-            loadCollectiblesForMap(tilemap.getCurrentLevel());
-            position = default_pos;
-            camShake = true;
-        }
-        else if (isEnd)
-        {
-            tilemap.setMapIndex(tilemap.incrementMapIndex());
-            loadCollectiblesForMap(tilemap.getCurrentLevel());
-            position = default_pos;
-        }
-        else if (isCollision || isIce)
-        {
-            if (isIce)
-                friction = 0.0f;
-            else
-                friction = 0.05f;
-
-            velocity.y = 0;
-            position.y = (new_pos.y > position.y) ? position.y : new_pos.y;
-        }
-
-        if (walls_collected > 0)
-        {
-            walls_collected--;
-            if (velocity.x <= 0)
-            {
-                velocity.x += wall_force;
-            }
-            else if (velocity.x > 0)
-            {
-                velocity.x -= wall_force;
-            }
-        }
-
-        return camShake;
     }
 
     vec2 Player::camFollowPlayer()

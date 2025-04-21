@@ -16,25 +16,20 @@ namespace Tmpl8
 
     class Player {
     public:
-        Player(TileMap& mapRef, Camera& cameraRef);
+        Player(Camera& cameraRef);
         vec2 velocity = { 0, 0 };
         vec2 position = { 0, 0 };
         vec2 default_pos = { 0, 0 };
 
-        TileType CheckCollisionBottom(const vec2& pos);
-        TileType CheckCollisionSides(const vec2& pos);
         void movePlayer(vec2& new_pos);
-        bool manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles);
         void getPlayerPos(vec2& pos);
         void setPlayerPos(const vec2& pos);
         void setPlayerDefaultPos(const vec2& pos);
         void getPlayerDefaultPos(vec2& pos);
         vec2 camFollowPlayer();
         void manageDefaultPos(int index);
-        void rotatePlayer(Surface* screen, float deltaTime);
         void setTouchStateFollowAI(bool isTouched);
     private:
-        TileMap& tilemap;
         Camera& camera;
         bool is_touched_follow_ai = false;
         float gravity = 0.5f;
