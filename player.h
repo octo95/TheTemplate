@@ -22,16 +22,19 @@ namespace Tmpl8
         vec2 default_pos = { 0, 0 };
 
         void movePlayer(vec2& new_pos);
-        void getPlayerPos(vec2& pos);
-        void setPlayerPos(const vec2& pos);
-        void setPlayerDefaultPos(const vec2& pos);
-        void getPlayerDefaultPos(vec2& pos);
         vec2 camFollowPlayer();
         void manageDefaultPos(int index);
-        void setTouchStateFollowAI(bool isTouched);
+
+        void setPlayerDefaultPos(const vec2& pos) { default_pos = pos; }
+        void getPlayerDefaultPos(vec2& pos) { pos = default_pos; }
+        void getPlayerPos(vec2& pos) { pos = position; }
+        void setPlayerPos(const vec2& pos) { position = pos; }
+        void setJumpState(bool canJump) { can_jump = canJump; }
+
     private:
         Camera& camera;
         bool is_touched_follow_ai = false;
+        bool can_jump = false;
         float gravity = 0.5f;
         float vertical_speed = 0;
         float horizontal_speed = 0;

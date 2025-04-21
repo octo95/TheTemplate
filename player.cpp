@@ -48,45 +48,37 @@ namespace Tmpl8
         velocity.y += gravity;
         if (velocity.y > 5) velocity.y = 5; // Clamp fall speed
 
-        /* + JUMP LOGIC +
-        TileType CheckSides = CheckCollisionSides({ new_pos.x + velocity.x, position.y });
-        TileType CheckBottom = CheckCollisionBottom({ position.x, new_pos.y + velocity.y });
-
-        bool isCollision = (CheckSides == TileType::Collision || CheckBottom == TileType::Collision);
-        bool isIce = (CheckSides == TileType::Ice || CheckBottom == TileType::Ice);
-        canJump = GetAsyncKeyState(VK_UP) && (CheckBottom == 3 || CheckBottom == 4) && collectibles_collected > 0;
-
-        if (canJump)
+      
+        if (can_jump)
         {
             velocity.y += -6.0f;
             collectibles_collected--;
         }
 
-        if (isCollision || isIce)
-        {
-            //if (CheckSides) {
-            //    float norm = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2));
-            //    float angle = acos(velocity.x / norm);
-            //
-            //    velocity.x = norm * -cos(angle);
-            //    velocity.y = -norm * sin(angle);                
-            //}
-            //else if (CheckBottom != TileType::None) {
-            //    float norm = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2));
-            //    float angle = acos(velocity.y / norm);
-            //
-            //    velocity.x = norm * cos(angle);
-            //    velocity.y = -norm * -sin(angle);
-            //}
-            //else if (!CheckBottom) {
-            //    velocity.y += gravity * 0.3;
-            //    if (velocity.y > 5) velocity.y = 5;
-            //}
-
-            //velocity.x *= pow(ENERGY_LOSS, 2);
-            //velocity.y *= pow(ENERGY_LOSS, 2);
-        }
-        */
+        // Physics (TODO)
+        //if (isCollision || isIce)
+        //{
+        //    if (CheckSides) {
+        //        float norm = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2));
+        //        float angle = acos(velocity.x / norm);
+        //    
+        //        velocity.x = norm * -cos(angle);
+        //        velocity.y = -norm * sin(angle);                
+        //    }
+        //    else if (CheckBottom != TileType::None) {
+        //        float norm = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2));
+        //        float angle = acos(velocity.y / norm);
+        //    
+        //        velocity.x = norm * cos(angle);
+        //        velocity.y = -norm * -sin(angle);
+        //    }
+        //    else if (!CheckBottom) {
+        //        velocity.y += gravity * 0.3;
+        //        if (velocity.y > 5) velocity.y = 5;
+        //    }
+        //    velocity.x *= pow(ENERGY_LOSS, 2);
+        //    velocity.y *= pow(ENERGY_LOSS, 2);
+        //}
 
         camera.setAngleAcceleration(velocity.x * rotation_speed);
 
@@ -100,32 +92,6 @@ namespace Tmpl8
         if (new_pos.x < 0) new_pos.x = 0;
         if (new_pos.x + player_img_width > SCREEN_WIDTH + TILE_SIZE)
             new_pos.x = SCREEN_WIDTH - player_img_width + TILE_SIZE;
-    }
-
-
-    void Player::setPlayerDefaultPos(const vec2& pos)
-    {
-        default_pos = pos;
-    }
-
-    void Player::getPlayerDefaultPos(vec2& pos)
-    {
-        pos = default_pos;
-    }
-
-    void Player::getPlayerPos(vec2& pos)
-    {
-        pos = position;
-    }
-
-    void Player::setPlayerPos(const vec2& pos)
-    {
-        position = pos;
-    }
-
-    void Player::setTouchStateFollowAI(bool isTouched)
-    {
-        is_touched_follow_ai = isTouched;
     }
 
     vec2 Player::camFollowPlayer()

@@ -1,3 +1,5 @@
+#define WIN32_LEAN_AND_MEAN
+#include "windows.h"
 #include "collisions.h"
 
 namespace Tmpl8
@@ -54,7 +56,7 @@ namespace Tmpl8
 
         bool isNoneX = (CheckSides == TileType::None);
         bool isNoneY = (CheckBottom == TileType::None);
-        bool isDamage = (CheckSides == TileType::Damage || CheckBottom == TileType::Damage); // need to add AI touch condition
+        bool isDamage = (CheckSides == TileType::Damage || CheckBottom == TileType::Damage || playerHitAI); // need to add AI touch condition
         bool isEnd = (CheckSides == TileType::End || CheckBottom == TileType::End);
         bool isCollision = (CheckSides == TileType::Collision || CheckBottom == TileType::Collision);
         bool isIce = (CheckSides == TileType::Ice || CheckBottom == TileType::Ice);
@@ -98,6 +100,34 @@ namespace Tmpl8
         }
 
         return camShake;
+    }
+
+    bool Collisions::getJumpState(vec2& new_pos)
+    {
+        bool canPlayerJump = false;
+        TileType CheckSides = CheckCollisionSides({ new_pos.x + player.velocity.x, player.position.y });
+        TileType CheckBottom = CheckCollisionBottom({ player.position.x, new_pos.y + player.velocity.y });
+
+        bool isCollision = (CheckSides == TileType::Collision || CheckBottom == TileType::Collision);
+        bool isIce = (CheckSides == TileType::Ice || CheckBottom == TileType::Ice);
+
+        canPlayerJump = GetAsyncKeyState(VK_UP) && (CheckBottom == 3 || CheckBottom == 4) && collectibles_collected > 0;
+
+        return canPlayerJump;
+    }
+
+    void Collisions::playerCollisionsAI()
+    {
+        float ai_rad = img_ai_follow.GetWidth() / 2.0f;
+        float player_rad = player_img_width / 2.0f;
+
+        float radii_sum = ai_rad + player_rad;
+
+        float dx = ai_follow_pos.x - player.position.x;
+        float dy = ai_follow_pos.y - player.position.y;
+        float distance = sqrtf(dx * dx + dy * dy);
+
+        playerHitAI = (distance <= radii_sum);
     }
 }
 

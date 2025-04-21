@@ -26,20 +26,6 @@ namespace Tmpl8
         ai_follow_pos.y += diffY * deltaTime * delayAmplifier;
     }
 
-    void AI_Follow::setTouchingPlayer()
-    {
-        float ai_rad = img_ai_follow.GetWidth() / 2.0f;
-        float player_rad = player_img_width / 2.0f;
-
-        float radii_sum = ai_rad + player_rad;
-
-        float dx = ai_follow_pos.x - player.position.x;
-        float dy = ai_follow_pos.y - player.position.y;
-        float distance = sqrtf(dx * dx + dy * dy);
-
-        player.setTouchStateFollowAI(distance <= radii_sum);
-    }
-
     void AI_Follow::manageDefaultPosAI_Follow(int index)
     {
         switch (index)

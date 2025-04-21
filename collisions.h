@@ -11,12 +11,16 @@ namespace Tmpl8
         TileType CheckCollisionBottom(const vec2& pos);
         TileType CheckCollisionSides(const vec2& pos);
         bool manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles);
+        bool getJumpState(vec2& new_pos);
+        void setTouchStateFollowAI(bool isTouched) { playerHitAI = isTouched; }
+        void playerCollisionsAI();
     private:
         Player& player;
         TileMap& tilemap;
         AI_Follow& ai_follow;
 
-        bool is_touched_follow_ai = false;
+        bool playerHitAI = false;
+        bool canPlayerJump = false;
         float gravity = 0.5f;
         float friction = 0.05f;
         float wall_force = 7.0f;

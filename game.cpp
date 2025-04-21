@@ -19,12 +19,10 @@
 
 /*
 * - drawRotated redo to fix black pixels and redo from the ground up
-* - make setPlayerPos and getPlayerPos (same for default functions) cleaner, the default ones should have in parameter the index of the map to remove the vec2 in init
 * - work on physics bounces
 * - do the evil AI
 * - put playerDefaultPos and aiDefaultPos in arrays in tilemap.h
 * - load a font to do a counter (otherwise if too hard to do, will do UI with sprites
-* - mouse hover enter button
 */
 
 namespace Tmpl8
@@ -51,16 +49,16 @@ namespace Tmpl8
         // * Starting the game logic
         if (menu.startGame())
         {
+            // * Initialize game logic
             vec2 new_pos;
             player.getPlayerPos(new_pos);
 
-            // * Initialize game logic
             camera.setCamPos(player.camFollowPlayer());
             ai_follow.followPlayer(deltaTime);
             player.movePlayer(new_pos);
+            collisions.playerCollisionsAI();
+            player.setJumpState(collisions.getJumpState(new_pos));
             bool is_colliding = collisions.manageCollisions(new_pos, screen, &collectible);
-
-            ai_follow.setTouchingPlayer();
             manageWallCollision(new_pos, &wall);
             manageCollectibleCollision(new_pos, &collectible);
             if (is_colliding) camera.Shake();
