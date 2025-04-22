@@ -23,6 +23,20 @@ namespace Tmpl8
         this->position.x += diffX * deltaTime * delayAmplifier;
         this->position.y += diffY * deltaTime * delayAmplifier;
     }
+
+    bool AI_Follow::isTouchingPlayer()
+    {
+        float ai_rad = img_ai_follow.GetWidth() / 2.0f;
+        float player_rad = player_img_width / 2.0f;
+
+        float radii_sum = ai_rad + player_rad;
+
+        float dx = this->position.x - player.position.x;
+        float dy = this->position.y - player.position.y;
+        float distance = sqrtf(dx * dx + dy * dy);
+
+        return (distance <= radii_sum);
+    }
 }
 
 // follow the player's pos with a delay of deltaTime * k

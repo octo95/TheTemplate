@@ -20,8 +20,8 @@ namespace Tmpl8
         tilemap.setMapIndex(map_index);
         loadAllWalls();
         loadAllCollectibles();
-        loadCollectiblesForMap(map_index);
         loadWallsForMap(map_index);
+        loadCollectiblesForMap(map_index);
     }
 
     void Level::manageDefaultPos(int map_index)

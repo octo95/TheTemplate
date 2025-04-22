@@ -20,18 +20,23 @@ namespace Tmpl8
     int player_img_height = player_img.GetHeight();
     bool canJump = false;
 
-    void Player::movePlayer(vec2& new_pos, Collisions* collisions)
+    void Player::movePlayer(vec2& new_pos, vec2& half_velocity, Collisions* collisions)
     {
+        // Left
         if (GetAsyncKeyState(VK_LEFT))
         {
             velocity.x -= ACCELERATION;
             if (velocity.x < -MAX_HORIZONTAL_SPEED) velocity.x = -MAX_HORIZONTAL_SPEED;
         }
+
+        // Right
         else if (GetAsyncKeyState(VK_RIGHT))
         {
             velocity.x += ACCELERATION;
             if (velocity.x > MAX_HORIZONTAL_SPEED) velocity.x = MAX_HORIZONTAL_SPEED;
         }
+
+        // If no direction, slide
         else
         {
             if (velocity.x > 0)
@@ -46,44 +51,30 @@ namespace Tmpl8
             }
         }
 
+        // Clamp fall speed
         velocity.y += gravity;
-        if (velocity.y > MAX_VERTICAL_SPEED) velocity.y = MAX_VERTICAL_SPEED; // Clamp fall speed
+        if (velocity.y > MAX_VERTICAL_SPEED) velocity.y = MAX_VERTICAL_SPEED;
 
-      
+        half_velocity = velocity;
+        collisions->applyBouncingPhysics(new_pos);
+
+        // Jump
         if (can_jump)
         {
             velocity.y += -6.0f;
             collectibles_collected--;
         }
     
-        if (collisions->CheckCollisionSides(vec2 { new_pos.x + velocity.x, new_pos.y }) != TileType::None) 
-        {
-            float norm = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2));
-            float angle = acos(velocity.x / norm); 
-            
-            velocity.x = norm * -cos(angle);
-            velocity.y = norm * sin(angle);
-        }
-        if (velocity.y > 2.0f && collisions->CheckCollisionBottom(vec2{ new_pos.x, new_pos.y + velocity.y }) != TileType::None) 
-        {
-            float norm = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2));
-            float angle = acos(velocity.x / norm);
-        
-            velocity.x = norm * cos(angle);
-            velocity.y = -norm * sin(angle);
-
-            velocity.x *= pow(ENERGY_LOSS, 2);
-            velocity.y *= pow(ENERGY_LOSS, 2);
-        }
+        // Pass the velocity to the camera to make the player rotate while moving
         camera.setAngleAcceleration(velocity.x * rotation_speed);
 
-        // Horizontal movement
+        // Apply horizontal movement
         new_pos.x += velocity.x;
 
-        // Vertical movement        
+        // Apply vertical movement        
         new_pos.y += velocity.y;
 
-        // Clamp horizontally
+        // Clamp horizontally to not go out of bounds
         if (new_pos.x < 0) new_pos.x = 0;
         if (new_pos.x + player_img_width > SCREEN_WIDTH + TILE_SIZE)
             new_pos.x = SCREEN_WIDTH - player_img_width + TILE_SIZE;

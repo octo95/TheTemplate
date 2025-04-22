@@ -19,7 +19,6 @@
 
 /*
 * - drawRotated redo to fix black pixels and redo from the ground up
-* - work on physics bounces
 * - do the evil AI
 * - load a font to do a counter (otherwise if too hard to do, will do UI with sprites
 * 
@@ -30,49 +29,45 @@
 
 namespace Tmpl8
 {
-    // + Initializer / Shutdown
-    void Game::Init()
-    {
-        level.loadLevel(1);
-    }
-
-    void Game::Shutdown() {}
-
     // + MAIN GAME LOGIC 
     void Game::Tick(float deltaTime)
     {
         deltaTime /= 1000.0f; // Convert deltaTime to seconds
-
+        deltaTime /= 1000.0f;
+        menu.skipAFrame(isTDown);
         // * Clear the screen black every tick
         screen->Clear(0);
 
         // * Starting the game logic
-        if (menu.startGame())
+        if (menu.manageGameStart())
         {
+            if (menu.manageGamePause())
+            {
+                // * Initialize game logic
+            
+                // Player logic
+                player.getPlayerPos(player_pos);
+                vec2 half_velocity;
+                player.movePlayer(player_pos, half_velocity, &collisions);
+                player.setJumpState(collisions.getJumpState(player_pos));
 
-            //if (!is_paused()) {
-            //    game logic
-            //}
-            //else {
-            //    draw game
-            //}
+                // Collisions logic
+                collisions.manageCollisions(player_pos, half_velocity, screen, &collectible);
+                manageWallCollision(player_pos, &wall);
+                manageCollectibleCollision(player_pos, &collectible);
 
+                // AI logic
+                ai_follow.followPlayer(deltaTime);
 
-            // * Initialize game logic
-            vec2 player_pos;
-
-            player.getPlayerPos(player_pos);
-
-            camera.setCamPos(player.camFollowPlayer());
-            ai_follow.followPlayer(deltaTime);
-            player.movePlayer(player_pos, &collisions);
-            collisions.playerCollisionsAI();
-            player.setJumpState(collisions.getJumpState(player_pos));
-            bool is_colliding = collisions.manageCollisions(player_pos, screen, &collectible);
-            manageWallCollision(player_pos, &wall);
-            manageCollectibleCollision(player_pos, &collectible);
-            if (is_colliding) camera.Shake();
-            camera.camShake(deltaTime);  
+                // Camera logic
+                camera.setCamPos(player.camFollowPlayer());
+                camera.shakeCamera(deltaTime);
+            }
+            else
+            {
+                // Pause the time if the game is paused
+                deltaTime = 0.0f;
+            }
 
             // * Draw the objects on screen
             tilemap.drawMap(screen, camera);
@@ -81,13 +76,45 @@ namespace Tmpl8
             drawCollectibleMap(&camera, screen, &this->collectible);
             drawWallMap(&camera, screen, &this->wall);
 
-            // * DEBUG: Enabled if pressing <spacebar>
-            debug.displayDebug(screen, deltaTime);
+            if (!menu.manageGamePause())
+            {
+                static float desaturationMax = 0.5f;
+                static float desaturationAmount = 0.0f;
+                static float desaturationTime = 0.5f;
 
+                // Increment the amount over <desaturationTime> seconds
+                desaturationAmount += (desaturationMax / desaturationTime) * deltaTime; 
+
+                // Stop the incrementation once reaching <desaturationMax>
+                if (desaturationAmount > desaturationMax) desaturationAmount = desaturationMax;
+
+                screen->ReduceSaturation(desaturationAmount);
+
+            }
+            
+            // * DEBUG: Enabled if pressing <SPACEBAR>
+            debug.displayDebug(screen, deltaTime);
         }
         else
         {
             menu.drawMenu(screen); // As long as we don't start the game, stay in the menu screen
         }
     }
+
+    // + INITIALIZER / SHUTDOWN
+    void Game::Init() {}
+    void Game::Shutdown() {}
 }
+
+// + NOTES +
+// Look up std_font
+// Look up scalefont on the server pins
+// Move the physics part of move in collisions.cpp to be called at the proper time (move should just do the += to its positions)
+
+// + FIXES +
+
+/*
+* - Physics collisions (mostly horizontal)
+* - Tiles collisions
+* - Manage walls defaults
+*/

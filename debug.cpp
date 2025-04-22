@@ -137,9 +137,9 @@ namespace Tmpl8
 
     void Debug::drawVelocityNorm(Surface* screen)
     { 
-        float lineSize = 10.0f;
+        float lineSize = 1.0f;
         float start_x = player.position.x + camera.getCamPos().x + player_img_width / 2;
-        float start_y = player.position.y + camera.getCamPos().y + player_img_height / 2 - 4;
+        float start_y = player.position.y + camera.getCamPos().y + player_img_height - 4 + 2;
         float end_x = start_x + player.velocity.x * lineSize;
         float end_y = start_y + player.velocity.y * lineSize;
 

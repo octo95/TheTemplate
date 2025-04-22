@@ -4,7 +4,7 @@
 namespace Tmpl8
 {
     void Camera::setCamPos(const vec2& position)
-    {
+    { 
         this->position = position;
     }
 
@@ -13,25 +13,34 @@ namespace Tmpl8
         return position + shake;
     }
 
-    void Camera::camShake(float deltaTime)
+    void Camera::setShakeState(bool is_shaking)
     {
+        shake_state = is_shaking;
+    }
+
+    void Camera::shakeCamera(float deltaTime)
+    {
+        float shakeTime = 0.6f;
+        float frequency = 20.0f;
+        float amplitude = 2.5;
+
+        if (shake_state)
+        {
+            total_time = shakeTime;
+            shake_state = false;
+        }
+
         total_time -= deltaTime;
-        const float frequency = 20.0f;
-        const float amplitude = 2.5f;
+
         if (total_time > 0.0f)
         {
-            shake.x = std::sin(exp(total_time) * frequency) * amplitude;
-            shake.y = std::cos(exp(total_time) * frequency) * amplitude;
+            shake.x = std::sin(std::exp(total_time) * frequency) * amplitude;
+            shake.y = std::cos(std::exp(total_time) * frequency) * amplitude;
         }
         else
         {
             shake = { 0, 0 };
         }
-    }
-
-    void Camera::Shake()
-    {
-        total_time = 0.6f;
     }
 
     void Camera::drawWithCam(Sprite* img, Surface* screen, int x, int y)

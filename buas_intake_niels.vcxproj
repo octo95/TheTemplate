@@ -250,6 +250,7 @@
     <ClInclude Include="menu.h" />
     <ClInclude Include="physics.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="stb_truetype.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />
     <ClInclude Include="tile.h" />

@@ -207,6 +207,30 @@ void Surface::Bar( int x1, int y1, int x2, int y2, Pixel c )
 	}
 }
 
+void Surface::ReduceSaturation(float amount)
+{
+	int count = m_Width * m_Height;
+	for (int i = 0; i < count; i++)
+	{
+		Pixel p = m_Buffer[i];
+
+		// Getting the RGB colors of the screen
+		unsigned char r = (p & 0xFF0000) >> 16;
+		unsigned char g = (p & 0x00FF00) >> 8;
+		unsigned char b = (p & 0x0000FF);
+
+		unsigned char gray = (r + g + b) / 3;
+
+		// Assigning each pixels a gray scale amount
+		unsigned char newR = static_cast<unsigned char>(r * (1.0f - amount) + gray * amount);
+		unsigned char newG = static_cast<unsigned char>(g * (1.0f - amount) + gray * amount);
+		unsigned char newB = static_cast<unsigned char>(b * (1.0f - amount) + gray * amount);
+
+		m_Buffer[i] = (newR << 16) | (newG << 8) | newB;
+	}
+}
+
+
 void Surface::CopyTo( Surface* a_Dst, int a_X, int a_Y )
 {
 	Pixel* dst = a_Dst->GetBuffer();

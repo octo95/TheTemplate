@@ -22,8 +22,11 @@ namespace Tmpl8
         vec2 velocity = { 0, 0 };
         vec2 position = { 0, 0 };
         vec2 default_pos = { 0, 0 };
+        const float ENERGY_LOSS = 0.7f;
+        const float MAX_HORIZONTAL_SPEED = 3.0f;
+        const float MAX_VERTICAL_SPEED = 10.0f;
 
-        void movePlayer(vec2& new_pos, Collisions* collisions);
+        void movePlayer(vec2& new_pos, vec2& half_velocity, Collisions* collisions);
         vec2 camFollowPlayer();
 
         void setPlayerDefaultPos(const vec2& pos) { default_pos = pos; }
@@ -42,9 +45,6 @@ namespace Tmpl8
         float friction = 0.05f;
         float wall_force = 7.0f;
         float rotation_speed = 90.0f;
-        const float ENERGY_LOSS = 0.7f;
         const float ACCELERATION = 0.3f;
-        const float MAX_HORIZONTAL_SPEED = 3.0f;
-        const float MAX_VERTICAL_SPEED = 10.0f;
     };
 }

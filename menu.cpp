@@ -4,6 +4,7 @@
 #include "tilemap.h"
 #include <stdio.h>
 #include <iostream>
+#include <thread>
 
 namespace Tmpl8
 {
@@ -26,7 +27,6 @@ namespace Tmpl8
     void Menu::drawMenu(Surface* screen)
     {
         // Draw background and buttons
-        screen->Clear(0);
         img_menu_bg.Draw(screen, 0, 0);
         detectLevelHover();
 
@@ -88,12 +88,50 @@ namespace Tmpl8
         mouseY = y;
     }
 
-    bool Menu::startGame()
+    bool Menu::manageGameStart()
     {
-        if (GetAsyncKeyState(VK_RETURN))
+        static bool enterPressedLastFrame = false;
+        static int game_state = 0;
+        bool isEnterDown = GetAsyncKeyState(VK_RETURN) & 0x8000;
+
+        if (isEnterDown && !enterPressedLastFrame)
         {
-            start_game = true;
+            game_state++;
+            start_game = (game_state % 2) == 1; 
+            level.loadLevel(1);
         }
+        enterPressedLastFrame = isEnterDown;
         return start_game;
     }
+
+    bool Menu::manageGamePause()
+    {
+        static bool pPressedLastFrame = false;
+        static bool resume_game = true; 
+        bool isPDown = GetAsyncKeyState('P') & 0x8000;
+
+        if (isPDown && !pPressedLastFrame) resume_game = !resume_game; 
+       
+        pPressedLastFrame = isPDown;
+        return resume_game;
+    }
+
+    void Menu::skipAFrame(bool& isTDown)
+    {
+
+        //static bool tPressedLastFrame = false;
+        if (GetAsyncKeyState('T') & 0x8000) isTDown = !isTDown;
+
+        if (isTDown)
+        {
+            resume_game = true;
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+            resume_game = false;
+        }
+
+
+        //tPressedLastFrame = isTDown;
+    }
+
+
 }

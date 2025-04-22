@@ -5,21 +5,23 @@
 #include "collectible.h"
 #include "wall.h"
 #include "level.h"
+#include "camera.h"
 
 namespace Tmpl8
 {
     class Collisions {
     public:
-        Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef);
+        Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef, Camera& cameraRef);
         TileType CheckCollisionBottom(const vec2& pos);
         TileType CheckCollisionTop(const vec2& pos);
         TileType CheckCollisionSides(const vec2& pos);
         TileType CheckCollisionCenter(const vec2& pos);
-        bool manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles);
+        void manageCollisions(vec2& new_pos, vec2& half_velocity, Surface* screen, CollectibleMap* collectibles);
         bool getJumpState(vec2& new_pos);
         void setTouchStateFollowAI(bool isTouched) { playerHitAI = isTouched; }
         void playerCollisionsAI();
         bool playerHitAI = false;
+        void applyBouncingPhysics(vec2& new_pos);
     private:
         Player& player;
         TileMap& tilemap;
@@ -27,6 +29,7 @@ namespace Tmpl8
         CollectibleMap& collectible;
         WallMap& wall;
         Level& level;
+        Camera& camera;
 
         bool canPlayerJump = false;
         float gravity = 0.5f;

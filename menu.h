@@ -18,13 +18,16 @@ namespace Tmpl8
 		void setMousePosition(int x, int y); 
 		void detectLevelHover();
 		void setMouseState(bool isPressed) { isMousePressed = isPressed; }
-		bool startGame();
+		bool manageGameStart();
+		bool manageGamePause();
+		void skipAFrame(bool& isTDown);
 
 	private:
 		Level& level;
 		Player& player;
 		int mouseX, mouseY; 
 		bool start_game = false;
+		bool resume_game = true;
 		bool isMousePressed = false;
 	};
 }

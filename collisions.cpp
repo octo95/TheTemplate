@@ -4,13 +4,14 @@
 
 namespace Tmpl8
 {
-    Collisions::Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef) :
+    Collisions::Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef, Camera& cameraRef) :
         player(playerRef),
         tilemap(tilemapRef),
         ai_follow(ai_followRef),
         collectible(collectibleRef),
         wall(wallRef),
-        level(levelRef)
+        level(levelRef),
+        camera(cameraRef)
     {}
 
     // Player functions
@@ -76,30 +77,37 @@ namespace Tmpl8
         return type;
     }
 
-    bool Collisions::manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles)
+    void Collisions::manageCollisions(vec2& new_pos, vec2& half_velocity, Surface* screen, CollectibleMap* collectibles)
     {
         TileType CheckSides = CheckCollisionSides({ new_pos.x, player.position.y });
         TileType CheckBottom = CheckCollisionBottom({ player.position.x, new_pos.y });
         TileType CheckCenter = CheckCollisionCenter({ new_pos.x, new_pos.y });
         TileType CheckTop = CheckCollisionTop({ player.position.x, new_pos.y });
 
-        bool camShake = false;
+        auto tt = CheckCollisionSides({ player.position.x + half_velocity.x, player.position.y });
+        if (tt != TileType::None) CheckSides = tt;
+        tt = CheckCollisionBottom({ player.position.x + half_velocity.x, player.position.y });
+        if (tt != TileType::None) CheckBottom = tt;
+        tt = CheckCollisionCenter({ player.position.x + half_velocity.x, player.position.y });
+        if (tt != TileType::None) CheckCenter = tt;
+        tt = CheckCollisionTop({ player.position.x + half_velocity.x, player.position.y });
+        if (tt != TileType::None) CheckTop = tt;
 
         bool isNoneX = (CheckSides == TileType::None);
         bool isNoneY = (CheckBottom == TileType::None);
-        bool isDamage = (CheckCenter == TileType::Damage || CheckSides == TileType::Damage || CheckBottom == TileType::Damage || CheckTop == TileType::Damage || playerHitAI);
+        bool isDamage = (CheckCenter == TileType::Damage || CheckSides == TileType::Damage || CheckBottom == TileType::Damage || CheckTop == TileType::Damage || ai_follow.isTouchingPlayer());
         bool isEnd = (CheckCenter == TileType::End || CheckSides == TileType::End || CheckBottom == TileType::End || CheckTop == TileType::End);
         bool isCollision = (CheckCenter == TileType::Collision || CheckSides == TileType::Collision || CheckBottom == TileType::Collision || CheckTop==TileType::Collision);
         bool isIce = (CheckSides == TileType::Ice || CheckBottom == TileType::Ice || CheckTop == TileType::Ice);
 
         if (isNoneX) player.position.x = new_pos.x;
         if (isNoneY) player.position.y = new_pos.y;
-        else if (isDamage)
+        if (isDamage)
         {
             ai_follow.setAIFollowPos(level.AI_FOLLOW_DEFAULT_POS[tilemap.getCurrentLevel()-1]);
             loadCollectiblesForMap(tilemap.getCurrentLevel());
             player.position = player.default_pos;
-            camShake = true;
+            camera.setShakeState(true);
         }
         else if (isEnd)
         {
@@ -120,8 +128,6 @@ namespace Tmpl8
             walls_collected--;
             player.velocity += (player.velocity.x <= 0) ? wall_force : -wall_force;
         }
-
-        return camShake;
     }
 
     bool Collisions::getJumpState(vec2& new_pos)
@@ -138,18 +144,27 @@ namespace Tmpl8
         return canPlayerJump;
     }
 
-    void Collisions::playerCollisionsAI()
+    void Collisions::applyBouncingPhysics(vec2& new_pos)
     {
-        float ai_rad = img_ai_follow.GetWidth() / 2.0f;
-        float player_rad = player_img_width / 2.0f;
+        if (this->CheckCollisionSides(vec2{ new_pos.x + player.velocity.x, new_pos.y }) != TileType::None)
+        {
+            float norm = sqrt(pow(player.velocity.x, 2) + pow(player.velocity.y, 2));
+            float angle = acos(player.velocity.x / norm);
 
-        float radii_sum = ai_rad + player_rad;
+            player.velocity.x = norm * -cos(angle);
+            player.velocity.y = norm * sin(angle);
+        }
+        if (player.velocity.y > 2.0f && this->CheckCollisionBottom(vec2{ new_pos.x, new_pos.y + player.velocity.y }) != TileType::None)
+        {
+            float norm = sqrt(pow(player.velocity.x, 2) + pow(player.velocity.y, 2));
+            float angle = acos(player.velocity.x / norm);
 
-        float dx = ai_follow.position.x - player.position.x;
-        float dy = ai_follow.position.y - player.position.y;
-        float distance = sqrtf(dx * dx + dy * dy);
+            player.velocity.x = norm * cos(angle);
+            player.velocity.y = -norm * sin(angle);
 
-        playerHitAI = (distance <= radii_sum);
+            player.velocity.x *= pow(player.ENERGY_LOSS, 2);
+            player.velocity.y *= pow(player.ENERGY_LOSS, 2);
+        }
     }
 }
 

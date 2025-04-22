@@ -26,7 +26,7 @@ namespace Tmpl8
 			debug(camera, tilemap, player, collectible, wall, ai_follow, level, collisions),
 			menu(level, player),
 			tilemap(player),
-			collisions(player, tilemap, ai_follow, collectible, wall, level),
+			collisions(player, tilemap, ai_follow, collectible, wall, level, camera),
 			level(tilemap, player, ai_follow, collectible, wall)
 		{}
 
@@ -64,5 +64,7 @@ namespace Tmpl8
 
 		int mousex, mousey;
 		bool start_game = false;
+		vec2 player_pos;
+		bool isTDown = false;
 	};
 }
