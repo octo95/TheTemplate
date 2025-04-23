@@ -66,39 +66,18 @@ namespace Tmpl8
         return type;
     }
 
-    TileType Collisions::CheckCollisionCenter(const vec2& pos)
-    {
-        TileType type = None;
-
-        // Center point
-        auto tile = tilemap.tile_at(static_cast<int>(pos.x) + hitbox_size / 2, static_cast<int>(pos.y) + hitbox_size / 2);
-        if (tile.type != TileType::None) type = tile.type;
-
-        return type;
-    }
-
-    void Collisions::manageCollisions(vec2& new_pos, vec2& half_velocity, Surface* screen, CollectibleMap* collectibles)
+    void Collisions::manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles)
     {
         TileType CheckSides = CheckCollisionSides({ new_pos.x, player.position.y });
-        TileType CheckBottom = CheckCollisionBottom({ player.position.x, new_pos.y });
-        TileType CheckCenter = CheckCollisionCenter({ new_pos.x, new_pos.y });
-        TileType CheckTop = CheckCollisionTop({ player.position.x, new_pos.y });
-
-        auto tt = CheckCollisionSides({ player.position.x + half_velocity.x, player.position.y });
-        if (tt != TileType::None) CheckSides = tt;
-        tt = CheckCollisionBottom({ player.position.x + half_velocity.x, player.position.y });
-        if (tt != TileType::None) CheckBottom = tt;
-        tt = CheckCollisionCenter({ player.position.x + half_velocity.x, player.position.y });
-        if (tt != TileType::None) CheckCenter = tt;
-        tt = CheckCollisionTop({ player.position.x + half_velocity.x, player.position.y });
-        if (tt != TileType::None) CheckTop = tt;
+        TileType CheckBottom = CheckCollisionBottom({ player.position.x, new_pos.y + player.velocity.y});
+        TileType CheckTop = CheckCollisionTop({ player.position.x, new_pos.y + player.velocity.y});
 
         bool isNoneX = (CheckSides == TileType::None);
         bool isNoneY = (CheckBottom == TileType::None);
-        bool isDamage = (CheckCenter == TileType::Damage || CheckSides == TileType::Damage || CheckBottom == TileType::Damage || CheckTop == TileType::Damage || ai_follow.isTouchingPlayer());
-        bool isEnd = (CheckCenter == TileType::End || CheckSides == TileType::End || CheckBottom == TileType::End || CheckTop == TileType::End);
-        bool isCollision = (CheckCenter == TileType::Collision || CheckSides == TileType::Collision || CheckBottom == TileType::Collision || CheckTop==TileType::Collision);
-        bool isIce = (CheckSides == TileType::Ice || CheckBottom == TileType::Ice || CheckTop == TileType::Ice);
+        bool isDamage = (CheckSides == TileType::Damage || CheckBottom == TileType::Damage || CheckTop == TileType::Damage || ai_follow.isTouchingPlayer());
+        bool isEnd = (CheckSides == TileType::End || CheckBottom == TileType::End || CheckTop == TileType::End);
+        bool isCollision = (CheckSides == TileType::Collision || CheckBottom == TileType::Collision || CheckTop==TileType::Collision);
+        bool isIce = (CheckBottom == TileType::Ice || CheckTop == TileType::Ice);
 
         if (isNoneX) player.position.x = new_pos.x;
         if (isNoneY) player.position.y = new_pos.y;
@@ -106,6 +85,7 @@ namespace Tmpl8
         {
             ai_follow.setAIFollowPos(level.AI_FOLLOW_DEFAULT_POS[tilemap.getCurrentLevel()-1]);
             loadCollectiblesForMap(tilemap.getCurrentLevel());
+            loadWallsForMap(tilemap.getCurrentLevel());
             player.position = player.default_pos;
             camera.setShakeState(true);
         }
@@ -153,6 +133,9 @@ namespace Tmpl8
 
             player.velocity.x = norm * -cos(angle);
             player.velocity.y = norm * sin(angle);
+
+            // Apply the power loss for the sides collisions
+            player.velocity.x *= pow(player.ENERGY_LOSS, 2);
         }
         if (player.velocity.y > 2.0f && this->CheckCollisionBottom(vec2{ new_pos.x, new_pos.y + player.velocity.y }) != TileType::None)
         {
@@ -162,7 +145,7 @@ namespace Tmpl8
             player.velocity.x = norm * cos(angle);
             player.velocity.y = -norm * sin(angle);
 
-            player.velocity.x *= pow(player.ENERGY_LOSS, 2);
+            // Apply the power loss for the bottom collisions
             player.velocity.y *= pow(player.ENERGY_LOSS, 2);
         }
     }

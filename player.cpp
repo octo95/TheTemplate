@@ -20,7 +20,7 @@ namespace Tmpl8
     int player_img_height = player_img.GetHeight();
     bool canJump = false;
 
-    void Player::movePlayer(vec2& new_pos, vec2& half_velocity, Collisions* collisions)
+    void Player::movePlayer(vec2& new_pos, Collisions* collisions)
     {
         // Left
         if (GetAsyncKeyState(VK_LEFT))
@@ -55,7 +55,6 @@ namespace Tmpl8
         velocity.y += gravity;
         if (velocity.y > MAX_VERTICAL_SPEED) velocity.y = MAX_VERTICAL_SPEED;
 
-        half_velocity = velocity;
         collisions->applyBouncingPhysics(new_pos);
 
         // Jump

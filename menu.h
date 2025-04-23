@@ -15,8 +15,10 @@ namespace Tmpl8
 	public:
 		Menu(Level& levelRef, Player& playerRef);
 		void drawMenu(Surface* screen);
+		void drawNextMenu(Surface* screen);
 		void setMousePosition(int x, int y); 
 		void detectLevelHover();
+		void detectNextLevelHover();
 		void setMouseState(bool isPressed) { isMousePressed = isPressed; }
 		bool manageGameStart();
 		bool manageGamePause();

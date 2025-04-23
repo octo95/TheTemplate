@@ -26,7 +26,7 @@ namespace Tmpl8
         const float MAX_HORIZONTAL_SPEED = 3.0f;
         const float MAX_VERTICAL_SPEED = 10.0f;
 
-        void movePlayer(vec2& new_pos, vec2& half_velocity, Collisions* collisions);
+        void movePlayer(vec2& new_pos, Collisions* collisions);
         vec2 camFollowPlayer();
 
         void setPlayerDefaultPos(const vec2& pos) { default_pos = pos; }

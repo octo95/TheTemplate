@@ -19,6 +19,9 @@ namespace Tmpl8
     Sprite img_lvl2_button(new Surface("assets/button_lvl2.png"), 1);
     Sprite img_lvl3_button(new Surface("assets/button_lvl3.png"), 1);
 
+    Sprite img_menu_next_level(new Surface("assets/menu_next_level.png"), 1);
+    Sprite img_button_next_level(new Surface("assets/button_next_level.png"), 1);
+
     const int START_BUTTON_WIDTH = img_start_button.GetWidth();
     const int START_BUTTON_HEIGHT = img_start_button.GetHeight();
     const int LVL_BUTTON_WIDTH = img_lvl1_button.GetWidth();
@@ -82,6 +85,30 @@ namespace Tmpl8
         }
     }
 
+    void Menu::drawNextMenu(Surface* screen)
+    {
+        img_menu_next_level.Draw(screen, 0, 0);
+        detectNextLevelHover();
+
+        int startX = SCREEN_WIDTH / 2 - START_BUTTON_WIDTH / 2;
+        int startY = SCREEN_HEIGHT / 2 - START_BUTTON_HEIGHT / 2 + 80;
+        img_button_next_level.Draw(screen, startX, startY);
+    }
+
+    void Menu::detectNextLevelHover()
+    {
+        int nxtlvlX = SCREEN_WIDTH / 2 - (MAP_AMOUNT * LVL_BUTTON_WIDTH + (MAP_AMOUNT - 1) * SPACING) / 2;
+        int nxtlvlY = SCREEN_HEIGHT / 2 - START_BUTTON_HEIGHT / 2 + 80 + START_BUTTON_HEIGHT + SPACING;
+        
+        bool isHoveringNXTLVL = mouseX >= nxtlvlX && mouseX <= nxtlvlX + LVL_BUTTON_WIDTH &&
+                                mouseY >= nxtlvlY && mouseY <= nxtlvlY + LVL_BUTTON_HEIGHT;
+
+        if ( (isHoveringNXTLVL && isMousePressed) || (GetAsyncKeyState(VK_RETURN) & 0x8000) )
+        {
+            level.loadLevel(2);
+        }
+    }
+
     void Menu::setMousePosition(int x, int y)
     {
         mouseX = x;
@@ -118,7 +145,6 @@ namespace Tmpl8
 
     void Menu::skipAFrame(bool& isTDown)
     {
-
         //static bool tPressedLastFrame = false;
         if (GetAsyncKeyState('T') & 0x8000) isTDown = !isTDown;
 

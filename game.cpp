@@ -33,7 +33,7 @@ namespace Tmpl8
     void Game::Tick(float deltaTime)
     {
         deltaTime /= 1000.0f; // Convert deltaTime to seconds
-        deltaTime /= 1000.0f;
+
         menu.skipAFrame(isTDown);
         // * Clear the screen black every tick
         screen->Clear(0);
@@ -47,12 +47,11 @@ namespace Tmpl8
             
                 // Player logic
                 player.getPlayerPos(player_pos);
-                vec2 half_velocity;
-                player.movePlayer(player_pos, half_velocity, &collisions);
+                player.movePlayer(player_pos, &collisions);
                 player.setJumpState(collisions.getJumpState(player_pos));
 
                 // Collisions logic
-                collisions.manageCollisions(player_pos, half_velocity, screen, &collectible);
+                collisions.manageCollisions(player_pos, screen, &collectible);
                 manageWallCollision(player_pos, &wall);
                 manageCollectibleCollision(player_pos, &collectible);
 
