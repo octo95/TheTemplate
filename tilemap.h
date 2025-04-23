@@ -16,10 +16,10 @@ namespace Tmpl8
     const char MAP1[TILE_ROWS][TILE_COLUMNS * 3] = {
     "ca ca da da da da da da da da da da da da da da da da da da da da ca ca ca ca ca",
     "ca ca da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca",
-    "ca ca da da da da da da da da da da ca ca da da da da da da da da da da da ca ca",
-    "ca ca da da da da da da da da da da da ca da da da da da da da da da da da ca ca",
-    "ca ca ca ca ca ca ca da da da da da da da da da da da da da da da da da da ca ca",
+    "ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da ca ca ca ca ca ca",
+    "ca da da da da da da da da da da da ca ca da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da ca da da da da da da da da da da da ca ca",
+    "ca ba ca ca ca ca ca da da da da da da da da da da da da da da da da da da ca ca",
     "ca ca ca ca ca ca ca da da ca ca ca ca ca ca ca ca ca da da da da da da da ca ca",
     "ca ca ca ca ca ca ca da da da da da da da da da da da da ca ca ca ca da da ca ca",
     "ca ca ca ca ca ca ca da da da da da da da da da da da da ca ca ca ca da da ca ca",
@@ -33,10 +33,10 @@ namespace Tmpl8
     "ca ca da da da da da ca ca da da da da da ca da da da da da ca da da da da ca ca",
     "ca ca da da da da da da ca da da da da da da da da da da da da da da da da ca ca",
     "ca ca da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca ca da da da da ea ea ea ea ea ea ea ea ea ea ea ea ea ea ca ca ca ca aa ca ca",
+    "ca ca da da da da ea ea ea ea ea ea ea ea ea ea ea ea ea ea ca ca ca ca da ca ca",
     "ca ca da da da da da da da da da da da da da da da da da da da da da da da ca ca",
     "ca ca da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca ca aa aa ca ca ca ca ca da da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca",
+    "ca ca aa aa ca ca ca ca ca da da da da ca ca ca ca ca ca ca ca ca ca ca da ca ca",
     "ca ca da da da da da da da da da da da da da da da da da da da da da da da ca ca",
     "ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da ca ca",
     "ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da ca ca",
@@ -169,9 +169,9 @@ namespace Tmpl8
         void loadLevel(int i);
         int getCurrentLevel() const { return (current_level - 1) % MAP_AMOUNT + 1; }
         int incrementMapIndex() { return current_level = current_level % MAP_AMOUNT + 1; }
+        int current_level = 1;
     private:
         Player& player;
-        int current_level = 1;
     };
 };
 

@@ -91,10 +91,7 @@ namespace Tmpl8
         }
         else if (isEnd)
         {
-            ai_follow.setAIFollowPos(level.AI_FOLLOW_DEFAULT_POS[0]);
-            tilemap.setMapIndex(tilemap.incrementMapIndex());
-            loadCollectiblesForMap(tilemap.getCurrentLevel());
-            player.position = player.default_pos;
+            level.level_finished = true;
         }
         else if (isCollision || isIce)
         {
@@ -151,3 +148,17 @@ namespace Tmpl8
     }
 }
 
+/*
+* + END LEVEL LOGIC +
+* 
+* - setLevelState
+*  > public int level_state = false; (level.h)
+*  > void setLevelState(bool state) { return (state = level_state); } (level.h)
+*  > bool getLevelState(bool state) { return state; } (collisions.h)
+*  > collisions.setLevelState(level.getLevelState()); (game.cpp)
+*  > case isEnd: 
+*  > in level.cpp, called in case isEnd in collisions
+* - pause game
+* - pop-up for next level
+* - if next level then load next level
+*/

@@ -8,9 +8,10 @@
 
 namespace Tmpl8
 {
-    Menu::Menu(Level& levelRef, Player& playerRef) :
+    Menu::Menu(Level& levelRef, Player& playerRef, TileMap& tilemapRef) :
         level(levelRef),
-        player(playerRef)
+        player(playerRef),
+        tilemap(tilemapRef)
     {}
 
     Sprite img_menu_bg(new Surface("assets/menu.png"), 1);
@@ -18,14 +19,9 @@ namespace Tmpl8
     Sprite img_lvl1_button(new Surface("assets/button_lvl1.png"), 1);
     Sprite img_lvl2_button(new Surface("assets/button_lvl2.png"), 1);
     Sprite img_lvl3_button(new Surface("assets/button_lvl3.png"), 1);
-
     Sprite img_menu_next_level(new Surface("assets/menu_next_level.png"), 1);
     Sprite img_button_next_level(new Surface("assets/button_next_level.png"), 1);
-
-    const int START_BUTTON_WIDTH = img_start_button.GetWidth();
-    const int START_BUTTON_HEIGHT = img_start_button.GetHeight();
-    const int LVL_BUTTON_WIDTH = img_lvl1_button.GetWidth();
-    const int LVL_BUTTON_HEIGHT = img_lvl1_button.GetHeight();
+    Sprite img_button_next_level_menu(new Surface("assets/button_next_level_menu.png"), 1);
 
     void Menu::drawMenu(Surface* screen)
     {
@@ -47,27 +43,18 @@ namespace Tmpl8
         img_lvl3_button.Draw(screen, groupStartX + 2 * (lvlButtonWidth + SPACING), lvlY);
     }
 
+    bool Menu::isHoveringSurface(int x, int y, int width, int height)
+    {
+        return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
+    }
+
     void Menu::detectLevelHover()
     {
-        int lvl1X = SCREEN_WIDTH / 2 - (MAP_AMOUNT * LVL_BUTTON_WIDTH + (MAP_AMOUNT-1) * SPACING) / 2;
-        int lvl2X = lvl1X + LVL_BUTTON_WIDTH + SPACING;
-        int lvl3X = lvl2X + LVL_BUTTON_WIDTH + SPACING;
-        int lvlY = SCREEN_HEIGHT / 2 - START_BUTTON_HEIGHT / 2 + 80 + START_BUTTON_HEIGHT + SPACING;
-        int enterButtonX = SCREEN_WIDTH / 2 - START_BUTTON_WIDTH / 2;
-        int enterButtonY = SCREEN_WIDTH / 2 - START_BUTTON_HEIGHT / 2 - 80;
+        bool isHoveringLVL1 = isHoveringSurface(LVL1X, LVLY, LVL_BUTTON_WIDTH, LVL_BUTTON_HEIGHT);
+        bool isHoveringLVL2 = isHoveringSurface(LVL2X, LVLY, LVL_BUTTON_WIDTH, LVL_BUTTON_HEIGHT);
+        bool isHoveringLVL3 = isHoveringSurface(LVL3X, LVLY, LVL_BUTTON_WIDTH, LVL_BUTTON_HEIGHT);
+        bool isHoveringEnter = isHoveringSurface(ENTER_BUTTON_X, ENTER_BUTTON_Y, START_BUTTON_WIDTH, START_BUTTON_HEIGHT);
 
-        bool isHoveringLVL1 =   mouseX >= lvl1X && mouseX <= lvl1X + LVL_BUTTON_WIDTH && 
-                                mouseY >= lvlY && mouseY <= lvlY + LVL_BUTTON_HEIGHT;
-
-        bool isHoveringLVL2 =   mouseX >= lvl2X && mouseX <= lvl2X + LVL_BUTTON_WIDTH && 
-                                mouseY >= lvlY && mouseY <= lvlY + LVL_BUTTON_HEIGHT;
-
-        bool isHoveringLVL3 =   mouseX >= lvl3X && mouseX <= lvl3X + LVL_BUTTON_WIDTH && 
-                                mouseY >= lvlY && mouseY <= lvlY + LVL_BUTTON_HEIGHT;
-
-        bool isHoveringEnter =  mouseX >= enterButtonX && mouseX <= enterButtonX + START_BUTTON_WIDTH &&
-                                mouseY >= enterButtonY && mouseY <= enterButtonY + START_BUTTON_HEIGHT;
-        
         if ((isHoveringLVL1 || isHoveringEnter) && isMousePressed)
         {
             start_game = true;
@@ -87,25 +74,64 @@ namespace Tmpl8
 
     void Menu::drawNextMenu(Surface* screen)
     {
-        img_menu_next_level.Draw(screen, 0, 0);
         detectNextLevelHover();
-
-        int startX = SCREEN_WIDTH / 2 - START_BUTTON_WIDTH / 2;
-        int startY = SCREEN_HEIGHT / 2 - START_BUTTON_HEIGHT / 2 + 80;
-        img_button_next_level.Draw(screen, startX, startY);
+        img_menu_next_level.Draw(screen, SCREEN_WIDTH / 2 - MENU_NXT_LVL_WIDTH / 2, SCREEN_HEIGHT / 2 - MENU_NXT_LVL_HEIGHT / 2);
+        img_button_next_level_menu.Draw(screen, NXTMENUX, NXTMENUY);
+        img_button_next_level.Draw(screen, NXTLVLX, NXTLVLY);
     }
+
 
     void Menu::detectNextLevelHover()
     {
-        int nxtlvlX = SCREEN_WIDTH / 2 - (MAP_AMOUNT * LVL_BUTTON_WIDTH + (MAP_AMOUNT - 1) * SPACING) / 2;
-        int nxtlvlY = SCREEN_HEIGHT / 2 - START_BUTTON_HEIGHT / 2 + 80 + START_BUTTON_HEIGHT + SPACING;
-        
-        bool isHoveringNXTLVL = mouseX >= nxtlvlX && mouseX <= nxtlvlX + LVL_BUTTON_WIDTH &&
-                                mouseY >= nxtlvlY && mouseY <= nxtlvlY + LVL_BUTTON_HEIGHT;
+        bool isHoveringNXTMENU = isHoveringSurface(NXTMENUX, NXTMENUY, BUTTON_NXT_LVL_WIDTH, BUTTON_NXT_LVL_HEIGHT);
+        bool isHoveringNXTLVL = isHoveringSurface(NXTLVLX, NXTLVLY, BUTTON_NXT_LVL_WIDTH, BUTTON_NXT_LVL_HEIGHT);
 
-        if ( (isHoveringNXTLVL && isMousePressed) || (GetAsyncKeyState(VK_RETURN) & 0x8000) )
+        bool pressingNext = (isHoveringNXTLVL && isMousePressed) || (GetAsyncKeyState(VK_RETURN) & 0x8000);
+        bool pressingMenu = (isHoveringNXTMENU && isMousePressed);
+
+        if (pressingNext && !alreadyClickedNextLevel)
         {
-            level.loadLevel(2);
+            resume_game = true;
+            level.loadLevel(tilemap.incrementMapIndex());
+            level.level_finished = false;
+            alreadyClickedNextLevel = true; 
+        }
+        else if (!pressingNext)
+        {
+            alreadyClickedNextLevel = false; 
+        }
+
+        if (pressingMenu)
+        {
+            start_game = false;
+        }
+    }
+
+
+    void Menu::manageNextMenu(Surface* screen, bool level_finished)
+    {
+        static bool pPressedLastFrame = false;
+        static bool manualPaused = false;
+
+        bool isPDown = GetAsyncKeyState('P') & 0x8000;
+        bool press = isPDown && !pPressedLastFrame;
+
+        if (press)
+        {
+            manualPaused = !manualPaused;
+        }
+
+        pPressedLastFrame = isPDown;
+
+        if (level_finished)
+        {
+            drawNextMenu(screen);
+            detectNextLevelHover();
+            resume_game = false;
+        }
+        else
+        {
+            resume_game = !manualPaused;
         }
     }
 
@@ -123,9 +149,9 @@ namespace Tmpl8
 
         if (isEnterDown && !enterPressedLastFrame)
         {
+            level.loadLevel(1);
             game_state++;
             start_game = (game_state % 2) == 1; 
-            level.loadLevel(1);
         }
         enterPressedLastFrame = isEnterDown;
         return start_game;
@@ -133,19 +159,11 @@ namespace Tmpl8
 
     bool Menu::manageGamePause()
     {
-        static bool pPressedLastFrame = false;
-        static bool resume_game = true; 
-        bool isPDown = GetAsyncKeyState('P') & 0x8000;
-
-        if (isPDown && !pPressedLastFrame) resume_game = !resume_game; 
-       
-        pPressedLastFrame = isPDown;
-        return resume_game;
+        return resume_game ;
     }
 
     void Menu::skipAFrame(bool& isTDown)
     {
-        //static bool tPressedLastFrame = false;
         if (GetAsyncKeyState('T') & 0x8000) isTDown = !isTDown;
 
         if (isTDown)
@@ -154,10 +172,5 @@ namespace Tmpl8
             std::this_thread::sleep_for(std::chrono::seconds(1));
             resume_game = false;
         }
-
-
-        //tPressedLastFrame = isTDown;
     }
-
-
 }

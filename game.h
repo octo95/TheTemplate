@@ -24,7 +24,7 @@ namespace Tmpl8
 			player(camera),
 			ai_follow(player, camera),
 			debug(camera, tilemap, player, collectible, wall, ai_follow, level, collisions),
-			menu(level, player),
+			menu(level, player, tilemap),
 			tilemap(player),
 			collisions(player, tilemap, ai_follow, collectible, wall, level, camera),
 			level(tilemap, player, ai_follow, collectible, wall)

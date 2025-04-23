@@ -462,6 +462,20 @@ void Sprite::DrawScaled( int a_X, int a_Y, int a_Width, int a_Height, Surface* a
 // NEED TO REDO MYSELF AND FIX MISSING PIXELS
 void Sprite::DrawRotated(Surface* a_Target, int a_X, int a_Y, float a_Angle)
 {
+	// If buffer gets out of definition, return
+	//if ((a_X < -m_Width) || (a_X > (a_Target->GetWidth() + m_Width))) return;
+	//if ((a_Y < -m_Height) || (a_Y > (a_Target->GetHeight() + m_Height))) return;
+	//
+	//float angle_radiant = a_Angle * PI / 180;
+	//
+	//Pixel* src = GetBuffer() + m_CurrentFrame * m_Width;	// Source is surface
+	//Pixel* dest = a_Target->GetBuffer();					// Destination is the target
+
+	// loop to go through all the pixels
+	// rotation matrix
+	// affect to destination
+	// Draw
+
 	if ((a_X < -m_Width) || (a_X > (a_Target->GetWidth() + m_Width))) return;
 	if ((a_Y < -m_Height) || (a_Y > (a_Target->GetHeight() + m_Height))) return;
 
@@ -481,7 +495,7 @@ void Sprite::DrawRotated(Surface* a_Target, int a_X, int a_Y, float a_Angle)
 		for (int x = 0; x < m_Width; x++)
 		{
 			Pixel color = src[x + y * m_Pitch];
-			if (!(color & 0xffffff)) continue; 
+			if (!(color & 0xffffff)) continue;
 
 			int dx = x - centerX;
 			int dy = y - centerY;
@@ -498,6 +512,7 @@ void Sprite::DrawRotated(Surface* a_Target, int a_X, int a_Y, float a_Angle)
 			}
 		}
 	}
+
 }
 
 
@@ -522,6 +537,44 @@ void Sprite::InitializeStartData()
 	}
 }
 
+/*
+	if ((a_X < -m_Width) || (a_X > (a_Target->GetWidth() + m_Width))) return;
+	if ((a_Y < -m_Height) || (a_Y > (a_Target->GetHeight() + m_Height))) return;
+
+	float radians = a_Angle * (PI / 180.0f);
+	float cosAngle = cosf(radians);
+	float sinAngle = sinf(radians);
+
+	Pixel* src = GetBuffer() + m_CurrentFrame * m_Width;
+	Pixel* dest = a_Target->GetBuffer();
+	const int dpitch = a_Target->GetPitch();
+
+	int centerX = m_Width / 2;
+	int centerY = m_Height / 2;
+
+	for (int y = 0; y < m_Height; y++)
+	{
+		for (int x = 0; x < m_Width; x++)
+		{
+			Pixel color = src[x + y * m_Pitch];
+			if (!(color & 0xffffff)) continue;
+
+			int dx = x - centerX;
+			int dy = y - centerY;
+
+			float fx = dx * cosAngle - dy * sinAngle;
+			float fy = dx * sinAngle + dy * cosAngle;
+
+			int finalX = a_X + centerX + (int)(fx + 0.5f);
+			int finalY = a_Y + centerY + (int)(fy + 0.5f);
+
+			if (finalX >= 0 && finalX < a_Target->GetWidth() && finalY >= 0 && finalY < a_Target->GetHeight())
+			{
+				dest[finalX + finalY * dpitch] = color;
+			}
+		}
+	}
+*/
 Font::Font( char* a_File, char* a_Chars )
 {
 	m_Surface = new Surface( a_File );

@@ -74,9 +74,10 @@ namespace Tmpl8
             camera.drawWithCamAndAngle(&img_ai_follow, screen, static_cast<int>(ai_follow.position.x), static_cast<int>(ai_follow.position.y - 4), deltaTime);
             drawCollectibleMap(&camera, screen, &this->collectible);
             drawWallMap(&camera, screen, &this->wall);
+            menu.manageNextMenu(screen, level.level_finished);
 
             if (!menu.manageGamePause())
-            {
+            {        
                 static float desaturationMax = 0.5f;
                 static float desaturationAmount = 0.0f;
                 static float desaturationTime = 0.5f;
@@ -88,6 +89,7 @@ namespace Tmpl8
                 if (desaturationAmount > desaturationMax) desaturationAmount = desaturationMax;
 
                 screen->ReduceSaturation(desaturationAmount);
+                deltaTime = 0.0f;
 
             }
             

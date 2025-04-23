@@ -11,7 +11,7 @@ namespace Tmpl8
     public:
         const vec2 AI_FOLLOW_DEFAULT_POS[3] =
         {
-            vec2 {700,40},
+            vec2 {100,500},
             vec2 {100,300},
             vec2 {0,0}
         };
@@ -22,6 +22,7 @@ namespace Tmpl8
             vec2 {500,10},
             vec2 {600,10}
         };
+        bool level_finished = false;
 
         Level(TileMap& tilemapRef, Player& playerRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef);
         void loadLevel(int i);
