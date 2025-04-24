@@ -10,7 +10,10 @@
 #include "tile.h"
 #include "ai_follow.h"
 #include "tilemap.h"
-
+#include "gamesound.h"
+#include <Audio/Sound.hpp>
+#include <cstdio>
+#include <iostream>
 #include <unordered_map>
 
 // +-----------------------+
@@ -27,37 +30,40 @@
 * Stop frame by frame logic or do a menu
 */
 
+
+
 namespace Tmpl8
 {
     // + MAIN GAME LOGIC 
+
+
     void Game::Tick(float deltaTime)
     {
         deltaTime /= 1000.0f; // Convert deltaTime to seconds
-
-        menu.skipAFrame(isTDown);
+        
         // * Clear the screen black every tick
         screen->Clear(0);
 
         // * Starting the game logic
-        if (menu.manageGameStart())
+        if (menu.start_game)
         {
-            if (menu.manageGamePause())
+            if (menu.resume_game)
             {
                 // * Initialize game logic
-            
+                
                 // Player logic
                 player.getPlayerPos(player_pos);
                 player.movePlayer(player_pos, &collisions);
                 player.setJumpState(collisions.getJumpState(player_pos));
-
+        
                 // Collisions logic
                 collisions.manageCollisions(player_pos, screen, &collectible);
                 manageWallCollision(player_pos, &wall);
                 manageCollectibleCollision(player_pos, &collectible);
-
+        
                 // AI logic
                 ai_follow.followPlayer(deltaTime);
-
+        
                 // Camera logic
                 camera.setCamPos(player.camFollowPlayer());
                 camera.shakeCamera(deltaTime);
@@ -67,30 +73,30 @@ namespace Tmpl8
                 // Pause the time if the game is paused
                 deltaTime = 0.0f;
             }
-
+        
             // * Draw the objects on screen
             tilemap.drawMap(screen, camera);
-            camera.drawWithCamAndAngle(&player_img, screen, static_cast<int>(player_pos.x), static_cast<int>(player_pos.y - 4), deltaTime);
-            camera.drawWithCamAndAngle(&img_ai_follow, screen, static_cast<int>(ai_follow.position.x), static_cast<int>(ai_follow.position.y - 4), deltaTime);
+            camera.drawWithCamAndAngle(&player_img, screen, static_cast<int>(player_pos.x), static_cast<int>(player_pos.y), deltaTime);
+            camera.drawWithCamAndAngle(&img_ai_follow, screen, static_cast<int>(ai_follow.position.x), static_cast<int>(ai_follow.position.y), deltaTime);
             drawCollectibleMap(&camera, screen, &this->collectible);
             drawWallMap(&camera, screen, &this->wall);
             menu.manageNextMenu(screen, level.level_finished);
-
-            if (!menu.manageGamePause())
+        
+            if (!menu.resume_game)
             {        
                 static float desaturationMax = 0.5f;
                 static float desaturationAmount = 0.0f;
                 static float desaturationTime = 0.5f;
-
+        
                 // Increment the amount over <desaturationTime> seconds
                 desaturationAmount += (desaturationMax / desaturationTime) * deltaTime; 
-
+        
                 // Stop the incrementation once reaching <desaturationMax>
                 if (desaturationAmount > desaturationMax) desaturationAmount = desaturationMax;
-
+        
                 screen->ReduceSaturation(desaturationAmount);
                 deltaTime = 0.0f;
-
+        
             }
             
             // * DEBUG: Enabled if pressing <SPACEBAR>
@@ -98,7 +104,7 @@ namespace Tmpl8
         }
         else
         {
-            menu.drawMenu(screen); // As long as we don't start the game, stay in the menu screen
+            menu.openMainMenu(screen); // As long as we don't start the game, stay in the menu screen
         }
     }
 

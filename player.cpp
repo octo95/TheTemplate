@@ -15,7 +15,7 @@ namespace Tmpl8
 
     // Variables
     Sprite player_img(new Surface("assets/tangerine.png"), 1);
-    int hitbox_size = 16 - 2; // Tolerance of 2 pixels on the hitbox
+    int hitbox_radius = 16 - 2; // Tolerance of 2 pixels on the hitbox
     int player_img_width = player_img.GetWidth();
     int player_img_height = player_img.GetHeight();
     bool canJump = false;

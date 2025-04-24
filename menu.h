@@ -3,6 +3,7 @@
 #include "level.h"
 #include "player.h"
 #include "tilemap.h"
+#include "gamesound.h"
 
 namespace Tmpl8
 {
@@ -18,60 +19,105 @@ namespace Tmpl8
 	extern Sprite img_menu_next_level;
 	extern Sprite img_button_next_level;
 	extern Sprite img_button_next_level_menu;
+	extern Sprite img_pause_menu;
+	extern Sprite img_button_resume;
+	extern Sprite img_button_quit;
 
 	class Menu
 	{
 	public:
-		Menu(Level& levelRef, Player& playerRef, TileMap& tilemapRef);
-		void drawMenu(Surface* screen);
-		void drawNextMenu(Surface* screen);
+		Menu(Level& levelRef, Player& playerRef, TileMap& tilemapRef, GameSound& gamesoundRef);
+		void openMainMenu(Surface* screen);
+		void openNextMenu(Surface* screen);
+		void openPauseMenu(Surface* screen);
 		void manageNextMenu(Surface* screen, bool level_finished);
 		void setMousePosition(int x, int y); 
-		void detectLevelHover();
-		void detectNextLevelHover();
 		void setMouseState(bool isPressed) { isMousePressed = isPressed; }
-		bool manageGameStart();
-		bool manageGamePause();
-		void skipAFrame(bool& isTDown);
-		bool Menu::isHoveringSurface(int x, int y, int width, int height);
+		bool isHoveringSurface(int x, int y, int width, int height);
+
+		bool start_game = false;
+		bool resume_game = true;
 
 	private:
 		Level& level;
 		Player& player;
 		TileMap& tilemap;
+		GameSound& gamesound;
 
 		int mouseX, mouseY; 
-		bool start_game = false;
-		bool resume_game = true;
+
 		bool isMousePressed = false;
+		bool manualPaused = false;
 		bool alreadyClickedNextLevel = false;
 
-		// Offsets
-		const int BUTTON_OFFSET_Y = 80;
-		const int BUTTON_OFFSET_X = 50;
+		// Menu flags
+		bool mainMenuOpen = true;
+		bool pauseMenuOpen = false;
+		bool nextMenuOpen = false;
 
-		// Buttons dimensions
-		const int START_BUTTON_WIDTH = img_start_button.GetWidth();
-		const int START_BUTTON_HEIGHT = img_start_button.GetHeight();
-		const int LVL_BUTTON_WIDTH = img_lvl1_button.GetWidth();
-		const int LVL_BUTTON_HEIGHT = img_lvl1_button.GetHeight();
-		const int MENU_NXT_LVL_WIDTH = img_menu_next_level.GetWidth();
-		const int MENU_NXT_LVL_HEIGHT = img_menu_next_level.GetHeight();
-		const int BUTTON_NXT_LVL_WIDTH = img_button_next_level.GetWidth();
-		const int BUTTON_NXT_LVL_HEIGHT = img_button_next_level.GetHeight();
-		const int BUTTON_NXT_LVL_MENU_WIDTH = img_button_next_level_menu.GetWidth();
-		const int BUTTON_NXT_LVL_MENU_HEIGHT = img_button_next_level_menu.GetHeight();
+		// Other consts
+		const int SCREEN_HALF_WIDTH = SCREEN_WIDTH / 2;
+		const int SCREEN_HALF_HEIGHT = SCREEN_HEIGHT / 2;
 
-		// Buttons positions
-		const int NXTMENUX = SCREEN_WIDTH / 2 - BUTTON_NXT_LVL_MENU_WIDTH / 2 - BUTTON_OFFSET_X;
-		const int NXTMENUY = SCREEN_HEIGHT / 2 - BUTTON_NXT_LVL_MENU_HEIGHT / 2 + BUTTON_OFFSET_X;
-		const int NXTLVLX = SCREEN_WIDTH / 2 - BUTTON_NXT_LVL_WIDTH / 2 + BUTTON_OFFSET_X;
-		const int NXTLVLY = SCREEN_HEIGHT / 2 - BUTTON_NXT_LVL_HEIGHT / 2 + BUTTON_OFFSET_X;
-		const int LVL1X = SCREEN_WIDTH / 2 - (MAP_AMOUNT * LVL_BUTTON_WIDTH + (MAP_AMOUNT - 1) * SPACING) / 2;
-		const int LVL2X = LVL1X + LVL_BUTTON_WIDTH + SPACING;
-		const int LVL3X = LVL2X + LVL_BUTTON_WIDTH + SPACING;
-		const int LVLY = SCREEN_HEIGHT / 2 - START_BUTTON_HEIGHT / 2 + BUTTON_OFFSET_Y + START_BUTTON_HEIGHT + SPACING;
-		const int ENTER_BUTTON_X = SCREEN_WIDTH / 2 - START_BUTTON_WIDTH / 2;
-		const int ENTER_BUTTON_Y = SCREEN_WIDTH / 2 - START_BUTTON_HEIGHT / 2 - BUTTON_OFFSET_Y;
+		// +-------------------+
+		// | BUTTON DIMENSIONS |
+		// +-------------------+
+
+		// Main menu
+		const int MAIN_START_WIDTH = img_start_button.GetWidth();
+		const int MAIN_START_HEIGHT = img_start_button.GetHeight();
+		const int MAIN_LVL_WIDTH = img_lvl1_button.GetWidth();
+		const int MAIN_LVL_HEIGHT = img_lvl1_button.GetHeight();
+
+		// Next level menu
+		const int NEXT_BG_WIDTH = img_menu_next_level.GetWidth();
+		const int NEXT_BG_HEIGHT = img_menu_next_level.GetHeight();
+		const int NEXT_NEXT_WIDTH = img_button_next_level.GetWidth();
+		const int NEXT_NEXT_HEIGHT = img_button_next_level.GetHeight();
+		const int NEXT_MENU_WIDTH = img_button_next_level_menu.GetWidth();
+		const int NEXT_MENU_HEIGHT = img_button_next_level_menu.GetHeight();
+
+		// Pause menu
+		const int PAUSE_BG_WIDTH = img_pause_menu.GetWidth();
+		const int PAUSE_BG_HEIGHT = img_pause_menu.GetHeight();
+		const int PAUSE_RESUME_WIDTH = img_button_resume.GetWidth();
+		const int PAUSE_RESUME_HEIGHT = img_button_resume.GetHeight();
+		const int PAUSE_QUIT_WIDTH = img_button_quit.GetWidth();
+		const int PAUSE_QUIT_HEIGHT = img_button_quit.GetHeight();
+
+		// +------------------+
+		// | BUTTON POSITIONS |
+		// +------------------+
+
+		// Main menu
+		const int MAIN_LVL1_X = SCREEN_HALF_WIDTH - (5 * MAIN_LVL_WIDTH + 4 * SPACING) / 2;
+		const int MAIN_LVL1_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 3 - SCREEN_HEIGHT / 3;
+
+		const int MAIN_LVL2_X = MAIN_LVL1_X + MAIN_LVL_WIDTH + SPACING;
+		const int MAIN_LVL2_Y = MAIN_LVL1_Y;
+
+		const int MAIN_LVL3_X = MAIN_LVL2_X + MAIN_LVL_WIDTH + SPACING;
+		const int MAIN_LVL3_Y = MAIN_LVL1_Y;
+
+		const int MAIN_LVL4_X = MAIN_LVL3_X + MAIN_LVL_WIDTH + SPACING;
+		const int MAIN_LVL4_Y = MAIN_LVL1_Y;
+
+		const int MAIN_LVL5_X = MAIN_LVL4_X + MAIN_LVL_WIDTH + SPACING;
+		const int MAIN_LVL5_Y = MAIN_LVL1_Y;
+
+		const int MAIN_ENTER_X = SCREEN_HALF_WIDTH - MAIN_START_WIDTH / 2;
+		const int MAIN_ENTER_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 2 + SCREEN_HEIGHT / 3;
+
+		// Next level menu
+		const int NEXT_MENU_X = SCREEN_HALF_WIDTH - NEXT_MENU_WIDTH / 2 - NEXT_BG_WIDTH / 4;
+		const int NEXT_MENU_Y = SCREEN_HALF_HEIGHT - NEXT_MENU_HEIGHT / 2 + NEXT_BG_HEIGHT / 4;
+		const int NEXT_LVL_X = SCREEN_HALF_WIDTH - NEXT_NEXT_WIDTH / 2 + NEXT_BG_WIDTH / 4;
+		const int NEXT_LVL_Y = NEXT_MENU_Y;
+
+		// Pause menu
+		const int PAUSE_QUIT_X = SCREEN_HALF_WIDTH - PAUSE_QUIT_WIDTH / 2 - PAUSE_BG_WIDTH / 4;
+		const int PAUSE_QUIT_Y = SCREEN_HALF_HEIGHT - PAUSE_RESUME_HEIGHT / 2 + PAUSE_BG_WIDTH / 5;
+		const int PAUSE_RESUME_X = SCREEN_HALF_WIDTH - PAUSE_RESUME_WIDTH / 2 + PAUSE_BG_WIDTH / 4;
+		const int PAUSE_RESUME_Y = PAUSE_QUIT_Y;
 	};
 }

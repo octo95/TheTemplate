@@ -4,6 +4,7 @@
 #include "ai_follow.h"
 #include "collectible.h"
 #include "wall.h"
+#include "gamesound.h"
 
 namespace Tmpl8
 {
@@ -24,7 +25,7 @@ namespace Tmpl8
         };
         bool level_finished = false;
 
-        Level(TileMap& tilemapRef, Player& playerRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef);
+        Level(TileMap& tilemapRef, Player& playerRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, GameSound& gamesoundRef);
         void loadLevel(int i);
         void manageDefaultPos(int map_index);
     private:
@@ -33,7 +34,6 @@ namespace Tmpl8
         AI_Follow& ai_follow;
         CollectibleMap& collectible;
         WallMap& wall;
-
-
+        GameSound& gamesound;
     };
 }

@@ -6,13 +6,14 @@
 #include "wall.h"
 #include "level.h"
 #include "camera.h"
+#include "gamesound.h"
 
 namespace Tmpl8
 {
     class Collisions {
     public:
-        Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef, Camera& cameraRef);
-        TileType CheckCollisionBottom(const vec2& pos);
+        Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef, Camera& cameraRef, GameSound& gamesoundRef);
+        TileType CheckCollisionBottom(const vec2int& pos);
         TileType CheckCollisionTop(const vec2& pos);
         TileType CheckCollisionSides(const vec2& pos);
         void manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles);
@@ -28,6 +29,7 @@ namespace Tmpl8
         WallMap& wall;
         Level& level;
         Camera& camera;
+        GameSound& gamesound;
 
         bool canPlayerJump = false;
         float gravity = 0.5f;

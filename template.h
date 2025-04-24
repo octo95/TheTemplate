@@ -102,6 +102,33 @@ public:
 	float dot( const vec2& operand ) const { return x * operand.x + y * operand.y; }
 };
 
+// vectors
+class vec2int // adapted from https://github.com/dcow/RayTracer
+{
+public:
+	union { struct { int x, y; }; int cell[2]; };
+	vec2int() {}
+	vec2int(int v) : x(v), y(v) {}
+	vec2int(int x, int y) : x(x), y(y) {}
+	vec2int operator - () const { return vec2int(-x, -y); }
+	vec2int operator + (const vec2int& addOperand) const { return vec2int(x + addOperand.x, y + addOperand.y); }
+	vec2int operator - (const vec2int& operand) const { return vec2int(x - operand.x, y - operand.y); }
+	vec2int operator * (const vec2int& operand) const { return vec2int(x * operand.x, y * operand.y); }
+	vec2int operator * (int operand) const { return vec2int(x * operand, y * operand); }
+	void operator -= (const vec2int& a) { x -= a.x; y -= a.y; }
+	void operator += (const vec2int& a) { x += a.x; y += a.y; }
+	void operator *= (const vec2int& a) { x *= a.x; y *= a.y; }
+	void operator *= (int a) { x *= a; y *= a; }
+	bool operator == (vec2int rhs) const { return this->x == rhs.x && this->y == rhs.y; }
+	int& operator [] (const int idx) { return cell[idx]; }
+	int length() { return sqrtf(x * x + y * y); }
+	int sqrLentgh() { return x * x + y * y; }
+	vec2int normalized() { int r = 1 / length(); return vec2int(x * r, y * r); }
+	void normalize() { int r = 1 / length(); x *= r; y *= r; }
+	static vec2int normalize(vec2int v) { return v.normalized(); }
+	int dot(const vec2int& operand) const { return x * operand.x + y * operand.y; }
+};
+
 class vec3
 {
 public:

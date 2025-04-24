@@ -1,0 +1,32 @@
+#pragma once
+#include <Audio/Sound.hpp>
+#include <vector>
+#include <memory>
+#include <string>
+
+namespace Tmpl8
+{
+    typedef std::vector<std::shared_ptr<Audio::Sound>> SoundType;
+
+    class GameSound
+    {
+    public:
+        // All SFX paths
+        const std::string snd_damage = "assets/audio/SFX/snd_damage.wav";
+        const std::string snd_level_finished = "assets/audio/SFX/snd_level_finished.wav";
+        const std::string snd_select = "assets/audio/SFX/snd_select.wav";
+
+        // All Music paths
+        const std::string mus_level = "assets/audio/Music/mus_level.mp3";
+        const std::string mus_menu = "assets/audio/Music/mus_menu.mp3";
+
+        void playSound(const std::string& filePath);
+        void playMusic(const std::string& filePath);
+        void stopMusic();
+
+    private:
+        const float globalVolume = 0.1f;
+        SoundType activeSounds;  // For storing active sound effects
+        SoundType activeMusics;  // For storing active music tracks
+    };
+}

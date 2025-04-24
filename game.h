@@ -9,6 +9,7 @@
 #include "ai_follow.h"
 #include "collisions.h"
 #include "level.h"
+#include "gamesound.h"
 
 #include <unordered_map>
 
@@ -24,10 +25,10 @@ namespace Tmpl8
 			player(camera),
 			ai_follow(player, camera),
 			debug(camera, tilemap, player, collectible, wall, ai_follow, level, collisions),
-			menu(level, player, tilemap),
+			menu(level, player, tilemap, gamesound),
 			tilemap(player),
-			collisions(player, tilemap, ai_follow, collectible, wall, level, camera),
-			level(tilemap, player, ai_follow, collectible, wall)
+			collisions(player, tilemap, ai_follow, collectible, wall, level, camera, gamesound),
+			level(tilemap, player, ai_follow, collectible, wall, gamesound)
 		{}
 
 		void SetTarget( Surface* surface ) { screen = surface; }
@@ -61,6 +62,7 @@ namespace Tmpl8
 		TileMap tilemap;
 		Collisions collisions;
 		Level level;
+		GameSound gamesound;
 
 		int mousex, mousey;
 		bool start_game = false;

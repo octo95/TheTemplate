@@ -19,10 +19,10 @@ namespace Tmpl8
     
     void Debug::drawHitbox(const vec2& pos, Surface* screen)
     {
-        int squareTop = (int)(pos.y + player_img_width / 2 - hitbox_size + camera.getCamPos().y);
-        int squareRight = (int)(pos.x + player_img_width / 2 + hitbox_size + camera.getCamPos().x);
-        int squareBottom = (int)(pos.y + player_img_width / 2 + hitbox_size + camera.getCamPos().y);
-        int squareLeft = (int)(pos.x + player_img_width / 2 - hitbox_size + camera.getCamPos().x);
+        int squareTop = (int)(pos.y + player_img_width / 2 - hitbox_radius + camera.getCamPos().y);
+        int squareRight = (int)(pos.x + player_img_width / 2 + hitbox_radius + camera.getCamPos().x);
+        int squareBottom = (int)(pos.y + player_img_width / 2 + hitbox_radius + camera.getCamPos().y);
+        int squareLeft = (int)(pos.x + player_img_width / 2 - hitbox_radius + camera.getCamPos().x);
         screen->Box(squareLeft, squareTop, squareRight, squareBottom, 0xFF0000);
     }
 
