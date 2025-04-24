@@ -5,7 +5,7 @@
 namespace Tmpl8
 {
     // External variables
-    extern Surface tiles;
+    extern Surface img_tilemap;
 
     // Constants
     const int TILE_SIZE = 32;

@@ -15,19 +15,24 @@ namespace Tmpl8
         gamesound(gamesoundRef)
     {}
 
-    Sprite img_menu_bg(new Surface("assets/menu.png"), 1);
-    Sprite img_start_button(new Surface("assets/start_button.png"), 1);
-    Sprite img_lvl1_button(new Surface("assets/button_lvl1.png"), 1);
-    Sprite img_lvl2_button(new Surface("assets/button_lvl2.png"), 1);
-    Sprite img_lvl3_button(new Surface("assets/button_lvl3.png"), 1);
-    Sprite img_lvl4_button(new Surface("assets/button_lvl4.png"), 1);
-    Sprite img_lvl5_button(new Surface("assets/button_lvl5.png"), 1);
-    Sprite img_menu_next_level(new Surface("assets/menu_next_level.png"), 1);
-    Sprite img_button_next_level(new Surface("assets/button_next_level.png"), 1);
-    Sprite img_button_next_level_menu(new Surface("assets/button_next_level_menu.png"), 1);
-    Sprite img_pause_menu(new Surface("assets/menu_pause.png"), 1);
-    Sprite img_button_resume(new Surface("assets/button_resume.png"), 1);
-    Sprite img_button_quit(new Surface("assets/button_quit.png"), 1);
+    // Main menu
+    Sprite img_menu_main_bg(new Surface("assets/images/menus/main_menu/img_menu_main_bg.png"), 1);
+    Sprite img_menu_main_start(new Surface("assets/images/menus/main_menu/img_menu_main_start.png"), 1);
+    Sprite img_menu_main_lvl1(new Surface("assets/images/menus/main_menu/img_menu_main_lvl1.png"), 1);
+    Sprite img_menu_main_lvl2(new Surface("assets/images/menus/main_menu/img_menu_main_lvl2.png"), 1);
+    Sprite img_menu_main_lvl3(new Surface("assets/images/menus/main_menu/img_menu_main_lvl3.png"), 1);
+    Sprite img_menu_main_lvl4(new Surface("assets/images/menus/main_menu/img_menu_main_lvl4.png"), 1);
+    Sprite img_menu_main_lvl5(new Surface("assets/images/menus/main_menu/img_menu_main_lvl5.png"), 1);
+
+    // Next menu
+    Sprite img_menu_next_bg(new Surface("assets/images/menus/next_menu/img_menu_next_bg.png"), 1);
+    Sprite img_menu_next_next(new Surface("assets/images/menus/next_menu/img_menu_next_next.png"), 1);
+    Sprite img_menu_next_menu(new Surface("assets/images/menus/next_menu/img_menu_next_menu.png"), 1);
+
+    // Pause menu
+    Sprite img_menu_pause_bg(new Surface("assets/images/menus/pause_menu/img_menu_pause_bg.png"), 1);
+    Sprite img_menu_pause_resume(new Surface("assets/images/menus/pause_menu/img_menu_pause_resume.png"), 1);
+    Sprite img_menu_pause_quit(new Surface("assets/images/menus/pause_menu/img_menu_pause_quit.png"), 1);
 
     bool Menu::isHoveringSurface(int x, int y, int width, int height)
     {
@@ -38,14 +43,14 @@ namespace Tmpl8
     {
         if (!mainMenuOpen) return;
 
-        img_menu_bg.Draw(screen, 0, 0);
+        img_menu_main_bg.Draw(screen, 0, 0);
 
-        img_start_button.Draw(screen, MAIN_ENTER_X, MAIN_ENTER_Y);
-        img_lvl1_button.Draw(screen, MAIN_LVL1_X, MAIN_LVL1_Y);
-        img_lvl2_button.Draw(screen, MAIN_LVL2_X, MAIN_LVL2_Y);
-        img_lvl3_button.Draw(screen, MAIN_LVL3_X, MAIN_LVL3_Y);
-        img_lvl4_button.Draw(screen, MAIN_LVL4_X, MAIN_LVL4_Y);
-        img_lvl5_button.Draw(screen, MAIN_LVL5_X, MAIN_LVL5_Y);
+        img_menu_main_start.Draw(screen, MAIN_ENTER_X, MAIN_ENTER_Y);
+        img_menu_main_lvl1.Draw(screen, MAIN_LVL1_X, MAIN_LVL1_Y);
+        img_menu_main_lvl2.Draw(screen, MAIN_LVL2_X, MAIN_LVL2_Y);
+        img_menu_main_lvl3.Draw(screen, MAIN_LVL3_X, MAIN_LVL3_Y);
+        img_menu_main_lvl4.Draw(screen, MAIN_LVL4_X, MAIN_LVL4_Y);
+        img_menu_main_lvl5.Draw(screen, MAIN_LVL5_X, MAIN_LVL5_Y);
 
         bool isHoveringLVL1 = isHoveringSurface(MAIN_LVL1_X, MAIN_LVL1_Y, MAIN_LVL_WIDTH, MAIN_LVL_HEIGHT);
         bool isHoveringLVL2 = isHoveringSurface(MAIN_LVL2_X, MAIN_LVL2_Y, MAIN_LVL_WIDTH, MAIN_LVL_HEIGHT);
@@ -101,9 +106,9 @@ namespace Tmpl8
         nextMenuOpen = level.level_finished;
         if (!nextMenuOpen) return;
 
-        img_menu_next_level.Draw(screen, SCREEN_WIDTH / 2 - NEXT_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - NEXT_BG_HEIGHT / 2);
-        img_button_next_level_menu.Draw(screen, NEXT_MENU_X, NEXT_MENU_Y);
-        img_button_next_level.Draw(screen, NEXT_LVL_X, NEXT_LVL_Y);
+        img_menu_next_bg.Draw(screen, SCREEN_WIDTH / 2 - NEXT_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - NEXT_BG_HEIGHT / 2);
+        img_menu_next_menu.Draw(screen, NEXT_MENU_X, NEXT_MENU_Y);
+        img_menu_next_next.Draw(screen, NEXT_LVL_X, NEXT_LVL_Y);
  
         bool isHoveringNXTMENU = isHoveringSurface(NEXT_MENU_X, NEXT_MENU_Y, NEXT_NEXT_WIDTH, NEXT_NEXT_HEIGHT);
         bool isHoveringNXTLVL = isHoveringSurface(NEXT_LVL_X, NEXT_LVL_Y, NEXT_NEXT_WIDTH, NEXT_NEXT_HEIGHT);
@@ -142,9 +147,9 @@ namespace Tmpl8
     {
         if (!pauseMenuOpen) return;
 
-        img_pause_menu.Draw(screen, SCREEN_WIDTH / 2 - PAUSE_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_HEIGHT / 2);
-        img_button_quit.Draw(screen, PAUSE_QUIT_X, PAUSE_QUIT_Y);
-        img_button_resume.Draw(screen, PAUSE_RESUME_X, PAUSE_RESUME_Y);
+        img_menu_pause_bg.Draw(screen, SCREEN_WIDTH / 2 - PAUSE_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_HEIGHT / 2);
+        img_menu_pause_quit.Draw(screen, PAUSE_QUIT_X, PAUSE_QUIT_Y);
+        img_menu_pause_resume.Draw(screen, PAUSE_RESUME_X, PAUSE_RESUME_Y);
 
         bool isHoveringQuit = isHoveringSurface(PAUSE_QUIT_X, PAUSE_QUIT_Y, PAUSE_QUIT_WIDTH, PAUSE_QUIT_HEIGHT);
         bool isHoveringResume = isHoveringSurface(PAUSE_RESUME_X, PAUSE_RESUME_Y, PAUSE_RESUME_WIDTH, PAUSE_RESUME_HEIGHT);

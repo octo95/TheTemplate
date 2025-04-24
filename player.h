@@ -7,7 +7,7 @@
 
 namespace Tmpl8
 {
-    extern Sprite player_img;
+    extern Sprite img_player;
     extern int hitbox_radius;
     extern int player_img_width;
     extern int player_img_height;

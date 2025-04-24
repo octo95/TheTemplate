@@ -7,7 +7,7 @@
 
 namespace Tmpl8
 {
-	Sprite img_wall(new Surface("assets/wall.png"), 1);
+	Sprite img_wall(new Surface("assets/images/map/img_wall.png"), 1);
 	int walls_collected = 0;
 
 	WallMap wmap_current;

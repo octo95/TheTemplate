@@ -3,13 +3,13 @@
 namespace Tmpl8
 {
     // Variables
-    Surface tiles("assets/nc2tiles.png");
-    const int IMG_TILEMAP_WIDTH = tiles.GetWidth();
+    Surface img_tilemap("assets/images/map/img_tilemap.png");
+    const int IMG_TILEMAP_WIDTH = img_tilemap.GetWidth();
     
     // Tile functions
     void Tile::DrawTile(Surface* screen, int x, int y, const Camera& camera)
     {
-        Pixel* src = tiles.GetBuffer() + 1 + tx * (1 + TILE_SIZE) + (1 + ty * (1 + TILE_SIZE)) * IMG_TILEMAP_WIDTH;
+        Pixel* src = img_tilemap.GetBuffer() + 1 + tx * (1 + TILE_SIZE) + (1 + ty * (1 + TILE_SIZE)) * IMG_TILEMAP_WIDTH;
         Pixel* dst = screen->GetBuffer();
 
         for (int yl = 0; yl < TILE_SIZE; yl++)

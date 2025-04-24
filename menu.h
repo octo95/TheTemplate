@@ -7,19 +7,19 @@
 
 namespace Tmpl8
 {
-	extern Sprite img_menu_bg;
-	extern Sprite img_start_button;
-	extern Sprite img_menu_bg;
-	extern Sprite img_start_button;
-	extern Sprite img_lvl1_button;
-	extern Sprite img_lvl2_button;
-	extern Sprite img_lvl3_button;
-	extern Sprite img_menu_next_level;
-	extern Sprite img_button_next_level;
-	extern Sprite img_button_next_level_menu;
-	extern Sprite img_pause_menu;
-	extern Sprite img_button_resume;
-	extern Sprite img_button_quit;
+	extern Sprite img_menu_main_bg;
+	extern Sprite img_menu_main_start;
+	extern Sprite img_menu_main_bg;
+	extern Sprite img_menu_main_start;
+	extern Sprite img_menu_main_lvl1;
+	extern Sprite img_menu_main_lvl2;
+	extern Sprite img_menu_main_lvl3;
+	extern Sprite img_menu_next_bg;
+	extern Sprite img_menu_next_next;
+	extern Sprite img_menu_next_menu;
+	extern Sprite img_menu_pause_bg;
+	extern Sprite img_menu_pause_resume;
+	extern Sprite img_menu_pause_quit;
 
 	class Menu
 	{
@@ -62,26 +62,26 @@ namespace Tmpl8
 		// +-------------------+
 
 		// Main menu
-		const int MAIN_START_WIDTH = img_start_button.GetWidth();
-		const int MAIN_START_HEIGHT = img_start_button.GetHeight();
-		const int MAIN_LVL_WIDTH = img_lvl1_button.GetWidth();
-		const int MAIN_LVL_HEIGHT = img_lvl1_button.GetHeight();
+		const int MAIN_START_WIDTH = img_menu_main_start.GetWidth();
+		const int MAIN_START_HEIGHT = img_menu_main_start.GetHeight();
+		const int MAIN_LVL_WIDTH = img_menu_main_lvl1.GetWidth();
+		const int MAIN_LVL_HEIGHT = img_menu_main_lvl1.GetHeight();
 
 		// Next level menu
-		const int NEXT_BG_WIDTH = img_menu_next_level.GetWidth();
-		const int NEXT_BG_HEIGHT = img_menu_next_level.GetHeight();
-		const int NEXT_NEXT_WIDTH = img_button_next_level.GetWidth();
-		const int NEXT_NEXT_HEIGHT = img_button_next_level.GetHeight();
-		const int NEXT_MENU_WIDTH = img_button_next_level_menu.GetWidth();
-		const int NEXT_MENU_HEIGHT = img_button_next_level_menu.GetHeight();
+		const int NEXT_BG_WIDTH = img_menu_next_bg.GetWidth();
+		const int NEXT_BG_HEIGHT = img_menu_next_bg.GetHeight();
+		const int NEXT_NEXT_WIDTH = img_menu_next_next.GetWidth();
+		const int NEXT_NEXT_HEIGHT = img_menu_next_next.GetHeight();
+		const int NEXT_MENU_WIDTH = img_menu_next_menu.GetWidth();
+		const int NEXT_MENU_HEIGHT = img_menu_next_menu.GetHeight();
 
 		// Pause menu
-		const int PAUSE_BG_WIDTH = img_pause_menu.GetWidth();
-		const int PAUSE_BG_HEIGHT = img_pause_menu.GetHeight();
-		const int PAUSE_RESUME_WIDTH = img_button_resume.GetWidth();
-		const int PAUSE_RESUME_HEIGHT = img_button_resume.GetHeight();
-		const int PAUSE_QUIT_WIDTH = img_button_quit.GetWidth();
-		const int PAUSE_QUIT_HEIGHT = img_button_quit.GetHeight();
+		const int PAUSE_BG_WIDTH = img_menu_pause_bg.GetWidth();
+		const int PAUSE_BG_HEIGHT = img_menu_pause_bg.GetHeight();
+		const int PAUSE_RESUME_WIDTH = img_menu_pause_resume.GetWidth();
+		const int PAUSE_RESUME_HEIGHT = img_menu_pause_resume.GetHeight();
+		const int PAUSE_QUIT_WIDTH = img_menu_pause_quit.GetWidth();
+		const int PAUSE_QUIT_HEIGHT = img_menu_pause_quit.GetHeight();
 
 		// +------------------+
 		// | BUTTON POSITIONS |

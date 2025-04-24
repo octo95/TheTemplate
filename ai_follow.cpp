@@ -11,7 +11,7 @@ namespace Tmpl8
         player(playerRef)
     {}
 
-    Sprite img_ai_follow(new Surface("assets/evil_tangerine.png"), 1);
+    Sprite img_ai_follow(new Surface("assets/images/entities/img_ai_follow.png"), 1);
 
     void AI_Follow::followPlayer(float deltaTime) // TODO
     {

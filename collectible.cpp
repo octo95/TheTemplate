@@ -7,7 +7,7 @@
 
 namespace Tmpl8
 {
-	Sprite img_collectible(new Surface("assets/collectible.png"), 1);
+	Sprite img_collectible(new Surface("assets/images/map/img_collectible.png"), 1);
 	int collectibles_collected = 0;
 
 	CollectibleMap cmap_current;

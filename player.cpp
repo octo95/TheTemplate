@@ -14,10 +14,11 @@ namespace Tmpl8
     {}
 
     // Variables
-    Sprite player_img(new Surface("assets/tangerine.png"), 1);
+    Sprite img_player(new Surface("assets/images/entities/img_player.png"), 1);
+
     int hitbox_radius = 16 - 2; // Tolerance of 2 pixels on the hitbox
-    int player_img_width = player_img.GetWidth();
-    int player_img_height = player_img.GetHeight();
+    int player_img_width = img_player.GetWidth();
+    int player_img_height = img_player.GetHeight();
     bool canJump = false;
 
     void Player::movePlayer(vec2& new_pos, Collisions* collisions)
