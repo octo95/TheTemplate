@@ -9,8 +9,7 @@ namespace Tmpl8
     const int TOTAL_MAPS = 3;
     const int TILE_ROWS = 32;
     const int TILE_COLUMNS = 27;
-    const int MAP_AMOUNT = 3;
-
+    const int MAP_AMOUNT = 5;
 
     // MAP1
     const char MAP1[TILE_ROWS][TILE_COLUMNS * 3] = {
@@ -155,6 +154,103 @@ namespace Tmpl8
         vec2 {3,3},
         vec2 {5,4}
     };
+
+    // MAP4
+    const char MAP4[TILE_ROWS][TILE_COLUMNS * 3] = {
+    "ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
+    "ca da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da ca",
+    "ca da da ca da da da da da da da da da da da da da da da da da da ca da da da ca",
+    "ca da da ca da da da da da da da da da da da da da da da da da da ca da da da ca",
+    "ca ca ca ca ca ca ca ca ca ca ca ca da da da ca ca ca ca ca ca ca ca da ca ca ca",
+    "ca ca ca ca ca ca ca ca ca ca ca ca da da da ca ca ca ca ca ca ca ca da ca ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
+    "ca da da ea ea ea ea ea ea ea ea ea ea ea ea ea ea ea ea ea ea ea da da da da ca",
+    "ca da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da da ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
+    "ca ca ca aa aa ca da da da ca ca da da da da ca ca ca ca ca ca ca ca ca ca ca ca",
+    "ca ca ca ca ca ca da da da ca ca da da da da ca ca ca ca ca ca ca ca ca ca ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
+    "ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da ca",
+    "ca da ca ca ca ca ca ca ca da da da da da da ca ca ca ca ca ca ca ca da da da ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
+    "ca ca ca aa aa ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
+    "ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da ca",
+    "ca ca ca ca ca ca ca ca ca da da da da da da ca ca ca ca ca ca ca ca da da da ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
+    "ca ca ca ca ca ca ca ca ca ca ca ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
+    "ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da ca",
+    "ca da aa aa ca ca da da da da da da da da da ca ca ca ca ca ca ca ca ca aa aa ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
+    "ca ca ca ca ca ca ca ca ca ca ca ba ba ba ba ba ca ca ca ca ca ca ca ca ca ca ca",
+    "ca ca ca ca ca ca ca ca ca ca ca ba ba ba ba ba ca ca ca ca ca ca ca ca ca ca ca"
+    };
+    const vec2 MAP4_COLLECTIBLES[4] = {
+        vec2 {3,2},
+        vec2 {11,9},
+        vec2 {9,11},
+        vec2 {12,1}
+    };
+    const vec2 MAP4_WALLS[4] = {
+        vec2 {5,7},
+        vec2 {1,1},
+        vec2 {3,3},
+        vec2 {5,4}
+    };
+
+    // MAP5
+    const char MAP5[TILE_ROWS][TILE_COLUMNS * 3] = {
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
+    "ca da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da ca",
+    "ca da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da ca",
+    "ca da da da da da da da da da da da da ca da da da da da da da da da da da da ca",
+    "ca da da da da da da da da da da da da ca da da da da da da da da da da da da ca",
+    "ca ca ca ca ca ca ca ca ca da da da ca ca ca da da da ca ca ca ca ca ca ca ca ca",
+    "ca ca ca ca ca ca ca ca ca da da da ca ca ca da da da ca ca ca ca ca ca ca ca ca",
+    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
+    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
+    "ca ca ca da da da ea ea ea ea ea ea ea ea ea ea ea ea ea ea ea da da da ca ca ca",
+    "ca ca ca da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da ca ca ca",
+    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
+    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
+    "ca ca ca aa aa da da ca ca ca ca da da da da da ca ca ca ca ca ca aa aa ca ca ca",
+    "ca ca ca ca ca da da ca ca ca ca da da da da da ca ca ca ca ca ca ca da ca ca ca",
+    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
+    "ca ca ca da da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da ca ca ca",
+    "ca ca ca da da da da ca ca ca ca da da da da da ca ca ca ca ca ca ca da ca ca ca",
+    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
+    "ca ca ca aa aa da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca",
+    "ca ca ca da ca da da da da da da da da da da da da da da da da da da da ca ca ca",
+    "ca ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da ca ca ca",
+    "ca ca ca da da da ca ca ca ca ca da da da da da ca ca ca ca ca ca ca da ca ca ca",
+    "ca ca ca ca da da da da da da da da da da da da da da da da da da da da ca ca ca",
+    "ca ca ca ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca",
+    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
+    "ca ca ca da da da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da ca ca ca",
+    "ca ca ca ca ca da da aa ca ca ca da da da da da ca ca ca ca ca ca ca ca ca ca ca",
+    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
+    "ca ca ca ca ca ca ca ca ca ca ca ba ba ba ba ba ca ca ca ca ca ca ca ca ca ca ca",
+    "ca ca ca ca ca ca ca ca ca ca ca ba ba ba ba ba ca ca ca ca ca ca ca ca ca ca ca"
+    };
+    const vec2 MAP5_COLLECTIBLES[4] = {
+        vec2 {3,2},
+        vec2 {11,9},
+        vec2 {9,11},
+        vec2 {12,1}
+    };
+    const vec2 MAP5_WALLS[4] = {
+        vec2 {5,7},
+        vec2 {1,1},
+        vec2 {3,3},
+        vec2 {5,4}
+    };
+
 
     class Player;
 

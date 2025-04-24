@@ -6,6 +6,7 @@
 #include <functional>
 #include <unordered_map>
 #include "vec2_hash.h"
+#include "gamesound.h"
 
 namespace Tmpl8
 {
@@ -40,7 +41,7 @@ namespace Tmpl8
 
 	void loadAllCollectibles();
 	void drawCollectibleMap(Camera* camera, Surface* screen, CollectibleMap* collectibles);
-	void manageCollectibleCollision(vec2 player_pos, CollectibleMap* collectibles);
+	void manageCollectibleCollision(vec2 player_pos, CollectibleMap* collectibles, GameSound* gamesound);
 	void loadCollectiblesForMap(int map);
 	void clearCollectibles();
 }

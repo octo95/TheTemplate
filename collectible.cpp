@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <iostream>
 #include <functional>
+#include "gamesound.h"
 
 namespace Tmpl8
 {
@@ -62,10 +63,11 @@ namespace Tmpl8
 		}
 	}
 
-	void manageCollectibleCollision(vec2 player_pos, CollectibleMap* collectibles) {
+	// Need to REDO
+	void manageCollectibleCollision(vec2 player_pos, CollectibleMap* collectibles, GameSound* gamesound) {
 		int x = player_pos.x / TILE_SIZE;
 		int y = player_pos.y / TILE_SIZE;
-
+	
 		CollectibleMap::iterator c = cmap_current.begin();
 		for (; c != cmap_current.end();)
 		{
@@ -73,6 +75,7 @@ namespace Tmpl8
 			int cy = static_cast<int>(c->first.y);
 			if (cx == x && cy == y) {
 				c = cmap_current.erase(c);
+				gamesound->playSound(gamesound->snd_collect);
 				collectibles_collected++;
 			}
 			else {

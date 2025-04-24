@@ -100,6 +100,10 @@ namespace Tmpl8
         bool isCollision = (CheckSides == TileType::Collision || CheckBottom == TileType::Collision || CheckTop==TileType::Collision);
         bool isIce = (CheckBottom == TileType::Ice || CheckTop == TileType::Ice);
 
+        // SFX: if falling from a high distance play <snd_fall_strong.wav>, otherwise from a smaller one play <snd_fall.wav> and if even smaller don't play any SFX.
+        if ((CheckBottom == TileType::Collision || CheckBottom == TileType::Ice) && player.velocity.y > trigger_fall_normal && player.velocity.y < trigger_fall_hard) gamesound.playSound(gamesound.snd_fall);
+        if ((CheckBottom == TileType::Collision || CheckBottom == TileType::Ice) && player.velocity.y >= trigger_fall_hard) gamesound.playSound(gamesound.snd_fall_strong);
+
         if (isNoneX) player.position.x = new_pos.x;
         if (isNoneY) player.position.y = new_pos.y;
         if (isDamage)
@@ -129,9 +133,6 @@ namespace Tmpl8
             player.velocity += (player.velocity.x <= 0) ? wall_force : -wall_force;
         }
 
-        // SFX: if falling from a high distance play <snd_fall_strong.wav>, otherwise from a smaller one play <snd_fall.wav> and if even smaller don't play any SFX.
-        if ((CheckBottom == TileType::Collision || CheckBottom == TileType::Ice) && player.velocity.y > 5.0f && player.velocity.y < 9.0f) gamesound.playSound(gamesound.snd_fall);
-        if ((CheckBottom == TileType::Collision || CheckBottom == TileType::Ice) && player.velocity.y >= 9.0f) gamesound.playSound(gamesound.snd_fall_strong);
     }
 
     bool Collisions::getJumpState(vec2& new_pos)
@@ -143,6 +144,7 @@ namespace Tmpl8
         bool isCollision = (CheckSides == TileType::Collision || CheckBottom == TileType::Collision);
         bool isIce = (CheckSides == TileType::Ice || CheckBottom == TileType::Ice);
 
+        // The player can jump if they press up, touch the ground and have at least 1 collectible.
         canPlayerJump = GetAsyncKeyState(VK_UP) && (CheckBottom == 3 || CheckBottom == 4) && collectibles_collected > 0;
 
         return canPlayerJump;

@@ -10,19 +10,24 @@ namespace Tmpl8
 {
     class Level {
     public:
-        const vec2 AI_FOLLOW_DEFAULT_POS[3] =
+        const vec2 AI_FOLLOW_DEFAULT_POS[5] =
         {
             vec2 {100,500},
             vec2 {100,300},
+            vec2 {0,0},
+            vec2 {0,0},
             vec2 {0,0}
         };
 
-        const vec2 PLAYER_DEFAULT_POS[3] =
+        const vec2 PLAYER_DEFAULT_POS[5] =
         {
             vec2 {300,10},
             vec2 {500,10},
+            vec2 {600,10},
+            vec2 {600,30},
             vec2 {600,10}
         };
+
         bool level_finished = false;
 
         Level(TileMap& tilemapRef, Player& playerRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, GameSound& gamesoundRef);

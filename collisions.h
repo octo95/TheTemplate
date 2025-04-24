@@ -19,8 +19,8 @@ namespace Tmpl8
         void manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles);
         bool getJumpState(vec2& new_pos);
         void setTouchStateFollowAI(bool isTouched) { playerHitAI = isTouched; }
-        bool playerHitAI = false;
         void applyBouncingPhysics(vec2& new_pos);
+        bool playerHitAI = false;
     private:
         Player& player;
         TileMap& tilemap;
@@ -35,5 +35,7 @@ namespace Tmpl8
         float gravity = 0.5f;
         float friction = 0.05f;
         float wall_force = 7.0f;
+        float trigger_fall_normal = 5.0f;
+        float trigger_fall_hard = 9.0f;
     };
 }

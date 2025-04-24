@@ -49,6 +49,9 @@
     <ClCompile Include="gamesound.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
+    <ClCompile Include="health.cpp">
+      <Filter>Solutions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="physics.h">
@@ -100,6 +103,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="gamesound.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="health.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

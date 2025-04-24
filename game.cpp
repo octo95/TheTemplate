@@ -16,22 +16,6 @@
 #include <iostream>
 #include <unordered_map>
 
-// +-----------------------+
-// |        TODO           |
-// +-----------------------+
-
-/*
-* - drawRotated redo to fix black pixels and redo from the ground up
-* - do the evil AI
-* - load a font to do a counter (otherwise if too hard to do, will do UI with sprites
-* 
-* + Homework:
-* Print on screen collision
-* Stop frame by frame logic or do a menu
-*/
-
-
-
 namespace Tmpl8
 {
     // + MAIN GAME LOGIC 
@@ -42,7 +26,6 @@ namespace Tmpl8
         deltaTime /= 1000.0f; // Convert deltaTime to seconds
         if (debug.gameSlow)  // Lower deltaTime if needed for debug
         {
-            printf("slow af");
             deltaTime = 1.0f / 60.0f;
         }
 
@@ -64,7 +47,7 @@ namespace Tmpl8
                 // Collisions logic
                 collisions.manageCollisions(player_pos, screen, &collectible);
                 manageWallCollision(player_pos, &wall);
-                manageCollectibleCollision(player_pos, &collectible);
+                manageCollectibleCollision(player_pos, &collectible, &gamesound);
         
                 // AI logic
                 ai_follow.followPlayer(deltaTime);
@@ -103,16 +86,3 @@ namespace Tmpl8
     }
     void Game::Shutdown() {}
 }
-
-// + NOTES +
-// Look up std_font
-// Look up scalefont on the server pins
-// Move the physics part of move in collisions.cpp to be called at the proper time (move should just do the += to its positions)
-
-// + FIXES +
-
-/*
-* - Physics collisions (mostly horizontal)
-* - Tiles collisions
-* - Manage walls defaults
-*/

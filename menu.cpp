@@ -95,12 +95,24 @@ namespace Tmpl8
         else if (isHoveringLVL4 && isMousePressed)
         {
             gamesound.playSound(gamesound.snd_select);
-            printf("Level 4 is not ready yet.");
+            gamesound.playMusic(gamesound.mus_level);
+            level.level_finished = false;
+            start_game = true;
+            resume_game = true;
+            manualPaused = false;
+            mainMenuOpen = false;
+            level.loadLevel(4);
         }
         else if (isHoveringLVL5 && isMousePressed)
         {
             gamesound.playSound(gamesound.snd_select);
-            printf("Level 5 is not ready yet.");
+            gamesound.playMusic(gamesound.mus_level);
+            level.level_finished = false;
+            start_game = true;
+            resume_game = true;
+            manualPaused = false;
+            mainMenuOpen = false;
+            level.loadLevel(5);
         }
     }
 

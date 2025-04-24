@@ -10,6 +10,7 @@
 #include "collisions.h"
 #include "level.h"
 #include "gamesound.h"
+#include "health.h"
 
 #include <unordered_map>
 
@@ -28,7 +29,8 @@ namespace Tmpl8
 			menu(level, player, tilemap, gamesound),
 			tilemap(player),
 			collisions(player, tilemap, ai_follow, collectible, wall, level, camera, gamesound),
-			level(tilemap, player, ai_follow, collectible, wall, gamesound)
+			level(tilemap, player, ai_follow, collectible, wall, gamesound),
+			health(player)
 		{}
 
 		void SetTarget( Surface* surface ) { screen = surface; }
@@ -63,6 +65,7 @@ namespace Tmpl8
 		Collisions collisions;
 		Level level;
 		GameSound gamesound;
+		Health health;
 
 		int mousex, mousey;
 		bool start_game = false;

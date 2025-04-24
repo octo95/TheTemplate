@@ -22,6 +22,12 @@ namespace Tmpl8
         case 3:
             current_map = MAP3;
             break;
+        case 4:
+            current_map = MAP4;
+            break;
+        case 5:
+            current_map = MAP5;
+            break;
         current_level = index;
         }
     }
