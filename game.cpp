@@ -97,7 +97,10 @@ namespace Tmpl8
     }
 
     // + INITIALIZER / SHUTDOWN
-    void Game::Init() {}
+    void Game::Init() 
+    {
+        gamesound.playMusic(gamesound.mus_menu);
+    }
     void Game::Shutdown() {}
 }
 

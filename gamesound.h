@@ -26,8 +26,10 @@ namespace Tmpl8
         void playMusic(const std::string& filePath);
         void stopMusic();
 
+        void setMusic(const std::string& filePath);
+        float globalVolume = 0.1f;
+
     private:
-        const float globalVolume = 0.1f;
         SoundType activeSounds;  // For storing active sound effects
         SoundType activeMusics;  // For storing active music tracks
     };

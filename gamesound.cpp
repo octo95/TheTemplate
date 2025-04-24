@@ -17,9 +17,11 @@ namespace Tmpl8
 
     void GameSound::playMusic(const std::string& filePath)
     {
+        printf("playing music\n");
+        stopMusic();
         auto music = std::make_shared<Audio::Sound>(filePath, Audio::Sound::Type::Stream);
         music->setLooping(true);  
-        music->setVolume(globalVolume);
+        music->setVolume(globalVolume/2.0f);
         music->play();            
         activeMusics.push_back(music); 
     }
@@ -31,6 +33,14 @@ namespace Tmpl8
             if (music)  music->stop();  
         }
         activeMusics.clear(); 
+    }
+
+    void GameSound::setMusic(const std::string& filePath)
+    {
+        stopMusic();
+        auto music = std::make_shared<Audio::Sound>(filePath, Audio::Sound::Type::Stream);
+
+      
     }
 
 }

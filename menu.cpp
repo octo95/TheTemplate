@@ -62,6 +62,7 @@ namespace Tmpl8
         if ((isHoveringLVL1 || isHoveringEnter) && isMousePressed)
         {
             gamesound.playSound(gamesound.snd_select);
+            gamesound.playMusic(gamesound.mus_level);
             level.level_finished = false;
             start_game = true;
             resume_game = true;
@@ -72,6 +73,7 @@ namespace Tmpl8
         else if (isHoveringLVL2 && isMousePressed)
         {
             gamesound.playSound(gamesound.snd_select);
+            gamesound.playMusic(gamesound.mus_level);
             level.level_finished = false;
             start_game = true;
             resume_game = true;
@@ -82,6 +84,7 @@ namespace Tmpl8
         else if (isHoveringLVL3 && isMousePressed)
         {
             gamesound.playSound(gamesound.snd_select);
+            gamesound.playMusic(gamesound.mus_level);
             level.level_finished = false;
             start_game = true;
             resume_game = true;
@@ -137,6 +140,7 @@ namespace Tmpl8
         if (pressingMenu)
         {
             gamesound.playSound(gamesound.snd_select);
+            gamesound.playMusic(gamesound.mus_menu);
             start_game = false;
             nextMenuOpen = false;
             mainMenuOpen = true;
@@ -158,6 +162,7 @@ namespace Tmpl8
         if (isHoveringQuit && isMousePressed)
         {
             gamesound.playSound(gamesound.snd_select);
+            gamesound.playMusic(gamesound.mus_menu);
             start_game = false;
             resume_game = false;
             mainMenuOpen = true;
