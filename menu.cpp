@@ -147,7 +147,7 @@ namespace Tmpl8
         img_button_resume.Draw(screen, PAUSE_RESUME_X, PAUSE_RESUME_Y);
 
         bool isHoveringQuit = isHoveringSurface(PAUSE_QUIT_X, PAUSE_QUIT_Y, PAUSE_QUIT_WIDTH, PAUSE_QUIT_HEIGHT);
-        bool isHoveringResume = isHoveringSurface(PAUSE_RESUME_X, PAUSE_RESUME_Y, PAUSE_QUIT_WIDTH, PAUSE_QUIT_HEIGHT);
+        bool isHoveringResume = isHoveringSurface(PAUSE_RESUME_X, PAUSE_RESUME_Y, PAUSE_RESUME_WIDTH, PAUSE_RESUME_HEIGHT);
 
         // If [QUIT]
         if (isHoveringQuit && isMousePressed)

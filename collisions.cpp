@@ -90,7 +90,6 @@ namespace Tmpl8
     void Collisions::manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles)
     {
         TileType CheckSides = CheckCollisionSides({ new_pos.x, player.position.y });
-
         TileType CheckBottom = CheckCollisionBottom({ (int)player.position.x, (int)(new_pos.y + player.velocity.y)});
         TileType CheckTop = CheckCollisionTop({ player.position.x, new_pos.y + player.velocity.y});
 
@@ -129,6 +128,10 @@ namespace Tmpl8
             walls_collected--;
             player.velocity += (player.velocity.x <= 0) ? wall_force : -wall_force;
         }
+
+        // SFX: if falling from a high distance play <snd_fall_strong.wav>, otherwise from a smaller one play <snd_fall.wav> and if even smaller don't play any SFX.
+        if ((CheckBottom == TileType::Collision || CheckBottom == TileType::Ice) && player.velocity.y > 5.0f && player.velocity.y < 9.0f) gamesound.playSound(gamesound.snd_fall);
+        if ((CheckBottom == TileType::Collision || CheckBottom == TileType::Ice) && player.velocity.y >= 9.0f) gamesound.playSound(gamesound.snd_fall_strong);
     }
 
     bool Collisions::getJumpState(vec2& new_pos)

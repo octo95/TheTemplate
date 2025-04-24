@@ -30,26 +30,10 @@ namespace Tmpl8
 
     void Level::manageDefaultPos(int map_index)
     {
-        switch (map_index)
-        {
-        case 1:
-            player.setPlayerDefaultPos(PLAYER_DEFAULT_POS[0]);
-            player.setPlayerPos(PLAYER_DEFAULT_POS[0]);
-            ai_follow.setAIFollowDefaultPos(AI_FOLLOW_DEFAULT_POS[0]);
-            ai_follow.setAIFollowPos(AI_FOLLOW_DEFAULT_POS[0]);
-            break;
-        case 2:
-            player.setPlayerDefaultPos(PLAYER_DEFAULT_POS[1]);
-            player.setPlayerPos(PLAYER_DEFAULT_POS[1]);
-            ai_follow.setAIFollowDefaultPos(AI_FOLLOW_DEFAULT_POS[1]);
-            ai_follow.setAIFollowPos(AI_FOLLOW_DEFAULT_POS[1]);
-            break;
-        case 3:
-            player.setPlayerDefaultPos(PLAYER_DEFAULT_POS[2]);
-            player.setPlayerPos(PLAYER_DEFAULT_POS[2]);
-            ai_follow.setAIFollowDefaultPos(AI_FOLLOW_DEFAULT_POS[2]);
-            ai_follow.setAIFollowPos(AI_FOLLOW_DEFAULT_POS[2]);
-            break;
-        }
+        player.resetPlayerVelocity();
+        player.setPlayerDefaultPos(PLAYER_DEFAULT_POS[map_index-1]);
+        player.setPlayerPos(PLAYER_DEFAULT_POS[map_index - 1]);
+        ai_follow.setAIFollowDefaultPos(AI_FOLLOW_DEFAULT_POS[map_index - 1]);
+        ai_follow.setAIFollowPos(AI_FOLLOW_DEFAULT_POS[map_index - 1]);
     }
 }

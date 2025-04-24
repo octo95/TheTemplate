@@ -31,6 +31,7 @@ namespace Tmpl8
 
         void setPlayerDefaultPos(const vec2& pos) { default_pos = pos; }
         void getPlayerDefaultPos(vec2& pos) { pos = default_pos; }
+        void resetPlayerVelocity() { velocity = { 0, 0 }; }
         void getPlayerPos(vec2& pos) { pos = position; }
         void setPlayerPos(const vec2& pos) { position = pos; }
         void setJumpState(bool canJump) { can_jump = canJump; }

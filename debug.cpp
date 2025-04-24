@@ -3,10 +3,12 @@
 #include "debug.h"
 #include "game.h"
 #include "player.h"
+#include <thread>
+
 
 namespace Tmpl8
 {
-    Debug::Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef, Level& levelRef, Collisions& collisionRef) :
+    Debug::Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef, Level& levelRef, Collisions& collisionRef, Menu& menuRef) :
         camera(cameraRef),
         tilemap(tilemapRef),
         player(playerRef),
@@ -14,7 +16,8 @@ namespace Tmpl8
         wall(wallRef),
         ai_follow(ai_followRef),
         level(levelRef),
-        collisions(collisionRef)
+        collisions(collisionRef),
+        menu(menuRef)
     {}
     
     void Debug::drawHitbox(const vec2& pos, Surface* screen)
@@ -35,6 +38,9 @@ namespace Tmpl8
 
             // PRESS <TAB> : Switches to the next level.
             nextDebugMap();
+
+            // PRESS <T> : Runs the game at 1 FPS.
+            gameSlowMode();
 
             // Get the player position
             vec2 playerPos;
@@ -83,7 +89,7 @@ namespace Tmpl8
             // Display FPS
             char FPS_coords[100];
             sprintf(FPS_coords, "FPS: %d", getFPS(deltaTime));
-            screen->Print(FPS_coords, 10, 150, 0xFFFF00);
+            screen->Print(FPS_coords, 10, 130, 0xFFFF00);
         }
     }
 
@@ -122,7 +128,6 @@ namespace Tmpl8
     }
 
     bool tabPressedLastFrame = false;
-
     void Debug::nextDebugMap()
     {
         bool isTabDown = GetAsyncKeyState(VK_TAB) & 0x8000;
@@ -171,4 +176,10 @@ namespace Tmpl8
 
         screen->Line(start_x, start_y, end_x, end_y, 0x00FF00);
     }
+
+    void Debug::gameSlowMode()
+    {
+        // TODO
+    }
+
 }

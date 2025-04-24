@@ -15,6 +15,8 @@ namespace Tmpl8
         const std::string snd_damage = "assets/audio/SFX/snd_damage.wav";
         const std::string snd_level_finished = "assets/audio/SFX/snd_level_finished.wav";
         const std::string snd_select = "assets/audio/SFX/snd_select.wav";
+        const std::string snd_fall = "assets/audio/SFX/snd_fall.wav";
+        const std::string snd_fall_strong = "assets/audio/SFX/snd_fall_strong.wav";
 
         // All Music paths
         const std::string mus_level = "assets/audio/Music/mus_level.mp3";

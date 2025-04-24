@@ -7,8 +7,6 @@
 
 namespace Tmpl8
 {
-	const int SPACING = 20;
-
 	extern Sprite img_menu_bg;
 	extern Sprite img_start_button;
 	extern Sprite img_menu_bg;
@@ -90,19 +88,19 @@ namespace Tmpl8
 		// +------------------+
 
 		// Main menu
-		const int MAIN_LVL1_X = SCREEN_HALF_WIDTH - (5 * MAIN_LVL_WIDTH + 4 * SPACING) / 2;
+		const int MAIN_LVL1_X = SCREEN_HALF_WIDTH - (5 * MAIN_LVL_WIDTH + 4 * 20) / 2;
 		const int MAIN_LVL1_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 3 - SCREEN_HEIGHT / 3;
 
-		const int MAIN_LVL2_X = MAIN_LVL1_X + MAIN_LVL_WIDTH + SPACING;
+		const int MAIN_LVL2_X = MAIN_LVL1_X + MAIN_LVL_WIDTH + 20;
 		const int MAIN_LVL2_Y = MAIN_LVL1_Y;
 
-		const int MAIN_LVL3_X = MAIN_LVL2_X + MAIN_LVL_WIDTH + SPACING;
+		const int MAIN_LVL3_X = MAIN_LVL2_X + MAIN_LVL_WIDTH + 20;
 		const int MAIN_LVL3_Y = MAIN_LVL1_Y;
 
-		const int MAIN_LVL4_X = MAIN_LVL3_X + MAIN_LVL_WIDTH + SPACING;
+		const int MAIN_LVL4_X = MAIN_LVL3_X + MAIN_LVL_WIDTH + 20;
 		const int MAIN_LVL4_Y = MAIN_LVL1_Y;
 
-		const int MAIN_LVL5_X = MAIN_LVL4_X + MAIN_LVL_WIDTH + SPACING;
+		const int MAIN_LVL5_X = MAIN_LVL4_X + MAIN_LVL_WIDTH + 20;
 		const int MAIN_LVL5_Y = MAIN_LVL1_Y;
 
 		const int MAIN_ENTER_X = SCREEN_HALF_WIDTH - MAIN_START_WIDTH / 2;

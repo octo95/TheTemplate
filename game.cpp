@@ -40,7 +40,12 @@ namespace Tmpl8
     void Game::Tick(float deltaTime)
     {
         deltaTime /= 1000.0f; // Convert deltaTime to seconds
-        
+        if (debug.gameSlow)  // Lower deltaTime if needed for debug
+        {
+            printf("slow af");
+            deltaTime = 1.0f / 60.0f;
+        }
+
         // * Clear the screen black every tick
         screen->Clear(0);
 
