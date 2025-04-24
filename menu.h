@@ -30,7 +30,7 @@ namespace Tmpl8
 		void openMainMenu(Surface* screen);
 		void openNextMenu(Surface* screen);
 		void openPauseMenu(Surface* screen);
-		void manageNextMenu(Surface* screen, bool level_finished);
+		void manageNextMenu(Surface* screen);
 		void setMousePosition(int x, int y); 
 		void setMouseState(bool isPressed) { isMousePressed = isPressed; }
 		bool isHoveringSurface(int x, int y, int width, int height);

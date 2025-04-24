@@ -57,6 +57,7 @@ namespace Tmpl8
         if ((isHoveringLVL1 || isHoveringEnter) && isMousePressed)
         {
             gamesound.playSound(gamesound.snd_select);
+            level.level_finished = false;
             start_game = true;
             resume_game = true;
             manualPaused = false;
@@ -66,6 +67,7 @@ namespace Tmpl8
         else if (isHoveringLVL2 && isMousePressed)
         {
             gamesound.playSound(gamesound.snd_select);
+            level.level_finished = false;
             start_game = true;
             resume_game = true;
             manualPaused = false;
@@ -75,6 +77,7 @@ namespace Tmpl8
         else if (isHoveringLVL3 && isMousePressed)
         {
             gamesound.playSound(gamesound.snd_select);
+            level.level_finished = false;
             start_game = true;
             resume_game = true;
             manualPaused = false;
@@ -166,7 +169,7 @@ namespace Tmpl8
         }
     }
 
-    void Menu::manageNextMenu(Surface* screen, bool level_finished)
+    void Menu::manageNextMenu(Surface* screen)
     {
         // Toggle <P> to open/close the pause menu
         static bool pPressedLastFrame = false;
@@ -180,7 +183,7 @@ namespace Tmpl8
 
         pPressedLastFrame = isPDown;
 
-        if (level_finished)
+        if (level.level_finished)
         {
             openNextMenu(screen);
             resume_game = false;
