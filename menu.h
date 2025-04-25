@@ -22,6 +22,9 @@ namespace Tmpl8
 	extern Sprite img_menu_pause_quit;
 	extern Sprite img_menu_end_bg;
 	extern Sprite img_menu_end_menu;
+	extern Sprite img_menu_end_menu;
+	extern Sprite img_menu_end_replay;
+
 
 	class Menu
 	{
@@ -93,6 +96,8 @@ namespace Tmpl8
 		const int END_BG_HEIGHT = img_menu_end_bg.GetHeight();
 		const int END_MENU_WIDTH = img_menu_end_menu.GetWidth();
 		const int END_MENU_HEIGHT = img_menu_end_menu.GetHeight();
+		const int END_REPLAY_WIDTH = img_menu_end_replay.GetWidth();
+		const int END_REPLAY_HEIGHT = img_menu_end_replay.GetHeight();
 
 		// +------------------+
 		// | BUTTON POSITIONS |
@@ -130,7 +135,9 @@ namespace Tmpl8
 		const int PAUSE_RESUME_Y = PAUSE_QUIT_Y;
 
 		// End menu
-		const int END_MENU_X = SCREEN_HALF_WIDTH - END_MENU_WIDTH / 2;
-		const int END_MENU_Y = SCREEN_HALF_HEIGHT - END_MENU_HEIGHT / 2 + END_BG_HEIGHT / 3;
+		const int END_MENU_X = SCREEN_HALF_WIDTH - END_MENU_WIDTH / 2 - END_BG_WIDTH / 4;
+		const int END_MENU_Y = SCREEN_HALF_HEIGHT - END_MENU_HEIGHT / 2 + END_BG_HEIGHT / 4;
+		const int END_REPLAY_X = SCREEN_HALF_WIDTH - END_REPLAY_WIDTH / 2 + END_BG_WIDTH / 4;
+		const int END_REPLAY_Y = END_MENU_Y;
 	};
 }

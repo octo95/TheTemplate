@@ -53,9 +53,11 @@ namespace Tmpl8
     // + END MENU
     Sprite img_menu_end_bg(new Surface("assets/images/menus/end_menu/img_menu_end_bg.png"), 1);
     Sprite img_menu_end_menu(new Surface("assets/images/menus/end_menu/img_menu_end_menu.png"), 1);
+    Sprite img_menu_end_replay(new Surface("assets/images/menus/end_menu/img_menu_end_menu_replay.png"), 1);
 
         // - Hover
     Sprite img_menu_end_menu_alt(new Surface("assets/images/menus/end_menu/img_menu_end_menu_alt.png"), 1);
+    Sprite img_menu_end_replay_alt(new Surface("assets/images/menus/end_menu/img_menu_end_menu_replay_alt.png"), 1);
 
     bool Menu::isHoveringSurface(int x, int y, int width, int height)
     {
@@ -262,12 +264,17 @@ namespace Tmpl8
         img_menu_end_bg.Draw(screen, SCREEN_WIDTH / 2 - PAUSE_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_HEIGHT / 2);
 
         static bool wasHoveringMenu = false;
+        static bool wasHoveringReplay = false;
+
         bool isHoveringMenu = isHoveringSurface(END_MENU_X, END_MENU_Y, END_MENU_WIDTH, END_MENU_HEIGHT);
+        bool isHoveringReplay = isHoveringSurface(END_REPLAY_X, END_REPLAY_Y, END_REPLAY_WIDTH, END_REPLAY_HEIGHT);
 
         if (isHoveringMenu)
         {
             if (!wasHoveringMenu)
+            {
                 gamesound.playSound(gamesound.snd_hover);
+            }
             img_menu_end_menu_alt.Draw(screen, END_MENU_X, END_MENU_Y);
         }
         else
@@ -275,7 +282,21 @@ namespace Tmpl8
             img_menu_end_menu.Draw(screen, END_MENU_X, END_MENU_Y);
         }
 
+        if(isHoveringReplay)
+        {
+            if (!wasHoveringReplay)
+            {
+                gamesound.playSound(gamesound.snd_hover);
+            }
+            img_menu_end_replay_alt.Draw(screen, END_REPLAY_X, END_MENU_Y);
+        }
+        else
+        {
+            img_menu_end_replay.Draw(screen, END_REPLAY_X, END_MENU_Y);
+        }
+
         wasHoveringMenu = isHoveringMenu;
+        wasHoveringReplay = isHoveringReplay;
 
         if (isHoveringMenu && isMousePressed)
         {
@@ -287,6 +308,19 @@ namespace Tmpl8
             endMenuOpen = false;
             mainMenuOpen = true;
             level.game_finished = false;
+        }
+
+        if (isHoveringReplay && isMousePressed)
+        {
+            gamesound.playSound(gamesound.snd_select);
+            gamesound.playMusic(gamesound.mus_level);
+            start_game = true;
+            resume_game = true;
+            pauseMenuOpen = false;
+            endMenuOpen = false;
+            mainMenuOpen = false;
+            level.game_finished = false;
+            level.loadLevel(1);
         }
     }
 
