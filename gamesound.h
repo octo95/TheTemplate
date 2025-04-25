@@ -18,6 +18,7 @@ namespace Tmpl8
         const std::string snd_fall = "assets/audio/SFX/snd_fall.wav";
         const std::string snd_fall_strong = "assets/audio/SFX/snd_fall_strong.wav";
         const std::string snd_collect = "assets/audio/SFX/snd_collect.wav";
+        const std::string snd_hover = "assets/audio/SFX/snd_hover.wav";
 
         // All Music paths
         const std::string mus_level = "assets/audio/Music/mus_level.mp3";
@@ -27,7 +28,6 @@ namespace Tmpl8
         void playMusic(const std::string& filePath);
         void stopMusic();
 
-        void setMusic(const std::string& filePath);
         float globalVolume = 0.1f;
 
     private:

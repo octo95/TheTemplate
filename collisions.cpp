@@ -117,6 +117,11 @@ namespace Tmpl8
         }
         else if (isEnd)
         {
+            if (tilemap.getCurrentLevel() == MAP_AMOUNT) 
+            {
+                level.game_finished = true;
+                return;
+            }
             gamesound.playSound(gamesound.snd_level_finished);
             level.level_finished = true;
         }

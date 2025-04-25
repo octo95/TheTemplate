@@ -20,6 +20,8 @@ namespace Tmpl8
 	extern Sprite img_menu_pause_bg;
 	extern Sprite img_menu_pause_resume;
 	extern Sprite img_menu_pause_quit;
+	extern Sprite img_menu_end_bg;
+	extern Sprite img_menu_end_menu;
 
 	class Menu
 	{
@@ -28,10 +30,12 @@ namespace Tmpl8
 		void openMainMenu(Surface* screen);
 		void openNextMenu(Surface* screen);
 		void openPauseMenu(Surface* screen);
-		void manageNextMenu(Surface* screen);
+		void openEndMenu(Surface* screen);
+		void manageMenus(Surface* screen);
 		void setMousePosition(int x, int y); 
 		void setMouseState(bool isPressed) { isMousePressed = isPressed; }
 		bool isHoveringSurface(int x, int y, int width, int height);
+		void manageLevelSelect(int index);
 
 		bool start_game = false;
 		bool resume_game = true;
@@ -52,6 +56,7 @@ namespace Tmpl8
 		bool mainMenuOpen = true;
 		bool pauseMenuOpen = false;
 		bool nextMenuOpen = false;
+		bool endMenuOpen = false;
 
 		// Other consts
 		const int SCREEN_HALF_WIDTH = SCREEN_WIDTH / 2;
@@ -83,6 +88,12 @@ namespace Tmpl8
 		const int PAUSE_QUIT_WIDTH = img_menu_pause_quit.GetWidth();
 		const int PAUSE_QUIT_HEIGHT = img_menu_pause_quit.GetHeight();
 
+		// End menu
+		const int END_BG_WIDTH = img_menu_end_bg.GetWidth();
+		const int END_BG_HEIGHT = img_menu_end_bg.GetHeight();
+		const int END_MENU_WIDTH = img_menu_end_menu.GetWidth();
+		const int END_MENU_HEIGHT = img_menu_end_menu.GetHeight();
+
 		// +------------------+
 		// | BUTTON POSITIONS |
 		// +------------------+
@@ -103,8 +114,8 @@ namespace Tmpl8
 		const int MAIN_LVL5_X = MAIN_LVL4_X + MAIN_LVL_WIDTH + 20;
 		const int MAIN_LVL5_Y = MAIN_LVL1_Y;
 
-		const int MAIN_ENTER_X = SCREEN_HALF_WIDTH - MAIN_START_WIDTH / 2;
-		const int MAIN_ENTER_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 2 + SCREEN_HEIGHT / 3;
+		const int MAIN_START_X = SCREEN_HALF_WIDTH - MAIN_START_WIDTH / 2;
+		const int MAIN_START_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 2 + SCREEN_HEIGHT / 3;
 
 		// Next level menu
 		const int NEXT_MENU_X = SCREEN_HALF_WIDTH - NEXT_MENU_WIDTH / 2 - NEXT_BG_WIDTH / 4;
@@ -117,5 +128,9 @@ namespace Tmpl8
 		const int PAUSE_QUIT_Y = SCREEN_HALF_HEIGHT - PAUSE_RESUME_HEIGHT / 2 + PAUSE_BG_WIDTH / 5;
 		const int PAUSE_RESUME_X = SCREEN_HALF_WIDTH - PAUSE_RESUME_WIDTH / 2 + PAUSE_BG_WIDTH / 4;
 		const int PAUSE_RESUME_Y = PAUSE_QUIT_Y;
+
+		// End menu
+		const int END_MENU_X = SCREEN_HALF_WIDTH - END_MENU_WIDTH / 2;
+		const int END_MENU_Y = SCREEN_HALF_HEIGHT - END_MENU_HEIGHT / 2 + END_BG_HEIGHT / 3;
 	};
 }

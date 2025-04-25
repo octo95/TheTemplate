@@ -163,7 +163,7 @@ namespace Tmpl8
     "ca da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da ca",
     "ca da da ca da da da da da da da da da da da da da da da da da da ca da da da ca",
     "ca da da ca da da da da da da da da da da da da da da da da da da ca da da da ca",
-    "ca ca ca ca ca ca ca ca ca ca ca ca da da da ca ca ca ca ca ca ca ca da ca ca ca",
+    "ca ba ba ca ca ca ca ca ca ca ca ca da da da ca ca ca ca ca ca ca ca da ca ca ca",
     "ca ca ca ca ca ca ca ca ca ca ca ca da da da ca ca ca ca ca ca ca ca da ca ca ca",
     "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
     "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
@@ -211,7 +211,7 @@ namespace Tmpl8
     "ca da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da ca",
     "ca da da da da da da da da da da da da ca da da da da da da da da da da da da ca",
     "ca da da da da da da da da da da da da ca da da da da da da da da da da da da ca",
-    "ca ca ca ca ca ca ca ca ca da da da ca ca ca da da da ca ca ca ca ca ca ca ca ca",
+    "ca ba ba ca ca ca ca ca ca da da da ca ca ca da da da ca ca ca ca ca ca ca ca ca",
     "ca ca ca ca ca ca ca ca ca da da da ca ca ca da da da ca ca ca ca ca ca ca ca ca",
     "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
     "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
@@ -250,7 +250,6 @@ namespace Tmpl8
         vec2 {3,3},
         vec2 {5,4}
     };
-
 
     class Player;
 

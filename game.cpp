@@ -68,7 +68,7 @@ namespace Tmpl8
             camera.drawWithCamAndAngle(&img_ai_follow, screen, static_cast<int>(ai_follow.position.x), static_cast<int>(ai_follow.position.y), deltaTime);
             drawCollectibleMap(&camera, screen, &this->collectible);
             drawWallMap(&camera, screen, &this->wall);
-            menu.manageNextMenu(screen);
+            menu.manageMenus(screen);
         
             // * DEBUG: Enabled if pressing <SPACEBAR>
             debug.displayDebug(screen, deltaTime);

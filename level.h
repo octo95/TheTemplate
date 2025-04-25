@@ -16,7 +16,7 @@ namespace Tmpl8
             vec2 {100,300},
             vec2 {0,0},
             vec2 {0,0},
-            vec2 {0,0}
+            vec2 {500,250}
         };
 
         const vec2 PLAYER_DEFAULT_POS[5] =
@@ -29,6 +29,7 @@ namespace Tmpl8
         };
 
         bool level_finished = false;
+        bool game_finished = false;
 
         Level(TileMap& tilemapRef, Player& playerRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, GameSound& gamesoundRef);
         void loadLevel(int i);
