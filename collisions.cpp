@@ -19,22 +19,17 @@ namespace Tmpl8
     TileType Collisions::CheckCollisionBottom(const vec2int& pos)
     {
         TileType t_left = TileType::None;
+        TileType t_right = TileType::None;
 
         int clamp_pos_x = pos.x / TILE_SIZE * TILE_SIZE;
         int clamp_pos_y = pos.y / TILE_SIZE * TILE_SIZE;
 
-        if (((pos.y - clamp_pos_y) + hitbox_radius * 2) % TILE_SIZE != 0) {
-            auto tile = tilemap.tile_at(clamp_pos_x, clamp_pos_y + TILE_SIZE);
-            if (tile.type != TileType::None) t_left = tile.type;
-        }
+        if (((pos.y - clamp_pos_y) + hitbox_radius * 2) >= TILE_SIZE) {
+            auto l = tilemap.tile_at(clamp_pos_x, pos.y + TILE_SIZE);
+            if (l.type != TileType::None) t_left = l.type;
 
-        TileType t_right = TileType::None;
-
-        clamp_pos_x = pos.x + (hitbox_radius * 2) * TILE_SIZE / TILE_SIZE;
-
-        if (((pos.y - clamp_pos_y) + hitbox_radius * 2) % TILE_SIZE != 0) {
-            auto tile = tilemap.tile_at(clamp_pos_x, clamp_pos_y + TILE_SIZE);
-            if (tile.type != TileType::None) t_right = tile.type;
+            auto r = tilemap.tile_at((pos.x + (hitbox_radius * 2)) / TILE_SIZE * TILE_SIZE, pos.y + TILE_SIZE);
+            if (r.type != TileType::None) t_right = r.type;
         }
 
         // If the player is more than half on the left
@@ -66,31 +61,69 @@ namespace Tmpl8
         return type;
     }
 
-    TileType Collisions::CheckCollisionSides(const vec2& pos)
+    TileType Collisions::CheckCollisionSides(const vec2int& pos)
     {
-        TileType type = None;
+        TileType t_top_left = TileType::None;
+        TileType t_bot_left = TileType::None;
 
-        // Left
-        auto tile = tilemap.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y));
-        if (tile.type != TileType::None) type = tile.type;
+        int clamp_pos_x = pos.x / TILE_SIZE * TILE_SIZE;
+        int clamp_pos_y = pos.y / TILE_SIZE * TILE_SIZE;
 
-        tile = tilemap.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y) + hitbox_radius * 2);
-        if (tile.type != TileType::None) type = tile.type;
+        if ((pos.x - clamp_pos_x) <= 0) {
+            auto tile = tilemap.tile_at(clamp_pos_x, pos.y);
+            if (tile.type != TileType::None) t_top_left = tile.type;
+        }
 
-        // Right
-        tile = tilemap.tile_at(static_cast<int>(pos.x) + hitbox_radius * 2, static_cast<int>(pos.y));
-        if (tile.type != TileType::None) type = tile.type;
+        if ((pos.x - clamp_pos_x) <= 0) {
+            auto tile = tilemap.tile_at(clamp_pos_x, pos.y + hitbox_radius * 2);
+            if (tile.type != TileType::None) t_bot_left = tile.type;
+        }
 
-        tile = tilemap.tile_at(static_cast<int>(pos.x) + hitbox_radius * 2, static_cast<int>(pos.y) + hitbox_radius * 2);
-        if (tile.type != TileType::None) type = tile.type;
+        TileType t_top_right = TileType::None;
+        TileType t_bot_right = TileType::None;
+        
+        if (((pos.x + hitbox_radius * 2) - clamp_pos_x) >= TILE_SIZE-1) {
+            auto tile = tilemap.tile_at(clamp_pos_x + TILE_SIZE, pos.y);
+            if (tile.type != TileType::None) t_top_right = tile.type;
+        }
 
-        return type;
+        if (((pos.x + hitbox_radius * 2) - clamp_pos_x) >= TILE_SIZE-1) {
+            auto tile = tilemap.tile_at(clamp_pos_x + TILE_SIZE, pos.y + hitbox_radius * 2);
+            if (tile.type != TileType::None) t_bot_right = tile.type;
+        }
+
+        TileType* check[4] = { &t_top_left, &t_bot_left, &t_top_right, &t_bot_right };
+        for (int i = 0; i < 4; i++) {
+            if (*check[i] != TileType::None) {
+                return *check[i];
+            }
+        }
+
+        return TileType::None;
+
+        //TileType type = None;
+        //
+        //// Left
+        //auto tile = tilemap.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y));
+        //if (tile.type != TileType::None) type = tile.type;
+        //
+        //tile = tilemap.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y) + hitbox_radius * 2);
+        //if (tile.type != TileType::None) type = tile.type;
+        //
+        //// Right
+        //tile = tilemap.tile_at(static_cast<int>(pos.x) + hitbox_radius * 2, static_cast<int>(pos.y));
+        //if (tile.type != TileType::None) type = tile.type;
+        //
+        //tile = tilemap.tile_at(static_cast<int>(pos.x) + hitbox_radius * 2, static_cast<int>(pos.y) + hitbox_radius * 2);
+        //if (tile.type != TileType::None) type = tile.type;
+        //
+        //return type;
     }
 
     void Collisions::manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles)
     {
-        TileType CheckSides = CheckCollisionSides({ new_pos.x, player.position.y });
-        TileType CheckBottom = CheckCollisionBottom({ (int)player.position.x, (int)(new_pos.y + player.velocity.y)});
+        TileType CheckSides = CheckCollisionSides({ (int)player.position.x, (int)player.position.y});
+        TileType CheckBottom = CheckCollisionBottom({ (int)player.position.x, (int)player.position.y});
         TileType CheckTop = CheckCollisionTop({ player.position.x, new_pos.y + player.velocity.y});
 
         bool isNoneX = (CheckSides == TileType::None);
@@ -110,7 +143,7 @@ namespace Tmpl8
         {
             gamesound.playSound(gamesound.snd_damage);
             ai_follow.setAIFollowPos(level.AI_FOLLOW_DEFAULT_POS[tilemap.getCurrentLevel()-1]);
-            loadCollectiblesForMap(tilemap.getCurrentLevel());
+            loadAllCollectibles(tilemap.getCurrentLevel());
             loadWallsForMap(tilemap.getCurrentLevel());
             player.position = player.default_pos;
             camera.setShakeState(true);
@@ -143,7 +176,7 @@ namespace Tmpl8
     bool Collisions::getJumpState(vec2& new_pos)
     {
         bool canPlayerJump = false;
-        TileType CheckSides = CheckCollisionSides({ new_pos.x + player.velocity.x, player.position.y });
+        TileType CheckSides = CheckCollisionSides({ (int)(new_pos.x + player.velocity.x), (int)player.position.y });
         TileType CheckBottom = CheckCollisionBottom({ (int)player.position.x, int(new_pos.y + player.velocity.y) });
 
         bool isCollision = (CheckSides == TileType::Collision || CheckBottom == TileType::Collision);
@@ -157,7 +190,7 @@ namespace Tmpl8
 
     void Collisions::applyBouncingPhysics(vec2& new_pos)
     {
-        if (this->CheckCollisionSides(vec2{ new_pos.x + player.velocity.x, new_pos.y }) != TileType::None)
+        if (this->CheckCollisionSides(vec2int{ (int)(new_pos.x + player.velocity.x), (int)new_pos.y }) != TileType::None)
         {
             float norm = sqrt(pow(player.velocity.x, 2) + pow(player.velocity.y, 2));
             float angle = acos(player.velocity.x / norm);

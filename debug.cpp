@@ -4,6 +4,7 @@
 #include "game.h"
 #include "player.h"
 #include <thread>
+#include <cmath>
 
 
 namespace Tmpl8
@@ -27,6 +28,17 @@ namespace Tmpl8
         int squareBottom = (int)(pos.y + player_img_width / 2 + hitbox_radius + camera.getCamPos().y);
         int squareLeft = (int)(pos.x + player_img_width / 2 - hitbox_radius + camera.getCamPos().x);
         screen->Box(squareLeft, squareTop, squareRight, squareBottom, 0xFF0000);
+    }
+
+    void Debug::drawTileHitbox(const vec2& pos, Surface* screen)
+    {
+        //printf("floor: %f\n", floor(pos.y / TILE_SIZE) * TILE_SIZE + camera.getCamPos().y + TILE_SIZE);
+        float x1 = floor(pos.x / TILE_SIZE) * TILE_SIZE + camera.getCamPos().x;
+        float y1 = floor(pos.y / TILE_SIZE) * TILE_SIZE + camera.getCamPos().y; 
+        float x2 = floor(pos.x / TILE_SIZE) * TILE_SIZE + camera.getCamPos().x + TILE_SIZE;
+        float y2 = floor(pos.y / TILE_SIZE) * TILE_SIZE + camera.getCamPos().y + TILE_SIZE;
+        //printf("tl: %0.f | tr: %0.f | bl: %0.f | br: %0.f\n", topLeft, topRight, bottomLeft, bottomRight);
+        screen->Box((int)x1, (int)y1,(int)x2, (int)y2, 0x0FF000);
     }
 
     void Debug::displayDebug(Surface* screen, float deltaTime)
@@ -65,8 +77,10 @@ namespace Tmpl8
 
             // Display player's position
             char player_tpos_coords[100];
-            sprintf(player_tpos_coords, "tx: %.0f, ty: %.0f", playerPos.x / 32, playerPos.y / 32);
+            sprintf(player_tpos_coords, "tx: %f, ty: %f", floor(playerPos.x / 32), floor(playerPos.y / 32));
             screen->Print(player_tpos_coords, 10, 50, 0xFFFF00);
+
+            drawTileHitbox(playerPos, screen);
 
             // Display current map level and spawn point
             char map_lvl_coords[100];
@@ -161,7 +175,7 @@ namespace Tmpl8
         if (GetAsyncKeyState('R') & 0x8000)
         {
             ai_follow.setAIFollowPos(level.AI_FOLLOW_DEFAULT_POS[tilemap.getCurrentLevel()-1]);
-            loadCollectiblesForMap(tilemap.getCurrentLevel());
+            loadAllCollectibles(tilemap.getCurrentLevel());
             loadWallsForMap(tilemap.getCurrentLevel());
             defaultPos();
         }

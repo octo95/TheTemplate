@@ -20,10 +20,9 @@ namespace Tmpl8
         player.position = player.default_pos;
         tilemap.setMapIndex(map_index);
         ai_follow.setAIFollowPos(AI_FOLLOW_DEFAULT_POS[map_index-1]);
+        loadAllCollectibles(map_index);
         loadAllWalls();
-        loadAllCollectibles();
         loadWallsForMap(map_index);
-        loadCollectiblesForMap(map_index);
     }
 
     void Level::manageDefaultPos(int map_index)

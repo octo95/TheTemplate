@@ -1,5 +1,5 @@
 #include "menu.h"
-#include "game.h"  // To call MouseMove if needed
+#include "game.h"
 #include "windows.h"
 #include "tilemap.h"
 #include <stdio.h>
@@ -85,9 +85,7 @@ namespace Tmpl8
 
             if (isHoveringLevel)
             {
-                if (!wasHoveringLevel[i])
-                    gamesound.playSound(gamesound.snd_hover);
-
+                if (!wasHoveringLevel[i]) gamesound.playSound(gamesound.snd_hover);
                 lvl_hover_list[i]->Draw(screen, lvl_list_X[i], lvl_list_Y[i]);
                 manageLevelSelect(i);
             }
@@ -104,11 +102,9 @@ namespace Tmpl8
 
         if (isHoveringStart)
         {
-            if (!wasHoveringStart)
-                gamesound.playSound(gamesound.snd_hover);
-
+            if (!wasHoveringStart) gamesound.playSound(gamesound.snd_hover);
             img_menu_main_start_alt.Draw(screen, MAIN_START_X, MAIN_START_Y);
-            manageLevelSelect(1);
+            manageLevelSelect(0);
         }
         else
         {
@@ -149,8 +145,7 @@ namespace Tmpl8
 
         if (isHoveringMenu)
         {
-            if (!wasHoveringMenu)
-                gamesound.playSound(gamesound.snd_hover);
+            if (!wasHoveringMenu) gamesound.playSound(gamesound.snd_hover);
             img_menu_next_menu_alt.Draw(screen, NEXT_MENU_X, NEXT_MENU_Y);
         }
         else
@@ -160,8 +155,7 @@ namespace Tmpl8
 
         if (isHoveringNext)
         {
-            if (!wasHoveringNext)
-                gamesound.playSound(gamesound.snd_hover);
+            if (!wasHoveringNext) gamesound.playSound(gamesound.snd_hover);
             img_menu_next_next_alt.Draw(screen, NEXT_LVL_X, NEXT_LVL_Y);
         }
         else
@@ -214,8 +208,7 @@ namespace Tmpl8
 
         if (isHoveringResume)
         {
-            if (!wasHoveringResume)
-                gamesound.playSound(gamesound.snd_hover);
+            if (!wasHoveringResume) gamesound.playSound(gamesound.snd_hover);
             img_menu_pause_resume_alt.Draw(screen, PAUSE_RESUME_X, PAUSE_RESUME_Y);
         }
         else
@@ -225,8 +218,7 @@ namespace Tmpl8
 
         if (isHoveringQuit)
         {
-            if (!wasHoveringQuit)
-                gamesound.playSound(gamesound.snd_hover);
+            if (!wasHoveringQuit) gamesound.playSound(gamesound.snd_hover);
             img_menu_pause_quit_alt.Draw(screen, PAUSE_QUIT_X, PAUSE_QUIT_Y);
         }
         else
@@ -271,10 +263,7 @@ namespace Tmpl8
 
         if (isHoveringMenu)
         {
-            if (!wasHoveringMenu)
-            {
-                gamesound.playSound(gamesound.snd_hover);
-            }
+            if (!wasHoveringMenu) gamesound.playSound(gamesound.snd_hover);
             img_menu_end_menu_alt.Draw(screen, END_MENU_X, END_MENU_Y);
         }
         else
@@ -284,10 +273,7 @@ namespace Tmpl8
 
         if(isHoveringReplay)
         {
-            if (!wasHoveringReplay)
-            {
-                gamesound.playSound(gamesound.snd_hover);
-            }
+            if (!wasHoveringReplay) gamesound.playSound(gamesound.snd_hover);
             img_menu_end_replay_alt.Draw(screen, END_REPLAY_X, END_MENU_Y);
         }
         else
