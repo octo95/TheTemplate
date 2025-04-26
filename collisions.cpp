@@ -215,8 +215,8 @@ namespace Tmpl8
         int draw_x = (int)player_pos.x + camera.getCamPos().x + img_water_slide_right.GetWidth() / 2 - player_img_width / 2;
         int draw_y = (int)player_pos.y + camera.getCamPos().y + img_water_slide_right.GetHeight() / 2 - player_img_height / 2 + player.PLAYER_DRAW_OFFSET_Y + 1;
 
-        if(player.velocity.x > 0)   img_water_slide_right.Draw(screen, draw_x, draw_y);
-        else                        img_water_slide_left.Draw(screen, draw_x, draw_y);
+        if(player.velocity.x > 0)   img_water_slide_right.Draw(screen, draw_x - img_water_slide_right.GetWidth() / 2, draw_y);
+        else                        img_water_slide_left.Draw(screen, draw_x + img_water_slide_left.GetWidth() / 2, draw_y);
     }
 
 }

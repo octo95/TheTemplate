@@ -33,12 +33,22 @@ namespace Tmpl8
 
         float radii_sum = ai_rad + player_rad;
 
-        float dx = this->position.x - player.position.x;
-        float dy = this->position.y - player.position.y;
+        // AI center
+        float ai_center_x = this->position.x + ai_rad;
+        float ai_center_y = this->position.y + ai_rad;
+
+        // Player center
+        float player_center_x = player.position.x + player_rad;
+        float player_center_y = player.position.y + player_rad;
+
+        // Distance between AI's center and the player's one.
+        float dx = ai_center_x - player_center_x;
+        float dy = ai_center_y - player_center_y;
         float distance = sqrtf(dx * dx + dy * dy);
 
         return (distance <= radii_sum);
     }
+
 }
 
 // follow the player's pos with a delay of deltaTime * k

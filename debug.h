@@ -18,8 +18,9 @@ namespace Tmpl8
     class Debug {
     public:
         Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef, Level& levelRef, Collisions& collisionRef, Menu& menuRef);
-        void drawHitbox(const vec2& pos, Surface* screen);
-        void drawTileHitbox(const vec2& pos, Surface* screen);
+        void drawPlayerHitbox(const vec2& pos, Surface* screen);
+        void drawPlayerTileHitbox(const vec2& pos, Surface* screen);
+        void drawAIFollowHitbox(const vec2& pos, Surface* screen);
         void displayDebug(Surface* screen, float deltaTime);
         void defaultPos();
         void nextDebugMap();

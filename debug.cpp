@@ -21,7 +21,7 @@ namespace Tmpl8
         menu(menuRef)
     {}
     
-    void Debug::drawHitbox(const vec2& pos, Surface* screen)
+    void Debug::drawPlayerHitbox(const vec2& pos, Surface* screen)
     {
         int x1 = (int)(pos.x + player_img_width / 2 - hitbox_radius + camera.getCamPos().x);
         int y1 = (int)(pos.x + player_img_width / 2 + hitbox_radius + camera.getCamPos().x);
@@ -30,7 +30,7 @@ namespace Tmpl8
         screen->Box(x1, x2, y1, y2, 0xFF0000);
     }
 
-    void Debug::drawTileHitbox(const vec2& pos, Surface* screen)
+    void Debug::drawPlayerTileHitbox(const vec2& pos, Surface* screen)
     {
         float x1 = floor(pos.x / TILE_SIZE) * TILE_SIZE + camera.getCamPos().x;
         float y1 = floor(pos.y / TILE_SIZE) * TILE_SIZE + camera.getCamPos().y; 
@@ -39,6 +39,18 @@ namespace Tmpl8
      
         screen->Box((int)x1, (int)y1,(int)x2, (int)y2, 0x0FF000);
     }
+
+    void Debug::drawAIFollowHitbox(const vec2& pos, Surface* screen)
+    {
+        int x1 = (int)(pos.x + camera.getCamPos().x);
+        int y1 = (int)(pos.y + camera.getCamPos().y);
+
+        int x2 = (int)(pos.x + img_ai_follow.GetWidth() + camera.getCamPos().x);
+        int y2 = (int)(pos.y + img_ai_follow.GetHeight() + camera.getCamPos().y);
+
+        screen->Box(x1, y1, x2, y2, 0xFF0000);
+    }
+
 
     void Debug::displayDebug(Surface* screen, float deltaTime)
     {
@@ -57,12 +69,12 @@ namespace Tmpl8
             stopAIs();
 
             // Get the player position
-            vec2 playerPos;
-            player.getPlayerPos(playerPos);
+            player.getPlayerPos(player.position);
 
             // Display the entities' hitboxes
-            drawHitbox(playerPos, screen);
-            drawHitbox(ai_follow.position, screen);
+            drawPlayerHitbox(player.position, screen);
+            drawPlayerTileHitbox(player.position, screen);
+            drawAIFollowHitbox(ai_follow.position, screen);
 
             // Draw the distance between the player and an AI to specify below
             drawDistancePlayerToAI(ai_follow.position, screen);
@@ -74,21 +86,17 @@ namespace Tmpl8
 
             // Display player's position
             char player_pos_txt[100];
-            sprintf(player_pos_txt, "px: %.0f, py: %.0f", playerPos.x, playerPos.y);
+            sprintf(player_pos_txt, "px: %.0f, py: %.0f", player.position.x, player.position.y);
             screen->Print(player_pos_txt, 10, 30, 0xFFFF00);
 
             // Display player's position
             char player_tpos_txt[100];
-            sprintf(player_tpos_txt, "tx: %.0f, ty: %.0f", floor(playerPos.x / 32), floor(playerPos.y / 32));
+            sprintf(player_tpos_txt, "tx: %.0f, ty: %.0f", floor(player.position.x / 32), floor(player.position.y / 32));
             screen->Print(player_tpos_txt, 10, 50, 0xFFFF00);
-
-            drawTileHitbox(playerPos, screen);
 
             // Display current map level and spawn point
             char map_lvl_txt[100];
-            vec2 defaultPos;
-            player.getPlayerDefaultPos(defaultPos);
-            sprintf(map_lvl_txt, "current map: %d - (%.0f, %.0f)", tilemap.getCurrentLevel(), defaultPos.x, defaultPos.y);
+            sprintf(map_lvl_txt, "current map: %d - (%.0f, %.0f)", tilemap.getCurrentLevel(), player.default_pos.x, player.default_pos.y);
             screen->Print(map_lvl_txt, 10, 70, 0xFFFF00);
 
             // Display velocity on the player as a line and print it on screen
