@@ -10,51 +10,50 @@ namespace Tmpl8
 	Sprite img_wall(new Surface("assets/images/map/img_wall.png"), 1);
 	int walls_collected = 0;
 
-	WallMap wmap_current;
-	WallMap wmap_1;
-	WallMap wmap_2;
-	WallMap wmap_3;
+	WallMap wmap;
 
-	void loadAllWalls()
+	void loadAllWalls(int map)
 	{
-		size_t map1_size = sizeof(MAP1_WALLS) / sizeof(MAP1_WALLS[0]);
-		size_t map2_size = sizeof(MAP2_WALLS) / sizeof(MAP2_WALLS[0]);
-		size_t map3_size = sizeof(MAP3_WALLS) / sizeof(MAP3_WALLS[0]);
+		// Clear wmap
+		wmap = WallMap();
 
-		for (int i = 0; i < map1_size; i++) {
-			wmap_1.insert({ MAP1_WALLS[i], Wall(MAP1_WALLS[i]) });
+		// Select correct map
+		const vec2* ptr;
+		int size = 0;
+
+		switch (map) {
+		case 1:
+			ptr = MAP1_WALLS;
+			size = sizeof(MAP1_WALLS) / sizeof(MAP1_WALLS[0]);
+			break;
+		case 2:
+			ptr = MAP2_WALLS;
+			size = sizeof(MAP2_WALLS) / sizeof(MAP2_WALLS[0]);
+			break;
+		case 3:
+			ptr = MAP3_WALLS;
+			size = sizeof(MAP3_WALLS) / sizeof(MAP3_WALLS[0]);
+			break;
+		case 4:
+			ptr = MAP4_WALLS;
+			size = sizeof(MAP4_WALLS) / sizeof(MAP4_WALLS[0]);
+			break;
+		case 5:
+			ptr = MAP5_WALLS;
+			size = sizeof(MAP5_WALLS) / sizeof(MAP5_WALLS[0]);
+			break;
 		}
 
-		for (int i = 0; i < map2_size; i++) {
-			wmap_2.insert({ MAP2_WALLS[i], Wall(MAP2_WALLS[i]) });
-		}
-
-		for (int i = 0; i < map3_size; i++) {
-			wmap_3.insert({ MAP3_WALLS[i], Wall(MAP3_WALLS[i]) });
+		// Insert walls into wmap
+		for (int i = 0; i < size; i++) {
+			wmap.insert({ ptr[i], Wall(ptr[i]) });
 		}
 	}
 
-	void loadWallsForMap(int map)
-	{
-		clearWalls();
-
-		if (map == 1)
-			wmap_current = wmap_1;
-		else if (map == 2)
-			wmap_current = wmap_2;
-		else if (map == 3)
-			wmap_current = wmap_3;
-	}
-
-	void clearWalls()
-	{
-		wmap_current.clear();
-		walls_collected = 0;
-	}
 
 	void drawWallMap(Camera* camera, Surface* screen, WallMap* walls)
 	{
-		for (auto& c : wmap_current)
+		for (auto& c : wmap)
 		{
 			float x = c.first.x * TILE_SIZE + TILE_SIZE / 2.0f;
 			float y = c.first.y * TILE_SIZE;
@@ -62,17 +61,18 @@ namespace Tmpl8
 		}
 	}
 
-	void manageWallCollision(vec2 player_pos, WallMap* walls) {
-		int x = player_pos.x / TILE_SIZE;
-		int y = player_pos.y / TILE_SIZE;
+	void manageWallCollision(vec2 player_pos, GameSound* gamesound) {
+		int x = (int)player_pos.x / TILE_SIZE;
+		int y = (int)player_pos.y / TILE_SIZE;
 
-		WallMap::iterator c = wmap_current.begin();
-		for (; c != wmap_current.end();)
+		WallMap::iterator c = wmap.begin();
+		for (; c != wmap.end();)
 		{
 			int cx = static_cast<int>(c->first.x);
 			int cy = static_cast<int>(c->first.y);
 			if (cx == x && cy == y) {
-				c = wmap_current.erase(c);
+				c = wmap.erase(c);
+				gamesound->playSound(gamesound->snd_break_wall);
 				walls_collected++;
 			}
 			else {

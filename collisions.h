@@ -34,8 +34,8 @@ namespace Tmpl8
 
         bool canPlayerJump = false;
         float gravity = 0.5f;
-        float friction = 0.05f;
         float wall_force = 7.0f;
+        float trigger_fall_light = 2.0f;
         float trigger_fall_normal = 5.0f;
         float trigger_fall_hard = 9.0f;
     };

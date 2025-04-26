@@ -6,6 +6,7 @@
 #include <functional>
 #include <unordered_map>
 #include "vec2_hash.h"
+#include "gamesound.h"
 
 namespace Tmpl8
 {
@@ -40,9 +41,7 @@ namespace Tmpl8
 
 	typedef std::unordered_map<vec2, Wall> WallMap;
 
-	void loadAllWalls();
+	void loadAllWalls(int map);
 	void drawWallMap(Camera* camera, Surface* screen, WallMap* collectibles);
-	void manageWallCollision(vec2 player_pos, WallMap* collectibles);
-	void loadWallsForMap(int map);
-	void clearWalls();
+	void manageWallCollision(vec2 player_pos, GameSound* gamesound);
 }

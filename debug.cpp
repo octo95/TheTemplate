@@ -51,7 +51,10 @@ namespace Tmpl8
             nextDebugMap();
 
             // PRESS <T> : Runs the game at 1 FPS.
-            getCurrentTileStatus();
+            // TODO
+
+            // PRESS <S> : Stop the AIs' movement.
+            stopAIs();
 
             // Get the player position
             vec2 playerPos;
@@ -65,54 +68,68 @@ namespace Tmpl8
             drawDistancePlayerToAI(ai_follow.position, screen);
 
             // Display debug text
-            char debug_active_coords[100];
-            sprintf(debug_active_coords, "-- DEBUG MODE --");
-            screen->Print(debug_active_coords, 10, 10, 0x00FF00);
+            char debug_active_txt[100];
+            sprintf(debug_active_txt, "-- DEBUG MODE --");
+            screen->Print(debug_active_txt, 10, 10, 0x00FF00);
 
             // Display player's position
-            char player_pos_coords[100];
-            sprintf(player_pos_coords, "px: %.0f, py: %.0f", playerPos.x, playerPos.y);
-            screen->Print(player_pos_coords, 10, 30, 0xFFFF00);
+            char player_pos_txt[100];
+            sprintf(player_pos_txt, "px: %.0f, py: %.0f", playerPos.x, playerPos.y);
+            screen->Print(player_pos_txt, 10, 30, 0xFFFF00);
 
             // Display player's position
-            char player_tpos_coords[100];
-            sprintf(player_tpos_coords, "tx: %f, ty: %f", floor(playerPos.x / 32), floor(playerPos.y / 32));
-            screen->Print(player_tpos_coords, 10, 50, 0xFFFF00);
+            char player_tpos_txt[100];
+            sprintf(player_tpos_txt, "tx: %.0f, ty: %.0f", floor(playerPos.x / 32), floor(playerPos.y / 32));
+            screen->Print(player_tpos_txt, 10, 50, 0xFFFF00);
 
             drawTileHitbox(playerPos, screen);
 
             // Display current map level and spawn point
-            char map_lvl_coords[100];
+            char map_lvl_txt[100];
             vec2 defaultPos;
             player.getPlayerDefaultPos(defaultPos);
-            sprintf(map_lvl_coords, "current map: %d - (%.0f, %.0f)", tilemap.getCurrentLevel(), defaultPos.x, defaultPos.y);
-            screen->Print(map_lvl_coords, 10, 70, 0xFFFF00);
+            sprintf(map_lvl_txt, "current map: %d - (%.0f, %.0f)", tilemap.getCurrentLevel(), defaultPos.x, defaultPos.y);
+            screen->Print(map_lvl_txt, 10, 70, 0xFFFF00);
 
             // Display velocity on the player as a line and print it on screen
             drawVelocityNorm(screen);
 
             // Display the collectibles collected
-            char collectibles_coords[100];
-            sprintf(collectibles_coords, "Jumps left: %d", collectibles_collected);
-            screen->Print(collectibles_coords, 10, 110, 0xFFFF00);
+            char collectibles_txt[100];
+            sprintf(collectibles_txt, "Jumps left: %d", collectibles_collected);
+            screen->Print(collectibles_txt, 10, 110, 0xFFFF00);
 
             // Display Collision status
-            // getCurrentTileStatus(screen);
+            getCurrentTileStatus(screen);
             
             // Display FPS
-            char FPS_coords[100];
-            sprintf(FPS_coords, "FPS: %d", getFPS(deltaTime));
-            screen->Print(FPS_coords, 10, 130, 0xFFFF00);
+            char FPS_txt[100];
+            sprintf(FPS_txt, "FPS: %d", getFPS(deltaTime));
+            screen->Print(FPS_txt, 10, 150, 0xFFFF00);
         }
     }
 
     // TODO -> Display : "Touching tile : <TYPE> at <SIDE>"
     //void Debug::getCurrentTileStatus(Surface* screen)
     //{
-    //    char collision_type_coords[100];
-    //    //sprintf(collision_type_coords, "Touching tile: %d at %d", TODO?);
-    //    screen->Print(collision_type_coords, 10, 130, 0xFFFF00);
+    //    char collision_type_txt[100];
+    //    //sprintf(collision_type_txt, "Touching tile: %d at %d", TODO?);
+    //    screen->Print(collision_type_txt, 10, 130, 0xFFFF00);
     //}
+
+    void Debug::stopAIs()
+    {
+        static bool s_wasPressed = false;
+
+        if (GetAsyncKeyState('S') & 0x8000) {
+            if (!s_wasPressed) {
+                ai_follow.is_following = !ai_follow.is_following;
+                s_wasPressed = true;
+            }
+        } else {
+            s_wasPressed = false;
+        }
+    }
 
     int Debug::getFPS(float deltaTime)
     {
@@ -148,36 +165,29 @@ namespace Tmpl8
         {
             tilemap.incrementMapIndex();
             level.loadLevel(tilemap.getCurrentLevel());
-            defaultPos();
         }
         tabPressedLastFrame = isTabDown;
     }
 
     void Debug::drawVelocityNorm(Surface* screen)
     { 
-        float lineSize = 1.0f;
+        float lineSize = 10.0f;
         float start_x = player.position.x + camera.getCamPos().x + player_img_width / 2;
-        float start_y = player.position.y + camera.getCamPos().y + player_img_height - 4 + 2;
+        float start_y = player.position.y + camera.getCamPos().y + player_img_height / 2;
         float end_x = start_x + player.velocity.x * lineSize;
         float end_y = start_y + player.velocity.y * lineSize;
 
         // Display velocity on screen
-        char velocity_coords[100];
-        sprintf(velocity_coords, "velocity: (x : %.2f, y : %.2f)", player.velocity.x, player.velocity.y);
-        screen->Print(velocity_coords, 10, 90, 0xFFFF00);
+        char velocity_txt[100];
+        sprintf(velocity_txt, "velocity: (x : %.2f, y : %.2f)", player.velocity.x, player.velocity.y);
+        screen->Print(velocity_txt, 10, 90, 0xFFFF00);
 
         screen->Line(start_x, start_y, end_x, end_y, 0x33F8FF);
     }
 
     void Debug::restartCurrentLevel()
     {
-        if (GetAsyncKeyState('R') & 0x8000)
-        {
-            ai_follow.setAIFollowPos(level.AI_FOLLOW_DEFAULT_POS[tilemap.getCurrentLevel()-1]);
-            loadAllCollectibles(tilemap.getCurrentLevel());
-            loadWallsForMap(tilemap.getCurrentLevel());
-            defaultPos();
-        }
+        if (GetAsyncKeyState('R') & 0x8000) level.loadLevel(tilemap.getCurrentLevel());
     }
 
     void Debug::drawDistancePlayerToAI(vec2 ai_pos, Surface* screen)
@@ -190,9 +200,43 @@ namespace Tmpl8
         screen->Line(start_x, start_y, end_x, end_y, 0x00FF00);
     }
 
-    void Debug::getCurrentTileStatus()
+    const char* getTileTypeName(TileType type)
     {
-        collisions.CheckCollisionBottom(player.position);
+        switch (type)
+        {
+        case TileType::Collision: return "Collision";
+        case TileType::Ice: return "Ice";
+        case TileType::Damage: return "Damage";
+        case TileType::End: return "End";
+        case TileType::None: return "None";
+        default: return "Unknown";
+        }
     }
+
+    void Debug::getCurrentTileStatus(Surface* screen)
+    {
+        // Check collisions with offsets of 1 to compare with the tile next to it.
+        TileType CheckLeft = collisions.CheckCollisionLeft({ player.position.x - 1, player.position.y });
+        TileType CheckRight = collisions.CheckCollisionRight({ player.position.x + 1, player.position.y });
+        TileType CheckBottom = collisions.CheckCollisionBottom({ player.position.x, player.position.y + 1 });
+        TileType CheckTop = collisions.CheckCollisionTop({ player.position.x, player.position.y - 1 });
+
+        std::string collisionInfo = "";
+
+        if (CheckLeft != TileType::None)    collisionInfo += "Left (" + std::string(getTileTypeName(CheckLeft)) + ") ";
+        if (CheckRight != TileType::None)   collisionInfo += "Right (" + std::string(getTileTypeName(CheckRight)) + ") ";
+        if (CheckBottom != TileType::None)  collisionInfo += "Bottom (" + std::string(getTileTypeName(CheckBottom)) + ") ";
+        if (CheckTop != TileType::None)     collisionInfo += "Top (" + std::string(getTileTypeName(CheckTop)) + ") ";
+        if (collisionInfo.empty())          collisionInfo = "Collision: None";
+        else                                collisionInfo = "Collision: " + collisionInfo;
+
+        char collision_type_txt[256];
+        sprintf(collision_type_txt, "%s", collisionInfo.c_str());
+        screen->Print(collision_type_txt, 10, 130, 0xFFFF00);
+    }
+
+
+
+
 
 }

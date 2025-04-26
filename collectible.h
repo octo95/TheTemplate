@@ -15,6 +15,7 @@ namespace Tmpl8
 
 	struct Collectible
 	{
+	public:
 		Tmpl8::vec2 pos;
 
 		// Default Constructor
@@ -42,4 +43,5 @@ namespace Tmpl8
 	void loadAllCollectibles(int map);
 	void drawCollectibleMap(Camera* camera, Surface* screen);
 	void manageCollectibleCollision(vec2 player_pos, GameSound* gamesound);
+	void manageCollectibleRespawn(float deltaTime);
 }

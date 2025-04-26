@@ -10,19 +10,23 @@ namespace Tmpl8
 {
 	Sprite img_collectible(new Surface("assets/images/map/img_collectible.png"), 1);
 	int collectibles_collected = 0;
+	int current_map = 1;
+	bool collectible_timer_active = false;
+	float collectible_respawn_time = 0.0f;
 
 	CollectibleMap cmap;
 
-	void loadAllCollectibles(int map)
+	void loadAllCollectibles(int map_index)
 	{
 		// Clear cmap
+		current_map = map_index;
 		cmap = CollectibleMap();
 
 		// Select correct map
 		const vec2* ptr;
 		int size = 0;
 
-		switch (map) {
+		switch (map_index) {
 		case 1:
 			ptr = MAP1_COLLECTIBLES;
 			size = sizeof(MAP1_COLLECTIBLES) / sizeof(MAP1_COLLECTIBLES[0]);
@@ -73,10 +77,31 @@ namespace Tmpl8
 				c = cmap.erase(c);
 				gamesound->playSound(gamesound->snd_collect);
 				collectibles_collected++;
+
+				// Start timer
+				collectible_respawn_time = 3.0f;
+				collectible_timer_active = true;
 			}
 			else {
 				++c;
 			}
 		}
 	}
+	void manageCollectibleRespawn(float deltaTime)
+	{
+		// Run through the timer
+		if (collectible_timer_active)
+		{
+			collectible_respawn_time -= deltaTime;
+			
+			// End of timer, make the collectibles respawn
+			if (collectible_respawn_time <= 0.0f)
+			{
+				collectible_timer_active = false;
+				loadAllCollectibles(current_map);
+			}
+		}
+	}
+
+
 }

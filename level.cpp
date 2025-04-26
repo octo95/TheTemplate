@@ -15,14 +15,14 @@ namespace Tmpl8
 
     void Level::loadLevel(int map_index)
     {
+        collectibles_collected = 0;
         tilemap.current_level = map_index;
-        manageDefaultPos(map_index);
         player.position = player.default_pos;
         tilemap.setMapIndex(map_index);
-        ai_follow.setAIFollowPos(AI_FOLLOW_DEFAULT_POS[map_index-1]);
+        manageDefaultPos(map_index);
         loadAllCollectibles(map_index);
-        loadAllWalls();
-        loadWallsForMap(map_index);
+        loadAllWalls(map_index);
+        ai_follow.setAIFollowPos(AI_FOLLOW_DEFAULT_POS[map_index-1]);
     }
 
     void Level::manageDefaultPos(int map_index)

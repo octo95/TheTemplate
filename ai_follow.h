@@ -10,6 +10,7 @@ namespace Tmpl8
     public:
         vec2 default_pos = { 0, 0 };
         vec2 position = default_pos;
+        bool is_following = true;
         AI_Follow(Player& playerRef, Camera& cameraRef);
         void followPlayer(float deltaTime);
         void setAIFollowDefaultPos(const vec2& pos) { default_pos = pos; }

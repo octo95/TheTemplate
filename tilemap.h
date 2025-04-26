@@ -15,7 +15,7 @@ namespace Tmpl8
     const char MAP1[TILE_ROWS][TILE_COLUMNS * 3] = {
     "ca ca da da da da da da da da da da da da da da da da da da da da ca ca ca ca ca",
     "ca ca da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da ca ca ca ca ca ca",
+    "ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca",
     "ca da da da da da da da da da da da ca ca da da da da da da da da da da da ca ca",
     "ca da da da da da da da da da da da da ca da da da da da da da da da da da ca ca",
     "ca ba ca ca ca ca ca da da da da da da da da da da da da da da da da da da ca ca",

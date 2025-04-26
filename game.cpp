@@ -24,10 +24,6 @@ namespace Tmpl8
     void Game::Tick(float deltaTime)
     {
         deltaTime /= 1000.0f; // Convert deltaTime to seconds
-        //if (debug.gameSlow)  // Lower deltaTime if needed for debug
-        {
-            deltaTime /= 1000.0f;
-        }
 
         // * Clear the screen black every tick
         screen->Clear(0);
@@ -46,7 +42,7 @@ namespace Tmpl8
         
                 // Collisions logic
                 collisions.manageCollisions(player_pos, screen, &collectible);
-                manageWallCollision(player_pos, &wall);
+                manageWallCollision(player_pos, &gamesound);
                 manageCollectibleCollision(player_pos, &gamesound);
         
                 // AI logic
@@ -55,6 +51,8 @@ namespace Tmpl8
                 // Camera logic
                 camera.setCamPos(player.camFollowPlayer());
                 camera.shakeCamera(deltaTime);
+
+                manageCollectibleRespawn(deltaTime);
             }
             else
             {

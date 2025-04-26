@@ -9,7 +9,7 @@ namespace Tmpl8
     // Tile functions
     void Tile::DrawTile(Surface* screen, int x, int y, const Camera& camera)
     {
-        Pixel* src = img_tilemap.GetBuffer() + 1 + tx * (1 + TILE_SIZE) + (1 + ty * (1 + TILE_SIZE)) * IMG_TILEMAP_WIDTH;
+        Pixel* src = img_tilemap.GetBuffer() + tx * TILE_SIZE + ty * TILE_SIZE * IMG_TILEMAP_WIDTH;
         Pixel* dst = screen->GetBuffer();
 
         for (int yl = 0; yl < TILE_SIZE; yl++)
@@ -20,7 +20,7 @@ namespace Tmpl8
                 int x_t = x + xl + camera.getCamPos().x;
                 int y_t = y + yl + camera.getCamPos().y;
 
-                if (x_t <= SCREEN_WIDTH && x_t >= 0 && y_t <= SCREEN_HEIGHT && y_t >= 0) {
+                if (x_t < SCREEN_WIDTH && x_t > 0 && y_t < SCREEN_HEIGHT && y_t > 0) {
                     dst[x_t + y_t * SCREEN_WIDTH] = src[xl + yl * IMG_TILEMAP_WIDTH];
                 }
             }

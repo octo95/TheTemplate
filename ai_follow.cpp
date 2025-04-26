@@ -13,8 +13,10 @@ namespace Tmpl8
 
     Sprite img_ai_follow(new Surface("assets/images/entities/img_ai_follow.png"), 1);
 
-    void AI_Follow::followPlayer(float deltaTime) // TODO
+    void AI_Follow::followPlayer(float deltaTime)
     {
+        if (!is_following) return;
+
         const float delayAmplifier = 0.5f;
 
         float diffX = player.position.x - this->position.x;

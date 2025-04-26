@@ -20,11 +20,11 @@ namespace Tmpl8
         TileType type = None;
 
         // Bottom-left
-        auto tile = tilemap.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y) + hitbox_radius * 2);
+        auto tile = tilemap.tile_at((int)(pos.x), (int)(pos.y) + hitbox_radius * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         // Bottom-right
-        tile = tilemap.tile_at(static_cast<int>(pos.x) + hitbox_radius * 2, static_cast<int>(pos.y) + hitbox_radius * 2);
+        tile = tilemap.tile_at((int)(pos.x) + hitbox_radius * 2, (int)(pos.y) + hitbox_radius * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         return type;
@@ -34,25 +34,27 @@ namespace Tmpl8
     {
         TileType type = None;
 
-        // Left
-        auto tile = tilemap.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y));
+        // Top-left
+        auto tile = tilemap.tile_at((int)(pos.x), (int)(pos.y));
         if (tile.type != TileType::None) type = tile.type;
 
-        tile = tilemap.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y) + hitbox_radius * 2);
+        // Bottom-left
+        tile = tilemap.tile_at((int)(pos.x), (int)(pos.y) + hitbox_radius * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         return type;
     }
 
-    TileType Collisions::CheckCollisionRight(const vec2 & pos)
+    TileType Collisions::CheckCollisionRight(const vec2& pos)
     {
         TileType type = None;
 
-        // Right
-        auto tile = tilemap.tile_at(static_cast<int>(pos.x) + hitbox_radius * 2, static_cast<int>(pos.y));
+        // Top-right
+        auto tile = tilemap.tile_at((int)(pos.x) + hitbox_radius * 2, (int)(pos.y));
         if (tile.type != TileType::None) type = tile.type;
 
-        tile = tilemap.tile_at(static_cast<int>(pos.x) + hitbox_radius * 2, static_cast<int>(pos.y) + hitbox_radius * 2);
+        // Bottom-right
+        tile = tilemap.tile_at((int)(pos.x) + hitbox_radius * 2, (int)(pos.y) + hitbox_radius * 2);
         if (tile.type != TileType::None) type = tile.type;
 
         return type;
@@ -62,15 +64,17 @@ namespace Tmpl8
     {
         TileType type = None;
 
-        // Top
-        auto tile = tilemap.tile_at(static_cast<int>(pos.x), static_cast<int>(pos.y));
+        // Top-left
+        auto tile = tilemap.tile_at((int)(pos.x), (int)(pos.y));
         if (tile.type != TileType::None) type = tile.type;
 
-        tile = tilemap.tile_at(static_cast<int>(pos.x) + hitbox_radius * 2, static_cast<int>(pos.y));
+        // Top-right
+        tile = tilemap.tile_at((int)(pos.x) + hitbox_radius * 2, (int)(pos.y));
         if (tile.type != TileType::None) type = tile.type;
 
         return type;
     }
+
 
     void Collisions::manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles)
     {
@@ -86,19 +90,27 @@ namespace Tmpl8
         bool isCollision = (CheckLeft == TileType::Collision || CheckRight == TileType::Collision || CheckBottom == TileType::Collision || CheckTop==TileType::Collision);
         bool isIce = (CheckBottom == TileType::Ice || CheckTop == TileType::Ice);
 
+        bool FallNormal = player.velocity.y >= trigger_fall_normal && player.velocity.y < trigger_fall_hard;
+        bool FallHard = player.velocity.y >= trigger_fall_hard;
+
         // SFX: if falling from a high distance play <snd_fall_strong.wav>, otherwise from a smaller one play <snd_fall.wav> and if even smaller don't play any SFX.
-        if ((CheckBottom == TileType::Collision || CheckBottom == TileType::Ice) && player.velocity.y > trigger_fall_normal && player.velocity.y < trigger_fall_hard) gamesound.playSound(gamesound.snd_fall);
-        if ((CheckBottom == TileType::Collision || CheckBottom == TileType::Ice) && player.velocity.y >= trigger_fall_hard) gamesound.playSound(gamesound.snd_fall_strong);
+        if ((CheckBottom == TileType::Collision || CheckBottom == TileType::Ice) && FallNormal) 
+        {
+            gamesound.playSound(gamesound.snd_fall);
+            //printf("fall normal: %.0f\n", player.velocity.y);
+        }
+        if ((CheckBottom == TileType::Collision || CheckBottom == TileType::Ice) && FallHard) 
+        {
+            gamesound.playSound(gamesound.snd_fall_strong);
+            //printf("fall hard: %.0f\n", player.velocity.y);
+        }
 
         if (isNoneX) player.position.x = new_pos.x;
         if (isNoneY) player.position.y = new_pos.y;
         if (isDamage)
         {
+            level.loadLevel(tilemap.getCurrentLevel());
             gamesound.playSound(gamesound.snd_damage);
-            ai_follow.setAIFollowPos(level.AI_FOLLOW_DEFAULT_POS[tilemap.getCurrentLevel()-1]);
-            loadAllCollectibles(tilemap.getCurrentLevel());
-            loadWallsForMap(tilemap.getCurrentLevel());
-            player.position = player.default_pos;
             camera.setShakeState(true);
         }
         else if (isEnd)
@@ -113,7 +125,7 @@ namespace Tmpl8
         }
         else if (isCollision || isIce)
         {
-            friction = isIce ? 0.0f : 0.05f;
+            player.friction = isIce ? 0.0f : 0.05f;
             player.velocity.y = 0;
             player.position.y = (new_pos.y > player.position.y) ? player.position.y : new_pos.y;
         }
@@ -121,7 +133,8 @@ namespace Tmpl8
         if (walls_collected > 0)
         {
             walls_collected--;
-            player.velocity += (player.velocity.x <= 0) ? wall_force : -wall_force;
+            player.velocity.x += (player.velocity.x >= 0) ? wall_force : -wall_force;
+            //player.velocity.y += (player.velocity.y <= 0) ? wall_force : -wall_force;
         }
 
     }
@@ -142,7 +155,13 @@ namespace Tmpl8
 
     void Collisions::applyBouncingPhysics(vec2& new_pos)
     {
-        if (this->CheckCollisionLeft(vec2{ new_pos.x + player.velocity.x, new_pos.y }) != TileType::None || this->CheckCollisionRight(vec2{ new_pos.x + player.velocity.x, new_pos.y }) != TileType::None)
+        bool CheckLeft = this->CheckCollisionLeft(vec2{ new_pos.x + player.velocity.x, new_pos.y }) != TileType::None;
+        bool CheckRight = this->CheckCollisionRight(vec2{ new_pos.x + player.velocity.x, new_pos.y }) != TileType::None;
+        bool CheckBottom = this->CheckCollisionBottom(vec2{ new_pos.x, new_pos.y + player.velocity.y }) != TileType::None;
+        
+        bool FallLight = player.velocity.y >= trigger_fall_light && player.velocity.y < trigger_fall_normal;
+
+        if (CheckLeft || CheckRight)
         {
             float norm = sqrt(pow(player.velocity.x, 2) + pow(player.velocity.y, 2));
             float angle = acos(player.velocity.x / norm);
@@ -153,8 +172,10 @@ namespace Tmpl8
             // Apply the power loss for the sides collisions
             player.velocity.x *= pow(player.ENERGY_LOSS, 2);
         }
-        if (player.velocity.y > 2.0f && this->CheckCollisionBottom(vec2{ new_pos.x, new_pos.y + player.velocity.y }) != TileType::None)
+        //printf("Bottom: %d, VelY: %f\n", (int)CheckBottom, player.velocity.y);
+        if (CheckBottom && FallLight)
         {
+            //printf("fall light: %.0f\n", player.velocity.y);
             float norm = sqrt(pow(player.velocity.x, 2) + pow(player.velocity.y, 2));
             float angle = acos(player.velocity.x / norm);
 
