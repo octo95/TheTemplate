@@ -13,9 +13,10 @@ namespace Tmpl8
     class Collisions {
     public:
         Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef, Camera& cameraRef, GameSound& gamesoundRef);
-        TileType CheckCollisionBottom(const vec2int& pos);
+        TileType CheckCollisionBottom(const vec2& pos);
         TileType CheckCollisionTop(const vec2& pos);
-        TileType CheckCollisionSides(const vec2int& pos);
+        TileType CheckCollisionRight(const vec2& pos);
+        TileType CheckCollisionLeft(const vec2& pos);
         void manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles);
         bool getJumpState(vec2& new_pos);
         void setTouchStateFollowAI(bool isTouched) { playerHitAI = isTouched; }

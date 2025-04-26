@@ -23,21 +23,20 @@ namespace Tmpl8
     
     void Debug::drawHitbox(const vec2& pos, Surface* screen)
     {
-        int squareTop = (int)(pos.y + player_img_width / 2 - hitbox_radius + camera.getCamPos().y);
-        int squareRight = (int)(pos.x + player_img_width / 2 + hitbox_radius + camera.getCamPos().x);
-        int squareBottom = (int)(pos.y + player_img_width / 2 + hitbox_radius + camera.getCamPos().y);
-        int squareLeft = (int)(pos.x + player_img_width / 2 - hitbox_radius + camera.getCamPos().x);
-        screen->Box(squareLeft, squareTop, squareRight, squareBottom, 0xFF0000);
+        int x1 = (int)(pos.x + player_img_width / 2 - hitbox_radius + camera.getCamPos().x);
+        int y1 = (int)(pos.x + player_img_width / 2 + hitbox_radius + camera.getCamPos().x);
+        int x2 = (int)(pos.y + player_img_width / 2 - hitbox_radius + camera.getCamPos().y);
+        int y2 = (int)(pos.y + player_img_width / 2 + hitbox_radius + camera.getCamPos().y);
+        screen->Box(x1, x2, y1, y2, 0xFF0000);
     }
 
     void Debug::drawTileHitbox(const vec2& pos, Surface* screen)
     {
-        //printf("floor: %f\n", floor(pos.y / TILE_SIZE) * TILE_SIZE + camera.getCamPos().y + TILE_SIZE);
         float x1 = floor(pos.x / TILE_SIZE) * TILE_SIZE + camera.getCamPos().x;
         float y1 = floor(pos.y / TILE_SIZE) * TILE_SIZE + camera.getCamPos().y; 
         float x2 = floor(pos.x / TILE_SIZE) * TILE_SIZE + camera.getCamPos().x + TILE_SIZE;
         float y2 = floor(pos.y / TILE_SIZE) * TILE_SIZE + camera.getCamPos().y + TILE_SIZE;
-        //printf("tl: %0.f | tr: %0.f | bl: %0.f | br: %0.f\n", topLeft, topRight, bottomLeft, bottomRight);
+     
         screen->Box((int)x1, (int)y1,(int)x2, (int)y2, 0x0FF000);
     }
 
@@ -52,7 +51,7 @@ namespace Tmpl8
             nextDebugMap();
 
             // PRESS <T> : Runs the game at 1 FPS.
-            gameSlowMode();
+            getCurrentTileStatus();
 
             // Get the player position
             vec2 playerPos;
@@ -191,9 +190,9 @@ namespace Tmpl8
         screen->Line(start_x, start_y, end_x, end_y, 0x00FF00);
     }
 
-    void Debug::gameSlowMode()
+    void Debug::getCurrentTileStatus()
     {
-        // TODO
+        collisions.CheckCollisionBottom(player.position);
     }
 
 }

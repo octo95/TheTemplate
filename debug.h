@@ -27,7 +27,7 @@ namespace Tmpl8
         void drawVelocityNorm(Surface* screen);
         void restartCurrentLevel();
         void drawDistancePlayerToAI(vec2 ai_pos, Surface* screen);
-        void gameSlowMode();
+        void getCurrentTileStatus();
         bool gameSlow = false;
         bool isTDown = false;
     private:
