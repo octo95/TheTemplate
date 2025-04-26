@@ -11,6 +11,7 @@ namespace Tmpl8
     extern int hitbox_radius;
     extern int player_img_width;
     extern int player_img_height;
+    
 
     class TileMap;
 
@@ -26,6 +27,7 @@ namespace Tmpl8
         const float ENERGY_LOSS = 0.9f;             // How much energy the ball keeps after a bounce in %
         const float MAX_HORIZONTAL_SPEED = 3.0f;
         const float MAX_VERTICAL_SPEED = 10.0f;
+        const float PLAYER_DRAW_OFFSET_Y = -4.0f;
 
         void movePlayer(vec2& new_pos, Collisions* collisions);
         vec2 camFollowPlayer();

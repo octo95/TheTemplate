@@ -15,6 +15,9 @@ namespace Tmpl8
         gamesound(gamesoundRef)
     {}
 
+    Sprite img_water_slide_right(new Surface("assets/images/entities/img_water_slide_right.tga"), 3);
+    Sprite img_water_slide_left(new Surface("assets/images/entities/img_water_slide_left.tga"), 3);
+
     TileType Collisions::CheckCollisionBottom(const vec2& pos)
     {
         TileType type = None;
@@ -130,6 +133,15 @@ namespace Tmpl8
             player.position.y = (new_pos.y > player.position.y) ? player.position.y : new_pos.y;
         }
 
+        if (isIce)
+        {
+            isOnIce = true;
+        }
+        else
+        {
+            isOnIce = false;
+        }
+
         if (walls_collected > 0)
         {
             walls_collected--;
@@ -186,6 +198,27 @@ namespace Tmpl8
             player.velocity.y *= pow(player.ENERGY_LOSS, 2);
         }
     }
+
+    void Collisions::drawSplash(Surface* screen, vec2 player_pos, float deltaTime)
+    {
+        if (!isOnIce) return;
+
+        static float frame = 0.0f;
+        const float animation_fps = 10.0f; 
+
+        frame += animation_fps * deltaTime;
+        if (frame >= 3.0f) frame -= 3.0f; 
+
+        img_water_slide_right.SetFrame((int)frame); 
+        img_water_slide_left.SetFrame((int)frame); 
+
+        int draw_x = (int)player_pos.x + camera.getCamPos().x + img_water_slide_right.GetWidth() / 2 - player_img_width / 2;
+        int draw_y = (int)player_pos.y + camera.getCamPos().y + img_water_slide_right.GetHeight() / 2 - player_img_height / 2 + player.PLAYER_DRAW_OFFSET_Y + 1;
+
+        if(player.velocity.x > 0)   img_water_slide_right.Draw(screen, draw_x, draw_y);
+        else                        img_water_slide_left.Draw(screen, draw_x, draw_y);
+    }
+
 }
 
 /*

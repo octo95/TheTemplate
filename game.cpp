@@ -62,10 +62,11 @@ namespace Tmpl8
         
             // * Draw the objects on screen
             tilemap.drawMap(screen, camera);
-            camera.drawWithCamAndAngle(&img_player, screen, static_cast<int>(player_pos.x), static_cast<int>(player_pos.y), deltaTime);
+            camera.drawWithCamAndAngle(&img_player, screen, static_cast<int>(player_pos.x), static_cast<int>(player_pos.y + player.PLAYER_DRAW_OFFSET_Y), deltaTime);
             camera.drawWithCamAndAngle(&img_ai_follow, screen, static_cast<int>(ai_follow.position.x), static_cast<int>(ai_follow.position.y), deltaTime);
             drawCollectibleMap(&camera, screen);
             drawWallMap(&camera, screen, &this->wall);
+            collisions.drawSplash(screen, player_pos, deltaTime);
             menu.manageMenus(screen);
         
             // * DEBUG: Enabled if pressing <SPACEBAR>

@@ -10,6 +10,8 @@
 
 namespace Tmpl8
 {
+    extern Sprite img_water_slide;
+
     class Collisions {
     public:
         Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef, Camera& cameraRef, GameSound& gamesoundRef);
@@ -21,7 +23,9 @@ namespace Tmpl8
         bool getJumpState(vec2& new_pos);
         void setTouchStateFollowAI(bool isTouched) { playerHitAI = isTouched; }
         void applyBouncingPhysics(vec2& new_pos);
+        void drawSplash(Surface* screen, vec2 player_pos, float deltaTime);
         bool playerHitAI = false;
+        bool isOnIce = false;
     private:
         Player& player;
         TileMap& tilemap;
