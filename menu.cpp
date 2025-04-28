@@ -190,12 +190,13 @@ namespace Tmpl8
 
     void Menu::manageDifficultySelect(int index)
     {
-        if (isMousePressed)
+        if (isMousePressed && difficulty != index + 1)
         {
+            gamesound.playSound(gamesound.snd_select);  
             difficulty = index + 1;
-            printf("difficulty: %d\n", difficulty);
         }
     }
+
 
     void Menu::openNextMenu(Surface* screen)
     {
@@ -493,6 +494,7 @@ namespace Tmpl8
             if (audioOn)
             {
                 gamesound.globalVolume = 0.1f;
+                gamesound.playSound(gamesound.snd_select);
                 if (start_game)
                     gamesound.playMusic(gamesound.mus_level);
                 else

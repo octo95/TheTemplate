@@ -64,9 +64,9 @@ namespace Tmpl8
             velocity.y += -6.0f;
             collectibles_collected--;
         }
-    
-        // Pass the velocity to the camera to make the player rotate while moving
-        camera.setAngleAcceleration(velocity.x * rotation_speed);
+
+        // Get the angle for the draw
+        angle = velocity.x * 90.0f;
 
         // Apply horizontal movement
         new_pos.x += velocity.x;

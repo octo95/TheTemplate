@@ -8,6 +8,7 @@
 #include "camera.h"
 #include "gamesound.h"
 #include "bell.h"
+#include "ai_patrol.h"
 
 namespace Tmpl8
 {
@@ -15,7 +16,7 @@ namespace Tmpl8
 
     class Collisions {
     public:
-        Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef, Camera& cameraRef, GameSound& gamesoundRef, Bell& bellRef);
+        Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef, Camera& cameraRef, GameSound& gamesoundRef, Bell& bellRef, AI_Patrol& ai_patrolRef);
         TileType CheckCollisionBottom(const vec2& pos);
         TileType CheckCollisionTop(const vec2& pos);
         TileType CheckCollisionRight(const vec2& pos);
@@ -37,6 +38,7 @@ namespace Tmpl8
         Camera& camera;
         GameSound& gamesound;
         Bell& bell;
+        AI_Patrol& ai_patrol;
 
         bool canPlayerJump = false;
         float bouncing_force = 1.0f;

@@ -35,10 +35,6 @@ namespace Tmpl8
         }
     }
 
-
-
-
-
 	void Bell::drawBell(Surface* screen, Camera* camera, int map_index)
 	{
 		vec2 current_pos = { BELL_POS[map_index - 1] * TILE_SIZE };

@@ -1,17 +1,18 @@
 #pragma once
-#include "camera.h"
-#include "tilemap.h"
-#include "menu.h"
-#include "collectible.h"
-#include "debug.h"
-#include "player.h"
-#include "wall.h"
 #include "ai_follow.h"
+#include "ai_patrol.h"
+#include "bell.h"
+#include "camera.h"
+#include "collectible.h"
 #include "collisions.h"
-#include "level.h"
+#include "debug.h"
 #include "gamesound.h"
 #include "health.h"
-#include "bell.h"
+#include "level.h"
+#include "menu.h"
+#include "player.h"
+#include "tilemap.h"
+#include "wall.h"
 
 #include <unordered_map>
 
@@ -26,12 +27,13 @@ namespace Tmpl8
 		Game() :
 			player(camera),
 			ai_follow(player, camera),
-			debug(camera, tilemap, player, collectible, wall, ai_follow, level, collisions, menu),
+			debug(camera, tilemap, player, collectible, wall, ai_follow, level, collisions, menu, ai_patrol),
 			menu(level, player, tilemap, gamesound),
 			tilemap(player),
-			collisions(player, tilemap, ai_follow, collectible, wall, level, camera, gamesound, bell),
-			level(tilemap, player, ai_follow, collectible, wall, gamesound, bell),
-			health(player)
+			collisions(player, tilemap, ai_follow, collectible, wall, level, camera, gamesound, bell, ai_patrol),
+			level(tilemap, player, ai_follow, collectible, wall, gamesound, bell, ai_patrol),
+			health(player),
+			ai_patrol(player, camera)
 		{}
 
 		void SetTarget( Surface* surface ) { screen = surface; }
@@ -62,6 +64,7 @@ namespace Tmpl8
 		WallMap wall = WallMap();
 		Player player;
 		AI_Follow ai_follow;
+		AI_Patrol ai_patrol;
 		TileMap tilemap;
 		Collisions collisions;
 		Level level;

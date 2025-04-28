@@ -24,6 +24,7 @@ namespace Tmpl8
         vec2 position = { 0, 0 };
         vec2 default_pos = { 0, 0 };
         bool can_jump = false;
+        float angle = 0.0f;
         float friction = 0.05f;
         const float ENERGY_LOSS = 0.9f;             // How much energy the ball keeps after a bounce in %
         const float MAX_HORIZONTAL_SPEED = 3.0f;
@@ -47,7 +48,6 @@ namespace Tmpl8
         float vertical_speed = 0;
         float horizontal_speed = 0;
         float wall_force = 7.0f;
-        float rotation_speed = 90.0f;
         const float ACCELERATION = 0.3f;
     };
 }

@@ -20,7 +20,7 @@ namespace Tmpl8
     "ca da da da da da da da da da da da da ca da da da da da da da da da da da ca ca",
     "ca ba ca ca ca ca ca da da da da da da da da da da da da da da da da da da ca ca",
     "ca ca ca ca ca ca ca da da ca ca ca ca ca ca ca ca ca da da da da da da da ca ca",
-    "ca ca ca ca ca ca ca da da da da da da da da da da da da ca ca ca ca da da ca ca",
+    "ca ca ca ca ca ca ca da da da da da da da da da da da da ca da da ca da da ca ca",
     "ca ca ca ca ca ca ca da da da da da da da da da da da da ca ca ca ca da da ca ca",
     "ca ca ca ca ca ca ca da da da da da da da da da da da da ca ca ca ca da da ca ca",
     "ca ca ca ca ca ca ca da da da da da da da da da da da da ca ca ca ca da da ca ca",
@@ -48,8 +48,8 @@ namespace Tmpl8
     };
     const vec2 MAP1_COLLECTIBLES[10] = {
         vec2 {3,4},
-        vec2 {4,11},
-        vec2 {5,8},
+        vec2 {13,5},
+        vec2 {19,6},
         vec2 {6,12},
         vec2 {7,11},
         vec2 {8,11},

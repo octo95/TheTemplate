@@ -225,6 +225,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ai_follow.cpp" />
+    <ClCompile Include="ai_patrol.cpp" />
     <ClCompile Include="bell.cpp" />
     <ClCompile Include="gamesound.cpp" />
     <ClCompile Include="camera.cpp" />
@@ -235,7 +236,6 @@
     <ClCompile Include="health.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="menu.cpp" />
-    <ClCompile Include="physics.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="template.cpp" />
@@ -245,6 +245,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ai_follow.h" />
+    <ClInclude Include="ai_patrol.h" />
     <ClInclude Include="bell.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="collectible.h" />
@@ -254,7 +255,6 @@
     <ClInclude Include="health.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="menu.h" />
-    <ClInclude Include="physics.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="gamesound.h" />
     <ClInclude Include="surface.h" />

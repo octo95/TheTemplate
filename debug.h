@@ -10,6 +10,7 @@
 #include "level.h"
 #include "collisions.h"
 #include "menu.h"
+#include "ai_patrol.h"
 
 namespace Tmpl8
 {
@@ -17,10 +18,11 @@ namespace Tmpl8
 
     class Debug {
     public:
-        Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef, Level& levelRef, Collisions& collisionRef, Menu& menuRef);
+        Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef, Level& levelRef, Collisions& collisionRef, Menu& menuRef, AI_Patrol& ai_patrolRef);
         void drawPlayerHitbox(const vec2& pos, Surface* screen);
         void drawPlayerTileHitbox(const vec2& pos, Surface* screen);
         void drawAIFollowHitbox(const vec2& pos, Surface* screen);
+        void drawAIPatrolHitbox(const vec2& pos, Surface* screen);
         void displayDebug(Surface* screen, float deltaTime);
         void defaultPos();
         void nextDebugMap();
@@ -42,5 +44,6 @@ namespace Tmpl8
         Level& level;
         Collisions& collisions;
         Menu& menu;
+        AI_Patrol ai_patrol;
     };
 }

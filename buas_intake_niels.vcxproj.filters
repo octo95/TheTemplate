@@ -4,9 +4,6 @@
     <ClCompile Include="collectible.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="physics.cpp">
-      <Filter>Other</Filter>
-    </ClCompile>
     <ClCompile Include="debug.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
@@ -55,11 +52,11 @@
     <ClCompile Include="bell.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
+    <ClCompile Include="ai_patrol.cpp">
+      <Filter>Solutions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="physics.h">
-      <Filter>Other</Filter>
-    </ClInclude>
     <ClInclude Include="player.h">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -112,6 +109,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="bell.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ai_patrol.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,6 +6,7 @@
 #include "wall.h"
 #include "gamesound.h"
 #include "bell.h"
+#include "ai_patrol.h"
 
 namespace Tmpl8
 {
@@ -14,6 +15,15 @@ namespace Tmpl8
         const vec2 AI_FOLLOW_DEFAULT_POS[5] =
         {
             vec2 {100,500},
+            vec2 {100,300},
+            vec2 {0,0},
+            vec2 {0,0},
+            vec2 {500,250}
+        };
+
+        const vec2 AI_PATROL_DEFAULT_POS[5] =
+        {
+            vec2 {660,224},
             vec2 {100,300},
             vec2 {0,0},
             vec2 {0,0},
@@ -32,7 +42,7 @@ namespace Tmpl8
         bool level_finished = false;
         bool game_finished = false;
 
-        Level(TileMap& tilemapRef, Player& playerRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, GameSound& gamesoundRef, Bell& bellRef);
+        Level(TileMap& tilemapRef, Player& playerRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, GameSound& gamesoundRef, Bell& bellRef, AI_Patrol& ai_patrolRef);
         void loadLevel(int i);
         void manageDefaultPos(int map_index);
     private:
@@ -43,5 +53,6 @@ namespace Tmpl8
         WallMap& wall;
         GameSound& gamesound;
         Bell& bell;
+        AI_Patrol& ai_patrol;
     };
 }

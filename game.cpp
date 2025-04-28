@@ -15,6 +15,7 @@
 #include <cstdio>
 #include <iostream>
 #include <unordered_map>
+#include "ai_patrol.h"
 
 namespace Tmpl8
 {
@@ -64,8 +65,10 @@ namespace Tmpl8
             tilemap.drawMap(screen, camera);            
             drawWallMap(&camera, screen, &this->wall);  
             drawCollectibleMap(&camera, screen);        
-            camera.drawWithCamAndAngle(&img_ai_follow, screen, (int)ai_follow.position.x, (int)ai_follow.position.y, deltaTime);
-            camera.drawWithCamAndAngle(&img_player, screen, (int)player_pos.x, (int)(player_pos.y + player.PLAYER_DRAW_OFFSET_Y), deltaTime); 
+            camera.drawWithCamAndAngle(&img_player, screen, (int)player_pos.x, (int)(player_pos.y + player.PLAYER_DRAW_OFFSET_Y), deltaTime, player.angle);
+            camera.drawWithCamAndAngle(&img_ai_follow, screen, (int)ai_follow.position.x, (int)ai_follow.position.y, deltaTime, 0);
+            camera.drawWithCamAndAngle(&img_ai_patrol, screen, (int)ai_patrol.position.x, (int)ai_patrol.position.y, deltaTime, ai_patrol.angle);
+            ai_patrol.Patrol(deltaTime, &collisions);
             collisions.drawSplash(screen, player_pos, deltaTime); 
             bell.drawBell(screen, &camera, tilemap.getCurrentLevel());
             bell.isBellTouchingPlayer(&player);

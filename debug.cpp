@@ -5,11 +5,11 @@
 #include "player.h"
 #include <thread>
 #include <cmath>
-
+#include "ai_patrol.h"
 
 namespace Tmpl8
 {
-    Debug::Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef, Level& levelRef, Collisions& collisionRef, Menu& menuRef) :
+    Debug::Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef, Level& levelRef, Collisions& collisionRef, Menu& menuRef, AI_Patrol& ai_patrolRef) :
         camera(cameraRef),
         tilemap(tilemapRef),
         player(playerRef),
@@ -18,7 +18,8 @@ namespace Tmpl8
         ai_follow(ai_followRef),
         level(levelRef),
         collisions(collisionRef),
-        menu(menuRef)
+        menu(menuRef),
+        ai_patrol(ai_patrolRef)
     {}
     
     void Debug::drawPlayerHitbox(const vec2& pos, Surface* screen)
@@ -51,6 +52,16 @@ namespace Tmpl8
         screen->Box(x1, y1, x2, y2, 0xFF0000);
     }
 
+    void Debug::drawAIPatrolHitbox(const vec2& pos, Surface* screen)
+    {
+        int x1 = (int)(pos.x + camera.getCamPos().x);
+        int y1 = (int)(pos.y + camera.getCamPos().y);
+
+        int x2 = (int)(pos.x + img_ai_patrol.GetWidth() + camera.getCamPos().x);
+        int y2 = (int)(pos.y + img_ai_patrol.GetHeight() + camera.getCamPos().y);
+
+        screen->Box(x1, y1, x2, y2, 0xFF0000);
+    }
 
     void Debug::displayDebug(Surface* screen, float deltaTime)
     {
@@ -75,6 +86,7 @@ namespace Tmpl8
             drawPlayerHitbox(player.position, screen);
             drawPlayerTileHitbox(player.position, screen);
             drawAIFollowHitbox(ai_follow.position, screen);
+            drawAIPatrolHitbox(ai_patrol.position, screen);
 
             // Draw the distance between the player and an AI to specify below
             drawDistancePlayerToAI(ai_follow.position, screen);
@@ -130,11 +142,16 @@ namespace Tmpl8
         static bool s_wasPressed = false;
 
         if (GetAsyncKeyState('S') & 0x8000) {
-            if (!s_wasPressed) {
+            if (!s_wasPressed) 
+            {
                 ai_follow.is_following = !ai_follow.is_following;
+                ai_patrol.stop = !ai_patrol.stop;
+                printf("debug stop: %d\n", (int)ai_patrol.stop);
                 s_wasPressed = true;
             }
-        } else {
+        }
+        else 
+        {
             s_wasPressed = false;
         }
     }
@@ -242,9 +259,4 @@ namespace Tmpl8
         sprintf(collision_type_txt, "%s", collisionInfo.c_str());
         screen->Print(collision_type_txt, 10, 130, 0xFFFF00);
     }
-
-
-
-
-
 }

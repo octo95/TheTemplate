@@ -5,7 +5,7 @@
 
 namespace Tmpl8
 {
-    Collisions::Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef, Camera& cameraRef, GameSound& gamesoundRef, Bell& bellRef) :
+    Collisions::Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef, Camera& cameraRef, GameSound& gamesoundRef, Bell& bellRef, AI_Patrol& ai_patrolRef) :
         player(playerRef),
         tilemap(tilemapRef),
         ai_follow(ai_followRef),
@@ -14,7 +14,8 @@ namespace Tmpl8
         level(levelRef),
         camera(cameraRef),
         gamesound(gamesoundRef),
-        bell(bellRef)
+        bell(bellRef),
+        ai_patrol(ai_patrolRef)
     {}
 
     Sprite img_water_slide_right(new Surface("assets/images/entities/img_water_slide_right.tga"), 3);
@@ -90,7 +91,7 @@ namespace Tmpl8
 
         bool isNoneX = (CheckLeft == TileType::None || CheckRight == TileType::None);
         bool isNoneY = (CheckBottom == TileType::None);
-        bool isDamage = (CheckLeft == TileType::Damage || CheckRight == TileType::Damage || CheckBottom == TileType::Damage || CheckTop == TileType::Damage || ai_follow.isTouchingPlayer());
+        bool isDamage = (CheckLeft == TileType::Damage || CheckRight == TileType::Damage || CheckBottom == TileType::Damage || CheckTop == TileType::Damage || ai_follow.isTouchingPlayer() || ai_patrol.isTouchingPlayer() );
         //bool isEnd = (CheckLeft == TileType::End || CheckRight == TileType::End || CheckBottom == TileType::End || CheckTop == TileType::End);
         bool isEnd = bell.touchedPlayer;
         bool isCollision = (CheckLeft == TileType::Collision || CheckRight == TileType::Collision || CheckBottom == TileType::Collision || CheckTop==TileType::Collision);

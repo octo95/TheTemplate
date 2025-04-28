@@ -90,7 +90,6 @@ namespace Tmpl8
 	}
 	void manageCollectibleRespawn(float deltaTime)
 	{
-		printf("collectibles: %d\n", (int)collectible_timer_active);
 		if (collectibles_collected < 1 && collected_new)
 		{
 			collectible_respawn_time = 3.0f;
