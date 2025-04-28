@@ -1,17 +1,14 @@
 #pragma once
+#include "gamesound.h"
 #include "surface.h"
 #include "tile.h"
-#include <map>
-#include <iostream>
-#include <functional>
-#include <unordered_map>
-#include "vec2_hash.h"
-#include "gamesound.h"
 #include "tilemap.h"
-
+#include "vec2_hash.h"
+#include <unordered_map>
 
 namespace Tmpl8
 {
+	// External variables
 	extern Sprite img_collectible;
 	extern int collectibles_collected;
 	extern bool collectible_timer_active;
@@ -20,7 +17,7 @@ namespace Tmpl8
 	struct Collectible
 	{
 	public:
-		Tmpl8::vec2 pos;
+		vec2 pos;
 
 		// Default Constructor
 		Collectible() :
@@ -42,8 +39,10 @@ namespace Tmpl8
 		~Collectible() {};
 	};
 
+	// Definition of the CollectibleMap type
 	typedef std::unordered_map<vec2, Collectible> CollectibleMap;
 
+	// Local functions
 	void loadAllCollectibles(int map);
 	void drawCollectibleMap(Camera* camera, Surface* screen);
 	void manageCollectibleCollision(vec2 player_pos, GameSound* gamesound);

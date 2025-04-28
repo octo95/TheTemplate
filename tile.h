@@ -26,4 +26,4 @@ namespace Tmpl8
 
         void DrawTile(Surface* screen, int x, int y, const Camera& camera);
     };
-};
+}

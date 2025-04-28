@@ -11,7 +11,10 @@ namespace Tmpl8
         public:
 
 		    // Constructor
-            AI_Copy(Player& playerRef, Camera& cameraRef);
+            AI_Copy(
+                Player& playerRef, 
+                Camera& cameraRef
+            );
         
 		    // Variables
             float angle = 0;

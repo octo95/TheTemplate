@@ -20,14 +20,12 @@ namespace Tmpl8
 		// Default Constructor
 		Wall() :
 			pos(vec2{ 0,0 })
-		{
-		};
+		{};
 
 		// Constructor
 		Wall(Tmpl8::vec2 _pos) :
 			pos(_pos)
-		{
-		};
+		{};
 
 		// Overloading == operator. Wall are equal if the coordinates are the same.
 		bool operator==(const Wall& rhs) const noexcept
@@ -39,8 +37,10 @@ namespace Tmpl8
 		~Wall() {};
 	};
 
+	// Definition of the WallMap type
 	typedef std::unordered_map<vec2, Wall> WallMap;
 
+	// Local functions
 	void loadAllWalls(int map);
 	void drawWallMap(Camera* camera, Surface* screen, WallMap* collectibles);
 	void manageWallCollision(vec2 player_pos, GameSound* gamesound);

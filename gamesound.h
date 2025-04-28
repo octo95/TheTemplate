@@ -3,33 +3,36 @@
 
 namespace Tmpl8
 {
+	// Define the SoundType as a vector of shared pointers to Audio::Sound
     typedef std::vector<std::shared_ptr<Audio::Sound>> SoundType;
 
     class GameSound
     {
-    public:
-        // All SFX paths
-        const std::string snd_damage = "assets/audio/SFX/snd_damage.wav";
-        const std::string snd_level_finished = "assets/audio/SFX/snd_level_finished.wav";
-        const std::string snd_select = "assets/audio/SFX/snd_select.wav";
-        const std::string snd_fall = "assets/audio/SFX/snd_fall.wav";
-        const std::string snd_fall_strong = "assets/audio/SFX/snd_fall_strong.wav";
-        const std::string snd_collect = "assets/audio/SFX/snd_collect.wav";
-        const std::string snd_hover = "assets/audio/SFX/snd_hover.wav";
-        const std::string snd_break_wall = "assets/audio/SFX/snd_break_wall.wav";
+        public:
+		    // Global volume for all sounds
+            float globalVolume = 0.1f;
 
-        // All Music paths
-        const std::string mus_level = "assets/audio/Music/mus_level.wav";
-        const std::string mus_menu = "assets/audio/Music/mus_menu.mp3";
+            // All SFX paths
+            const std::string snd_damage = "assets/audio/SFX/snd_damage.wav";
+            const std::string snd_level_finished = "assets/audio/SFX/snd_level_finished.wav";
+            const std::string snd_select = "assets/audio/SFX/snd_select.wav";
+            const std::string snd_fall = "assets/audio/SFX/snd_fall.wav";
+            const std::string snd_fall_strong = "assets/audio/SFX/snd_fall_strong.wav";
+            const std::string snd_collect = "assets/audio/SFX/snd_collect.wav";
+            const std::string snd_hover = "assets/audio/SFX/snd_hover.wav";
+            const std::string snd_break_wall = "assets/audio/SFX/snd_break_wall.wav";
 
-        void playSound(const std::string& filePath);
-        void playMusic(const std::string& filePath);
-        void stopMusic();
+            // All MUS paths
+            const std::string mus_level = "assets/audio/Music/mus_level.wav";
+            const std::string mus_menu = "assets/audio/Music/mus_menu.mp3";
 
-        float globalVolume = 0.1f;
+		    // Functions
+            void playSound(const std::string& filePath);
+            void playMusic(const std::string& filePath);
+            void stopMusic();
 
-    private:
-        SoundType activeSounds;  // For storing active sound effects
-        SoundType activeMusics;  // For storing active music tracks
+        private:
+            SoundType activeSounds;  // For storing active sound effects
+            SoundType activeMusics;  // For storing active music tracks
     };
 }

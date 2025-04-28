@@ -253,21 +253,31 @@ namespace Tmpl8
 
     class Player;
 
-    class TileMap {
-    public:
-        const char (*current_map)[TILE_COLUMNS * 3];
+    class TileMap 
+    {
+        public:
+			// Constructor
+            TileMap(
+                Player& playerRef
+            );
 
-        TileMap(Player& playerRef);
-        void setMapIndex(int index);
-        Tile tile_at(int x, int y);
-        void drawMap(Surface* screen, const Camera& camera);
-        void loadLevel(int i);
-        int getCurrentLevel() const { return (current_level - 1) % MAP_AMOUNT + 1; }
-        int incrementMapIndex() { return current_level = current_level % MAP_AMOUNT + 1; }
-        void readImageToCharMap();
-        int current_level = 1;
-    private:
-        Player& player;
+			// Variables
+            const char (*current_map)[TILE_COLUMNS * 3];
+            int current_level = 1;
+
+            // Functions
+            void loadLevel(int i);
+            void readImageToCharMap();
+            Tile tile_at(int x, int y);
+            void drawMap(Surface* screen, const Camera& camera);
+            int incrementMapIndex() { return current_level = current_level % MAP_AMOUNT + 1; }
+
+			// Getters / Setters
+            void setMapIndex(int index);
+            int getCurrentLevel() const { return (current_level - 1) % MAP_AMOUNT + 1; }
+
+        private:
+            Player& player;
     };
 };
 

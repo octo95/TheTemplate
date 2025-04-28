@@ -10,7 +10,10 @@ namespace Tmpl8
     {
         public:
             // Constructor
-            AI_Follow(Player& playerRef, Camera& cameraRef);
+            AI_Follow(
+                Player& playerRef, 
+                Camera& cameraRef
+            );
 
 		    // Variables
             vec2 default_pos = { 0, 0 };

@@ -1,12 +1,13 @@
 #pragma once
-#include "surface.h"
+#include "gamesound.h"
 #include "level.h"
 #include "player.h"
+#include "surface.h"
 #include "tilemap.h"
-#include "gamesound.h"
 
 namespace Tmpl8
 {
+	// External variables
 	extern Sprite img_menu_main_bg;
 	extern Sprite img_menu_main_start;
 	extern Sprite img_menu_main_bg;
@@ -33,144 +34,159 @@ namespace Tmpl8
 
 	class Menu
 	{
-	public:
-		Menu(Level& levelRef, Player& playerRef, TileMap& tilemapRef, GameSound& gamesoundRef);
-		void openMainMenu(Surface* screen);
-		void openNextMenu(Surface* screen);
-		void openPauseMenu(Surface* screen);
-		void openEndMenu(Surface* screen);
-		void manageMenus(Surface* screen);
-		void setMousePosition(int x, int y); 
-		void setMouseState(bool isPressed) { isMousePressed = isPressed; }
-		bool isHoveringSurface(int x, int y, int width, int height);
-		void manageLevelSelect(int index);
-		void manageDifficultySelect(int index);
-		void audioManagerOpen(Surface* screen);
-		void quitManagerOpen(Surface* screen);
+		public:
 
-		bool start_game = false;
-		bool resume_game = true;
+			// Constructor
+			Menu(
+				Level& levelRef, 
+				Player& playerRef, 
+				TileMap& tilemapRef, 
+				GameSound& gamesoundRef
+			);
 
-	private:
-		Level& level;
-		Player& player;
-		TileMap& tilemap;
-		GameSound& gamesound;
+			// Variables
+			bool start_game = false;
+			bool resume_game = true;
 
-		int mouseX, mouseY; 
-		int difficulty = 2; // 1: easy, 2: medium (default), 3: hard
+			// Open menus
+			void openMainMenu(Surface* screen);
+			void openNextMenu(Surface* screen);
+			void openPauseMenu(Surface* screen);
+			void openEndMenu(Surface* screen);
 
-		bool isMousePressed = false;
-		bool manualPaused = false;
-		bool alreadyClickedNextLevel = false;
-		bool audioOn = true;
+			// Menu managers
+			void manageMenus(Surface* screen);
+			void manageLevelSelect(int index);
+			void manageDifficultySelect(int index);
+			void audioManagerOpen(Surface* screen);
+			void quitManagerOpen(Surface* screen);
 
-		// Menu flags
-		bool mainMenuOpen = true;
-		bool audioOpen = true;
-		bool quitOpen = true;
-		bool pauseMenuOpen = false;
-		bool nextMenuOpen = false;
-		bool endMenuOpen = false;
+			// Mouse functions
+			void setMousePosition(int x, int y); 
+			void setMouseState(bool isPressed) { isMousePressed = isPressed; }
+			bool isHoveringSurface(int x, int y, int width, int height);
 
-		// Other consts
-		const int SCREEN_HALF_WIDTH = SCREEN_WIDTH / 2;
-		const int SCREEN_HALF_HEIGHT = SCREEN_HEIGHT / 2;
 
-		// +-------------------+
-		// | BUTTON DIMENSIONS |
-		// +-------------------+
+		private:
+			Level& level;
+			Player& player;
+			TileMap& tilemap;
+			GameSound& gamesound;
 
-		// Main menu
-		const int MAIN_START_WIDTH = img_menu_main_start.GetWidth();
-		const int MAIN_START_HEIGHT = img_menu_main_start.GetHeight();
-		const int MAIN_LVL_WIDTH = img_menu_main_lvl1.GetWidth();
-		const int MAIN_LVL_HEIGHT = img_menu_main_lvl1.GetHeight();
-		const int MAIN_DIFFICULTY_WIDTH = img_menu_main_difficulty_easy.GetWidth();
-		const int MAIN_DIFFICULTY_HEIGHT = img_menu_main_difficulty_easy.GetHeight();
+			// Variables
+			int mouseX, mouseY; 
+			int difficulty = 2; // 1: easy, 2: medium (default), 3: hard
+			bool isMousePressed = false;
+			bool manualPaused = false;
+			bool alreadyClickedNextLevel = false;
+			bool audioOn = true;
 
-		// Next level menu
-		const int NEXT_BG_WIDTH = img_menu_next_bg.GetWidth();
-		const int NEXT_BG_HEIGHT = img_menu_next_bg.GetHeight();
-		const int NEXT_NEXT_WIDTH = img_menu_next_next.GetWidth();
-		const int NEXT_NEXT_HEIGHT = img_menu_next_next.GetHeight();
-		const int NEXT_MENU_WIDTH = img_menu_next_menu.GetWidth();
-		const int NEXT_MENU_HEIGHT = img_menu_next_menu.GetHeight();
+			// Menu flags
+			bool mainMenuOpen = true;
+			bool audioOpen = true;
+			bool quitOpen = true;
+			bool pauseMenuOpen = false;
+			bool nextMenuOpen = false;
+			bool endMenuOpen = false;
 
-		// Pause menu
-		const int PAUSE_BG_WIDTH = img_menu_pause_bg.GetWidth();
-		const int PAUSE_BG_HEIGHT = img_menu_pause_bg.GetHeight();
-		const int PAUSE_RESUME_WIDTH = img_menu_pause_resume.GetWidth();
-		const int PAUSE_RESUME_HEIGHT = img_menu_pause_resume.GetHeight();
-		const int PAUSE_QUIT_WIDTH = img_menu_pause_quit.GetWidth();
-		const int PAUSE_QUIT_HEIGHT = img_menu_pause_quit.GetHeight();
+			// Other consts
+			const int SCREEN_HALF_WIDTH = SCREEN_WIDTH / 2;
+			const int SCREEN_HALF_HEIGHT = SCREEN_HEIGHT / 2;
 
-		// End menu
-		const int END_BG_WIDTH = img_menu_end_bg.GetWidth();
-		const int END_BG_HEIGHT = img_menu_end_bg.GetHeight();
-		const int END_MENU_WIDTH = img_menu_end_menu.GetWidth();
-		const int END_MENU_HEIGHT = img_menu_end_menu.GetHeight();
-		const int END_REPLAY_WIDTH = img_menu_end_replay.GetWidth();
-		const int END_REPLAY_HEIGHT = img_menu_end_replay.GetHeight();
+			// +-------------------+
+			// | BUTTON DIMENSIONS |
+			// +-------------------+
 
-		// Audio manager
-		const int AUDIO_WIDTH = img_audio_on.GetWidth();
-		const int AUDIO_HEIGHT = img_audio_on.GetHeight();
+			// Main menu
+			const int MAIN_START_WIDTH = img_menu_main_start.GetWidth();
+			const int MAIN_START_HEIGHT = img_menu_main_start.GetHeight();
+			const int MAIN_LVL_WIDTH = img_menu_main_lvl1.GetWidth();
+			const int MAIN_LVL_HEIGHT = img_menu_main_lvl1.GetHeight();
+			const int MAIN_DIFFICULTY_WIDTH = img_menu_main_difficulty_easy.GetWidth();
+			const int MAIN_DIFFICULTY_HEIGHT = img_menu_main_difficulty_easy.GetHeight();
 
-		// Quit manager
-		const int QUIT_WIDTH = img_quit.GetWidth();
-		const int QUIT_HEIGHT = img_quit.GetHeight();
+			// Next level menu
+			const int NEXT_BG_WIDTH = img_menu_next_bg.GetWidth();
+			const int NEXT_BG_HEIGHT = img_menu_next_bg.GetHeight();
+			const int NEXT_NEXT_WIDTH = img_menu_next_next.GetWidth();
+			const int NEXT_NEXT_HEIGHT = img_menu_next_next.GetHeight();
+			const int NEXT_MENU_WIDTH = img_menu_next_menu.GetWidth();
+			const int NEXT_MENU_HEIGHT = img_menu_next_menu.GetHeight();
 
-		// +------------------+
-		// | BUTTON POSITIONS |
-		// +------------------+
+			// Pause menu
+			const int PAUSE_BG_WIDTH = img_menu_pause_bg.GetWidth();
+			const int PAUSE_BG_HEIGHT = img_menu_pause_bg.GetHeight();
+			const int PAUSE_RESUME_WIDTH = img_menu_pause_resume.GetWidth();
+			const int PAUSE_RESUME_HEIGHT = img_menu_pause_resume.GetHeight();
+			const int PAUSE_QUIT_WIDTH = img_menu_pause_quit.GetWidth();
+			const int PAUSE_QUIT_HEIGHT = img_menu_pause_quit.GetHeight();
 
-		// Main menu
+			// End menu
+			const int END_BG_WIDTH = img_menu_end_bg.GetWidth();
+			const int END_BG_HEIGHT = img_menu_end_bg.GetHeight();
+			const int END_MENU_WIDTH = img_menu_end_menu.GetWidth();
+			const int END_MENU_HEIGHT = img_menu_end_menu.GetHeight();
+			const int END_REPLAY_WIDTH = img_menu_end_replay.GetWidth();
+			const int END_REPLAY_HEIGHT = img_menu_end_replay.GetHeight();
 
-		// - LVLs
-		const int MAIN_LVL1_X = SCREEN_HALF_WIDTH - (5 * MAIN_LVL_WIDTH + 4 * 20) / 2;
-		const int MAIN_LVLS_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 3 - SCREEN_HEIGHT / 3;
+			// Audio manager
+			const int AUDIO_WIDTH = img_audio_on.GetWidth();
+			const int AUDIO_HEIGHT = img_audio_on.GetHeight();
 
-		const int MAIN_LVL2_X = MAIN_LVL1_X + MAIN_LVL_WIDTH + 20;
-		const int MAIN_LVL3_X = MAIN_LVL2_X + MAIN_LVL_WIDTH + 20;
-		const int MAIN_LVL4_X = MAIN_LVL3_X + MAIN_LVL_WIDTH + 20;
-		const int MAIN_LVL5_X = MAIN_LVL4_X + MAIN_LVL_WIDTH + 20;
+			// Quit manager
+			const int QUIT_WIDTH = img_quit.GetWidth();
+			const int QUIT_HEIGHT = img_quit.GetHeight();
 
-		// - Difficulties
-		const int MAIN_EASY_X = SCREEN_HALF_WIDTH - (3 * MAIN_DIFFICULTY_WIDTH + 2 * 50) / 2;
-		const int MAIN_DIFFICULTIES_Y = SCREEN_HALF_HEIGHT - MAIN_DIFFICULTY_HEIGHT / 2;
+			// +------------------+
+			// | BUTTON POSITIONS |
+			// +------------------+
 
-		const int MAIN_MEDIUM_X = MAIN_EASY_X + MAIN_DIFFICULTY_WIDTH + 50;
-		const int MAIN_HARD_X = MAIN_MEDIUM_X + MAIN_DIFFICULTY_WIDTH + 50;
+			// Main menu
 
-		// - Start
-		const int MAIN_START_X = SCREEN_HALF_WIDTH - MAIN_START_WIDTH / 2;
-		const int MAIN_START_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 2 + SCREEN_HEIGHT / 3;
+			// - LVLs
+			const int MAIN_LVL1_X = SCREEN_HALF_WIDTH - (5 * MAIN_LVL_WIDTH + 4 * 20) / 2;
+			const int MAIN_LVLS_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 3 - SCREEN_HEIGHT / 3;
 
-		// Next level menu
-		const int NEXT_MENU_X = SCREEN_HALF_WIDTH - NEXT_MENU_WIDTH / 2 - NEXT_BG_WIDTH / 4;
-		const int NEXT_MENU_Y = SCREEN_HALF_HEIGHT - NEXT_MENU_HEIGHT / 2 + NEXT_BG_HEIGHT / 4;
-		const int NEXT_LVL_X = SCREEN_HALF_WIDTH - NEXT_NEXT_WIDTH / 2 + NEXT_BG_WIDTH / 4;
-		const int NEXT_LVL_Y = NEXT_MENU_Y;
+			const int MAIN_LVL2_X = MAIN_LVL1_X + MAIN_LVL_WIDTH + 20;
+			const int MAIN_LVL3_X = MAIN_LVL2_X + MAIN_LVL_WIDTH + 20;
+			const int MAIN_LVL4_X = MAIN_LVL3_X + MAIN_LVL_WIDTH + 20;
+			const int MAIN_LVL5_X = MAIN_LVL4_X + MAIN_LVL_WIDTH + 20;
 
-		// Pause menu
-		const int PAUSE_QUIT_X = SCREEN_HALF_WIDTH - PAUSE_QUIT_WIDTH / 2 - PAUSE_BG_WIDTH / 4;
-		const int PAUSE_QUIT_Y = SCREEN_HALF_HEIGHT - PAUSE_RESUME_HEIGHT / 2 + PAUSE_BG_WIDTH / 5;
-		const int PAUSE_RESUME_X = SCREEN_HALF_WIDTH - PAUSE_RESUME_WIDTH / 2 + PAUSE_BG_WIDTH / 4;
-		const int PAUSE_RESUME_Y = PAUSE_QUIT_Y;
+			// - Difficulties
+			const int MAIN_EASY_X = SCREEN_HALF_WIDTH - (3 * MAIN_DIFFICULTY_WIDTH + 2 * 50) / 2;
+			const int MAIN_DIFFICULTIES_Y = SCREEN_HALF_HEIGHT - MAIN_DIFFICULTY_HEIGHT / 2;
 
-		// End menu
-		const int END_MENU_X = SCREEN_HALF_WIDTH - END_MENU_WIDTH / 2 - END_BG_WIDTH / 4;
-		const int END_MENU_Y = SCREEN_HALF_HEIGHT - END_MENU_HEIGHT / 2 + END_BG_HEIGHT / 4;
-		const int END_REPLAY_X = SCREEN_HALF_WIDTH - END_REPLAY_WIDTH / 2 + END_BG_WIDTH / 4;
-		const int END_REPLAY_Y = END_MENU_Y;
+			const int MAIN_MEDIUM_X = MAIN_EASY_X + MAIN_DIFFICULTY_WIDTH + 50;
+			const int MAIN_HARD_X = MAIN_MEDIUM_X + MAIN_DIFFICULTY_WIDTH + 50;
 
-		// Audio
-		const int AUDIO_X = AUDIO_WIDTH / 10;
-		const int AUDIO_Y = AUDIO_HEIGHT / 10;
+			// - Start
+			const int MAIN_START_X = SCREEN_HALF_WIDTH - MAIN_START_WIDTH / 2;
+			const int MAIN_START_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 2 + SCREEN_HEIGHT / 3;
 
-		// Quit
-		const int QUIT_X = SCREEN_WIDTH - QUIT_WIDTH - QUIT_WIDTH / 10;
-		const int QUIT_Y = QUIT_HEIGHT / 10;
+			// Next level menu
+			const int NEXT_MENU_X = SCREEN_HALF_WIDTH - NEXT_MENU_WIDTH / 2 - NEXT_BG_WIDTH / 4;
+			const int NEXT_MENU_Y = SCREEN_HALF_HEIGHT - NEXT_MENU_HEIGHT / 2 + NEXT_BG_HEIGHT / 4;
+			const int NEXT_LVL_X = SCREEN_HALF_WIDTH - NEXT_NEXT_WIDTH / 2 + NEXT_BG_WIDTH / 4;
+			const int NEXT_LVL_Y = NEXT_MENU_Y;
+
+			// Pause menu
+			const int PAUSE_QUIT_X = SCREEN_HALF_WIDTH - PAUSE_QUIT_WIDTH / 2 - PAUSE_BG_WIDTH / 4;
+			const int PAUSE_QUIT_Y = SCREEN_HALF_HEIGHT - PAUSE_RESUME_HEIGHT / 2 + PAUSE_BG_WIDTH / 5;
+			const int PAUSE_RESUME_X = SCREEN_HALF_WIDTH - PAUSE_RESUME_WIDTH / 2 + PAUSE_BG_WIDTH / 4;
+			const int PAUSE_RESUME_Y = PAUSE_QUIT_Y;
+
+			// End menu
+			const int END_MENU_X = SCREEN_HALF_WIDTH - END_MENU_WIDTH / 2 - END_BG_WIDTH / 4;
+			const int END_MENU_Y = SCREEN_HALF_HEIGHT - END_MENU_HEIGHT / 2 + END_BG_HEIGHT / 4;
+			const int END_REPLAY_X = SCREEN_HALF_WIDTH - END_REPLAY_WIDTH / 2 + END_BG_WIDTH / 4;
+			const int END_REPLAY_Y = END_MENU_Y;
+
+			// Audio
+			const int AUDIO_X = AUDIO_WIDTH / 10;
+			const int AUDIO_Y = AUDIO_HEIGHT / 10;
+
+			// Quit
+			const int QUIT_X = SCREEN_WIDTH - QUIT_WIDTH - QUIT_WIDTH / 10;
+			const int QUIT_Y = QUIT_HEIGHT / 10;
 	};
 }

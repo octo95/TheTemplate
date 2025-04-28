@@ -1,49 +1,73 @@
 #pragma once
+#include "ai_follow.h"
+#include "ai_patrol.h"
 #include "camera.h"
+#include "collisions.h"
+#include "collectible.h"
+#include "level.h"
+#include "menu.h"
+#include "player.h"
 #include "surface.h"
 #include "template.h"
-#include "player.h"
-#include "collectible.h"
 #include "tilemap.h"
 #include "wall.h"
-#include "ai_follow.h"
-#include "level.h"
-#include "collisions.h"
-#include "menu.h"
-#include "ai_patrol.h"
 
 namespace Tmpl8
 {
     class TileMap;
 
-    class Debug {
-    public:
-        Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef, Level& levelRef, Collisions& collisionRef, Menu& menuRef, AI_Patrol& ai_patrolRef);
-        void drawPlayerHitbox(const vec2& pos, Surface* screen);
-        void drawPlayerTileHitbox(const vec2& pos, Surface* screen);
-        void drawAIFollowHitbox(const vec2& pos, Surface* screen);
-        void drawAIPatrolHitbox(const vec2& pos, Surface* screen);
-        void displayDebug(Surface* screen, float deltaTime);
-        void defaultPos();
-        void nextDebugMap();
-        int getFPS(float deltaTime);
-        void drawVelocityNorm(Surface* screen);
-        void restartCurrentLevel();
-        void drawDistancePlayerToAI(vec2 ai_pos, int size, Surface* screen);
-        void getCurrentTileStatus(Surface* screen);
-        void stopAIs();
-        bool gameSlow = false;
-        bool isTDown = false;
-    private:
-        Camera& camera;
-        TileMap& tilemap;
-        Player& player;
-        CollectibleMap& collectible;
-        WallMap& wall;
-        AI_Follow& ai_follow;
-        Level& level;
-        Collisions& collisions;
-        Menu& menu;
-        AI_Patrol& ai_patrol;
+    class Debug 
+    {
+        public:
+            // Constructor
+            Debug(
+                Camera& cameraRef,
+                TileMap& tilemapRef,
+                Player& playerRef,
+                CollectibleMap& collectibleRef,
+                WallMap& wallRef,
+                AI_Follow& ai_followRef,
+                Level& levelRef,
+                Collisions& collisionRef,
+                Menu& menuRef,
+                AI_Patrol& ai_patrolRef
+            );
+
+            // Variables
+            bool gameSlow = false;
+            bool isTDown = false;
+
+            // Main debug function
+            void displayDebug(Surface* screen, float deltaTime);
+
+            // Draw functions
+            void drawPlayerHitbox(const vec2& pos, Surface* screen);
+            void drawPlayerTileHitbox(const vec2& pos, Surface* screen);
+            void drawAIFollowHitbox(const vec2& pos, Surface* screen);
+            void drawAIPatrolHitbox(const vec2& pos, Surface* screen);
+            void drawVelocityNorm(Surface* screen);
+            void drawDistancePlayerToAI(vec2 ai_pos, int size, Surface* screen);
+
+            // Other functions
+            void defaultPos();
+            void nextDebugMap();
+            void restartCurrentLevel();
+            void stopAIs();
+
+		    // Getters / Setters
+            int getFPS(float deltaTime);
+            void getCurrentTileStatus(Surface* screen);
+
+        private:
+            Camera& camera;
+            TileMap& tilemap;
+            Player& player;
+            CollectibleMap& collectible;
+            WallMap& wall;
+            AI_Follow& ai_follow;
+            Level& level;
+            Collisions& collisions;
+            Menu& menu;
+            AI_Patrol& ai_patrol;
     };
 }

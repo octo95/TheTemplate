@@ -10,7 +10,10 @@ namespace Tmpl8
     {
         public:
             // Constructor
-            AI_Patrol(Player& playerRef, Camera& cameraRef);
+            AI_Patrol(
+                Player& playerRef, 
+                Camera& cameraRef
+            );
 
             // Variables
             float angle = 0;
@@ -29,14 +32,11 @@ namespace Tmpl8
         private:
             Player& player;
             Camera& camera;
-
             enum class Direction
             {
                 LEFT,
                 RIGHT
             };
-
             Direction direction;
-
     };
 }

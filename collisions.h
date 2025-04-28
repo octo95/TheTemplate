@@ -1,14 +1,14 @@
 #pragma once
+#include "ai_follow.h"
+#include "ai_patrol.h"
+#include "bell.h"
+#include "camera.h"
+#include "collectible.h"
+#include "gamesound.h"
+#include "level.h"
 #include "player.h"
 #include "tilemap.h"
-#include "ai_follow.h"
-#include "collectible.h"
 #include "wall.h"
-#include "level.h"
-#include "camera.h"
-#include "gamesound.h"
-#include "bell.h"
-#include "ai_patrol.h"
 
 namespace Tmpl8
 {
@@ -16,18 +16,39 @@ namespace Tmpl8
 
     class Collisions {
     public:
-        Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef, Camera& cameraRef, GameSound& gamesoundRef, Bell& bellRef, AI_Patrol& ai_patrolRef);
+        // Constructor
+        Collisions(
+            Player& playerRef,
+            TileMap& tilemapRef,
+            AI_Follow& ai_followRef,
+            CollectibleMap& collectibleRef,
+            WallMap& wallRef,
+            Level& levelRef,
+            Camera& cameraRef,
+            GameSound& gamesoundRef,
+            Bell& bellRef,
+            AI_Patrol& ai_patrolRef
+        );
+
+		// Variables
+        bool playerHitAI = false;
+        bool isOnIce = false;
+
+        // Collision checks
         TileType CheckCollisionBottom(const vec2& pos);
         TileType CheckCollisionTop(const vec2& pos);
         TileType CheckCollisionRight(const vec2& pos);
         TileType CheckCollisionLeft(const vec2& pos);
+
+		// Other functions
         void manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles);
-        bool getJumpState(vec2& new_pos);
-        void setTouchStateFollowAI(bool isTouched) { playerHitAI = isTouched; }
         void applyBouncingPhysics(vec2& new_pos);
         void drawSplash(Surface* screen, vec2 player_pos, float deltaTime);
-        bool playerHitAI = false;
-        bool isOnIce = false;
+
+		// Getters / Setters
+        bool getJumpState(vec2& new_pos);
+        void setTouchStateFollowAI(bool isTouched) { playerHitAI = isTouched; }
+
     private:
         Player& player;
         TileMap& tilemap;
