@@ -22,7 +22,7 @@ namespace Tmpl8
         ai_patrol(ai_patrolRef)
     {}
     
-    void Debug::drawPlayerHitbox(const vec2& pos, Surface* screen)
+    void Debug::drawHitbox(const vec2& pos, Surface* screen)
     {
         int x1 = (int)(pos.x + player_img_width / 2 - hitbox_radius + camera.getCamPos().x);
         int y1 = (int)(pos.x + player_img_width / 2 + hitbox_radius + camera.getCamPos().x);
@@ -31,7 +31,7 @@ namespace Tmpl8
         screen->Box(x1, x2, y1, y2, 0xFF0000);
     }
 
-    void Debug::drawPlayerTileHitbox(const vec2& pos, Surface* screen)
+    void Debug::drawTileHitbox(const vec2& pos, Surface* screen)
     {
         float x1 = floor(pos.x / TILE_SIZE) * TILE_SIZE + camera.getCamPos().x;
         float y1 = floor(pos.y / TILE_SIZE) * TILE_SIZE + camera.getCamPos().y; 
@@ -80,7 +80,8 @@ namespace Tmpl8
             stopAIs();
 
             // Get the player position
-            player.getPlayerPos(player.position);
+            vec2 playerPos;
+            player.getPlayerPos(playerPos);
 
             // Display the entities' hitboxes
             drawPlayerHitbox(player.position, screen);
@@ -98,17 +99,21 @@ namespace Tmpl8
 
             // Display player's position
             char player_pos_txt[100];
-            sprintf(player_pos_txt, "px: %.0f, py: %.0f", player.position.x, player.position.y);
+            sprintf(player_pos_txt, "px: %.0f, py: %.0f", playerPos.x, playerPos.y);
             screen->Print(player_pos_txt, 10, 30, 0xFFFF00);
 
             // Display player's position
             char player_tpos_txt[100];
-            sprintf(player_tpos_txt, "tx: %.0f, ty: %.0f", floor(player.position.x / 32), floor(player.position.y / 32));
+            sprintf(player_tpos_txt, "tx: %.0f, ty: %.0f", floor(playerPos.x / 32), floor(playerPos.y / 32));
             screen->Print(player_tpos_txt, 10, 50, 0xFFFF00);
+
+            drawTileHitbox(playerPos, screen);
 
             // Display current map level and spawn point
             char map_lvl_txt[100];
-            sprintf(map_lvl_txt, "current map: %d - (%.0f, %.0f)", tilemap.getCurrentLevel(), player.default_pos.x, player.default_pos.y);
+            vec2 defaultPos;
+            player.getPlayerDefaultPos(defaultPos);
+            sprintf(map_lvl_txt, "current map: %d - (%.0f, %.0f)", tilemap.getCurrentLevel(), defaultPos.x, defaultPos.y);
             screen->Print(map_lvl_txt, 10, 70, 0xFFFF00);
 
             // Display velocity on the player as a line and print it on screen
