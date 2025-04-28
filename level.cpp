@@ -17,6 +17,7 @@ namespace Tmpl8
 
     void Level::loadLevel(int map_index)
     {
+        ai_patrol.isDead = false;
         bell.touchedPlayer = false;
         collected_new = false;
         collectible_timer_active = false;

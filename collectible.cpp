@@ -1,11 +1,10 @@
 #include "collectible.h"
 #include "tilemap.h"
 #include "tile.h"
+
 #include <unordered_map>
-#include <iostream>
-#include <functional>
-#include "gamesound.h"
-#include "player.h"
+
+
 
 namespace Tmpl8
 {

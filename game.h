@@ -13,7 +13,7 @@
 #include "player.h"
 #include "tilemap.h"
 #include "wall.h"
-
+#include "ai_copy.h"
 #include <unordered_map>
 
 namespace Tmpl8 
@@ -33,7 +33,8 @@ namespace Tmpl8
 			collisions(player, tilemap, ai_follow, collectible, wall, level, camera, gamesound, bell, ai_patrol),
 			level(tilemap, player, ai_follow, collectible, wall, gamesound, bell, ai_patrol),
 			health(player),
-			ai_patrol(player, camera)
+			ai_patrol(player, camera),
+			ai_copy(player, camera)
 		{}
 
 		void SetTarget( Surface* surface ) { screen = surface; }
@@ -71,6 +72,7 @@ namespace Tmpl8
 		GameSound gamesound;
 		Health health;
 		Bell bell;
+		AI_Copy ai_copy;
 
 		int mousex, mousey;
 		bool start_game = false;

@@ -1,9 +1,6 @@
-#define WIN32_LEAN_AND_MEAN
-#include "windows.h"
 #include "ai_patrol.h"
-#include <cmath>
-#include "tile.h"
 #include "collisions.h"
+#include "tile.h"
 
 namespace Tmpl8
 {
@@ -13,40 +10,61 @@ namespace Tmpl8
         player(playerRef)
     {}
 
+    AI_Patrol::~AI_Patrol()
+    {}
+
     Sprite img_ai_patrol(new Surface("assets/images/entities/img_ai_patrol.png"), 1);
+
+    void AI_Patrol::getStomped()
+    {
+        isAILowerThanPlayer = (position.y + img_ai_patrol.GetHeight() / 2.0f) >= (player.position.y + hitbox_radius + TILE_SIZE / 1.5);
+        if (isTouchingPlayer() && isAILowerThanPlayer)
+        {
+			player.velocity.y -= 12.0f;
+            isDead = true;
+        }
+    }
 
     void AI_Patrol::Patrol(float deltaTime, Collisions* collisions)
     {
+        if (isDead) return;
+
+        getStomped();
         float spawn_x = this->position.x;
+
         bool CheckLeft = collisions->CheckCollisionLeft(position) == TileType::Collision;
         bool CheckRight = collisions->CheckCollisionRight(position) == TileType::Collision;
+
+        bool EdgeRight = collisions->CheckCollisionBottom(vec2(position.x + TILE_SIZE, position.y + TILE_SIZE)) == TileType::None;
+		bool EdgeLeft = collisions->CheckCollisionBottom(vec2(position.x - TILE_SIZE, position.y + TILE_SIZE)) == TileType::None;
+
         float position_speed = 100.0f;
         float rotation_speed = 3.0f;
 
         if (stop) position_speed = 0.0f;
 
-        // Initialize the direction to right
-        if (direction != Direction::LEFT && direction != Direction::RIGHT)
-        {
-            direction = Direction::RIGHT;  
-        }
+        bool conditionTurnRight =   (direction != Direction::LEFT && direction != Direction::RIGHT) ||  // If default case           => TURN RIGHT
+                                    (CheckLeft && direction == Direction::LEFT) ||                      // If blocked on the left
+                                    (EdgeRight && direction == Direction::LEFT) ||                      // If on the right edge
+                                    (EdgeLeft && direction == Direction::LEFT);                         // If on the left edge
 
-        if (!CheckRight && direction == Direction::RIGHT)
-        {
-            position.x += deltaTime * position_speed;  
-        }
-        if (!CheckLeft && direction == Direction::LEFT)
-        {
-            position.x -= deltaTime * position_speed; 
-        }
-        if (CheckRight && direction == Direction::RIGHT)
-        {
+        bool conditionTurnLeft =    ((CheckRight && direction == Direction::RIGHT) || EdgeRight) ||     // If blocked on the right   => TURN LEFT
+                                    (EdgeRight && direction == Direction::RIGHT) ||                     // If on the right edge
+                                    (EdgeRight && direction == Direction::RIGHT) || 				    // If on the right edge
+                                    (EdgeLeft && direction == Direction::RIGHT);                        // If on the left edge
+
+        // Set the direction
+        if (conditionTurnRight)
+			direction = Direction::RIGHT;
+        else if (conditionTurnLeft)
             direction = Direction::LEFT;
-        }
-        if (CheckLeft && direction == Direction::LEFT)
-        {
-            direction = Direction::RIGHT;
-        }
+
+        // Set the motion
+        if (!CheckRight && direction == Direction::RIGHT)
+            position.x += deltaTime * position_speed;  
+        else if (!CheckLeft && direction == Direction::LEFT)
+            position.x -= deltaTime * position_speed; 
+        
         angle += (position.x - spawn_x) * rotation_speed;
     }
 
@@ -72,6 +90,5 @@ namespace Tmpl8
 
         return (distance <= radii_sum);
     }
-
 }
 

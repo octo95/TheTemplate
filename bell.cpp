@@ -1,9 +1,4 @@
-#define WIN32_LEAN_AND_MEAN
-#include "windows.h"
 #include "bell.h"
-#include "surface.h"
-#include "camera.h"
-#include "tile.h"
 
 namespace Tmpl8
 {

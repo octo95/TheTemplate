@@ -1,22 +1,24 @@
 #define WIN32_LEAN_AND_MEAN
 #include "windows.h"
 
+#include "ai_copy.h"
+#include "ai_follow.h"
+#include "ai_patrol.h"
 #include "camera.h"
 #include "collectible.h"
 #include "debug.h"
 #include "game.h"
+#include "gamesound.h"
 #include "menu.h"
 #include "player.h"
+#include "surface.h"
 #include "tile.h"
-#include "ai_follow.h"
 #include "tilemap.h"
-#include "gamesound.h"
+
 #include <Audio/Sound.hpp>
 #include <cstdio>
 #include <iostream>
 #include <unordered_map>
-#include "ai_patrol.h"
-#include "surface.h"
 
 namespace Tmpl8
 {
@@ -50,10 +52,15 @@ namespace Tmpl8
         
                 // AI logic
                 ai_follow.followPlayer(deltaTime);
+                ai_copy.setPos();
+                ai_patrol.Patrol(deltaTime, &collisions);
         
                 // Camera logic
                 camera.setCamPos(player.camFollowPlayer());
                 camera.shakeCamera(deltaTime);
+
+                // Bell logic
+                bell.isBellTouchingPlayer(&player);
 
             }
             else
@@ -68,11 +75,10 @@ namespace Tmpl8
             drawCollectibleMap(&camera, screen);       
             camera.drawPlayer(&img_player, screen, (int)player_pos.x, (int)(player_pos.y + player.PLAYER_DRAW_OFFSET_Y), deltaTime);
 			img_ai_follow.DrawRotated(screen, (int)ai_follow.position.x + camera.getCamPos().x, (int)ai_follow.position.y + camera.getCamPos().y, ai_follow.angle);
-			img_ai_patrol.DrawRotated(screen, (int)ai_patrol.position.x + camera.getCamPos().x, (int)ai_patrol.position.y + camera.getCamPos().y, ai_patrol.angle);
-            ai_patrol.Patrol(deltaTime, &collisions);
+			img_ai_copy.DrawRotated(screen, (int)ai_copy.position.x + camera.getCamPos().x, (int)ai_copy.position.y + camera.getCamPos().y, ai_copy.angle);
+			if(!ai_patrol.isDead) img_ai_patrol.DrawRotated(screen, (int)ai_patrol.position.x + camera.getCamPos().x, (int)ai_patrol.position.y + camera.getCamPos().y, ai_patrol.angle);
             collisions.drawSplash(screen, player_pos, deltaTime); 
             bell.drawBell(screen, &camera, tilemap.getCurrentLevel());
-            bell.isBellTouchingPlayer(&player);
             menu.manageMenus(screen);
         
             // * DEBUG: Enabled if pressing <SPACEBAR>

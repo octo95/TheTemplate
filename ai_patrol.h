@@ -8,13 +8,18 @@ namespace Tmpl8
 
     class AI_Patrol {
     public:
+        AI_Patrol(Player& playerRef, Camera& cameraRef);
+        ~AI_Patrol(); 
+
         float angle = 0;
         bool stop = false;
+        bool isDead = false;
+        bool isAILowerThanPlayer = true;
         vec2 default_pos = { 0, 0 };
         vec2 position = { 0, 0 };
-        AI_Patrol(Player& playerRef, Camera& cameraRef);
         void setAIPatrolPos(const vec2& pos) { position = pos; }
         bool isTouchingPlayer();
+        void getStomped();
         void Patrol(float deltaTime, Collisions* collisions);
     private:
         Player& player;

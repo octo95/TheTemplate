@@ -55,6 +55,9 @@
     <ClCompile Include="ai_patrol.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
+    <ClCompile Include="ai_copy.cpp">
+      <Filter>Solutions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="player.h">
@@ -112,6 +115,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="ai_patrol.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ai_copy.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

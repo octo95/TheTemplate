@@ -224,6 +224,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ai_copy.cpp" />
     <ClCompile Include="ai_follow.cpp" />
     <ClCompile Include="ai_patrol.cpp" />
     <ClCompile Include="bell.cpp" />
@@ -244,6 +245,7 @@
     <ClCompile Include="wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ai_copy.h" />
     <ClInclude Include="ai_follow.h" />
     <ClInclude Include="ai_patrol.h" />
     <ClInclude Include="bell.h" />

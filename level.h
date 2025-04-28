@@ -36,7 +36,7 @@ namespace Tmpl8
             vec2 {500,10},
             vec2 {600,10},
             vec2 {600,30},
-            vec2 {600,10}
+            vec2 {100,10}
         };
 
         bool level_finished = false;

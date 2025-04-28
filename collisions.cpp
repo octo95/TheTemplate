@@ -91,7 +91,7 @@ namespace Tmpl8
 
         bool isNoneX = (CheckLeft == TileType::None || CheckRight == TileType::None);
         bool isNoneY = (CheckBottom == TileType::None);
-        bool isDamage = (CheckLeft == TileType::Damage || CheckRight == TileType::Damage || CheckBottom == TileType::Damage || CheckTop == TileType::Damage || ai_follow.isTouchingPlayer() || ai_patrol.isTouchingPlayer() );
+        bool isDamage = (CheckLeft == TileType::Damage || CheckRight == TileType::Damage || CheckBottom == TileType::Damage || CheckTop == TileType::Damage || ai_follow.isTouchingPlayer() || (ai_patrol.isTouchingPlayer() && !ai_patrol.isAILowerThanPlayer ));
         //bool isEnd = (CheckLeft == TileType::End || CheckRight == TileType::End || CheckBottom == TileType::End || CheckTop == TileType::End);
         bool isEnd = bell.touchedPlayer;
         bool isCollision = (CheckLeft == TileType::Collision || CheckRight == TileType::Collision || CheckBottom == TileType::Collision || CheckTop==TileType::Collision);
@@ -188,27 +188,27 @@ namespace Tmpl8
 
         if (CheckLeft || CheckRight)
         {
-            float norm = sqrt(pow(player.velocity.x, 2) + pow(player.velocity.y, 2));
-            float angle = acos(player.velocity.x / norm);
+            float norm = sqrtf(pow(player.velocity.x, 2) + pow(player.velocity.y, 2));
+            float angle = acosf(player.velocity.x / norm);
 
             player.velocity.x = -norm * cos(angle);
             player.velocity.y = norm * sin(angle);
 
             // Apply the power loss for the sides collisions
-            player.velocity.x *= pow(player.ENERGY_LOSS, 2);
+            player.velocity.x *= powf(player.ENERGY_LOSS, 2);
         }
         //printf("Bottom: %d, VelY: %f\n", (int)CheckBottom, player.velocity.y);
         if (CheckBottom)
         {
             //printf("check bottom\n");
-            float norm = sqrt(pow(player.velocity.x, 2) + pow(player.velocity.y, 2));
-            float angle = acos(player.velocity.x / norm);
+            float norm = sqrtf(pow(player.velocity.x, 2) + pow(player.velocity.y, 2));
+            float angle = acosf(player.velocity.x / norm);
 
             player.velocity.x = norm * cos(angle);
             player.velocity.y = -norm * sin(angle);
 
             // Apply the power loss for the bottom collisions
-            player.velocity.y *= pow(player.ENERGY_LOSS, 2);
+            player.velocity.y *= powf(player.ENERGY_LOSS, 2);
 
             // Threshold of 0.5 to the velocity.y to prevent the player from bouncing when on the ground with a low velocity
             if (fabs(player.velocity.y) < 0.5f) player.velocity.y = 0.0f;
