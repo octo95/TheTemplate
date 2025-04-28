@@ -1,11 +1,11 @@
 #define WIN32_LEAN_AND_MEAN
 #include "windows.h"
-#include "debug.h"
 #include "game.h"
 #include "player.h"
 #include <thread>
 #include <cmath>
 #include "ai_patrol.h"
+#include "debug.h"
 
 namespace Tmpl8
 {
@@ -22,7 +22,7 @@ namespace Tmpl8
         ai_patrol(ai_patrolRef)
     {}
     
-    void Debug::drawHitbox(const vec2& pos, Surface* screen)
+    void Debug::drawPlayerHitbox(const vec2& pos, Surface* screen)
     {
         int x1 = (int)(pos.x + player_img_width / 2 - hitbox_radius + camera.getCamPos().x);
         int y1 = (int)(pos.x + player_img_width / 2 + hitbox_radius + camera.getCamPos().x);
@@ -31,7 +31,7 @@ namespace Tmpl8
         screen->Box(x1, x2, y1, y2, 0xFF0000);
     }
 
-    void Debug::drawTileHitbox(const vec2& pos, Surface* screen)
+    void Debug::drawPlayerTileHitbox(const vec2& pos, Surface* screen)
     {
         float x1 = floor(pos.x / TILE_SIZE) * TILE_SIZE + camera.getCamPos().x;
         float y1 = floor(pos.y / TILE_SIZE) * TILE_SIZE + camera.getCamPos().y; 
@@ -90,7 +90,8 @@ namespace Tmpl8
             drawAIPatrolHitbox(ai_patrol.position, screen);
 
             // Draw the distance between the player and an AI to specify below
-            drawDistancePlayerToAI(ai_follow.position, screen);
+            drawDistancePlayerToAI(ai_follow.position, img_ai_follow.GetWidth(), screen);
+            drawDistancePlayerToAI(ai_patrol.position, img_ai_patrol.GetWidth(), screen);
 
             // Display debug text
             char debug_active_txt[100];
@@ -107,7 +108,7 @@ namespace Tmpl8
             sprintf(player_tpos_txt, "tx: %.0f, ty: %.0f", floor(playerPos.x / 32), floor(playerPos.y / 32));
             screen->Print(player_tpos_txt, 10, 50, 0xFFFF00);
 
-            drawTileHitbox(playerPos, screen);
+            drawPlayerTileHitbox(playerPos, screen);
 
             // Display current map level and spawn point
             char map_lvl_txt[100];
@@ -151,7 +152,6 @@ namespace Tmpl8
             {
                 ai_follow.is_following = !ai_follow.is_following;
                 ai_patrol.stop = !ai_patrol.stop;
-                printf("debug stop: %d\n", (int)ai_patrol.stop);
                 s_wasPressed = true;
             }
         }
@@ -220,12 +220,12 @@ namespace Tmpl8
         if (GetAsyncKeyState('R') & 0x8000) level.loadLevel(tilemap.getCurrentLevel());
     }
 
-    void Debug::drawDistancePlayerToAI(vec2 ai_pos, Surface* screen)
+    void Debug::drawDistancePlayerToAI(vec2 ai_pos, int size, Surface* screen)
     {
         int start_x = player.position.x + player_img_width / 2 + camera.getCamPos().x;
         int start_y = player.position.y + (player_img_height / 2 - 4) + camera.getCamPos().y;
-        int end_y = ai_pos.y + img_ai_follow.GetHeight() / 2 + camera.getCamPos().y;
-        int end_x = ai_pos.x + img_ai_follow.GetWidth() / 2 + camera.getCamPos().x;
+        int end_y = ai_pos.y + size / 2 + camera.getCamPos().y;
+        int end_x = ai_pos.x + size / 2 + camera.getCamPos().x;
 
         screen->Line(start_x, start_y, end_x, end_y, 0x00FF00);
     }

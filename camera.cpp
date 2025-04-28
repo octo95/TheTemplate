@@ -50,12 +50,11 @@ namespace Tmpl8
         img->Draw(screen, x, y);
     }
 
-    void Camera::drawWithCamAndAngle(Sprite* img, Surface* screen, int x, int y, float deltaTime, float acceleration)
+    void Camera::drawPlayer(Sprite* img, Surface* screen, int x, int y, float deltaTime)
     {
-        float dynamic_angle = 0.0f;
-        dynamic_angle += deltaTime * acceleration;
+        player_angle += deltaTime * acceleration;
         x += getCamPos().x;
         y += getCamPos().y;
-        img->DrawRotated(screen, x, y, dynamic_angle);
+        img->DrawRotated(screen, x, y, player_angle);
     }
 };

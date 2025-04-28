@@ -22,6 +22,12 @@ namespace Tmpl8
         float diffX = player.position.x - this->position.x;
         float diffY = player.position.y - this->position.y;
 
+        // Calculate the angle to the player
+        angle = atan2(diffY, diffX) * 180.0f / 3.1415f + 90.0f; 
+
+        // Convert the angle from radians to degrees
+        float angleInDegrees = angle * 180.0f / 3.1415f;
+
         this->position.x += diffX * deltaTime * delayAmplifier;
         this->position.y += diffY * deltaTime * delayAmplifier;
     }

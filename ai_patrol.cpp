@@ -21,10 +21,9 @@ namespace Tmpl8
         bool CheckLeft = collisions->CheckCollisionLeft(position) == TileType::Collision;
         bool CheckRight = collisions->CheckCollisionRight(position) == TileType::Collision;
         float position_speed = 100.0f;
-        float rotation_speed = 200.0f;
+        float rotation_speed = 3.0f;
 
-        if (stop) printf("stop\n"), position_speed = 0.0f;
-        printf("stop real value: %d\n", (int)stop);
+        if (stop) position_speed = 0.0f;
 
         // Initialize the direction to right
         if (direction != Direction::LEFT && direction != Direction::RIGHT)

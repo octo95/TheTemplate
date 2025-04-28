@@ -29,7 +29,7 @@ namespace Tmpl8
         int getFPS(float deltaTime);
         void drawVelocityNorm(Surface* screen);
         void restartCurrentLevel();
-        void drawDistancePlayerToAI(vec2 ai_pos, Surface* screen);
+        void drawDistancePlayerToAI(vec2 ai_pos, int size, Surface* screen);
         void getCurrentTileStatus(Surface* screen);
         void stopAIs();
         bool gameSlow = false;
@@ -44,6 +44,6 @@ namespace Tmpl8
         Level& level;
         Collisions& collisions;
         Menu& menu;
-        AI_Patrol ai_patrol;
+        AI_Patrol& ai_patrol;
     };
 }

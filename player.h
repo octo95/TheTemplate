@@ -24,7 +24,6 @@ namespace Tmpl8
         vec2 position = { 0, 0 };
         vec2 default_pos = { 0, 0 };
         bool can_jump = false;
-        float angle = 0.0f;
         float friction = 0.05f;
         const float ENERGY_LOSS = 0.9f;             // How much energy the ball keeps after a bounce in %
         const float MAX_HORIZONTAL_SPEED = 3.0f;
@@ -33,7 +32,6 @@ namespace Tmpl8
 
         void movePlayer(vec2& new_pos, Collisions* collisions);
         vec2 camFollowPlayer();
-
         void setPlayerDefaultPos(const vec2& pos) { default_pos = pos; }
         void getPlayerDefaultPos(vec2& pos) { pos = default_pos; }
         void resetPlayerVelocity() { velocity = { 0, 0 }; }
