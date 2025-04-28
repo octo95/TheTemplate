@@ -1,11 +1,8 @@
 #define WIN32_LEAN_AND_MEAN
 #include "windows.h"
-#include <stdio.h>
 
 #include "game.h"
 #include "player.h"
-#include "camera.h"
-#include "collisions.h"
 
 namespace Tmpl8
 {

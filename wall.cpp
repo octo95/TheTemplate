@@ -1,9 +1,4 @@
 #include "wall.h"
-#include "tilemap.h"
-#include "tile.h"
-#include <unordered_map>
-#include <iostream>
-#include <functional>
 
 namespace Tmpl8
 {

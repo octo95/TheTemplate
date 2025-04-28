@@ -1,7 +1,4 @@
-#define WIN32_LEAN_AND_MEAN
-#include "windows.h"
 #include "health.h"
-#include "menu.h"
 
 namespace Tmpl8
 {

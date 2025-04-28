@@ -1,10 +1,5 @@
 #define WIN32_LEAN_AND_MEAN
 #include "windows.h"
-#include "game.h"
-#include "player.h"
-#include <thread>
-#include <cmath>
-#include "ai_patrol.h"
 #include "debug.h"
 
 namespace Tmpl8

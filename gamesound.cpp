@@ -1,7 +1,3 @@
-#include <Audio/Sound.hpp>
-#include <thread>       
-#include <chrono>       
-#include <iostream>
 #include "gamesound.h"
 
 namespace Tmpl8

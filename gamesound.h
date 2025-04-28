@@ -1,8 +1,5 @@
 #pragma once
 #include <Audio/Sound.hpp>
-#include <vector>
-#include <memory>
-#include <string>
 
 namespace Tmpl8
 {

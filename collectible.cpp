@@ -1,10 +1,4 @@
 #include "collectible.h"
-#include "tilemap.h"
-#include "tile.h"
-
-#include <unordered_map>
-
-
 
 namespace Tmpl8
 {

@@ -1,4 +1,5 @@
 #pragma once
+#include "ai_copy.h"
 #include "ai_follow.h"
 #include "ai_patrol.h"
 #include "bell.h"
@@ -13,8 +14,6 @@
 #include "player.h"
 #include "tilemap.h"
 #include "wall.h"
-#include "ai_copy.h"
-#include <unordered_map>
 
 namespace Tmpl8 
 {

@@ -1,24 +1,4 @@
-#define WIN32_LEAN_AND_MEAN
-#include "windows.h"
-
-#include "ai_copy.h"
-#include "ai_follow.h"
-#include "ai_patrol.h"
-#include "camera.h"
-#include "collectible.h"
-#include "debug.h"
 #include "game.h"
-#include "gamesound.h"
-#include "menu.h"
-#include "player.h"
-#include "surface.h"
-#include "tile.h"
-#include "tilemap.h"
-
-#include <Audio/Sound.hpp>
-#include <cstdio>
-#include <iostream>
-#include <unordered_map>
 
 namespace Tmpl8
 {

@@ -1,6 +1,7 @@
 #pragma once
 #include "surface.h"
 #include "template.h"
+#include <cmath>
 
 namespace Tmpl8
 {

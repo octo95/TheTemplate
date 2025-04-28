@@ -7,6 +7,8 @@
 #include <unordered_map>
 #include "vec2_hash.h"
 #include "gamesound.h"
+#include "tilemap.h"
+
 
 namespace Tmpl8
 {

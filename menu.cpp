@@ -1,10 +1,6 @@
-#include "menu.h"
-#include "game.h"
+#define WIN32_MEAN_AND_LEAN
 #include "windows.h"
-#include "tilemap.h"
-#include <stdio.h>
-#include <iostream>
-#include <thread>
+#include "menu.h"
 
 namespace Tmpl8
 {

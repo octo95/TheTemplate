@@ -1,7 +1,4 @@
-#include "player.h"
 #include "tilemap.h"
-#include "game.h"
-#include "wall.h"
 
 namespace Tmpl8
 {
