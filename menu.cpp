@@ -23,6 +23,9 @@ namespace Tmpl8
     Sprite img_menu_main_lvl3(new Surface("assets/images/menus/main_menu/img_menu_main_lvl3.png"), 1);
     Sprite img_menu_main_lvl4(new Surface("assets/images/menus/main_menu/img_menu_main_lvl4.png"), 1);
     Sprite img_menu_main_lvl5(new Surface("assets/images/menus/main_menu/img_menu_main_lvl5.png"), 1);
+    Sprite img_menu_main_difficulty_easy(new Surface("assets/images/menus/main_menu/img_menu_main_difficulty_easy.png"), 1);
+    Sprite img_menu_main_difficulty_medium(new Surface("assets/images/menus/main_menu/img_menu_main_difficulty_medium.png"), 1);
+    Sprite img_menu_main_difficulty_hard(new Surface("assets/images/menus/main_menu/img_menu_main_difficulty_hard.png"), 1);
 
         // - Hover
     Sprite img_menu_main_start_alt(new Surface("assets/images/menus/main_menu/hover/img_menu_main_start_alt.png"), 1);
@@ -31,6 +34,9 @@ namespace Tmpl8
     Sprite img_menu_main_lvl3_alt(new Surface("assets/images/menus/main_menu/hover/img_menu_main_lvl3_alt.png"), 1);
     Sprite img_menu_main_lvl4_alt(new Surface("assets/images/menus/main_menu/hover/img_menu_main_lvl4_alt.png"), 1);
     Sprite img_menu_main_lvl5_alt(new Surface("assets/images/menus/main_menu/hover/img_menu_main_lvl5_alt.png"), 1);
+    Sprite img_menu_main_difficulty_easy_hover(new Surface("assets/images/menus/main_menu/hover/img_menu_main_difficulty_easy_hover.png"), 1);
+    Sprite img_menu_main_difficulty_medium_hover(new Surface("assets/images/menus/main_menu/hover/img_menu_main_difficulty_medium_hover.png"), 1);
+    Sprite img_menu_main_difficulty_hard_hover(new Surface("assets/images/menus/main_menu/hover/img_menu_main_difficulty_hard_hover.png"), 1);
 
     // + NEXT MENU
     Sprite img_menu_next_bg(new Surface("assets/images/menus/next_menu/img_menu_next_bg.png"), 1);
@@ -59,6 +65,21 @@ namespace Tmpl8
     Sprite img_menu_end_menu_alt(new Surface("assets/images/menus/end_menu/img_menu_end_menu_alt.png"), 1);
     Sprite img_menu_end_replay_alt(new Surface("assets/images/menus/end_menu/img_menu_end_menu_replay_alt.png"), 1);
 
+    // + AUDIO MANAGER
+    Sprite img_audio_on(new Surface("assets/images/UI/img_audio_on.png"), 1);
+    Sprite img_audio_off(new Surface("assets/images/UI/img_audio_off.png"), 1);
+
+        // - Hover
+    Sprite img_audio_on_hover(new Surface("assets/images/UI/img_audio_on_hover.png"), 1);
+    Sprite img_audio_off_hover(new Surface("assets/images/UI/img_audio_off_hover.png"), 1);
+
+    // + GLOBAL
+    Sprite img_selected(new Surface("assets/images/UI/img_selected.png"), 1);
+    Sprite img_quit(new Surface("assets/images/UI/img_quit.png"), 1);
+
+        // - Hover
+    Sprite img_quit_hover(new Surface("assets/images/UI/img_quit_hover.png"), 1);
+
     bool Menu::isHoveringSurface(int x, int y, int width, int height)
     {
         return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
@@ -70,33 +91,68 @@ namespace Tmpl8
 
         img_menu_main_bg.Draw(screen, 0, 0);
 
+        audioOpen = true;
+        quitOpen = true;
+        audioManagerOpen(screen);
+        quitManagerOpen(screen);
+
         Sprite* lvl_hover_list[5] = { &img_menu_main_lvl1_alt, &img_menu_main_lvl2_alt, &img_menu_main_lvl3_alt, &img_menu_main_lvl4_alt, &img_menu_main_lvl5_alt };
         Sprite* lvl_list[5] = { &img_menu_main_lvl1, &img_menu_main_lvl2, &img_menu_main_lvl3, &img_menu_main_lvl4, &img_menu_main_lvl5 };
         int lvl_list_X[5] = { MAIN_LVL1_X, MAIN_LVL2_X, MAIN_LVL3_X, MAIN_LVL4_X, MAIN_LVL5_X };
-        int lvl_list_Y[5] = { MAIN_LVL1_Y, MAIN_LVL2_Y, MAIN_LVL3_Y, MAIN_LVL4_Y, MAIN_LVL5_Y };
+
+        Sprite* difficulty_hover_list[3] = { &img_menu_main_difficulty_easy_hover, &img_menu_main_difficulty_medium_hover, &img_menu_main_difficulty_hard_hover };
+        Sprite* difficulty_list[3] = { &img_menu_main_difficulty_easy, &img_menu_main_difficulty_medium, &img_menu_main_difficulty_hard };
+        int difficulty_X[3] = { MAIN_EASY_X, MAIN_MEDIUM_X, MAIN_HARD_X };
 
         static bool wasHoveringLevel[5] = { false };
+        static bool wasHoveringDifficulty[5] = { false };
         static bool wasHoveringStart = false;
 
         for (int i = 0; i < 5; i++)
         { 
             // Hover levels buttons logic
-            bool isHoveringLevel = isHoveringSurface(lvl_list_X[i], lvl_list_Y[i], MAIN_LVL_WIDTH, MAIN_LVL_HEIGHT);
+            bool isHoveringLevel = isHoveringSurface(lvl_list_X[i], MAIN_LVLS_Y, MAIN_LVL_WIDTH, MAIN_LVL_HEIGHT);
 
             if (isHoveringLevel)
             {
                 if (!wasHoveringLevel[i]) gamesound.playSound(gamesound.snd_hover);
-                lvl_hover_list[i]->Draw(screen, lvl_list_X[i], lvl_list_Y[i]);
+                lvl_hover_list[i]->Draw(screen, lvl_list_X[i], MAIN_LVLS_Y);
                 manageLevelSelect(i);
             }
             else
             {
-                lvl_list[i]->Draw(screen, lvl_list_X[i], lvl_list_Y[i]);
+                lvl_list[i]->Draw(screen, lvl_list_X[i], MAIN_LVLS_Y);
             }
 
             wasHoveringLevel[i] = isHoveringLevel;
         }
 
+        for (int i = 0; i < 3; i++)
+        {
+            // Hover difficulties buttons logic
+            bool isHoveringDifficulty = isHoveringSurface(difficulty_X[i], MAIN_DIFFICULTIES_Y, MAIN_DIFFICULTY_WIDTH, MAIN_DIFFICULTY_HEIGHT);
+
+            if (isHoveringDifficulty)
+            {
+                if (!wasHoveringDifficulty[i]) gamesound.playSound(gamesound.snd_hover);
+                difficulty_hover_list[i]->Draw(screen, difficulty_X[i], MAIN_DIFFICULTIES_Y);
+                manageDifficultySelect(i);
+            }
+            else
+            {
+                difficulty_list[i]->Draw(screen, difficulty_X[i], MAIN_DIFFICULTIES_Y);
+            }
+
+            wasHoveringDifficulty[i] = isHoveringDifficulty;
+
+            // Draw the selected difficulty marker
+            if (difficulty == i + 1)
+            {
+                img_selected.Draw(screen, difficulty_X[i] + MAIN_DIFFICULTY_WIDTH / 2 - img_selected.GetWidth() / 2, MAIN_DIFFICULTIES_Y + MAIN_DIFFICULTY_HEIGHT );
+            }
+        }
+
+    
         // Hover start button logic
         bool isHoveringStart = isHoveringSurface(MAIN_START_X, MAIN_START_Y, MAIN_START_WIDTH, MAIN_START_HEIGHT);
 
@@ -121,12 +177,23 @@ namespace Tmpl8
         {
             gamesound.playSound(gamesound.snd_select);
             gamesound.playMusic(gamesound.mus_level);
+            audioOpen = false;
+            quitOpen = false;
             level.level_finished = false;
             start_game = true;
             resume_game = true;
             manualPaused = false;
             mainMenuOpen = false;
             level.loadLevel(index + 1);
+        }
+    }
+
+    void Menu::manageDifficultySelect(int index)
+    {
+        if (isMousePressed)
+        {
+            difficulty = index + 1;
+            printf("difficulty: %d\n", difficulty);
         }
     }
 
@@ -198,6 +265,11 @@ namespace Tmpl8
     {
         if (!pauseMenuOpen) return;
 
+        audioOpen = true;
+        quitOpen = true;
+        audioManagerOpen(screen);
+        quitManagerOpen(screen);
+
         img_menu_pause_bg.Draw(screen, SCREEN_WIDTH / 2 - PAUSE_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_HEIGHT / 2);
 
         static bool wasHoveringResume = false;
@@ -237,6 +309,8 @@ namespace Tmpl8
             resume_game = false;
             mainMenuOpen = true;
             pauseMenuOpen = false;
+            audioOpen = false;
+            quitOpen = false;
         }
         else if (isHoveringResume && isMousePressed)
         {
@@ -244,6 +318,8 @@ namespace Tmpl8
             manualPaused = false;
             resume_game = true;
             pauseMenuOpen = false;
+            audioOpen = false;
+            quitOpen = false;
         }
     }
 
@@ -353,6 +429,84 @@ namespace Tmpl8
             end_sound_played = false; 
         }
 
+    }
+
+    void Menu::quitManagerOpen(Surface* screen)
+    {
+        if (!quitOpen) return;
+
+        static bool wasHoveringQuit = false;
+        bool isHoveringQuit = isHoveringSurface(QUIT_X, QUIT_Y, QUIT_WIDTH, QUIT_HEIGHT);
+
+        if (isHoveringQuit)
+        {
+            if (!wasHoveringQuit)
+                gamesound.playSound(gamesound.snd_hover);
+            img_quit_hover.Draw(screen, QUIT_X, QUIT_Y);
+        }
+        else
+        {
+            img_quit.Draw(screen, QUIT_X, QUIT_Y);
+        }
+
+        wasHoveringQuit = isHoveringQuit;
+
+        if (isHoveringQuit && isMousePressed)
+        {
+            exit(0);
+        }
+    }
+
+    void Menu::audioManagerOpen(Surface* screen)
+    {
+        if (!audioOpen) return;
+
+        static bool wasHoveringAudio = false;
+        static bool audioClickedLastFrame = false;
+
+        bool isHoveringAudio = isHoveringSurface(AUDIO_X, AUDIO_Y, AUDIO_WIDTH, AUDIO_HEIGHT);
+
+        if (isHoveringAudio)
+        {
+            if (!wasHoveringAudio)
+                gamesound.playSound(gamesound.snd_hover);
+
+            if (audioOn)
+                img_audio_on_hover.Draw(screen, AUDIO_X, AUDIO_Y);
+            else
+                img_audio_off_hover.Draw(screen, AUDIO_X, AUDIO_Y);
+        }
+        else
+        {
+            if (audioOn)
+                img_audio_on.Draw(screen, AUDIO_X, AUDIO_Y);
+            else
+                img_audio_off.Draw(screen, AUDIO_X, AUDIO_Y);
+        }
+
+        wasHoveringAudio = isHoveringAudio;
+
+        if (isHoveringAudio && isMousePressed && !audioClickedLastFrame)
+        {
+            gamesound.playSound(gamesound.snd_select);
+            audioOn = !audioOn;
+            if (audioOn)
+            {
+                gamesound.globalVolume = 0.1f;
+                if (start_game)
+                    gamesound.playMusic(gamesound.mus_level);
+                else
+                    gamesound.playMusic(gamesound.mus_menu);
+            }
+            else
+            {
+                gamesound.stopMusic();
+                gamesound.globalVolume = 0.0f;
+            }
+
+        }
+
+        audioClickedLastFrame = isMousePressed;
     }
 
     void Menu::setMousePosition(int x, int y)

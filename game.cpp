@@ -44,6 +44,7 @@ namespace Tmpl8
                 collisions.manageCollisions(player_pos, screen, &collectible);
                 manageWallCollision(player_pos, &gamesound);
                 manageCollectibleCollision(player_pos, &gamesound);
+                manageCollectibleRespawn(deltaTime);
         
                 // AI logic
                 ai_follow.followPlayer(deltaTime);
@@ -52,7 +53,6 @@ namespace Tmpl8
                 camera.setCamPos(player.camFollowPlayer());
                 camera.shakeCamera(deltaTime);
 
-                manageCollectibleRespawn(deltaTime);
             }
             else
             {
@@ -67,8 +67,9 @@ namespace Tmpl8
             camera.drawWithCamAndAngle(&img_ai_follow, screen, (int)ai_follow.position.x, (int)ai_follow.position.y, deltaTime);
             camera.drawWithCamAndAngle(&img_player, screen, (int)player_pos.x, (int)(player_pos.y + player.PLAYER_DRAW_OFFSET_Y), deltaTime); 
             collisions.drawSplash(screen, player_pos, deltaTime); 
-            menu.manageMenus(screen);                    
-
+            bell.drawBell(screen, &camera, tilemap.getCurrentLevel());
+            bell.isBellTouchingPlayer(&player);
+            menu.manageMenus(screen);
         
             // * DEBUG: Enabled if pressing <SPACEBAR>
             debug.displayDebug(screen, deltaTime);
@@ -82,6 +83,7 @@ namespace Tmpl8
     // + INITIALIZER / SHUTDOWN
     void Game::Init() 
     {
+        tilemap.readImageToCharMap();
         gamesound.playMusic(gamesound.mus_menu);
     }
     void Game::Shutdown() {}

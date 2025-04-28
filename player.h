@@ -23,6 +23,7 @@ namespace Tmpl8
         vec2 velocity = { 0, 0 };
         vec2 position = { 0, 0 };
         vec2 default_pos = { 0, 0 };
+        bool can_jump = false;
         float friction = 0.05f;
         const float ENERGY_LOSS = 0.9f;             // How much energy the ball keeps after a bounce in %
         const float MAX_HORIZONTAL_SPEED = 3.0f;
@@ -42,7 +43,6 @@ namespace Tmpl8
     private:
         Camera& camera;
         bool is_touched_follow_ai = false;
-        bool can_jump = false;
         float gravity = 0.28f;
         float vertical_speed = 0;
         float horizontal_speed = 0;

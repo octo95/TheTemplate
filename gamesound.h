@@ -22,7 +22,7 @@ namespace Tmpl8
         const std::string snd_break_wall = "assets/audio/SFX/snd_break_wall.wav";
 
         // All Music paths
-        const std::string mus_level = "assets/audio/Music/mus_level.mp3";
+        const std::string mus_level = "assets/audio/Music/mus_level.wav";
         const std::string mus_menu = "assets/audio/Music/mus_menu.mp3";
 
         void playSound(const std::string& filePath);

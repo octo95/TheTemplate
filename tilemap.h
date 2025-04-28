@@ -205,38 +205,38 @@ namespace Tmpl8
 
     // MAP5
     const char MAP5[TILE_ROWS][TILE_COLUMNS * 3] = {
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da ca",
-    "ca da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da ca",
-    "ca da da da da da da da da da da da da ca da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da ca da da da da da da da da da da da da ca",
-    "ca ba ba ca ca ca ca ca ca da da da ca ca ca da da da ca ca ca ca ca ca ca ca ca",
-    "ca ca ca ca ca ca ca ca ca da da da ca ca ca da da da ca ca ca ca ca ca ca ca ca",
-    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca da da da ea ea ea ea ea ea ea ea ea ea ea ea ea ea ea da da da ca ca ca",
-    "ca ca ca da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da ca ca ca",
-    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca aa aa da da ca ca ca ca da da da da da ca ca ca ca ca ca aa aa ca ca ca",
-    "ca ca ca ca ca da da ca ca ca ca da da da da da ca ca ca ca ca ca ca da ca ca ca",
-    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca da da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da ca ca ca",
-    "ca ca ca da da da da ca ca ca ca da da da da da ca ca ca ca ca ca ca da ca ca ca",
-    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca aa aa da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca",
-    "ca ca ca da ca da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da ca ca ca",
-    "ca ca ca da da da ca ca ca ca ca da da da da da ca ca ca ca ca ca ca da ca ca ca",
-    "ca ca ca ca da da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca",
-    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca da da da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da ca ca ca",
-    "ca ca ca ca ca da da aa ca ca ca da da da da da ca ca ca ca ca ca ca ca ca ca ca",
-    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca ca ca ca ca ca ca ca ca ba ba ba ba ba ca ca ca ca ca ca ca ca ca ca ca",
-    "ca ca ca ca ca ca ca ca ca ca ca ba ba ba ba ba ca ca ca ca ca ca ca ca ca ca ca"
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca ca ca ca ca ca ca ca ca ca da da ca ca ca ca da da da da da da da da da ca ca",
+    "ca da da da da da da da da ca ca ca ca ca ca ca da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da ca ca da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
+    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca"
     };
     const vec2 MAP5_COLLECTIBLES[4] = {
         vec2 {3,2},
@@ -264,6 +264,7 @@ namespace Tmpl8
         void loadLevel(int i);
         int getCurrentLevel() const { return (current_level - 1) % MAP_AMOUNT + 1; }
         int incrementMapIndex() { return current_level = current_level % MAP_AMOUNT + 1; }
+        void readImageToCharMap();
         int current_level = 1;
     private:
         Player& player;

@@ -4,17 +4,21 @@
 
 namespace Tmpl8
 {
-    Level::Level(TileMap& tilemapRef, Player& playerRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef,WallMap& wallRef, GameSound& gamesoundRef) :
+    Level::Level(TileMap& tilemapRef, Player& playerRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef,WallMap& wallRef, GameSound& gamesoundRef, Bell& bellRef) :
         tilemap(tilemapRef),
         player(playerRef),
         ai_follow(ai_followRef),
         collectible(collectibleRef),
         wall(wallRef),
-        gamesound(gamesoundRef)
+        gamesound(gamesoundRef),
+        bell(bellRef)
     {}
 
     void Level::loadLevel(int map_index)
     {
+        bell.touchedPlayer = false;
+        collected_new = false;
+        collectible_timer_active = false;
         collectibles_collected = 0;
         tilemap.current_level = map_index;
         player.position = player.default_pos;

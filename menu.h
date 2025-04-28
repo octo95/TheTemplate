@@ -24,7 +24,12 @@ namespace Tmpl8
 	extern Sprite img_menu_end_menu;
 	extern Sprite img_menu_end_menu;
 	extern Sprite img_menu_end_replay;
-
+	extern Sprite img_audio_on;
+	extern Sprite img_audio_off;
+	extern Sprite img_menu_main_difficulty_easy;
+	extern Sprite img_menu_main_difficulty_medium;
+	extern Sprite img_menu_main_difficulty_hard;
+	extern Sprite img_quit;
 
 	class Menu
 	{
@@ -39,6 +44,9 @@ namespace Tmpl8
 		void setMouseState(bool isPressed) { isMousePressed = isPressed; }
 		bool isHoveringSurface(int x, int y, int width, int height);
 		void manageLevelSelect(int index);
+		void manageDifficultySelect(int index);
+		void audioManagerOpen(Surface* screen);
+		void quitManagerOpen(Surface* screen);
 
 		bool start_game = false;
 		bool resume_game = true;
@@ -50,13 +58,17 @@ namespace Tmpl8
 		GameSound& gamesound;
 
 		int mouseX, mouseY; 
+		int difficulty = 2; // 1: easy, 2: medium (default), 3: hard
 
 		bool isMousePressed = false;
 		bool manualPaused = false;
 		bool alreadyClickedNextLevel = false;
+		bool audioOn = true;
 
 		// Menu flags
 		bool mainMenuOpen = true;
+		bool audioOpen = true;
+		bool quitOpen = true;
 		bool pauseMenuOpen = false;
 		bool nextMenuOpen = false;
 		bool endMenuOpen = false;
@@ -74,6 +86,8 @@ namespace Tmpl8
 		const int MAIN_START_HEIGHT = img_menu_main_start.GetHeight();
 		const int MAIN_LVL_WIDTH = img_menu_main_lvl1.GetWidth();
 		const int MAIN_LVL_HEIGHT = img_menu_main_lvl1.GetHeight();
+		const int MAIN_DIFFICULTY_WIDTH = img_menu_main_difficulty_easy.GetWidth();
+		const int MAIN_DIFFICULTY_HEIGHT = img_menu_main_difficulty_easy.GetHeight();
 
 		// Next level menu
 		const int NEXT_BG_WIDTH = img_menu_next_bg.GetWidth();
@@ -99,26 +113,37 @@ namespace Tmpl8
 		const int END_REPLAY_WIDTH = img_menu_end_replay.GetWidth();
 		const int END_REPLAY_HEIGHT = img_menu_end_replay.GetHeight();
 
+		// Audio manager
+		const int AUDIO_WIDTH = img_audio_on.GetWidth();
+		const int AUDIO_HEIGHT = img_audio_on.GetHeight();
+
+		// Quit manager
+		const int QUIT_WIDTH = img_quit.GetWidth();
+		const int QUIT_HEIGHT = img_quit.GetHeight();
+
 		// +------------------+
 		// | BUTTON POSITIONS |
 		// +------------------+
 
 		// Main menu
+
+		// - LVLs
 		const int MAIN_LVL1_X = SCREEN_HALF_WIDTH - (5 * MAIN_LVL_WIDTH + 4 * 20) / 2;
-		const int MAIN_LVL1_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 3 - SCREEN_HEIGHT / 3;
+		const int MAIN_LVLS_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 3 - SCREEN_HEIGHT / 3;
 
 		const int MAIN_LVL2_X = MAIN_LVL1_X + MAIN_LVL_WIDTH + 20;
-		const int MAIN_LVL2_Y = MAIN_LVL1_Y;
-
 		const int MAIN_LVL3_X = MAIN_LVL2_X + MAIN_LVL_WIDTH + 20;
-		const int MAIN_LVL3_Y = MAIN_LVL1_Y;
-
 		const int MAIN_LVL4_X = MAIN_LVL3_X + MAIN_LVL_WIDTH + 20;
-		const int MAIN_LVL4_Y = MAIN_LVL1_Y;
-
 		const int MAIN_LVL5_X = MAIN_LVL4_X + MAIN_LVL_WIDTH + 20;
-		const int MAIN_LVL5_Y = MAIN_LVL1_Y;
 
+		// - Difficulties
+		const int MAIN_EASY_X = SCREEN_HALF_WIDTH - (3 * MAIN_DIFFICULTY_WIDTH + 2 * 50) / 2;
+		const int MAIN_DIFFICULTIES_Y = SCREEN_HALF_HEIGHT - MAIN_DIFFICULTY_HEIGHT / 2;
+
+		const int MAIN_MEDIUM_X = MAIN_EASY_X + MAIN_DIFFICULTY_WIDTH + 50;
+		const int MAIN_HARD_X = MAIN_MEDIUM_X + MAIN_DIFFICULTY_WIDTH + 50;
+
+		// - Start
 		const int MAIN_START_X = SCREEN_HALF_WIDTH - MAIN_START_WIDTH / 2;
 		const int MAIN_START_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 2 + SCREEN_HEIGHT / 3;
 
@@ -139,5 +164,13 @@ namespace Tmpl8
 		const int END_MENU_Y = SCREEN_HALF_HEIGHT - END_MENU_HEIGHT / 2 + END_BG_HEIGHT / 4;
 		const int END_REPLAY_X = SCREEN_HALF_WIDTH - END_REPLAY_WIDTH / 2 + END_BG_WIDTH / 4;
 		const int END_REPLAY_Y = END_MENU_Y;
+
+		// Audio
+		const int AUDIO_X = AUDIO_WIDTH / 10;
+		const int AUDIO_Y = AUDIO_HEIGHT / 10;
+
+		// Quit
+		const int QUIT_X = SCREEN_WIDTH - QUIT_WIDTH - QUIT_WIDTH / 10;
+		const int QUIT_Y = QUIT_HEIGHT / 10;
 	};
 }

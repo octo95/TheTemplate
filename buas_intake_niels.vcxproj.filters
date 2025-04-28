@@ -52,6 +52,9 @@
     <ClCompile Include="health.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
+    <ClCompile Include="bell.cpp">
+      <Filter>Solutions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="physics.h">
@@ -106,6 +109,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="health.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="bell.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -225,6 +225,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ai_follow.cpp" />
+    <ClCompile Include="bell.cpp" />
     <ClCompile Include="gamesound.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="collectible.cpp" />
@@ -244,6 +245,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ai_follow.h" />
+    <ClInclude Include="bell.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="collectible.h" />
     <ClInclude Include="collisions.h" />

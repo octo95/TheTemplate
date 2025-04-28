@@ -7,7 +7,10 @@ namespace Tmpl8
 {
     TileMap::TileMap(Player& playerRef) :
         player(playerRef)
-    {}
+    {
+    }
+
+    Sprite map_test(new Surface("assets/map_test.png"), 1);
 
     void TileMap::setMapIndex(int index)
     {
@@ -28,7 +31,7 @@ namespace Tmpl8
         case 5:
             current_map = MAP5;
             break;
-        current_level = index;
+            current_level = index;
         }
     }
 
@@ -71,5 +74,29 @@ namespace Tmpl8
                 tile.DrawTile(screen, x * TILE_SIZE, y * TILE_SIZE, camera);
             }
         }
+    }
+
+    std::string getTileColor(int color)
+    {
+        if (color == 0xFF0000) return "aa"; // Red      (Damage)
+        if (color == 0x00FF00) return "ba"; // Green    (End)
+        if (color == 0x0000FF) return "ca"; // Blue     (Collision)
+        if (color == 0x000000) return "da"; // Black    (None)
+        if (color == 0x00DEFF) return "ea"; // Cyan     (Ice)
+    }
+
+    void TileMap::readImageToCharMap()
+    {
+        int columns_amount = map_test.GetWidth() / TILE_SIZE;
+        int rows_amount = map_test.GetHeight() / TILE_SIZE;
+
+        for (int row = 0; row < rows_amount; ++row)
+        {
+            for (int col = 0; col < columns_amount; ++col)
+            {
+                // TODO
+            }
+        }
+
     }
 }

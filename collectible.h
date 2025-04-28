@@ -12,6 +12,8 @@ namespace Tmpl8
 {
 	extern Sprite img_collectible;
 	extern int collectibles_collected;
+	extern bool collectible_timer_active;
+	extern bool collected_new;
 
 	struct Collectible
 	{

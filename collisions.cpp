@@ -1,10 +1,11 @@
 #define WIN32_LEAN_AND_MEAN
 #include "windows.h"
 #include "collisions.h"
+#include <cmath>
 
 namespace Tmpl8
 {
-    Collisions::Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef, Camera& cameraRef, GameSound& gamesoundRef) :
+    Collisions::Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef, Camera& cameraRef, GameSound& gamesoundRef, Bell& bellRef) :
         player(playerRef),
         tilemap(tilemapRef),
         ai_follow(ai_followRef),
@@ -12,7 +13,8 @@ namespace Tmpl8
         wall(wallRef),
         level(levelRef),
         camera(cameraRef),
-        gamesound(gamesoundRef)
+        gamesound(gamesoundRef),
+        bell(bellRef)
     {}
 
     Sprite img_water_slide_right(new Surface("assets/images/entities/img_water_slide_right.tga"), 3);
@@ -89,23 +91,32 @@ namespace Tmpl8
         bool isNoneX = (CheckLeft == TileType::None || CheckRight == TileType::None);
         bool isNoneY = (CheckBottom == TileType::None);
         bool isDamage = (CheckLeft == TileType::Damage || CheckRight == TileType::Damage || CheckBottom == TileType::Damage || CheckTop == TileType::Damage || ai_follow.isTouchingPlayer());
-        bool isEnd = (CheckLeft == TileType::End || CheckRight == TileType::End || CheckBottom == TileType::End || CheckTop == TileType::End);
+        //bool isEnd = (CheckLeft == TileType::End || CheckRight == TileType::End || CheckBottom == TileType::End || CheckTop == TileType::End);
+        bool isEnd = bell.touchedPlayer;
         bool isCollision = (CheckLeft == TileType::Collision || CheckRight == TileType::Collision || CheckBottom == TileType::Collision || CheckTop==TileType::Collision);
         bool isIce = (CheckBottom == TileType::Ice || CheckTop == TileType::Ice);
 
+        bool FallLight = player.velocity.y >= trigger_fall_light && player.velocity.y < trigger_fall_normal;
         bool FallNormal = player.velocity.y >= trigger_fall_normal && player.velocity.y < trigger_fall_hard;
         bool FallHard = player.velocity.y >= trigger_fall_hard;
 
         // SFX: if falling from a high distance play <snd_fall_strong.wav>, otherwise from a smaller one play <snd_fall.wav> and if even smaller don't play any SFX.
+        if ((CheckBottom == TileType::Collision || CheckBottom == TileType::Ice) && FallLight) 
+        {
+            //printf("fall light: %.0f\n", player.velocity.y);
+            bouncing_force = 1.0f;
+        }
         if ((CheckBottom == TileType::Collision || CheckBottom == TileType::Ice) && FallNormal) 
         {
             gamesound.playSound(gamesound.snd_fall);
             //printf("fall normal: %.0f\n", player.velocity.y);
+            bouncing_force = 1.5f;
         }
         if ((CheckBottom == TileType::Collision || CheckBottom == TileType::Ice) && FallHard) 
         {
             gamesound.playSound(gamesound.snd_fall_strong);
             //printf("fall hard: %.0f\n", player.velocity.y);
+            bouncing_force = 10.0f;
         }
 
         if (isNoneX) player.position.x = new_pos.x;
@@ -125,6 +136,7 @@ namespace Tmpl8
             }
             gamesound.playSound(gamesound.snd_level_finished);
             level.level_finished = true;
+            bell.touchedPlayer = false;
         }
         else if (isCollision || isIce)
         {
@@ -145,9 +157,11 @@ namespace Tmpl8
         if (walls_collected > 0)
         {
             walls_collected--;
+
+            player.velocity.x = -player.velocity.x; 
             player.velocity.x += (player.velocity.x >= 0) ? wall_force : -wall_force;
-            //player.velocity.y += (player.velocity.y <= 0) ? wall_force : -wall_force;
         }
+
 
     }
 
@@ -170,24 +184,22 @@ namespace Tmpl8
         bool CheckLeft = this->CheckCollisionLeft(vec2{ new_pos.x + player.velocity.x, new_pos.y }) != TileType::None;
         bool CheckRight = this->CheckCollisionRight(vec2{ new_pos.x + player.velocity.x, new_pos.y }) != TileType::None;
         bool CheckBottom = this->CheckCollisionBottom(vec2{ new_pos.x, new_pos.y + player.velocity.y }) != TileType::None;
-        
-        bool FallLight = player.velocity.y >= trigger_fall_light && player.velocity.y < trigger_fall_normal;
 
         if (CheckLeft || CheckRight)
         {
             float norm = sqrt(pow(player.velocity.x, 2) + pow(player.velocity.y, 2));
             float angle = acos(player.velocity.x / norm);
 
-            player.velocity.x = norm * -cos(angle);
+            player.velocity.x = -norm * cos(angle);
             player.velocity.y = norm * sin(angle);
 
             // Apply the power loss for the sides collisions
             player.velocity.x *= pow(player.ENERGY_LOSS, 2);
         }
         //printf("Bottom: %d, VelY: %f\n", (int)CheckBottom, player.velocity.y);
-        if (CheckBottom && FallLight)
+        if (CheckBottom)
         {
-            //printf("fall light: %.0f\n", player.velocity.y);
+            //printf("check bottom\n");
             float norm = sqrt(pow(player.velocity.x, 2) + pow(player.velocity.y, 2));
             float angle = acos(player.velocity.x / norm);
 
@@ -196,6 +208,9 @@ namespace Tmpl8
 
             // Apply the power loss for the bottom collisions
             player.velocity.y *= pow(player.ENERGY_LOSS, 2);
+
+            // Threshold of 0.5 to the velocity.y to prevent the player from bouncing when on the ground with a low velocity
+            if (fabs(player.velocity.y) < 0.5f) player.velocity.y = 0.0f;
         }
     }
 

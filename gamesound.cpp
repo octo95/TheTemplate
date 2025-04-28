@@ -20,7 +20,7 @@ namespace Tmpl8
         stopMusic();
         auto music = std::make_shared<Audio::Sound>(filePath, Audio::Sound::Type::Stream);
         music->setLooping(true);  
-        music->setVolume(globalVolume/2.0f);
+        music->setVolume(globalVolume);
         music->play();            
         activeMusics.push_back(music); 
     }

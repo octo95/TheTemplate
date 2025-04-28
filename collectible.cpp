@@ -5,6 +5,7 @@
 #include <iostream>
 #include <functional>
 #include "gamesound.h"
+#include "player.h"
 
 namespace Tmpl8
 {
@@ -13,6 +14,7 @@ namespace Tmpl8
 	int current_map = 1;
 	bool collectible_timer_active = false;
 	float collectible_respawn_time = 0.0f;
+	bool collected_new = false;
 
 	CollectibleMap cmap;
 
@@ -65,7 +67,8 @@ namespace Tmpl8
 		}
 	}
 
-	void manageCollectibleCollision(vec2 player_pos, GameSound* gamesound) {
+	void manageCollectibleCollision(vec2 player_pos, GameSound* gamesound)
+	{
 		int x = (int)player_pos.x / TILE_SIZE;
 		int y = (int)player_pos.y / TILE_SIZE;
 		CollectibleMap::iterator c = cmap.begin();
@@ -77,23 +80,29 @@ namespace Tmpl8
 				c = cmap.erase(c);
 				gamesound->playSound(gamesound->snd_collect);
 				collectibles_collected++;
-
-				// Start timer
-				collectible_respawn_time = 3.0f;
-				collectible_timer_active = true;
+				collected_new = true;
 			}
-			else {
+			else 
+			{
 				++c;
 			}
 		}
 	}
 	void manageCollectibleRespawn(float deltaTime)
 	{
+		printf("collectibles: %d\n", (int)collectible_timer_active);
+		if (collectibles_collected < 1 && collected_new)
+		{
+			collectible_respawn_time = 3.0f;
+			collectible_timer_active = true;
+			collected_new = false;
+		}
+
 		// Run through the timer
 		if (collectible_timer_active)
 		{
 			collectible_respawn_time -= deltaTime;
-			
+
 			// End of timer, make the collectibles respawn
 			if (collectible_respawn_time <= 0.0f)
 			{
