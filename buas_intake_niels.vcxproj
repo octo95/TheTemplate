@@ -228,6 +228,7 @@
     <ClCompile Include="ai_follow.cpp" />
     <ClCompile Include="ai_patrol.cpp" />
     <ClCompile Include="bell.cpp" />
+    <ClCompile Include="circular_buffer.cpp" />
     <ClCompile Include="gamesound.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="collectible.cpp" />
@@ -250,6 +251,7 @@
     <ClInclude Include="ai_patrol.h" />
     <ClInclude Include="bell.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="circular_buffer.h" />
     <ClInclude Include="collectible.h" />
     <ClInclude Include="collisions.h" />
     <ClInclude Include="debug.h" />

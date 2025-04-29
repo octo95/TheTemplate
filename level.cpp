@@ -2,7 +2,7 @@
 
 namespace Tmpl8
 {
-    Level::Level(TileMap& tilemapRef, Player& playerRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef,WallMap& wallRef, GameSound& gamesoundRef, Bell& bellRef, AI_Patrol& ai_patrolRef) :
+    Level::Level(TileMap& tilemapRef, Player& playerRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef,WallMap& wallRef, GameSound& gamesoundRef, Bell& bellRef, AI_Patrol& ai_patrolRef, AI_Copy& ai_copyRef) :
         tilemap(tilemapRef),
         player(playerRef),
         ai_follow(ai_followRef),
@@ -10,11 +10,15 @@ namespace Tmpl8
         wall(wallRef),
         gamesound(gamesoundRef),
         bell(bellRef),
-        ai_patrol(ai_patrolRef)
+        ai_patrol(ai_patrolRef),
+        ai_copy(ai_copyRef)
     {}
 
     void Level::loadLevel(int map_index)
     {
+        ai_copy.playerBuffer.reset();
+        ai_copy.position = ai_copy.default_pos;
+        ai_copy.copyTimer = 3.0f; 
         ai_patrol.isDead = false;
         bell.touchedPlayer = false;
         collected_new = false;

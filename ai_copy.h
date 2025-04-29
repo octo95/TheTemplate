@@ -1,6 +1,7 @@
 #pragma once
 #include "camera.h"
 #include "player.h"
+#include "circular_buffer.h"
 
 namespace Tmpl8
 {
@@ -9,6 +10,8 @@ namespace Tmpl8
     class AI_Copy 
     {
         public:
+            CircularBuffer playerBuffer;
+            float copyTimer = 3.0f;     // Wait 3 seconds before starting to read the buffer when loading a new level
 
 		    // Constructor
             AI_Copy(

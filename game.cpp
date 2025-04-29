@@ -31,8 +31,9 @@ namespace Tmpl8
                 manageCollectibleRespawn(deltaTime);
         
                 // AI logic
-                ai_follow.followPlayer(deltaTime);
                 ai_copy.setPos();
+                ai_copy.playerBuffer.add(deltaTime, player_pos);
+                ai_follow.followPlayer(deltaTime);
                 ai_patrol.Patrol(deltaTime, &collisions);
         
                 // Camera logic

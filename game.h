@@ -14,6 +14,7 @@
 #include "player.h"
 #include "tilemap.h"
 #include "wall.h"
+#include "circular_buffer.h"
 
 namespace Tmpl8 
 {
@@ -29,8 +30,8 @@ namespace Tmpl8
 			debug(camera, tilemap, player, collectible, wall, ai_follow, level, collisions, menu, ai_patrol),
 			menu(level, player, tilemap, gamesound),
 			tilemap(player),
-			collisions(player, tilemap, ai_follow, collectible, wall, level, camera, gamesound, bell, ai_patrol),
-			level(tilemap, player, ai_follow, collectible, wall, gamesound, bell, ai_patrol),
+			collisions(player, tilemap, ai_follow, collectible, wall, level, camera, gamesound, bell, ai_patrol, ai_copy),
+			level(tilemap, player, ai_follow, collectible, wall, gamesound, bell, ai_patrol, ai_copy),
 			health(player),
 			ai_patrol(player, camera),
 			ai_copy(player, camera)
@@ -72,6 +73,7 @@ namespace Tmpl8
 		Health health;
 		Bell bell;
 		AI_Copy ai_copy;
+		CircularBuffer circular_buffer;
 
 		int mousex, mousey;
 		bool start_game = false;

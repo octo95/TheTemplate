@@ -7,6 +7,7 @@
 #include "gamesound.h"
 #include "bell.h"
 #include "ai_patrol.h"
+#include "ai_copy.h"
 
 namespace Tmpl8
 {
@@ -15,14 +16,15 @@ namespace Tmpl8
         public:
             // Constructor
             Level(
-                TileMap& tilemapRef, 
-                Player& playerRef, 
-                AI_Follow& ai_followRef, 
-                CollectibleMap& collectibleRef, 
-                WallMap& wallRef, 
-                GameSound& gamesoundRef, 
-                Bell& bellRef, 
-                AI_Patrol& ai_patrolRef
+                TileMap& tilemapRef,
+                Player& playerRef,
+                AI_Follow& ai_followRef,
+                CollectibleMap& collectibleRef,
+                WallMap& wallRef,
+                GameSound& gamesoundRef,
+                Bell& bellRef,
+                AI_Patrol& ai_patrolRef,
+                AI_Copy& ai_copyRef
             );
 
 			// Default positions for the player and AIs
@@ -68,5 +70,6 @@ namespace Tmpl8
             GameSound& gamesound;
             Bell& bell;
             AI_Patrol& ai_patrol;
+            AI_Copy& ai_copy;
     };
 }

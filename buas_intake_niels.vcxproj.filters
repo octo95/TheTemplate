@@ -34,9 +34,6 @@
     <ClCompile Include="wall.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="ai_follow.cpp">
-      <Filter>Solutions</Filter>
-    </ClCompile>
     <ClCompile Include="collisions.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
@@ -52,11 +49,17 @@
     <ClCompile Include="bell.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
+    <ClCompile Include="circular_buffer.cpp">
+      <Filter>Solutions\AIs</Filter>
+    </ClCompile>
     <ClCompile Include="ai_patrol.cpp">
-      <Filter>Solutions</Filter>
+      <Filter>Solutions\AIs</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_follow.cpp">
+      <Filter>Solutions\AIs</Filter>
     </ClCompile>
     <ClCompile Include="ai_copy.cpp">
-      <Filter>Solutions</Filter>
+      <Filter>Solutions\AIs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -96,9 +99,6 @@
     <ClInclude Include="vec2_hash.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="ai_follow.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="collisions.h">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -115,10 +115,16 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="ai_patrol.h">
-      <Filter>Headers</Filter>
+      <Filter>Headers\AIs</Filter>
     </ClInclude>
     <ClInclude Include="ai_copy.h">
-      <Filter>Headers</Filter>
+      <Filter>Headers\AIs</Filter>
+    </ClInclude>
+    <ClInclude Include="ai_follow.h">
+      <Filter>Headers\AIs</Filter>
+    </ClInclude>
+    <ClInclude Include="circular_buffer.h">
+      <Filter>Headers\AIs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +136,12 @@
     </Filter>
     <Filter Include="Other">
       <UniqueIdentifier>{19be942a-7ccf-4e24-9553-b3fa0d247f5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Solutions\AIs">
+      <UniqueIdentifier>{a0f6295d-8473-495f-a53d-35202be8a855}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\AIs">
+      <UniqueIdentifier>{edbd892d-5b7b-4d17-9f3f-8a6549c86c6b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
