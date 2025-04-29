@@ -115,8 +115,6 @@ public:
 	unsigned int GetFlags() const { return m_Flags; }
 	int GetWidth() { return m_Width; }
 	int GetHeight() { return m_Height; }
-	float GetFloatWidth() { return m_Width; }
-	float GetFloatHeight() { return m_Height; }
 	Pixel* GetBuffer() { return m_Surface->GetBuffer(); }	
 	unsigned int Frames() { return m_NumFrames; }
 	Surface* GetSurface() { return m_Surface; }

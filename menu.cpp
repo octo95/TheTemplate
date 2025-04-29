@@ -76,9 +76,9 @@ namespace Tmpl8
         // - Hover
     Sprite img_quit_hover(new Surface("assets/images/UI/img_quit_hover.png"), 1);
 
-    bool Menu::isHoveringSurface(const vec2& pos, const vec2& size)
+    bool Menu::isHoveringSurface(int x, int y, int width, int height)
     {
-        return mouseX >= pos.x && mouseX <= pos.x + size.x && mouseY >= pos.y && mouseY <= pos.y + size.y;
+        return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
     }
 
     void Menu::openMainMenu(Surface* screen)
@@ -94,11 +94,11 @@ namespace Tmpl8
 
         Sprite* lvl_hover_list[5] = { &img_menu_main_lvl1_alt, &img_menu_main_lvl2_alt, &img_menu_main_lvl3_alt, &img_menu_main_lvl4_alt, &img_menu_main_lvl5_alt };
         Sprite* lvl_list[5] = { &img_menu_main_lvl1, &img_menu_main_lvl2, &img_menu_main_lvl3, &img_menu_main_lvl4, &img_menu_main_lvl5 };
-        vec2 lvl_list_pos[5] = { MAIN_LVL1_POS, MAIN_LVL2_POS, MAIN_LVL3_POS, MAIN_LVL4_POS, MAIN_LVL5_POS };
+        int lvl_list_X[5] = { MAIN_LVL1_X, MAIN_LVL2_X, MAIN_LVL3_X, MAIN_LVL4_X, MAIN_LVL5_X };
 
         Sprite* difficulty_hover_list[3] = { &img_menu_main_difficulty_easy_hover, &img_menu_main_difficulty_medium_hover, &img_menu_main_difficulty_hard_hover };
         Sprite* difficulty_list[3] = { &img_menu_main_difficulty_easy, &img_menu_main_difficulty_medium, &img_menu_main_difficulty_hard };
-        vec2 difficulty_pos[3] = { MAIN_EASY_POS, MAIN_MEDIUM_POS, MAIN_HARD_POS };
+        int difficulty_X[3] = { MAIN_EASY_X, MAIN_MEDIUM_X, MAIN_HARD_X };
 
         static bool wasHoveringLevel[5] = { false };
         static bool wasHoveringDifficulty[5] = { false };
@@ -107,17 +107,17 @@ namespace Tmpl8
         for (int i = 0; i < 5; i++)
         { 
             // Hover levels buttons logic
-            bool isHoveringLevel = isHoveringSurface(lvl_list_pos[i], MAIN_LVL_SIZE);
+            bool isHoveringLevel = isHoveringSurface(lvl_list_X[i], MAIN_LVLS_Y, MAIN_LVL_WIDTH, MAIN_LVL_HEIGHT);
 
             if (isHoveringLevel)
             {
                 if (!wasHoveringLevel[i]) gamesound.playSound(gamesound.snd_hover);
-                lvl_hover_list[i]->Draw(screen, lvl_list_pos[i]);
+                lvl_hover_list[i]->Draw(screen, lvl_list_X[i], MAIN_LVLS_Y);
                 manageLevelSelect(i);
             }
             else
             {
-                lvl_list[i]->Draw(screen, lvl_list_pos[i]);
+                lvl_list[i]->Draw(screen, lvl_list_X[i], MAIN_LVLS_Y);
             }
 
             wasHoveringLevel[i] = isHoveringLevel;
@@ -126,17 +126,17 @@ namespace Tmpl8
         for (int i = 0; i < 3; i++)
         {
             // Hover difficulties buttons logic
-            bool isHoveringDifficulty = isHoveringSurface(difficulty_pos[i], MAIN_DIFFICULTY_SIZE);
+            bool isHoveringDifficulty = isHoveringSurface(difficulty_X[i], MAIN_DIFFICULTIES_Y, MAIN_DIFFICULTY_WIDTH, MAIN_DIFFICULTY_HEIGHT);
 
             if (isHoveringDifficulty)
             {
                 if (!wasHoveringDifficulty[i]) gamesound.playSound(gamesound.snd_hover);
-                difficulty_hover_list[i]->Draw(screen, difficulty_pos[i]);
+                difficulty_hover_list[i]->Draw(screen, difficulty_X[i], MAIN_DIFFICULTIES_Y);
                 manageDifficultySelect(i);
             }
             else
             {
-                difficulty_list[i]->Draw(screen, difficulty_pos[i]);
+                difficulty_list[i]->Draw(screen, difficulty_X[i], MAIN_DIFFICULTIES_Y);
             }
 
             wasHoveringDifficulty[i] = isHoveringDifficulty;
@@ -144,23 +144,23 @@ namespace Tmpl8
             // Draw the selected difficulty marker
             if (difficulty == i + 1)
             {
-                img_selected.Draw(screen, difficulty_pos[i].x + MAIN_DIFFICULTY_SIZE.x / 2 - img_selected.GetWidth() / 2, difficulty_pos[i].y + MAIN_DIFFICULTY_SIZE.y );
+                img_selected.Draw(screen, difficulty_X[i] + MAIN_DIFFICULTY_WIDTH / 2 - img_selected.GetWidth() / 2, MAIN_DIFFICULTIES_Y + MAIN_DIFFICULTY_HEIGHT );
             }
         }
 
     
         // Hover start button logic
-        bool isHoveringStart = isHoveringSurface(MAIN_START_POS, MAIN_START_SIZE);
+        bool isHoveringStart = isHoveringSurface(MAIN_START_X, MAIN_START_Y, MAIN_START_WIDTH, MAIN_START_HEIGHT);
 
         if (isHoveringStart)
         {
             if (!wasHoveringStart) gamesound.playSound(gamesound.snd_hover);
-            img_menu_main_start_alt.Draw(screen, MAIN_START_POS);
+            img_menu_main_start_alt.Draw(screen, MAIN_START_X, MAIN_START_Y);
             manageLevelSelect(0);
         }
         else
         {
-            img_menu_main_start.Draw(screen, MAIN_START_POS);
+            img_menu_main_start.Draw(screen, MAIN_START_X, MAIN_START_Y);
         }
 
         wasHoveringStart = isHoveringStart;
@@ -199,32 +199,32 @@ namespace Tmpl8
         nextMenuOpen = level.level_finished;
         if (!nextMenuOpen) return;
 
-        img_menu_next_bg.Draw(screen, SCREEN_WIDTH / 2 - NEXT_BG_SIZE.x / 2, SCREEN_HEIGHT / 2 - NEXT_BG_SIZE.y / 2);
+        img_menu_next_bg.Draw(screen, SCREEN_WIDTH / 2 - NEXT_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - NEXT_BG_HEIGHT / 2);
 
         static bool wasHoveringNext = false;
         static bool wasHoveringMenu = false;
 
-        bool isHoveringMenu = isHoveringSurface(NEXT_MENU_POS, NEXT_NEXT_SIZE);
-        bool isHoveringNext = isHoveringSurface(NEXT_LVL_POS, NEXT_NEXT_SIZE);
+        bool isHoveringMenu = isHoveringSurface(NEXT_MENU_X, NEXT_MENU_Y, NEXT_NEXT_WIDTH, NEXT_NEXT_HEIGHT);
+        bool isHoveringNext = isHoveringSurface(NEXT_LVL_X, NEXT_LVL_Y, NEXT_NEXT_WIDTH, NEXT_NEXT_HEIGHT);
 
         if (isHoveringMenu)
         {
             if (!wasHoveringMenu) gamesound.playSound(gamesound.snd_hover);
-            img_menu_next_menu_alt.Draw(screen, NEXT_MENU_POS);
+            img_menu_next_menu_alt.Draw(screen, NEXT_MENU_X, NEXT_MENU_Y);
         }
         else
         {
-            img_menu_next_menu.Draw(screen, NEXT_MENU_POS);
+            img_menu_next_menu.Draw(screen, NEXT_MENU_X, NEXT_MENU_Y);
         }
 
         if (isHoveringNext)
         {
             if (!wasHoveringNext) gamesound.playSound(gamesound.snd_hover);
-            img_menu_next_next_alt.Draw(screen, NEXT_LVL_POS);
+            img_menu_next_next_alt.Draw(screen, NEXT_LVL_X, NEXT_LVL_Y);
         }
         else
         {
-            img_menu_next_next.Draw(screen, NEXT_LVL_POS);
+            img_menu_next_next.Draw(screen, NEXT_LVL_X, NEXT_LVL_Y);
         }
 
         wasHoveringMenu = isHoveringMenu;
@@ -267,32 +267,32 @@ namespace Tmpl8
         audioManagerOpen(screen);
         quitManagerOpen(screen);
 
-        img_menu_pause_bg.Draw(screen, SCREEN_WIDTH / 2 - PAUSE_BG_SIZE.x / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_SIZE.y / 2);
+        img_menu_pause_bg.Draw(screen, SCREEN_WIDTH / 2 - PAUSE_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_HEIGHT / 2);
 
         static bool wasHoveringResume = false;
         static bool wasHoveringQuit = false;
 
-        bool isHoveringResume = isHoveringSurface(PAUSE_RESUME_POS, PAUSE_RESUME_SIZE);
-        bool isHoveringQuit = isHoveringSurface(PAUSE_QUIT_POS, PAUSE_QUIT_SIZE);
+        bool isHoveringResume = isHoveringSurface(PAUSE_RESUME_X, PAUSE_RESUME_Y, PAUSE_RESUME_WIDTH, PAUSE_RESUME_HEIGHT);
+        bool isHoveringQuit = isHoveringSurface(PAUSE_QUIT_X, PAUSE_QUIT_Y, PAUSE_QUIT_WIDTH, PAUSE_QUIT_HEIGHT);
 
         if (isHoveringResume)
         {
             if (!wasHoveringResume) gamesound.playSound(gamesound.snd_hover);
-            img_menu_pause_resume_alt.Draw(screen, PAUSE_RESUME_POS);
+            img_menu_pause_resume_alt.Draw(screen, PAUSE_RESUME_X, PAUSE_RESUME_Y);
         }
         else
         {
-            img_menu_pause_resume.Draw(screen, PAUSE_RESUME_POS);
+            img_menu_pause_resume.Draw(screen, PAUSE_RESUME_X, PAUSE_RESUME_Y);
         }
 
         if (isHoveringQuit)
         {
             if (!wasHoveringQuit) gamesound.playSound(gamesound.snd_hover);
-            img_menu_pause_quit_alt.Draw(screen, PAUSE_QUIT_POS);
+            img_menu_pause_quit_alt.Draw(screen, PAUSE_QUIT_X, PAUSE_QUIT_Y);
         }
         else
         {
-            img_menu_pause_quit.Draw(screen, PAUSE_QUIT_POS);
+            img_menu_pause_quit.Draw(screen, PAUSE_QUIT_X, PAUSE_QUIT_Y);
         }
 
         wasHoveringResume = isHoveringResume;
@@ -326,32 +326,32 @@ namespace Tmpl8
         endMenuOpen = level.game_finished;
         if (!endMenuOpen) return;
 
-        img_menu_end_bg.Draw(screen, SCREEN_WIDTH / 2 - PAUSE_BG_SIZE.x / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_SIZE.y / 2);
+        img_menu_end_bg.Draw(screen, SCREEN_WIDTH / 2 - PAUSE_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_HEIGHT / 2);
 
         static bool wasHoveringMenu = false;
         static bool wasHoveringReplay = false;
 
-        bool isHoveringMenu = isHoveringSurface(END_MENU_POS, END_MENU_SIZE);
-        bool isHoveringReplay = isHoveringSurface(END_REPLAY_POS, END_REPLAY_SIZE);
+        bool isHoveringMenu = isHoveringSurface(END_MENU_X, END_MENU_Y, END_MENU_WIDTH, END_MENU_HEIGHT);
+        bool isHoveringReplay = isHoveringSurface(END_REPLAY_X, END_REPLAY_Y, END_REPLAY_WIDTH, END_REPLAY_HEIGHT);
 
         if (isHoveringMenu)
         {
             if (!wasHoveringMenu) gamesound.playSound(gamesound.snd_hover);
-            img_menu_end_menu_alt.Draw(screen, END_MENU_POS);
+            img_menu_end_menu_alt.Draw(screen, END_MENU_X, END_MENU_Y);
         }
         else
         {
-            img_menu_end_menu.Draw(screen, END_MENU_POS);
+            img_menu_end_menu.Draw(screen, END_MENU_X, END_MENU_Y);
         }
 
         if(isHoveringReplay)
         {
             if (!wasHoveringReplay) gamesound.playSound(gamesound.snd_hover);
-            img_menu_end_replay_alt.Draw(screen, END_REPLAY_POS);
+            img_menu_end_replay_alt.Draw(screen, END_REPLAY_X, END_MENU_Y);
         }
         else
         {
-            img_menu_end_replay.Draw(screen, END_REPLAY_POS);
+            img_menu_end_replay.Draw(screen, END_REPLAY_X, END_MENU_Y);
         }
 
         wasHoveringMenu = isHoveringMenu;
@@ -433,17 +433,17 @@ namespace Tmpl8
         if (!quitOpen) return;
 
         static bool wasHoveringQuit = false;
-        bool isHoveringQuit = isHoveringSurface(QUIT_POS, QUIT_SIZE);
+        bool isHoveringQuit = isHoveringSurface(QUIT_X, QUIT_Y, QUIT_WIDTH, QUIT_HEIGHT);
 
         if (isHoveringQuit)
         {
             if (!wasHoveringQuit)
                 gamesound.playSound(gamesound.snd_hover);
-            img_quit_hover.Draw(screen, QUIT_POS);
+            img_quit_hover.Draw(screen, QUIT_X, QUIT_Y);
         }
         else
         {
-            img_quit.Draw(screen, QUIT_POS);
+            img_quit.Draw(screen, QUIT_X, QUIT_Y);
         }
 
         wasHoveringQuit = isHoveringQuit;
@@ -461,7 +461,7 @@ namespace Tmpl8
         static bool wasHoveringAudio = false;
         static bool audioClickedLastFrame = false;
 
-        bool isHoveringAudio = isHoveringSurface(AUDIO_POS, AUDIO_SIZE);
+        bool isHoveringAudio = isHoveringSurface(AUDIO_X, AUDIO_Y, AUDIO_WIDTH, AUDIO_HEIGHT);
 
         if (isHoveringAudio)
         {
@@ -469,16 +469,16 @@ namespace Tmpl8
                 gamesound.playSound(gamesound.snd_hover);
 
             if (audioOn)
-                img_audio_on_hover.Draw(screen, AUDIO_POS);
+                img_audio_on_hover.Draw(screen, AUDIO_X, AUDIO_Y);
             else
-                img_audio_off_hover.Draw(screen, AUDIO_POS);
+                img_audio_off_hover.Draw(screen, AUDIO_X, AUDIO_Y);
         }
         else
         {
             if (audioOn)
-                img_audio_on.Draw(screen, AUDIO_POS);
+                img_audio_on.Draw(screen, AUDIO_X, AUDIO_Y);
             else
-                img_audio_off.Draw(screen, AUDIO_POS);
+                img_audio_off.Draw(screen, AUDIO_X, AUDIO_Y);
         }
 
         wasHoveringAudio = isHoveringAudio;

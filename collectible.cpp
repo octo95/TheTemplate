@@ -54,18 +54,16 @@ namespace Tmpl8
 	{
 		for (auto& c : cmap)
 		{
-			vec2 draw_pos = vec2(
-				c.first.x * TILE_SIZE + TILE_SIZE / 2.0f, 
-				c.first.y * TILE_SIZE + TILE_SIZE / 2.0f
-			);
-			camera->drawWithCam(&img_collectible, screen, draw_pos);
+			float x = c.first.x * TILE_SIZE + TILE_SIZE / 2.0f;
+			float y = c.first.y * TILE_SIZE + TILE_SIZE / 2.0f;
+			camera->drawWithCam(&img_collectible, screen, x, y);
 		}
 	}
 
 	void manageCollectibleCollision(vec2 player_pos, GameSound* gamesound)
 	{
-		int x = (int)(player_pos.x / TILE_SIZE);
-		int y = (int)(player_pos.y / TILE_SIZE);
+		int x = (int)player_pos.x / TILE_SIZE;
+		int y = (int)player_pos.y / TILE_SIZE;
 		CollectibleMap::iterator c = cmap.begin();
 		for (; c != cmap.end();)
 		{

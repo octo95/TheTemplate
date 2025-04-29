@@ -64,7 +64,7 @@ namespace Tmpl8
 			// Mouse functions
 			void setMousePosition(int x, int y); 
 			void setMouseState(bool isPressed) { isMousePressed = isPressed; }
-			bool isHoveringSurface(const vec2& pos, const vec2& size);
+			bool isHoveringSurface(int x, int y, int width, int height);
 
 
 		private:
@@ -97,162 +97,96 @@ namespace Tmpl8
 			// | BUTTON DIMENSIONS |
 			// +-------------------+
 
-			// Main menu sizes
-			vec2 MAIN_START_SIZE = {
-				img_menu_main_start.GetFloatWidth(),
-				img_menu_main_start.GetFloatHeight()
-			};
-			vec2 MAIN_LVL_SIZE = {
-				img_menu_main_lvl1.GetFloatWidth(),
-				img_menu_main_lvl1.GetFloatHeight()
-			};
-			vec2 MAIN_DIFFICULTY_SIZE = {
-				img_menu_main_difficulty_easy.GetFloatWidth(),
-				img_menu_main_difficulty_easy.GetFloatHeight()
-			};
+			// Main menu
+			const int MAIN_START_WIDTH = img_menu_main_start.GetWidth();
+			const int MAIN_START_HEIGHT = img_menu_main_start.GetHeight();
+			const int MAIN_LVL_WIDTH = img_menu_main_lvl1.GetWidth();
+			const int MAIN_LVL_HEIGHT = img_menu_main_lvl1.GetHeight();
+			const int MAIN_DIFFICULTY_WIDTH = img_menu_main_difficulty_easy.GetWidth();
+			const int MAIN_DIFFICULTY_HEIGHT = img_menu_main_difficulty_easy.GetHeight();
 
-			// Next level menu sizes
-			vec2 NEXT_BG_SIZE = {
-				img_menu_next_bg.GetFloatWidth(),
-				img_menu_next_bg.GetFloatHeight()
-			};
-			vec2 NEXT_NEXT_SIZE = {
-				img_menu_next_next.GetFloatWidth(),
-				img_menu_next_next.GetFloatHeight()
-			};
-			vec2 NEXT_MENU_SIZE = {
-				img_menu_next_menu.GetFloatWidth(),
-				img_menu_next_menu.GetFloatHeight()
-			};
+			// Next level menu
+			const int NEXT_BG_WIDTH = img_menu_next_bg.GetWidth();
+			const int NEXT_BG_HEIGHT = img_menu_next_bg.GetHeight();
+			const int NEXT_NEXT_WIDTH = img_menu_next_next.GetWidth();
+			const int NEXT_NEXT_HEIGHT = img_menu_next_next.GetHeight();
+			const int NEXT_MENU_WIDTH = img_menu_next_menu.GetWidth();
+			const int NEXT_MENU_HEIGHT = img_menu_next_menu.GetHeight();
 
-			// Pause menu sizes
-			vec2 PAUSE_BG_SIZE = {
-				img_menu_pause_bg.GetFloatWidth(),
-				img_menu_pause_bg.GetFloatHeight()
-			};
-			vec2 PAUSE_RESUME_SIZE = {
-				img_menu_pause_resume.GetFloatWidth(),
-				img_menu_pause_resume.GetFloatHeight()
-			};
-			vec2 PAUSE_QUIT_SIZE = {
-				img_menu_pause_quit.GetFloatWidth(),
-				img_menu_pause_quit.GetFloatHeight()
-			};
+			// Pause menu
+			const int PAUSE_BG_WIDTH = img_menu_pause_bg.GetWidth();
+			const int PAUSE_BG_HEIGHT = img_menu_pause_bg.GetHeight();
+			const int PAUSE_RESUME_WIDTH = img_menu_pause_resume.GetWidth();
+			const int PAUSE_RESUME_HEIGHT = img_menu_pause_resume.GetHeight();
+			const int PAUSE_QUIT_WIDTH = img_menu_pause_quit.GetWidth();
+			const int PAUSE_QUIT_HEIGHT = img_menu_pause_quit.GetHeight();
 
-			// End menu sizes
-			vec2 END_BG_SIZE = {
-				img_menu_end_bg.GetFloatWidth(),
-				img_menu_end_bg.GetFloatHeight()
-			};
-			vec2 END_MENU_SIZE = {
-				img_menu_end_menu.GetFloatWidth(),
-				img_menu_end_menu.GetFloatHeight()
-			};
-			vec2 END_REPLAY_SIZE = {
-				img_menu_end_replay.GetFloatWidth(),
-				img_menu_end_replay.GetFloatHeight()
-			};
+			// End menu
+			const int END_BG_WIDTH = img_menu_end_bg.GetWidth();
+			const int END_BG_HEIGHT = img_menu_end_bg.GetHeight();
+			const int END_MENU_WIDTH = img_menu_end_menu.GetWidth();
+			const int END_MENU_HEIGHT = img_menu_end_menu.GetHeight();
+			const int END_REPLAY_WIDTH = img_menu_end_replay.GetWidth();
+			const int END_REPLAY_HEIGHT = img_menu_end_replay.GetHeight();
 
-			// Audio manager size
-			vec2 AUDIO_SIZE = {
-				img_audio_on.GetFloatWidth(),
-				img_audio_on.GetFloatHeight()
-			};
+			// Audio manager
+			const int AUDIO_WIDTH = img_audio_on.GetWidth();
+			const int AUDIO_HEIGHT = img_audio_on.GetHeight();
 
-			// Quit manager size
-			vec2 QUIT_SIZE = {
-				img_quit.GetFloatWidth(),
-				img_quit.GetFloatHeight()
-			};
+			// Quit manager
+			const int QUIT_WIDTH = img_quit.GetWidth();
+			const int QUIT_HEIGHT = img_quit.GetHeight();
 
 			// +------------------+
 			// | BUTTON POSITIONS |
 			// +------------------+
 
-			// Main menu positions
-			vec2 MAIN_LVL1_POS = {
-				SCREEN_HALF_WIDTH - (5 * MAIN_LVL_SIZE.x + 4 * 20) / 2,
-				SCREEN_HALF_HEIGHT - MAIN_START_SIZE.y / 3 - SCREEN_HEIGHT / 3
-			};
-			vec2 MAIN_LVL2_POS = {
-				MAIN_LVL1_POS.x + MAIN_LVL_SIZE.x + 20,
-				MAIN_LVL1_POS.y
-			};
-			vec2 MAIN_LVL3_POS = {
-				MAIN_LVL2_POS.x + MAIN_LVL_SIZE.x + 20,
-				MAIN_LVL2_POS.y
-			};
-			vec2 MAIN_LVL4_POS = {
-				MAIN_LVL3_POS.x + MAIN_LVL_SIZE.x + 20,
-				MAIN_LVL3_POS.y
-			};
-			vec2 MAIN_LVL5_POS = {
-				MAIN_LVL4_POS.x + MAIN_LVL_SIZE.x + 20,
-				MAIN_LVL4_POS.y
-			};
+			// Main menu
 
-			// Difficulty positions
-			vec2 MAIN_EASY_POS = {
-				SCREEN_HALF_WIDTH - (3 * MAIN_DIFFICULTY_SIZE.x + 2 * 50) / 2,
-				SCREEN_HALF_HEIGHT - MAIN_DIFFICULTY_SIZE.y / 2
-			};
-			vec2 MAIN_MEDIUM_POS = {
-				MAIN_EASY_POS.x + MAIN_DIFFICULTY_SIZE.x + 50,
-				MAIN_EASY_POS.y
-			};
-			vec2 MAIN_HARD_POS = {
-				MAIN_MEDIUM_POS.x + MAIN_DIFFICULTY_SIZE.x + 50,
-				MAIN_MEDIUM_POS.y
-			};
+			// - LVLs
+			const int MAIN_LVL1_X = SCREEN_HALF_WIDTH - (5 * MAIN_LVL_WIDTH + 4 * 20) / 2;
+			const int MAIN_LVLS_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 3 - SCREEN_HEIGHT / 3;
 
-			// Start button position
-			vec2 MAIN_START_POS = {
-				SCREEN_HALF_WIDTH - MAIN_START_SIZE.x / 2,
-				SCREEN_HALF_HEIGHT - MAIN_START_SIZE.y / 2 + SCREEN_HEIGHT / 3
-			};
+			const int MAIN_LVL2_X = MAIN_LVL1_X + MAIN_LVL_WIDTH + 20;
+			const int MAIN_LVL3_X = MAIN_LVL2_X + MAIN_LVL_WIDTH + 20;
+			const int MAIN_LVL4_X = MAIN_LVL3_X + MAIN_LVL_WIDTH + 20;
+			const int MAIN_LVL5_X = MAIN_LVL4_X + MAIN_LVL_WIDTH + 20;
 
-			// Next level menu positions
-			vec2 NEXT_MENU_POS = {
-				SCREEN_HALF_WIDTH - NEXT_MENU_SIZE.x / 2 - NEXT_BG_SIZE.x / 4,
-				SCREEN_HALF_HEIGHT - NEXT_MENU_SIZE.y / 2 + NEXT_BG_SIZE.y / 4
-			};
-			vec2 NEXT_LVL_POS = {
-				SCREEN_HALF_WIDTH - NEXT_NEXT_SIZE.x / 2 + NEXT_BG_SIZE.x / 4,
-				NEXT_MENU_POS.y
-			};
+			// - Difficulties
+			const int MAIN_EASY_X = SCREEN_HALF_WIDTH - (3 * MAIN_DIFFICULTY_WIDTH + 2 * 50) / 2;
+			const int MAIN_DIFFICULTIES_Y = SCREEN_HALF_HEIGHT - MAIN_DIFFICULTY_HEIGHT / 2;
 
-			// Pause menu positions
-			vec2 PAUSE_QUIT_POS = {
-				SCREEN_HALF_WIDTH - PAUSE_QUIT_SIZE.x / 2 - PAUSE_BG_SIZE.x / 4,
-				SCREEN_HALF_HEIGHT - PAUSE_RESUME_SIZE.y / 2 + PAUSE_BG_SIZE.x / 5
-			};
-			vec2 PAUSE_RESUME_POS = {
-				SCREEN_HALF_WIDTH - PAUSE_RESUME_SIZE.x / 2 + PAUSE_BG_SIZE.x / 4,
-				PAUSE_QUIT_POS.y
-			};
+			const int MAIN_MEDIUM_X = MAIN_EASY_X + MAIN_DIFFICULTY_WIDTH + 50;
+			const int MAIN_HARD_X = MAIN_MEDIUM_X + MAIN_DIFFICULTY_WIDTH + 50;
 
-			// End menu positions
-			vec2 END_MENU_POS = {
-				SCREEN_HALF_WIDTH - END_MENU_SIZE.x / 2 - END_BG_SIZE.x / 4,
-				SCREEN_HALF_HEIGHT - END_MENU_SIZE.y / 2 + END_BG_SIZE.y / 4
-			};
-			vec2 END_REPLAY_POS = {
-				SCREEN_HALF_WIDTH - END_REPLAY_SIZE.x / 2 + END_BG_SIZE.x / 4,
-				END_MENU_POS.y
-			};
+			// - Start
+			const int MAIN_START_X = SCREEN_HALF_WIDTH - MAIN_START_WIDTH / 2;
+			const int MAIN_START_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 2 + SCREEN_HEIGHT / 3;
 
-			// Audio position
-			vec2 AUDIO_POS = {
-				AUDIO_SIZE.x / 10,
-				AUDIO_SIZE.y / 10
-			};
+			// Next level menu
+			const int NEXT_MENU_X = SCREEN_HALF_WIDTH - NEXT_MENU_WIDTH / 2 - NEXT_BG_WIDTH / 4;
+			const int NEXT_MENU_Y = SCREEN_HALF_HEIGHT - NEXT_MENU_HEIGHT / 2 + NEXT_BG_HEIGHT / 4;
+			const int NEXT_LVL_X = SCREEN_HALF_WIDTH - NEXT_NEXT_WIDTH / 2 + NEXT_BG_WIDTH / 4;
+			const int NEXT_LVL_Y = NEXT_MENU_Y;
 
-			// Quit position
-			vec2 QUIT_POS = {
-				SCREEN_WIDTH - QUIT_SIZE.x - QUIT_SIZE.x / 10,
-				QUIT_SIZE.y / 10
-			};
+			// Pause menu
+			const int PAUSE_QUIT_X = SCREEN_HALF_WIDTH - PAUSE_QUIT_WIDTH / 2 - PAUSE_BG_WIDTH / 4;
+			const int PAUSE_QUIT_Y = SCREEN_HALF_HEIGHT - PAUSE_RESUME_HEIGHT / 2 + PAUSE_BG_WIDTH / 5;
+			const int PAUSE_RESUME_X = SCREEN_HALF_WIDTH - PAUSE_RESUME_WIDTH / 2 + PAUSE_BG_WIDTH / 4;
+			const int PAUSE_RESUME_Y = PAUSE_QUIT_Y;
 
+			// End menu
+			const int END_MENU_X = SCREEN_HALF_WIDTH - END_MENU_WIDTH / 2 - END_BG_WIDTH / 4;
+			const int END_MENU_Y = SCREEN_HALF_HEIGHT - END_MENU_HEIGHT / 2 + END_BG_HEIGHT / 4;
+			const int END_REPLAY_X = SCREEN_HALF_WIDTH - END_REPLAY_WIDTH / 2 + END_BG_WIDTH / 4;
+			const int END_REPLAY_Y = END_MENU_Y;
 
+			// Audio
+			const int AUDIO_X = AUDIO_WIDTH / 10;
+			const int AUDIO_Y = AUDIO_HEIGHT / 10;
+
+			// Quit
+			const int QUIT_X = SCREEN_WIDTH - QUIT_WIDTH - QUIT_WIDTH / 10;
+			const int QUIT_Y = QUIT_HEIGHT / 10;
 	};
 }

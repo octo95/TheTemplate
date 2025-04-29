@@ -50,23 +50,21 @@ namespace Tmpl8
 	{
 		for (auto& c : wmap)
 		{
-			vec2 draw_pos = vec2(
-				c.first.x * TILE_SIZE + TILE_SIZE / 2.0f,
-				c.first.y * TILE_SIZE
-			);
-			camera->drawWithCam(&img_wall, screen, draw_pos);
+			float x = c.first.x * TILE_SIZE + TILE_SIZE / 2.0f;
+			float y = c.first.y * TILE_SIZE;
+			camera->drawWithCam(&img_wall, screen, x, y);
 		}
 	}
 
 	void manageWallCollision(vec2 player_pos, GameSound* gamesound) {
-		int x = (int)(player_pos.x / TILE_SIZE);
-		int y = (int)(player_pos.y / TILE_SIZE);
+		int x = (int)player_pos.x / TILE_SIZE;
+		int y = (int)player_pos.y / TILE_SIZE;
 
 		WallMap::iterator c = wmap.begin();
 		for (; c != wmap.end();)
 		{
-			int cx = (int)(c->first.x);
-			int cy = (int)(c->first.y);
+			int cx = static_cast<int>(c->first.x);
+			int cy = static_cast<int>(c->first.y);
 			if (cx == x && cy == y) {
 				c = wmap.erase(c);
 				gamesound->playSound(gamesound->snd_break_wall);

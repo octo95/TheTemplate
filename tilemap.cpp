@@ -32,6 +32,35 @@ namespace Tmpl8
         }
     }
 
+    Tile TileMap::tile_at(vec2 pos)
+    {
+        int tile_row = (int)(pos.y / TILE_SIZE);
+        int tile_col = (int)(pos.x / TILE_SIZE);
+
+        char a = current_map[tile_row][tile_col * 3];
+        char b = current_map[tile_row][tile_col * 3 + 1];
+
+        int tx = a - 'a';
+        int ty = b - 'a';
+
+        TileType tile_type = None;
+
+        if (a == 'd' && b == 'a')       tile_type = None;
+        else if (a == 'a' && b == 'a')  tile_type = Damage;
+        else if (a == 'b' && b == 'a')  tile_type = End;
+        else if (a == 'c' && b == 'a')  tile_type = Collision;
+        else if (a == 'e' && b == 'a')  tile_type = Ice;
+
+        Tile tile = Tile
+        {
+            tx,
+            ty,
+            tile_type,
+        };
+
+        return tile;
+    }
+
     Tile TileMap::tile_at(int x, int y)
     {
         int tile_row = y / TILE_SIZE;
@@ -59,12 +88,6 @@ namespace Tmpl8
         };
 
         return tile;
-    }
-
-    // vec2 override
-    Tile TileMap::tile_at(vec2 pos)
-    {
-        return tile_at(pos.x, pos.y);
     }
 
     void TileMap::drawMap(Surface* screen, const Camera& camera)

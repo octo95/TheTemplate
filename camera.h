@@ -12,7 +12,9 @@ namespace Tmpl8
 			void shakeCamera(float deltaTime);
 
 			// Draw
+			void drawWithCam(Sprite* img, Surface* screen, int x, int y);
 			void drawWithCam(Sprite* img, Surface* screen, vec2 pos);
+			void drawPlayer(Sprite* img, Surface* screen, int x, int y, float deltaTime);
 			void drawPlayer(Sprite* img, Surface* screen, vec2 pos, float deltaTime);
 
 			// Getters / Setters
