@@ -67,8 +67,8 @@ namespace Tmpl8
 		CollectibleMap::iterator c = cmap.begin();
 		for (; c != cmap.end();)
 		{
-			int cx = static_cast<int>(c->first.x);
-			int cy = static_cast<int>(c->first.y);
+			int cx = (int)(c->first.x);
+			int cy = (int)(c->first.y);
 			if (cx == x && cy == y) {
 				c = cmap.erase(c);
 				gamesound->playSound(gamesound->snd_collect);

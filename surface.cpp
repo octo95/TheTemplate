@@ -197,6 +197,16 @@ void Surface::Box( int x1, int y1, int x2, int y2, Pixel c )
 	Line( (float)x1, (float)y1, (float)x1, (float)y2, c );
 }
 
+void Surface::Box(vec2 pos1, vec2 pos2, Pixel c)
+{
+	int x1 = (int)pos1.x;
+	int y1 = (int)pos1.y;
+	int x2 = (int)pos2.x;
+	int y2 = (int)pos2.y;
+
+	Box(x1, y1, x2, y2, c);
+}
+
 void Surface::Bar( int x1, int y1, int x2, int y2, Pixel c )
 {
 	Pixel* a = x1 + y1 * m_Pitch + m_Buffer;
@@ -423,6 +433,13 @@ void Sprite::Draw( Surface* a_Target, int a_X, int a_Y )
 	}
 }
 
+void Sprite::Draw(Surface* a_Target, vec2 pos)
+{
+	int draw_x = (int)pos.x;
+	int draw_y = (int)pos.y;
+	Draw(a_Target, draw_x, draw_y);
+}
+
 void Sprite::DrawScaled( int a_X, int a_Y, int a_Width, int a_Height, Surface* a_Target )
 {
 	if ((a_Width == 0) || (a_Height == 0)) return;
@@ -435,23 +452,8 @@ void Sprite::DrawScaled( int a_X, int a_Y, int a_Width, int a_Height, Surface* a
 	}
 }
 
-// NEED TO REDO MYSELF AND FIX MISSING PIXELS
 void Sprite::DrawRotated(Surface* a_Target, int a_X, int a_Y, float a_Angle)
 {
-	// If buffer gets out of definition, return
-	//if ((a_X < -m_Width) || (a_X > (a_Target->GetWidth() + m_Width))) return;
-	//if ((a_Y < -m_Height) || (a_Y > (a_Target->GetHeight() + m_Height))) return;
-	//
-	//float angle_radiant = a_Angle * PI / 180;
-	//
-	//Pixel* src = GetBuffer() + m_CurrentFrame * m_Width;	// Source is surface
-	//Pixel* dest = a_Target->GetBuffer();					// Destination is the target
-
-	// loop to go through all the pixels
-	// rotation matrix
-	// affect to destination
-	// Draw
-
 	if ((a_X < -m_Width) || (a_X > (a_Target->GetWidth() + m_Width))) return;
 	if ((a_Y < -m_Height) || (a_Y > (a_Target->GetHeight() + m_Height))) return;
 
@@ -491,6 +493,10 @@ void Sprite::DrawRotated(Surface* a_Target, int a_X, int a_Y, float a_Angle)
 
 }
 
+void Sprite::DrawRotated(Surface* a_Target, vec2 a_Pos, float a_Angle)
+{
+	DrawRotated(a_Target, (int)a_Pos.x, (int)a_Pos.y, a_Angle);
+}
 
 void Sprite::InitializeStartData()
 {

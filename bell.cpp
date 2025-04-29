@@ -36,7 +36,7 @@ namespace Tmpl8
 		bell_current_pos = current_pos;
 
 		vec2 draw_pos = { current_pos.x, current_pos.y - 0.9f * BELL_HEIGHT };
-		camera->drawWithCam(&img_bell, screen, (int)draw_pos.x, (int)draw_pos.y);
+        camera->drawWithCam(&img_bell, screen, draw_pos);
 	}
 }
 

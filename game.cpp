@@ -54,10 +54,10 @@ namespace Tmpl8
             tilemap.drawMap(screen, camera);            
             drawWallMap(&camera, screen, &this->wall);  
             drawCollectibleMap(&camera, screen);       
-            camera.drawPlayer(&img_player, screen, (int)player_pos.x, (int)(player_pos.y + player.PLAYER_DRAW_OFFSET_Y), deltaTime);
-			img_ai_follow.DrawRotated(screen, (int)ai_follow.position.x + camera.getCamPos().x, (int)ai_follow.position.y + camera.getCamPos().y, ai_follow.angle);
-			img_ai_copy.DrawRotated(screen, (int)ai_copy.position.x + camera.getCamPos().x, (int)ai_copy.position.y + camera.getCamPos().y, ai_copy.angle);
-			if(!ai_patrol.isDead) img_ai_patrol.DrawRotated(screen, (int)ai_patrol.position.x + camera.getCamPos().x, (int)ai_patrol.position.y + camera.getCamPos().y, ai_patrol.angle);
+            camera.drawPlayer(&img_player, screen, player_pos, deltaTime);
+			img_ai_follow.DrawRotated(screen, ai_follow.position + camera.getCamPos(), ai_follow.angle);
+			img_ai_copy.DrawRotated(screen, ai_copy.position + camera.getCamPos() , ai_copy.angle);
+			if(!ai_patrol.isDead) img_ai_patrol.DrawRotated(screen, ai_patrol.position + camera.getCamPos(), ai_patrol.angle);
             collisions.drawSplash(screen, player_pos, deltaTime); 
             bell.drawBell(screen, &camera, tilemap.getCurrentLevel());
             menu.manageMenus(screen);

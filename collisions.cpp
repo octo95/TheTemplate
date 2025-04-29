@@ -24,64 +24,62 @@ namespace Tmpl8
 
     TileType Collisions::CheckCollisionBottom(const vec2& pos)
     {
-        TileType type = None;
+        TileType type = TileType::None;
 
-        // Bottom-left
-        auto tile = tilemap.tile_at((int)(pos.x), (int)(pos.y) + hitbox_radius * 2);
-        if (tile.type != TileType::None) type = tile.type;
+        // Check bottom left
+        type = checkCollisionAtOffset(pos, vec2(0, hitbox_radius * 2));
+        if (type != TileType::None) return type;
 
-        // Bottom-right
-        tile = tilemap.tile_at((int)(pos.x) + hitbox_radius * 2, (int)(pos.y) + hitbox_radius * 2);
-        if (tile.type != TileType::None) type = tile.type;
-
+        // Check bottom right
+        type = checkCollisionAtOffset(pos, vec2(hitbox_radius * 2, hitbox_radius * 2));
         return type;
     }
 
     TileType Collisions::CheckCollisionLeft(const vec2& pos)
     {
-        TileType type = None;
+        TileType type = TileType::None;
 
-        // Top-left
-        auto tile = tilemap.tile_at((int)(pos.x), (int)(pos.y));
-        if (tile.type != TileType::None) type = tile.type;
+        // Check top-left
+        type = checkCollisionAtOffset(pos, vec2(0, 0));
+        if (type != TileType::None) return type;
 
-        // Bottom-left
-        tile = tilemap.tile_at((int)(pos.x), (int)(pos.y) + hitbox_radius * 2);
-        if (tile.type != TileType::None) type = tile.type;
-
+        // Check bottom-left
+        type = checkCollisionAtOffset(pos, vec2(0, hitbox_radius * 2));
         return type;
     }
 
     TileType Collisions::CheckCollisionRight(const vec2& pos)
     {
-        TileType type = None;
+        TileType type = TileType::None;
 
-        // Top-right
-        auto tile = tilemap.tile_at((int)(pos.x) + hitbox_radius * 2, (int)(pos.y));
-        if (tile.type != TileType::None) type = tile.type;
+        // Check top-right
+        type = checkCollisionAtOffset(pos, vec2(hitbox_radius * 2, 0));
+        if (type != TileType::None) return type;
 
-        // Bottom-right
-        tile = tilemap.tile_at((int)(pos.x) + hitbox_radius * 2, (int)(pos.y) + hitbox_radius * 2);
-        if (tile.type != TileType::None) type = tile.type;
-
+        // Check bottom-right
+        type = checkCollisionAtOffset(pos, vec2(hitbox_radius * 2, hitbox_radius * 2));
         return type;
     }
 
     TileType Collisions::CheckCollisionTop(const vec2& pos)
     {
-        TileType type = None;
+        TileType type = TileType::None;
 
-        // Top-left
-        auto tile = tilemap.tile_at((int)(pos.x), (int)(pos.y));
-        if (tile.type != TileType::None) type = tile.type;
+        // Check top-left
+        type = checkCollisionAtOffset(pos, vec2(0, 0));
+        if (type != TileType::None) return type;
 
-        // Top-right
-        tile = tilemap.tile_at((int)(pos.x) + hitbox_radius * 2, (int)(pos.y));
-        if (tile.type != TileType::None) type = tile.type;
-
+        // Check top-right
+        type = checkCollisionAtOffset(pos, vec2(hitbox_radius * 2, 0));
         return type;
     }
 
+    TileType Collisions::checkCollisionAtOffset(const vec2& pos, const vec2& offset)
+    {
+        vec2 adjusted_pos = pos + offset;
+        auto tile = tilemap.tile_at(adjusted_pos);
+        return (tile.type != TileType::None) ? tile.type : TileType::None;
+    }
 
     void Collisions::manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles)
     {
@@ -93,7 +91,6 @@ namespace Tmpl8
         bool isNoneX = (CheckLeft == TileType::None || CheckRight == TileType::None);
         bool isNoneY = (CheckBottom == TileType::None);
         bool isDamage = (CheckLeft == TileType::Damage || CheckRight == TileType::Damage || CheckBottom == TileType::Damage || CheckTop == TileType::Damage || ai_follow.isTouchingPlayer() || (ai_patrol.isTouchingPlayer() && !ai_patrol.isAILowerThanPlayer || ai_copy.isTouchingPlayer()));
-        //bool isEnd = (CheckLeft == TileType::End || CheckRight == TileType::End || CheckBottom == TileType::End || CheckTop == TileType::End);
         bool isEnd = bell.touchedPlayer;
         bool isCollision = (CheckLeft == TileType::Collision || CheckRight == TileType::Collision || CheckBottom == TileType::Collision || CheckTop==TileType::Collision);
         bool isIce = (CheckBottom == TileType::Ice || CheckTop == TileType::Ice);
@@ -226,14 +223,18 @@ namespace Tmpl8
         frame += animation_fps * deltaTime;
         if (frame >= 3.0f) frame -= 3.0f; 
 
-        img_water_slide_right.SetFrame((int)frame); 
-        img_water_slide_left.SetFrame((int)frame); 
+        img_water_slide_right.SetFrame(frame); 
+        img_water_slide_left.SetFrame(frame); 
 
-        int draw_x = (int)player_pos.x + camera.getCamPos().x + img_water_slide_right.GetWidth() / 2 - player_img_width / 2;
-        int draw_y = (int)player_pos.y + camera.getCamPos().y + img_water_slide_right.GetHeight() / 2 - player_img_height / 2 + player.PLAYER_DRAW_OFFSET_Y + 1;
+        vec2 offset = vec2(
+            img_water_slide_right.GetWidth() / 2 - player_img_width / 2,
+            img_water_slide_right.GetHeight() / 2 - player_img_height / 2 + player.PLAYER_DRAW_OFFSET_Y + 1
+        );
 
-        if(player.velocity.x > 0)   img_water_slide_right.Draw(screen, draw_x, draw_y);
-        else                        img_water_slide_left.Draw(screen, draw_x, draw_y);
+        vec2 draw_pos = player_pos + camera.getCamPos() + offset;
+
+        if (player.velocity.x > 0)   img_water_slide_right.Draw(screen, draw_pos);
+        else                         img_water_slide_left.Draw(screen, draw_pos);
     }
 
 }

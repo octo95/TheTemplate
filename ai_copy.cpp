@@ -13,6 +13,8 @@ namespace Tmpl8
 
     void AI_Copy::setPos()
     {
+        if (stop) return;
+
         if (copyTimer > 0.0f)
         {
             copyTimer -= 1.0f / 60.0f;
@@ -20,7 +22,6 @@ namespace Tmpl8
         }
         this->position = playerBuffer.read(); 
     }
-
 
     bool AI_Copy::isTouchingPlayer()
     {

@@ -11,6 +11,7 @@
 #include "template.h"
 #include "tilemap.h"
 #include "wall.h"
+#include "ai_copy.h"
 
 namespace Tmpl8
 {
@@ -30,7 +31,8 @@ namespace Tmpl8
                 Level& levelRef,
                 Collisions& collisionRef,
                 Menu& menuRef,
-                AI_Patrol& ai_patrolRef
+                AI_Patrol& ai_patrolRef,
+                AI_Copy& ai_copyRef
             );
 
             // Variables
@@ -43,8 +45,7 @@ namespace Tmpl8
             // Draw functions
             void drawPlayerHitbox(const vec2& pos, Surface* screen);
             void drawPlayerTileHitbox(const vec2& pos, Surface* screen);
-            void drawAIFollowHitbox(const vec2& pos, Surface* screen);
-            void drawAIPatrolHitbox(const vec2& pos, Surface* screen);
+            void drawHitbox(const vec2& pos, Sprite* img, Surface* screen);
             void drawVelocityNorm(Surface* screen);
             void drawDistancePlayerToAI(vec2 ai_pos, int size, Surface* screen);
 
@@ -69,5 +70,6 @@ namespace Tmpl8
             Collisions& collisions;
             Menu& menu;
             AI_Patrol& ai_patrol;
+            AI_Copy& ai_copy;
     };
 }

@@ -2,6 +2,7 @@
 // IGAD/BUAS(NHTV)/UU - Jacco Bikker - 2006-2020
 
 #pragma once
+#include "template.h"
 
 namespace Tmpl8 {
 
@@ -67,9 +68,9 @@ public:
 	void BlendCopyTo( Surface* a_Dst, int a_X, int a_Y );
 	void ScaleColor( unsigned int a_Scale );
 	void Box( int x1, int y1, int x2, int y2, Pixel color );
+	void Box(vec2 pos1, vec2 pos2, Pixel c);
 	void Bar( int x1, int y1, int x2, int y2, Pixel color );
 	void Resize( Surface* a_Orig );
-	void ReduceSaturation(float amount);
 private:
 	// Attributes
 	Pixel* m_Buffer{nullptr};	
@@ -105,8 +106,10 @@ public:
 	~Sprite();
 	// Methods
 	void Draw( Surface* a_Target, int a_X, int a_Y );
+	void Draw(Surface* a_Target, vec2 pos);
 	void DrawScaled( int a_X, int a_Y, int a_Width, int a_Height, Surface* a_Target );
 	void DrawRotated(Surface* a_Target, int a_X, int a_Y, float a_Angle);
+	void DrawRotated(Surface* a_Target, vec2 a_Pos, float a_Angle);
 	void SetFlags( unsigned int a_Flags ) { m_Flags = a_Flags; }
 	void SetFrame( unsigned int a_Index ) { m_CurrentFrame = a_Index; }
 	unsigned int GetFlags() const { return m_Flags; }

@@ -1,10 +1,11 @@
 #define WIN32_LEAN_AND_MEAN
 #include "windows.h"
 #include "debug.h"
+#include <cmath>
 
 namespace Tmpl8
 {
-    Debug::Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef, Level& levelRef, Collisions& collisionRef, Menu& menuRef, AI_Patrol& ai_patrolRef) :
+    Debug::Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef, Level& levelRef, Collisions& collisionRef, Menu& menuRef, AI_Patrol& ai_patrolRef, AI_Copy& ai_copyRef) :
         camera(cameraRef),
         tilemap(tilemapRef),
         player(playerRef),
@@ -14,48 +15,38 @@ namespace Tmpl8
         level(levelRef),
         collisions(collisionRef),
         menu(menuRef),
-        ai_patrol(ai_patrolRef)
+        ai_patrol(ai_patrolRef),
+        ai_copy(ai_copyRef)
     {}
     
     void Debug::drawPlayerHitbox(const vec2& pos, Surface* screen)
     {
-        int x1 = (int)(pos.x + player_img_width / 2 - hitbox_radius + camera.getCamPos().x);
-        int y1 = (int)(pos.x + player_img_width / 2 + hitbox_radius + camera.getCamPos().x);
-        int x2 = (int)(pos.y + player_img_width / 2 - hitbox_radius + camera.getCamPos().y);
-        int y2 = (int)(pos.y + player_img_width / 2 + hitbox_radius + camera.getCamPos().y);
-        screen->Box(x1, x2, y1, y2, 0xFF0000);
+        vec2 offset(player_img_width / 2.0f, player_img_height / 2.0f); 
+        vec2 hitbox_size(hitbox_radius, hitbox_radius);
+        vec2 center = pos + camera.getCamPos() + offset;
+
+        vec2 pos1 = center - hitbox_size;
+        vec2 pos2 = center + hitbox_size;
+
+        screen->Box(pos1, pos2, 0xFF0000);
     }
+
 
     void Debug::drawPlayerTileHitbox(const vec2& pos, Surface* screen)
     {
-        float x1 = floor(pos.x / TILE_SIZE) * TILE_SIZE + camera.getCamPos().x;
-        float y1 = floor(pos.y / TILE_SIZE) * TILE_SIZE + camera.getCamPos().y; 
-        float x2 = floor(pos.x / TILE_SIZE) * TILE_SIZE + camera.getCamPos().x + TILE_SIZE;
-        float y2 = floor(pos.y / TILE_SIZE) * TILE_SIZE + camera.getCamPos().y + TILE_SIZE;
-     
-        screen->Box((int)x1, (int)y1,(int)x2, (int)y2, 0x0FF000);
+        vec2 floorPos = vec2(std::floor(pos.x / TILE_SIZE), std::floor(pos.y / TILE_SIZE));
+        vec2 pos1 =  floorPos * TILE_SIZE + camera.getCamPos();
+        vec2 pos2 = pos1 + vec2(TILE_SIZE, TILE_SIZE);
+
+        screen->Box(pos1, pos2, 0x0FF000);
     }
 
-    void Debug::drawAIFollowHitbox(const vec2& pos, Surface* screen)
+    void Debug::drawHitbox(const vec2& pos, Sprite* img, Surface* screen)   
     {
-        int x1 = (int)(pos.x + camera.getCamPos().x);
-        int y1 = (int)(pos.y + camera.getCamPos().y);
+        vec2 pos1 = pos + camera.getCamPos();
+        vec2 pos2 = pos1 + vec2(img->GetWidth(), img->GetHeight());
 
-        int x2 = (int)(pos.x + img_ai_follow.GetWidth() + camera.getCamPos().x);
-        int y2 = (int)(pos.y + img_ai_follow.GetHeight() + camera.getCamPos().y);
-
-        screen->Box(x1, y1, x2, y2, 0xFF0000);
-    }
-
-    void Debug::drawAIPatrolHitbox(const vec2& pos, Surface* screen)
-    {
-        int x1 = (int)(pos.x + camera.getCamPos().x);
-        int y1 = (int)(pos.y + camera.getCamPos().y);
-
-        int x2 = (int)(pos.x + img_ai_patrol.GetWidth() + camera.getCamPos().x);
-        int y2 = (int)(pos.y + img_ai_patrol.GetHeight() + camera.getCamPos().y);
-
-        screen->Box(x1, y1, x2, y2, 0xFF0000);
+        screen->Box(pos1, pos2, 0xFF0000);
     }
 
     void Debug::displayDebug(Surface* screen, float deltaTime)
@@ -74,17 +65,15 @@ namespace Tmpl8
             // PRESS <S> : Stop the AIs' movement.
             stopAIs();
 
-            // Get the player position
-            vec2 playerPos;
-            player.getPlayerPos(playerPos);
-
             // Display the entities' hitboxes
             drawPlayerHitbox(player.position, screen);
             drawPlayerTileHitbox(player.position, screen);
-            drawAIFollowHitbox(ai_follow.position, screen);
-            drawAIPatrolHitbox(ai_patrol.position, screen);
+            drawHitbox(ai_copy.position, &img_ai_copy, screen);
+            drawHitbox(ai_patrol.position, &img_ai_patrol, screen);
+            drawHitbox(ai_follow.position, &img_ai_follow, screen);
 
             // Draw the distance between the player and an AI to specify below
+            drawDistancePlayerToAI(ai_copy.position, img_ai_copy.GetWidth(), screen);
             drawDistancePlayerToAI(ai_follow.position, img_ai_follow.GetWidth(), screen);
             drawDistancePlayerToAI(ai_patrol.position, img_ai_patrol.GetWidth(), screen);
 
@@ -95,21 +84,18 @@ namespace Tmpl8
 
             // Display player's position
             char player_pos_txt[100];
-            sprintf(player_pos_txt, "px: %.0f, py: %.0f", playerPos.x, playerPos.y);
+            sprintf(player_pos_txt, "px: %.0f, py: %.0f", player.position.x, player.position.y);
             screen->Print(player_pos_txt, 10, 30, 0xFFFF00);
 
             // Display player's position
             char player_tpos_txt[100];
-            sprintf(player_tpos_txt, "tx: %.0f, ty: %.0f", floor(playerPos.x / 32), floor(playerPos.y / 32));
+            sprintf(player_tpos_txt, "tx: %.0f, ty: %.0f", floor(player.position.x / 32), floor(player.position.y / 32));
             screen->Print(player_tpos_txt, 10, 50, 0xFFFF00);
 
-            drawPlayerTileHitbox(playerPos, screen);
 
             // Display current map level and spawn point
             char map_lvl_txt[100];
-            vec2 defaultPos;
-            player.getPlayerDefaultPos(defaultPos);
-            sprintf(map_lvl_txt, "current map: %d - (%.0f, %.0f)", tilemap.getCurrentLevel(), defaultPos.x, defaultPos.y);
+            sprintf(map_lvl_txt, "current map: %d - (%.0f, %.0f)", tilemap.getCurrentLevel(), player.default_pos.x, player.default_pos.y);
             screen->Print(map_lvl_txt, 10, 70, 0xFFFF00);
 
             // Display velocity on the player as a line and print it on screen
@@ -130,14 +116,6 @@ namespace Tmpl8
         }
     }
 
-    // TODO -> Display : "Touching tile : <TYPE> at <SIDE>"
-    //void Debug::getCurrentTileStatus(Surface* screen)
-    //{
-    //    char collision_type_txt[100];
-    //    //sprintf(collision_type_txt, "Touching tile: %d at %d", TODO?);
-    //    screen->Print(collision_type_txt, 10, 130, 0xFFFF00);
-    //}
-
     void Debug::stopAIs()
     {
         static bool s_wasPressed = false;
@@ -147,6 +125,7 @@ namespace Tmpl8
             {
                 ai_follow.is_following = !ai_follow.is_following;
                 ai_patrol.stop = !ai_patrol.stop;
+                ai_copy.stop = !ai_copy.stop;
                 s_wasPressed = true;
             }
         }
@@ -168,7 +147,7 @@ namespace Tmpl8
 
         if (timeAccumulator >= refreshRate)
         {
-            lastFPS = (int)(frameCounter / timeAccumulator);
+            lastFPS = frameCounter / timeAccumulator;
             timeAccumulator = 0.0f;
             frameCounter = 0;
         }

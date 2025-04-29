@@ -43,6 +43,7 @@ namespace Tmpl8
         TileType CheckCollisionLeft(const vec2& pos);
 
 		// Other functions
+        TileType checkCollisionAtOffset(const vec2& pos, const vec2& offset);
         void manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles);
         void applyBouncingPhysics(vec2& new_pos);
         void drawSplash(Surface* screen, vec2 player_pos, float deltaTime);

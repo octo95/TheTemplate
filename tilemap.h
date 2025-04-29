@@ -269,6 +269,7 @@ namespace Tmpl8
             void loadLevel(int i);
             void readImageToCharMap();
             Tile tile_at(int x, int y);
+            Tile tile_at(vec2 pos);
             void drawMap(Surface* screen, const Camera& camera);
             int incrementMapIndex() { return current_level = current_level % MAP_AMOUNT + 1; }
 
