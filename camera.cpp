@@ -27,24 +27,9 @@ namespace Tmpl8
         }
     }
 
-    void Camera::drawWithCam(Sprite* img, Surface* screen, int x, int y)
-    {
-        x += getCamPos().x;
-        y += getCamPos().y;
-        img->Draw(screen, x, y);
-    }
-
     void Camera::drawWithCam(Sprite* img, Surface* screen, vec2 pos)
     {
         img->Draw(screen, pos + getCamPos());
-    }
-
-    void Camera::drawPlayer(Sprite* img, Surface* screen, int x, int y, float deltaTime)
-    {
-        player_angle += deltaTime * acceleration;
-        x += getCamPos().x;
-        y += getCamPos().y;
-        img->DrawRotated(screen, x, y, player_angle);
     }
 
     void Camera::drawPlayer(Sprite* img, Surface* screen, vec2 pos, float deltaTime)
