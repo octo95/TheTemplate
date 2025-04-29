@@ -4,7 +4,7 @@ namespace Tmpl8
 {
     CircularBuffer::CircularBuffer() :
         timer(3.0f),
-        buf(std::vector<vec2>{}),
+        buf(std::vector<PlayerState>{}),
         head(0),
         tail(0)
     {
@@ -15,13 +15,13 @@ namespace Tmpl8
         tail = (tail == 720 - 1) ? 0 : tail + 1;
     }
 
-    void CircularBuffer::add(float deltaTime, vec2& item) {
-        buf[head] = item;
+    void CircularBuffer::add(vec2& item, float angle) {
+        buf[head] = { item, angle };
         head = (head == 720 - 1) ? 0 : head + 1;
     }
 
-    vec2 CircularBuffer::read() {
-        vec2 item = buf[tail];
+    PlayerState CircularBuffer::read() {
+        PlayerState item = buf[tail];
         incrementTail();
         return item;
     }

@@ -3,25 +3,28 @@
 namespace Tmpl8
 {
 
-    AI_Copy::AI_Copy(Player& playerRef, Camera& cameraRef) :
-        camera(cameraRef),
+    AI_Copy::AI_Copy(Player& playerRef) :
         player(playerRef)
     {}
 
 
     Sprite img_ai_copy(new Surface("assets/images/entities/img_ai_copy.png"), 1);
 
-    void AI_Copy::setPos()
+    void AI_Copy::setProperties()
     {
         if (stop) return;
 
         if (copyTimer > 0.0f)
         {
             copyTimer -= 1.0f / 60.0f;
-            return; 
+            return;
         }
-        this->position = playerBuffer.read(); 
+
+        PlayerState pastState = playerBuffer.read(); 
+        this->position = pastState.position;
+        this->acceleration = pastState.acceleration;
     }
+
 
     bool AI_Copy::isTouchingPlayer()
     {

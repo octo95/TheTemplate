@@ -31,8 +31,8 @@ namespace Tmpl8
                 manageCollectibleRespawn(deltaTime);
         
                 // AI logic
-                ai_copy.setPos();
-                ai_copy.playerBuffer.add(deltaTime, player_pos);
+                ai_copy.setProperties();
+                ai_copy.playerBuffer.add(player_pos, player.acceleration);
                 ai_follow.followPlayer(deltaTime);
                 ai_patrol.Patrol(deltaTime, &collisions);
         
@@ -54,9 +54,9 @@ namespace Tmpl8
             tilemap.drawMap(screen, camera);            
             drawWallMap(&camera, screen, &this->wall);  
             drawCollectibleMap(&camera, screen);       
-            camera.drawPlayer(&img_player, screen, player_pos, deltaTime);
+            camera.drawPlayer(&img_player, screen, player_pos, deltaTime, player.acceleration);
+            camera.drawAICopy(&img_ai_copy, screen, ai_copy.position, deltaTime, ai_copy.acceleration);
 			img_ai_follow.DrawRotated(screen, ai_follow.position + camera.getCamPos(), ai_follow.angle);
-			img_ai_copy.DrawRotated(screen, ai_copy.position + camera.getCamPos() , ai_copy.angle);
 			if(!ai_patrol.isDead) img_ai_patrol.DrawRotated(screen, ai_patrol.position + camera.getCamPos(), ai_patrol.angle);
             collisions.drawSplash(screen, player_pos, deltaTime); 
             bell.drawBell(screen, &camera, tilemap.getCurrentLevel());

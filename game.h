@@ -34,7 +34,7 @@ namespace Tmpl8
 			level(tilemap, player, ai_follow, collectible, wall, gamesound, bell, ai_patrol, ai_copy),
 			health(player),
 			ai_patrol(player, camera),
-			ai_copy(player, camera)
+			ai_copy(player)
 		{}
 
 		void SetTarget( Surface* surface ) { screen = surface; }

@@ -54,9 +54,11 @@ namespace Tmpl8
 	{
 		for (auto& c : cmap)
 		{
-			float x = c.first.x * TILE_SIZE + TILE_SIZE / 2.0f;
-			float y = c.first.y * TILE_SIZE + TILE_SIZE / 2.0f;
-			camera->drawWithCam(&img_collectible, screen, x, y);
+			vec2 draw_pos = vec2(
+				c.first.x * TILE_SIZE + TILE_SIZE / 2.0f, 
+				c.first.y * TILE_SIZE + TILE_SIZE / 2.0f
+			);
+			camera->drawWithCam(&img_collectible, screen, draw_pos);
 		}
 	}
 

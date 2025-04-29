@@ -63,7 +63,7 @@ namespace Tmpl8
         }
 
         // Pass the velocity to the camera to make the player rotate while moving
-        camera.setAngleAcceleration(velocity.x * 90.0f);
+        acceleration = velocity.x * 90.0f;
 
         // Apply horizontal movement
         new_pos.x += velocity.x;

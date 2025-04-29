@@ -50,9 +50,11 @@ namespace Tmpl8
 	{
 		for (auto& c : wmap)
 		{
-			float x = c.first.x * TILE_SIZE + TILE_SIZE / 2.0f;
-			float y = c.first.y * TILE_SIZE;
-			camera->drawWithCam(&img_wall, screen, x, y);
+			vec2 draw_pos = vec2(
+				c.first.x * TILE_SIZE + TILE_SIZE / 2.0f,
+				c.first.y * TILE_SIZE
+			);
+			camera->drawWithCam(&img_wall, screen, draw_pos);
 		}
 	}
 

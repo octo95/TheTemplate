@@ -1,5 +1,4 @@
 #pragma once
-#include "camera.h"
 #include "player.h"
 #include "circular_buffer.h"
 
@@ -16,21 +15,19 @@ namespace Tmpl8
 
 		    // Constructor
             AI_Copy(
-                Player& playerRef, 
-                Camera& cameraRef
+                Player& playerRef
             );
         
 		    // Variables
-            float angle = 0;
+            float acceleration = 0;
             vec2 default_pos = { -100, -100 }; // Make the AI appear out of bounds when not on screen
             vec2 position = { 0, 0 };
 
 		    // Functions
             bool isTouchingPlayer();
-            void setPos();
+            void setProperties();
       
         private:
             Player& player;
-            Camera& camera;
     };
 }
