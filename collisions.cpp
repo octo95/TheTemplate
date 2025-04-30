@@ -99,6 +99,11 @@ namespace Tmpl8
         bool FallNormal = player.velocity.y >= trigger_fall_normal && player.velocity.y < trigger_fall_hard;
         bool FallHard = player.velocity.y >= trigger_fall_hard;
 
+        if ((CheckBottom == TileType::Collision))
+        {
+            //gamesound.playSound(gamesound.snd_rolling);
+        }
+
         // SFX: if falling from a high distance play <snd_fall_strong.wav>, otherwise from a smaller one play <snd_fall.wav> and if even smaller don't play any SFX.
         if ((CheckBottom == TileType::Collision || CheckBottom == TileType::Ice) && FallLight) 
         {

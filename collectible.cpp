@@ -2,7 +2,7 @@
 
 namespace Tmpl8
 {
-	Sprite img_collectible(new Surface("assets/images/map/img_collectible.png"), 1);
+	Sprite img_collectible_jump(new Surface("assets/images/map/img_collectible_jump.png"), 1);
 	int collectibles_collected = 0;
 	int current_map = 1;
 	bool collectible_timer_active = false;
@@ -58,7 +58,7 @@ namespace Tmpl8
 				c.first.x * TILE_SIZE + TILE_SIZE / 2.0f, 
 				c.first.y * TILE_SIZE + TILE_SIZE / 2.0f
 			);
-			camera->drawWithCam(&img_collectible, screen, draw_pos);
+			camera->drawWithCam(&img_collectible_jump, screen, draw_pos);
 		}
 	}
 

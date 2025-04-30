@@ -21,6 +21,8 @@ namespace Tmpl8
             const std::string snd_collect = "assets/audio/SFX/snd_collect.wav";
             const std::string snd_hover = "assets/audio/SFX/snd_hover.wav";
             const std::string snd_break_wall = "assets/audio/SFX/snd_break_wall.wav";
+            const std::string snd_slide = "assets/audio/SFX/snd_slide.wav";
+            const std::string snd_rolling = "assets/audio/SFX/snd_rolling.wav";
 
             // All MUS paths
             const std::string mus_level = "assets/audio/Music/mus_level.wav";

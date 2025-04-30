@@ -10,24 +10,27 @@ namespace Tmpl8
 
     void Bell::isBellTouchingPlayer(Player* player)
     {
-        // Player position in tiles
-        int player_tpos_x = player->position.x / TILE_SIZE;
-        int player_tpos_y = player->position.y / TILE_SIZE;
+        // Define player bounding box
+        float player_x = player->position.x;
+        float player_y = player->position.y;
+        float player_hitbox = hitbox_radius;  
 
-        // Bell position in tiles
-        int bell_tpos_x = bell_current_pos.x / TILE_SIZE;
-        int bell_tpos_y = (bell_current_pos.y - BELL_HEIGHT) / TILE_SIZE ;
+        // Define bell bounding box
+        float bell_x = bell_current_pos.x;
+        float bell_y = bell_current_pos.y - BELL_HEIGHT; 
+        float bell_width = BELL_WIDTH;
+        float bell_height = BELL_HEIGHT;
 
-        // Check collision
-        if (player_tpos_x >= bell_tpos_x && player_tpos_x <= bell_tpos_x + 1 &&
-            player_tpos_y >= bell_tpos_y && player_tpos_y <= bell_tpos_y + 1)
-        {
-            touchedPlayer = true;
-        }
-        else
-        {
-            touchedPlayer = false;
-        }
+        float reduce_hitbox = 10.0f;
+
+        // AABB collision check
+        bool overlap =
+                            player_x < reduce_hitbox + bell_x + bell_width &&
+            player_x + player_hitbox > reduce_hitbox + bell_x &&
+                            player_y < reduce_hitbox + bell_y + bell_height &&
+            player_y + player_hitbox > bell_y;
+
+        touchedPlayer = overlap;
     }
 
 	void Bell::drawBell(Surface* screen, Camera* camera, int map_index)
