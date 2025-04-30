@@ -31,7 +31,7 @@ namespace Tmpl8
             const vec2 AI_FOLLOW_DEFAULT_POS[5] =
             {
                 vec2 {100,500},
-                vec2 {100,300},
+                vec2 {400,500},
                 vec2 {0,0},
                 vec2 {0,0},
                 vec2 {500,250}
@@ -39,7 +39,7 @@ namespace Tmpl8
             const vec2 AI_PATROL_DEFAULT_POS[5] =
             {
                 vec2 {660,224},
-                vec2 {100,300},
+                vec2 {5*32,40*32},
                 vec2 {0,0},
                 vec2 {0,0},
                 vec2 {500,250}
@@ -47,7 +47,7 @@ namespace Tmpl8
             const vec2 PLAYER_DEFAULT_POS[5] =
             {
                 vec2 {300,10},
-                vec2 {500,10},
+                vec2 {2*32,32},
                 vec2 {600,10},
                 vec2 {600,30},
                 vec2 {100,10}

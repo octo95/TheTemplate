@@ -179,7 +179,7 @@ namespace Tmpl8
         bool isIce = (CheckBottom == TileType::Ice);
 
         // The player can jump if they press up, touch the ground and have at least 1 collectible.
-        canPlayerJump = GetAsyncKeyState(VK_UP) && (CheckBottom == 3 || CheckBottom == 4) /*&& collectibles_collected > 0*/;
+        canPlayerJump = GetAsyncKeyState(VK_UP) && (CheckBottom == 3 || CheckBottom == 4) && collectibles_collected > 0;
 
         return canPlayerJump;
     }

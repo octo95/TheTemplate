@@ -23,8 +23,8 @@ namespace Tmpl8
         private:
             vec2 BELL_POS[5] =
             {
-                vec2 {22,30},
-                vec2 {0,10},
+                vec2 {8,21},
+                vec2 {1,36},
                 vec2 {0,10},
                 vec2 {0,30},
                 vec2 {2,3}

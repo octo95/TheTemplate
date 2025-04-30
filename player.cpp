@@ -58,7 +58,7 @@ namespace Tmpl8
         // Jump
         if (can_jump)
         {
-            velocity.y += -6.0f;
+            velocity.y += -7.0f;
             collectibles_collected--;
         }
 
@@ -67,10 +67,16 @@ namespace Tmpl8
 
         //printf("deltaTime: %f\n", deltaTime);
         // Apply horizontal movement
-        new_pos.x += velocity.x /*/ (deltaTime * 1000.0f) * 3.0f*/; 
+        new_pos.x += velocity.x /* (deltaTime * 1000.0f) * 3.0f*/; 
 
         // Apply vertical movement        
         new_pos.y += velocity.y /*/ (deltaTime * 1000.0f) * 3.0f*/;
+
+        //// Apply horizontal movement
+        //new_pos.x += (velocity.x / (deltaTime * 1000.0f)) * 6.0f;
+        //
+        //// Apply vertical movement        
+        //new_pos.y += (velocity.y / (deltaTime * 1000.0f)) * 7.0f;
 
 
     }
@@ -127,10 +133,17 @@ namespace Tmpl8
             }
         }
 
-        // Clamp horizontally to not go out of bounds
+        // + Clamp to not go out of bounds
+
+        // Horizontally
         if (position.x < 0) position.x = 0;
         if (position.x + player_img_width > mapSize.x)
             position.x = mapSize.x - player_img_width;
+
+        // Vertically
+        if (position.y < 0) position.y = 0;
+        if (position.y + player_img_height > mapSize.y)
+            position.y = mapSize.y - player_img_height;
 
         return camPos;
     }
