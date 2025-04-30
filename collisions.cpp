@@ -77,8 +77,9 @@ namespace Tmpl8
     TileType Collisions::checkCollisionAtOffset(const vec2& pos, const vec2& offset)
     {
         vec2 adjusted_pos = pos + offset;
-        auto tile = tilemap.tile_at(adjusted_pos);
-        return (tile.type != TileType::None) ? tile.type : TileType::None;
+        vec2 tiled_pos = vec2(floor(adjusted_pos.x / TILE_SIZE) * TILE_SIZE, floor(adjusted_pos.y / TILE_SIZE) * TILE_SIZE);
+        auto tile = tilemap.map_collision[tiled_pos];
+        return (tile != TileType::None) ? tile : TileType::None;
     }
 
     void Collisions::manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles)
@@ -178,7 +179,7 @@ namespace Tmpl8
         bool isIce = (CheckBottom == TileType::Ice);
 
         // The player can jump if they press up, touch the ground and have at least 1 collectible.
-        canPlayerJump = GetAsyncKeyState(VK_UP) && (CheckBottom == 3 || CheckBottom == 4) && collectibles_collected > 0;
+        canPlayerJump = GetAsyncKeyState(VK_UP) && (CheckBottom == 3 || CheckBottom == 4) /*&& collectibles_collected > 0*/;
 
         return canPlayerJump;
     }

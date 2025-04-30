@@ -31,7 +31,7 @@ namespace Tmpl8
             vec2 default_pos = { 0, 0 };
             bool can_jump = false;
 
-            float acceleration = 0.0f;
+            float angular_acceleration = 0.0f;
 		    float friction = 0.05f;                     // Friction on the ground, lower friction results in more momentum
             const float ENERGY_LOSS = 0.9f;             // How much energy the ball keeps after a bounce in %
 		    const float MAX_HORIZONTAL_SPEED = 3.0f;    // Max horizontal speed
@@ -39,8 +39,8 @@ namespace Tmpl8
 		    const float PLAYER_DRAW_OFFSET_Y = -4.0f;   // Offset for the player sprite (since it has a reduced hitbox, to put it back on the ground)
 
             // Functions
-            void movePlayer(vec2& new_pos, Collisions* collisions);
-            vec2 camFollowPlayer();
+            void movePlayer(vec2& new_pos, Collisions* collisions, float deltaTime);
+            vec2 camFollowPlayer(TileMap* map);
 
 		    // Getters / Setters
             void getPlayerPos(vec2& pos) { pos = position; }

@@ -2,7 +2,7 @@
 #include "surface.h"
 #include "tile.h"
 #include "player.h"
-
+#include <unordered_map>
 
 namespace Tmpl8
 {
@@ -11,41 +11,8 @@ namespace Tmpl8
     const int TILE_COLUMNS = 27;
     const int MAP_AMOUNT = 5;
 
-    // MAP1
-    const char MAP1[TILE_ROWS][TILE_COLUMNS * 3] = {
-    "ca ca da da da da da da da da da da da da da da da da da da da da ca ca ca ca ca",
-    "ca ca da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca",
-    "ca da da da da da da da da da da da ca ca da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da ca da da da da da da da da da da da ca ca",
-    "ca ba ca ca ca ca ca da da da da da da da da da da da da da da da da da da ca ca",
-    "ca ca ca ca ca ca ca da da ca ca ca ca ca ca ca ca ca da da da da da da da ca ca",
-    "ca ca ca ca ca ca ca da da da da da da da da da da da da da da da da da da ca ca",
-    "ca ca ca ca ca ca ca da da da da da da da da da da da da ca ca ca ca ca da ca ca",
-    "ca ca ca ca ca ca ca da da da da da da da da da da da da ca ca ca ca ca da ca ca",
-    "ca ca ca ca ca ca ca da da da da da da da da da da da da ca ca ca ca da da ca ca",
-    "ca ca ca ca ca ca ca aa aa aa aa aa aa aa aa aa aa aa aa ca ca ca ca da da ca ca",
-    "ca ca ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da ca ca",
-    "ca ca ca da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da ca ca",
-    "ca ca ca da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da ca ca",
-    "ca ca da da da da da ca ca ca da da da ca ca da da da da ca ca ca da da da ca ca",
-    "ca ca da da da da da ca ca da da da da da ca da da da da da ca da da da da ca ca",
-    "ca ca da da da da da da ca da da da da da da da da da da da da da da da da ca ca",
-    "ca ca da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca ca da da da da ea ea ea ea ea ea ea ea ea ea ea ea ea ea ca ca ca ca da ca ca",
-    "ca ca da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca ca da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca ca aa aa ca ca ca ca ca da da da da ca ca ca ca ca ca ca ca ca ca ca da ca ca",
-    "ca ca da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da ca ca",
-    "ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da ca ca",
-    "ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da ca da ca ca",
-    "ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da da ca ca",
-    "ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da da ca ca",
-    "ca ca aa ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da da da ca ca",
-    "ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ba ba ca ca ca",
-    "ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca"
-    };
+    extern Sprite img_map1_data_read;
+
     const vec2 MAP1_COLLECTIBLES[10] = {
         vec2 {3,4},
         vec2 {13,5},
@@ -64,40 +31,6 @@ namespace Tmpl8
     };
     
     // MAP2
-    const char MAP2[TILE_ROWS][TILE_COLUMNS * 3] = {
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da ca ca ca ca da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da ca da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da ca da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da ca da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da ca ea ea ea da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da ca ca da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da ca da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da ea da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da aa da da da aa da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da ca da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da aa da da da aa da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca ca ba ba ca ca aa ca ca ca ca ca ba ba ca ca ca ca ca ca aa ca ca ba ba ca ca"
-    };
     const vec2 MAP2_COLLECTIBLES[2] = {
         vec2 {3,2},
         vec2 {12,1}
@@ -108,40 +41,6 @@ namespace Tmpl8
     };
 
     // MAP3
-    const char MAP3[TILE_ROWS][TILE_COLUMNS * 3] = {
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da ca",
-    "ca da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da ca",
-    "ca da da da da da da da da da da da da ca da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da ca da da da da da da da da da da da da ca",
-    "ca ca ca ca ca ca ca ca ca da da da ca ca ca da da da ca ca ca ca ca ca ca ca ca",
-    "ca ca ca ca ca ca ca ca ca da da da ca ca ca da da da ca ca ca ca ca ca ca ca ca",
-    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca da da da ea ea ea ea ea ea ea ea ea ea ea ea ea ea ea da da da ca ca ca",
-    "ca ca ca da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da ca ca ca",
-    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca aa aa da da ca ca ca ca da da da da da ca ca ca ca ca ca aa aa ca ca ca",
-    "ca ca ca ca ca da da ca ca ca ca da da da da da ca ca ca ca ca ca ca ca ca ca ca",
-    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca da da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da ca ca ca",
-    "ca ca ca da da da da ca ca ca ca da da da da da ca ca ca ca ca ca ca da ca ca ca",
-    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca aa aa da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca",
-    "ca ca ca da ca da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da ca ca ca",
-    "ca ca ca da da da ca ca ca ca ca da da da da da ca ca ca ca ca ca ca da ca ca ca",
-    "ca ca ca ca da da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca",
-    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca da da da da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da ca ca ca",
-    "ca ca ca ca ca da da aa ca ca ca da da da da da ca ca ca ca ca ca ca ca ca ca ca",
-    "ca ca ca da da da da da da da da da da da da da da da da da da da da da ca ca ca",
-    "ca ca ca ca ca ca ca ca ca ca ca ba ba ba ba ba ca ca ca ca ca ca ca ca ca ca ca",
-    "ca ca ca ca ca ca ca ca ca ca ca ba ba ba ba ba ca ca ca ca ca ca ca ca ca ca ca"
-    };
     const vec2 MAP3_COLLECTIBLES[4] = {
         vec2 {3,2},
         vec2 {11,9},
@@ -156,40 +55,6 @@ namespace Tmpl8
     };
 
     // MAP4
-    const char MAP4[TILE_ROWS][TILE_COLUMNS * 3] = {
-    "ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da ca",
-    "ca da da ca da da da da da da da da da da da da da da da da da da ca da da da ca",
-    "ca da da ca da da da da da da da da da da da da da da da da da da ca da da da ca",
-    "ca ba ba ca ca ca ca ca ca ca ca ca da da da ca ca ca ca ca ca ca ca da ca ca ca",
-    "ca ca ca ca ca ca ca ca ca ca ca ca da da da ca ca ca ca ca ca ca ca da ca ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da ea ea ea ea ea ea ea ea ea ea ea ea ea ea ea ea ea ea ea da da da da ca",
-    "ca da da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca ca ca aa aa ca da da da ca ca da da da da ca ca ca ca ca ca ca ca ca ca ca ca",
-    "ca ca ca ca ca ca da da da ca ca da da da da ca ca ca ca ca ca ca ca ca ca ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da ca",
-    "ca da ca ca ca ca ca ca ca da da da da da da ca ca ca ca ca ca ca ca da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca ca ca aa aa ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da ca",
-    "ca ca ca ca ca ca ca ca ca da da da da da da ca ca ca ca ca ca ca ca da da da ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca ca ca ca ca ca ca ca ca ca ca ca ca da ca ca ca ca ca ca ca ca ca ca ca ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca da ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca ca da da ca",
-    "ca da aa aa ca ca da da da da da da da da da ca ca ca ca ca ca ca ca ca aa aa ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da da ca",
-    "ca ca ca ca ca ca ca ca ca ca ca ba ba ba ba ba ca ca ca ca ca ca ca ca ca ca ca",
-    "ca ca ca ca ca ca ca ca ca ca ca ba ba ba ba ba ca ca ca ca ca ca ca ca ca ca ca"
-    };
     const vec2 MAP4_COLLECTIBLES[4] = {
         vec2 {3,2},
         vec2 {11,9},
@@ -204,40 +69,6 @@ namespace Tmpl8
     };
 
     // MAP5
-    const char MAP5[TILE_ROWS][TILE_COLUMNS * 3] = {
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca ca ca ca ca ca ca ca ca ca da da ca ca ca ca da da da da da da da da da ca ca",
-    "ca da da da da da da da da ca ca ca ca ca ca ca da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da ca ca da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca",
-    "ca da da da da da da da da da da da da da da da da da da da da da da da da ca ca"
-    };
     const vec2 MAP5_COLLECTIBLES[4] = {
         vec2 {3,2},
         vec2 {11,9},
@@ -262,19 +93,24 @@ namespace Tmpl8
             );
 
 			// Variables
+            std::unordered_map<vec2, TileType> map_collision;
+            Sprite* current_map_data_read;
+            Sprite* current_map_draw;
+
+            // 
             const char (*current_map)[TILE_COLUMNS * 3];
             int current_level = 1;
 
             // Functions
+            void readImageToMap(Sprite* image);
+
+
             void loadLevel(int i);
-            void readImageToCharMap();
-            Tile tile_at(int x, int y);
-            Tile tile_at(vec2 pos);
-            void drawMap(Surface* screen, const Camera& camera);
+
             int incrementMapIndex() { return current_level = current_level % MAP_AMOUNT + 1; }
 
 			// Getters / Setters
-            void setMapIndex(int index);
+            void loadMap(int index);
             int getCurrentLevel() const { return (current_level - 1) % MAP_AMOUNT + 1; }
 
         private:

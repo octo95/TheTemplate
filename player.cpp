@@ -18,7 +18,7 @@ namespace Tmpl8
     int player_img_height = img_player.GetHeight();
     bool canJump = false;
 
-    void Player::movePlayer(vec2& new_pos, Collisions* collisions)
+    void Player::movePlayer(vec2& new_pos, Collisions* collisions, float deltaTime)
     {
         // Left
         if (GetAsyncKeyState(VK_LEFT))
@@ -63,39 +63,77 @@ namespace Tmpl8
         }
 
         // Pass the velocity to the camera to make the player rotate while moving
-        acceleration = velocity.x * 90.0f;
+        angular_acceleration = velocity.x * 90.0f;
 
+        //printf("deltaTime: %f\n", deltaTime);
         // Apply horizontal movement
-        new_pos.x += velocity.x;
+        new_pos.x += velocity.x /*/ (deltaTime * 1000.0f) * 3.0f*/; 
 
         // Apply vertical movement        
-        new_pos.y += velocity.y;
+        new_pos.y += velocity.y /*/ (deltaTime * 1000.0f) * 3.0f*/;
 
-        // Clamp horizontally to not go out of bounds
-        if (new_pos.x < 0) new_pos.x = 0;
-        if (new_pos.x + player_img_width > SCREEN_WIDTH + TILE_SIZE)
-            new_pos.x = SCREEN_WIDTH - player_img_width + TILE_SIZE;
+
     }
 
-    vec2 Player::camFollowPlayer()
+    vec2 Player::camFollowPlayer(TileMap* map)
     {
-        float camX = -TILE_SIZE;
-        float camY = 0;
-        int playerCenterY = static_cast<int>(position.y) + player_img_height / 2;
-        int screenCenterY = SCREEN_HEIGHT / 2;
-        int mapHeight = TILE_ROWS * TILE_SIZE;
-        int maxCamY = SCREEN_HEIGHT - mapHeight;
+        vec2 camPos = vec2(0.0f, 0.0f); // Offset the camera by one tile to the right
 
-        if (playerCenterY < screenCenterY)
-            camY = 0;
+        vec2 playerCenter = vec2(
+            position.x + player_img_width / 2.0f,
+            position.y + player_img_height / 2.0f
+        );
+
+        vec2 screenCenter = vec2(
+            SCREEN_WIDTH / 2.0f,
+            SCREEN_HEIGHT / 2.0f
+        );
+
+        vec2 mapSize = vec2(
+            map->current_map_data_read->GetWidth(),
+            map->current_map_data_read->GetHeight()
+        );
+
+        vec2 maxCam = vec2(
+            SCREEN_WIDTH - mapSize.x,
+            SCREEN_HEIGHT - mapSize.y
+        );
+
+        // Vertical
+        if (playerCenter.y < screenCenter.y)
+        {
+            camPos.y = 0.0f;
+        }
         else
         {
-            camY = -(playerCenterY - screenCenterY);
-
-            if (camY < maxCamY)
-                camY = maxCamY;
+            camPos.y = -(playerCenter.y - screenCenter.y);
+            if (camPos.y < maxCam.y)
+            {
+                camPos.y = maxCam.y;
+            }
         }
 
-        return { camX, camY };
+        // Horizontal
+        if (playerCenter.x < screenCenter.x)
+        {
+            camPos.x = 0.0f;
+        }
+        else
+        {
+            camPos.x = -(playerCenter.x - screenCenter.x);
+            if (camPos.x < maxCam.x)
+            {
+                camPos.x = maxCam.x;
+            }
+        }
+
+        // Clamp horizontally to not go out of bounds
+        if (position.x < 0) position.x = 0;
+        if (position.x + player_img_width > mapSize.x)
+            position.x = mapSize.x - player_img_width;
+
+        return camPos;
     }
+
+
 };

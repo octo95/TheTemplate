@@ -1,5 +1,6 @@
 #include "level.h"
 
+
 namespace Tmpl8
 {
     Level::Level(TileMap& tilemapRef, Player& playerRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef,WallMap& wallRef, GameSound& gamesoundRef, Bell& bellRef, AI_Patrol& ai_patrolRef, AI_Copy& ai_copyRef) :
@@ -16,20 +17,28 @@ namespace Tmpl8
 
     void Level::loadLevel(int map_index)
     {
+        // Reset AI copy
         ai_copy.playerBuffer.reset();
         ai_copy.position = ai_copy.default_pos;
         ai_copy.copyTimer = 3.0f; 
         ai_patrol.isDead = false;
         bell.touchedPlayer = false;
         collected_new = false;
+
+
         collectible_timer_active = false;
         collectibles_collected = 0;
+
+        // Set Map
+        tilemap.loadMap(map_index);
+
         tilemap.current_level = map_index;
         player.position = player.default_pos;
-        tilemap.setMapIndex(map_index);
         manageDefaultPos(map_index);
         loadAllCollectibles(map_index);
         loadAllWalls(map_index);
+
+        // AI movement
         ai_follow.setAIFollowPos(AI_FOLLOW_DEFAULT_POS[map_index-1]);
         ai_patrol.setAIPatrolPos(AI_PATROL_DEFAULT_POS[map_index-1]);
     }

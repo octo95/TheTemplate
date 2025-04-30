@@ -21,7 +21,7 @@ namespace Tmpl8
                 
                 // Player logic
                 player.getPlayerPos(player_pos);
-                player.movePlayer(player_pos, &collisions);
+                player.movePlayer(player_pos, &collisions, deltaTime);
                 player.setJumpState(collisions.getJumpState(player_pos));
         
                 // Collisions logic
@@ -32,12 +32,12 @@ namespace Tmpl8
         
                 // AI logic
                 ai_copy.setProperties();
-                ai_copy.playerBuffer.add(player_pos, player.acceleration);
+                ai_copy.playerBuffer.add(player_pos, player.angular_acceleration);
                 ai_follow.followPlayer(deltaTime);
                 ai_patrol.Patrol(deltaTime, &collisions);
         
                 // Camera logic
-                camera.setCamPos(player.camFollowPlayer());
+                camera.setCamPos(player.camFollowPlayer(&tilemap));
                 camera.shakeCamera(deltaTime);
 
                 // Bell logic
@@ -51,10 +51,10 @@ namespace Tmpl8
             }
         
             // * Draw the objects on screen
-            tilemap.drawMap(screen, camera);            
+            camera.drawWithCam(tilemap.current_map_draw, screen, vec2(0, 0));
             drawWallMap(&camera, screen, &this->wall);  
             drawCollectibleMap(&camera, screen);       
-            camera.drawPlayer(&img_player, screen, player_pos, deltaTime, player.acceleration);
+            camera.drawPlayer(&img_player, screen, player_pos, deltaTime, player.angular_acceleration);
             camera.drawAICopy(&img_ai_copy, screen, ai_copy.position, deltaTime, ai_copy.acceleration);
 			img_ai_follow.DrawRotated(screen, ai_follow.position + camera.getCamPos(), ai_follow.angle);
 			if(!ai_patrol.isDead) img_ai_patrol.DrawRotated(screen, ai_patrol.position + camera.getCamPos(), ai_patrol.angle);
@@ -74,7 +74,7 @@ namespace Tmpl8
     // + INITIALIZER / SHUTDOWN
     void Game::Init() 
     {
-        tilemap.readImageToCharMap();
+        tilemap.readImageToMap(&img_map1_data_read);
         gamesound.playMusic(gamesound.mus_menu);
     }
     void Game::Shutdown() {}

@@ -4,125 +4,72 @@ namespace Tmpl8
 {
     TileMap::TileMap(Player& playerRef) :
         player(playerRef)
+    {}
+
+    Sprite img_map1_data_read(new Surface("assets/images/map/data_read/img_map1_data_read.png"), 1);
+    Sprite img_map1_draw(new Surface("assets/images/map/draw/img_map1_draw.png"), 1);
+
+    Sprite img_map2_data_read(new Surface("assets/images/map/data_read/img_map2_data_read.png"), 1);
+    Sprite img_map2_draw(new Surface("assets/images/map/draw/img_map2_draw.png"), 1);
+
+    Sprite img_map3_data_read(new Surface("assets/images/map/data_read/img_map3_data_read.png"), 1);
+    Sprite img_map3_draw(new Surface("assets/images/map/draw/img_map3_draw.png"), 1);
+
+    Sprite img_map4_data_read(new Surface("assets/images/map/data_read/img_map4_data_read.png"), 1);
+    Sprite img_map4_draw(new Surface("assets/images/map/draw/img_map4_draw.png"), 1);
+
+    Sprite img_map5_data_read(new Surface("assets/images/map/data_read/img_map5_data_read.png"), 1);
+    Sprite img_map5_draw(new Surface("assets/images/map/draw/img_map5_draw.png"), 1);
+
+
+    void TileMap::loadMap(int index)
     {
-    }
-
-    Sprite map_test(new Surface("assets/map_test.png"), 1);
-
-    void TileMap::setMapIndex(int index)
-    {
-        switch (index)
-        {
-        case 1:
-            current_map = MAP1;
-            break;
-        case 2:
-            current_map = MAP2;
-            break;
-        case 3:
-            current_map = MAP3;
-            break;
-        case 4:
-            current_map = MAP4;
-            break;
-        case 5:
-            current_map = MAP5;
-            break;
-            current_level = index;
-        }
-    }
-
-    Tile TileMap::tile_at(vec2 pos)
-    {
-        int tile_row = (int)(pos.y / TILE_SIZE);
-        int tile_col = (int)(pos.x / TILE_SIZE);
-
-        char a = current_map[tile_row][tile_col * 3];
-        char b = current_map[tile_row][tile_col * 3 + 1];
-
-        int tx = a - 'a';
-        int ty = b - 'a';
-
-        TileType tile_type = None;
-
-        if (a == 'd' && b == 'a')       tile_type = None;
-        else if (a == 'a' && b == 'a')  tile_type = Damage;
-        else if (a == 'b' && b == 'a')  tile_type = End;
-        else if (a == 'c' && b == 'a')  tile_type = Collision;
-        else if (a == 'e' && b == 'a')  tile_type = Ice;
-
-        Tile tile = Tile
-        {
-            tx,
-            ty,
-            tile_type,
+        Sprite* maps_data[5] = {
+            &img_map1_data_read,
+            &img_map2_data_read,
+            &img_map3_data_read,
+            &img_map4_data_read,
+            &img_map5_data_read,
+        };
+        Sprite* maps_draw[5] = {
+            &img_map1_draw,
+            &img_map2_draw,
+            &img_map3_draw,
+            &img_map4_draw,
+            &img_map5_draw,
         };
 
-        return tile;
+        current_map_data_read = maps_data[index-1];
+        current_map_draw = maps_draw[index-1];
+        current_level = index;
+
+        // Load collision
+        this->readImageToMap(current_map_data_read);
     }
 
-    Tile TileMap::tile_at(int x, int y)
-    {
-        int tile_row = y / TILE_SIZE;
-        int tile_col = x / TILE_SIZE;
+    void TileMap::readImageToMap(Sprite* image) {
+        Pixel* src = image->GetBuffer();
+        size_t width = image->GetWidth();
+        size_t height = image->GetHeight();
+        std::unordered_map<vec2, TileType> new_map = std::unordered_map<vec2, TileType>{};
 
-        char a = current_map[tile_row][tile_col * 3];
-        char b = current_map[tile_row][tile_col * 3 + 1];
-
-        int tx = a - 'a';
-        int ty = b - 'a';
-
-        TileType tile_type = None;
-
-        if (a == 'd' && b == 'a')       tile_type = None;
-        else if (a == 'a' && b == 'a')  tile_type = Damage;
-        else if (a == 'b' && b == 'a')  tile_type = End;
-        else if (a == 'c' && b == 'a')  tile_type = Collision;
-        else if (a == 'e' && b == 'a')  tile_type = Ice;
-
-        Tile tile = Tile
+        for ( int y = 0; y < height; y+=TILE_SIZE ) 
         {
-            tx,
-            ty,
-            tile_type,
-        };
-
-        return tile;
-    }
-
-    void TileMap::drawMap(Surface* screen, const Camera& camera)
-    {
-        for (int y = 0; y < TILE_ROWS; ++y)
-        {
-            for (int x = 0; x < TILE_COLUMNS; ++x)
+            for ( int x = 0; x < width; x+=TILE_SIZE ) 
             {
-                Tile tile = tile_at(x * TILE_SIZE, y * TILE_SIZE);
-                tile.DrawTile(screen, x * TILE_SIZE, y * TILE_SIZE, camera);
-            }
-        }
-    }
 
-    std::string getTileColor(int color)
-    {
-        if (color == 0xFF0000) return "aa"; // Red      (Damage)
-        if (color == 0x00FF00) return "ba"; // Green    (End)
-        if (color == 0x0000FF) return "ca"; // Blue     (Collision)
-        if (color == 0x000000) return "da"; // Black    (None)
-        if (color == 0x00DEFF) return "ea"; // Cyan     (Ice)
-    }
+                TileType type = TileType::Ice;
+                Pixel p = src[(y * width) + x];
+                if (p == 0xFFFF0000) type = TileType::Damage;    // Red      (Damage)
+                if (p == 0xFF00FF00) type = TileType::End;       // Green    (End)
+                if (p == 0xFF0000FF) type = TileType::Collision; // Blue     (Collision)
+                if (p == 0xFF000000) type = TileType::None;      // Black    (None)
+                if (p == 0xFFFFDE00) type = TileType::Ice;       // Cyan     (Ice)
 
-    void TileMap::readImageToCharMap()
-    {
-        int columns_amount = map_test.GetWidth() / TILE_SIZE;
-        int rows_amount = map_test.GetHeight() / TILE_SIZE;
-
-        for (int row = 0; row < rows_amount; ++row)
-        {
-            for (int col = 0; col < columns_amount; ++col)
-            {
-                // TODO
+                new_map.insert({ vec2{(float)x,(float)y}, type });
             }
         }
 
+        map_collision = new_map;
     }
 }
