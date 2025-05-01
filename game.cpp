@@ -1,5 +1,4 @@
 #include "game.h"
-
 namespace Tmpl8
 {
     // + MAIN GAME LOGIC 
@@ -77,5 +76,7 @@ namespace Tmpl8
         tilemap.readImageToMap(&img_map1_data_read);
         gamesound.playMusic(gamesound.mus_menu);
     }
-    void Game::Shutdown() {}
+    void Game::Shutdown() 
+    {
+    }
 }

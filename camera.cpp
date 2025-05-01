@@ -1,23 +1,34 @@
-#include "camera.h"
+﻿#include "camera.h"
 
 namespace Tmpl8
 {
     void Camera::shakeCamera(float deltaTime)
     {
-        float shakeTime = 0.6f;
-        float frequency = 20.0f;
-        float amplitude = 2.5;
+        static float frequency = 0.0f;
+        static float amplitude = 0.0f;
 
-        if (shake_state)
+        if (shake_conditions != shakeConditions::None && total_time <= 0.0f)
         {
-            total_time = shakeTime;
-            shake_state = false;
+            switch (shake_conditions)
+            {
+            case shakeConditions::Damage:
+                total_time = 0.6f;
+                frequency = 20.0f;
+                amplitude = 2.5f;
+                break;
+            case shakeConditions::FallHard:
+                total_time = 1.7f;
+                frequency = 4.0f;
+                amplitude = 3.5f;
+                break;
+            }
+            shake_conditions = shakeConditions::None;
         }
-
-        total_time -= deltaTime;
 
         if (total_time > 0.0f)
         {
+            total_time -= deltaTime;
+
             shake.x = std::sin(std::exp(total_time) * frequency) * amplitude;
             shake.y = std::cos(std::exp(total_time) * frequency) * amplitude;
         }
@@ -26,6 +37,10 @@ namespace Tmpl8
             shake = { 0, 0 };
         }
     }
+
+
+
+
 
     void Camera::drawWithCam(Sprite* img, Surface* screen, vec2 pos)
     {

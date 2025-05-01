@@ -8,6 +8,14 @@ namespace Tmpl8
 	class Camera
 	{
 		public:
+			enum class shakeConditions {
+				None,
+				Damage,
+				FallHard
+			};
+
+			shakeConditions shake_conditions = shakeConditions::None;
+
 			// Shaking functions
 			void shakeCamera(float deltaTime);
 
@@ -19,7 +27,7 @@ namespace Tmpl8
 			// Getters / Setters
 			vec2 getCamPos() const { return position + shake; }
 			void setCamPos(const vec2& position) { this->position = position; }
-			void setShakeState(bool is_shaking) { shake_state = is_shaking; }
+			void setShakeState(shakeConditions condition) { shake_conditions = condition, printf("set: %d\n", (int)shake_conditions); }
 
 		private:
 			vec2 position = { 0, 0 };

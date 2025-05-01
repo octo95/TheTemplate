@@ -36,7 +36,7 @@ namespace Tmpl8
                 OFF_SCREEN,
                 vec2 {3*32,6*32}, // Show on level 3
                 OFF_SCREEN,
-                OFF_SCREEN
+                vec2 {3 * 32,6 * 32}
             };
             const vec2 AI_PATROL_DEFAULT_POS[5] =
             {
@@ -44,7 +44,7 @@ namespace Tmpl8
                 vec2 {5*32,40*32}, // Show on level 2
                 OFF_SCREEN,
                 OFF_SCREEN,
-                OFF_SCREEN
+                vec2 {5 * 32,40 * 32}
             };
             const vec2 PLAYER_DEFAULT_POS[5] =
             {

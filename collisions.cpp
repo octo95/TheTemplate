@@ -122,6 +122,7 @@ namespace Tmpl8
             gamesound.playSound(gamesound.snd_fall_strong);
             //printf("fall hard: %.0f\n", player.velocity.y);
             bouncing_force = 10.0f;
+            camera.setShakeState(Camera::shakeConditions::FallHard);
         }
 
         if (isNoneX) player.position.x = new_pos.x;
@@ -130,9 +131,9 @@ namespace Tmpl8
         {
             level.loadLevel(tilemap.getCurrentLevel());
             gamesound.playSound(gamesound.snd_damage);
-            camera.setShakeState(true);
+            camera.setShakeState(Camera::shakeConditions::Damage);
         }
-        else if (isEnd)
+        else if (isEnd) 
         {
             if (tilemap.getCurrentLevel() == MAP_AMOUNT) 
             {

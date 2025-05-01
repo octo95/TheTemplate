@@ -20,7 +20,7 @@ namespace Tmpl8
 
     void Player::movePlayer(vec2& new_pos, Collisions* collisions, float deltaTime)
     {
-        printf("deltaTime: %f\n", deltaTime);
+        //printf("deltaTime: %f\n", deltaTime);
 
         // Left
         if (GetAsyncKeyState(VK_LEFT))
