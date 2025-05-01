@@ -4,6 +4,8 @@
 #include "player.h"
 #include "surface.h"
 #include "tilemap.h"
+#include "text.h"
+#include "collectible.h"
 
 namespace Tmpl8
 {
@@ -41,10 +43,13 @@ namespace Tmpl8
 				Level& levelRef, 
 				Player& playerRef, 
 				TileMap& tilemapRef, 
-				GameSound& gamesoundRef
+				GameSound& gamesoundRef,
+				Text& textRef
 			);
 
 			// Variables
+			int score = 0;
+			int previousScore = 0;
 			bool start_game = false;
 			bool resume_game = true;
 
@@ -60,6 +65,7 @@ namespace Tmpl8
 			void manageLevelSelect(int index);
 			void manageDifficultySelect(int index);
 			void audioManagerOpen(Surface* screen);
+			void scoreManagerOpen(Surface* screen, float deltaTime);
 			void quitManagerOpen(Surface* screen);
 
 			// Mouse functions
@@ -73,6 +79,7 @@ namespace Tmpl8
 			Player& player;
 			TileMap& tilemap;
 			GameSound& gamesound;
+			Text& text;
 
 			// Variables
 			int mouseX, mouseY; 

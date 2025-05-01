@@ -4,11 +4,12 @@
 
 namespace Tmpl8
 {
-    Menu::Menu(Level& levelRef, Player& playerRef, TileMap& tilemapRef, GameSound& gamesoundRef) :
+    Menu::Menu(Level& levelRef, Player& playerRef, TileMap& tilemapRef, GameSound& gamesoundRef, Text& textRef) :
         level(levelRef),
         player(playerRef),
         tilemap(tilemapRef),
-        gamesound(gamesoundRef)
+        gamesound(gamesoundRef),
+        text(textRef)
     {}
 
     // + MAIN MENU
@@ -440,6 +441,71 @@ namespace Tmpl8
         }
 
     }
+
+    /*
+    * { TODO: }
+    * - Update actual score
+    * - Whenever it's updated make it scale up (add a float scale to the function)
+    * - Play an SFX
+    * - When it increases at the end of a level it can add up like angry faces did
+    */
+#include <ctime>  // For time management
+
+    // Add a member variable to store the time of the last score update
+    float lastScoreUpdateTime = -1.0f;  // -1 means no update yet
+
+    void Menu::scoreManagerOpen(Surface* screen, float deltaTime)
+    {
+        char buffer[50];
+        bool score_updated = score != previousScore;  // Track if the score is updated
+        Pixel color = 0xFFFFFF;
+
+        // Check if the score was updated
+        if (score_updated)
+        {
+            // Store the current time when the score is updated
+            lastScoreUpdateTime = 0.0f;  // Reset the timer when score updates
+        }
+
+        // Change color if the score has been updated within the last second
+        if (lastScoreUpdateTime >= 0.0f && lastScoreUpdateTime < 1.0f)
+        {
+            color = 0xFFFF00;  // Yellow color for the updated score
+        }
+
+        // If more than 1 second has passed since the score update, reset the color
+        if (lastScoreUpdateTime >= 1.0f)
+        {
+            color = 0xFFFFFF;  // Reset to white after 1 second
+        }
+
+        // Increment the lastScoreUpdateTime by deltaTime
+        if (lastScoreUpdateTime >= 0.0f)
+        {
+            lastScoreUpdateTime += deltaTime;
+        }
+
+        // Save the current score as previousScore for the next frame
+        previousScore = score;
+
+        // Format the score as text
+        sprintf(buffer, "Score: %04d", score);
+
+        std::string txt = buffer;
+        int text_width = stb_easy_font_width((char*)txt.c_str());
+        float offset_to_corner = 10.0f;
+
+        vec2 draw_pos = vec2(
+            SCREEN_WIDTH - text_width - offset_to_corner,
+            offset_to_corner
+        );
+
+        // Draw the text on the screen
+        text.printOnScreen((char*)txt.c_str(), draw_pos + 2.0f, screen, 0x934712);  // Drop shadow (dark orange)
+        text.printOnScreen((char*)txt.c_str(), draw_pos, screen, color);         // Actual text (color)
+    }
+
+
 
     void Menu::quitManagerOpen(Surface* screen)
     {

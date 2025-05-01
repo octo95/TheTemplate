@@ -243,6 +243,7 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="template.cpp" />
+    <ClCompile Include="text.cpp" />
     <ClCompile Include="tile.cpp" />
     <ClCompile Include="tilemap.cpp" />
     <ClCompile Include="wall.cpp" />
@@ -265,6 +266,7 @@
     <ClInclude Include="gamesound.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />
+    <ClInclude Include="text.h" />
     <ClInclude Include="tile.h" />
     <ClInclude Include="tilemap.h" />
     <ClInclude Include="vec2_hash.h" />

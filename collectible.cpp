@@ -50,17 +50,27 @@ namespace Tmpl8
 		}
 	}
 
-	void drawCollectibleMap(Camera* camera,Surface* screen)
+	void drawCollectibleMap(Camera* camera, Surface* screen, float deltaTime)
 	{
+		static float totalTime = 0.0f;
+		float floating_time = 2.0f; 
+		float amplitude = 5.0f;    
+
+		totalTime += deltaTime;
+
 		for (auto& c : cmap)
 		{
 			vec2 draw_pos = vec2(
-				c.first.x * TILE_SIZE + TILE_SIZE / 2.0f, 
+				c.first.x * TILE_SIZE + TILE_SIZE / 2.0f,
 				c.first.y * TILE_SIZE + TILE_SIZE / 2.0f
 			);
+
+			// Offset to make the collectibles float, adding an offset of 4 to put it a bit higher to the ground
+			draw_pos.y += sin((totalTime / floating_time) * 2.0f * 3.1416f) * amplitude - 4.0f;
 			camera->drawWithCam(&img_collectible_jump, screen, draw_pos);
 		}
 	}
+
 
 	void manageCollectibleCollision(vec2 player_pos, GameSound* gamesound)
 	{
@@ -76,6 +86,8 @@ namespace Tmpl8
 				gamesound->playSound(gamesound->snd_collect);
 				collectibles_collected++;
 				collected_new = true;
+				//menu.previousScore = menu.score;
+				//menu.score += 100;
 			}
 			else 
 			{

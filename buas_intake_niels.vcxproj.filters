@@ -61,6 +61,9 @@
     <ClCompile Include="ai_copy.cpp">
       <Filter>Solutions\AIs</Filter>
     </ClCompile>
+    <ClCompile Include="text.cpp">
+      <Filter>Solutions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="player.h">
@@ -125,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="circular_buffer.h">
       <Filter>Headers\AIs</Filter>
+    </ClInclude>
+    <ClInclude Include="text.h">
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

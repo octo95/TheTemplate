@@ -184,6 +184,11 @@ void Surface::Line( float x1, float y1, float x2, float y2, Pixel c )
 	}
 }
 
+void Surface::Line(vec2 pos1, vec2 pos2, Pixel c)
+{
+	Line(pos1.x, pos1.y, pos2.x, pos2.y, c);
+}
+
 void Surface::Plot( int x, int y, Pixel c )
 { 
 	if ((x >= 0) && (y >= 0) && (x < m_Width) && (y < m_Height)) m_Buffer[x + y * m_Pitch] = c;

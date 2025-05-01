@@ -10,6 +10,7 @@
 #include "tilemap.h"
 #include "wall.h"
 #include "ai_copy.h"
+#include "menu.h"
 
 namespace Tmpl8
 {
@@ -29,7 +30,8 @@ namespace Tmpl8
             GameSound& gamesoundRef,
             Bell& bellRef,
             AI_Patrol& ai_patrolRef,
-            AI_Copy& ai_copyRef
+            AI_Copy& ai_copyRef,
+            Menu& menuRef
         );
 
 		// Variables
@@ -64,6 +66,7 @@ namespace Tmpl8
         Bell& bell;
         AI_Patrol& ai_patrol;
         AI_Copy& ai_copy;
+        Menu& menu;
 
         bool canPlayerJump = false;
         float bouncing_force = 1.0f;

@@ -238,4 +238,6 @@ namespace Tmpl8
         sprintf(collision_type_txt, "%s", collisionInfo.c_str());
         screen->Print(collision_type_txt, 10, 130, 0xFFFF00);
     }
+
+    
 }

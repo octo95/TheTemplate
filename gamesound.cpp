@@ -29,4 +29,34 @@ namespace Tmpl8
         }
         activeMusics.clear(); 
     }
+
+    // UNUSED
+    void GameSound::playRollingSound(const std::string& filePath)
+    {
+        if (rollingSoundPlaying) return;
+        auto snd_rolling = std::make_shared<Audio::Sound>(filePath);
+        snd_rolling->setLooping(true);
+        snd_rolling->setVolume(globalVolume / 2.0f);
+        snd_rolling->play();
+        activeSounds.push_back(snd_rolling);
+        rollingSoundPlaying = true;
+    }
+
+    void GameSound::stopRollingSound()
+    {
+        for (auto i = activeSounds.begin(); i != activeSounds.end(); )
+        {
+            auto& sound = *i;
+            if (sound && sound->isPlaying() && sound->isLooping())
+            {
+                sound->stop();
+                i = activeSounds.erase(i);
+            }
+            else
+            {
+                ++i;
+            }
+        }
+        rollingSoundPlaying = false;
+    }
 }

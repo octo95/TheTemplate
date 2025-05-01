@@ -1,4 +1,6 @@
 #include "game.h"
+#include "text.h"
+
 namespace Tmpl8
 {
     // + MAIN GAME LOGIC 
@@ -52,7 +54,7 @@ namespace Tmpl8
             // * Draw the objects on screen
             camera.drawWithCam(tilemap.current_map_draw, screen, vec2(0, 0));
             drawWallMap(&camera, screen, &this->wall);  
-            drawCollectibleMap(&camera, screen);       
+            drawCollectibleMap(&camera, screen, deltaTime);       
             camera.drawPlayer(&img_player, screen, player_pos, deltaTime, player.angular_acceleration);
             camera.drawAICopy(&img_ai_copy, screen, ai_copy.position, deltaTime, ai_copy.acceleration);
 			img_ai_follow.DrawRotated(screen, ai_follow.position + camera.getCamPos(), ai_follow.angle);
@@ -60,9 +62,10 @@ namespace Tmpl8
             collisions.drawSplash(screen, player_pos, deltaTime); 
             bell.drawBell(screen, &camera, tilemap.getCurrentLevel());
             menu.manageMenus(screen);
+            menu.scoreManagerOpen(screen, deltaTime);
         
             // * DEBUG: Enabled if pressing <SPACEBAR>
-            debug.displayDebug(screen, deltaTime);
+            debug.displayDebug(screen, deltaTime);  
         }
         else
         {

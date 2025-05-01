@@ -1,5 +1,6 @@
 #pragma once
 #include <Audio/Sound.hpp>
+#include "tile.h"
 
 namespace Tmpl8
 {
@@ -30,10 +31,13 @@ namespace Tmpl8
 
 		    // Functions
             void playSound(const std::string& filePath);
+            void playRollingSound(const std::string& filePath);
             void playMusic(const std::string& filePath);
             void stopMusic();
+            void stopRollingSound();
 
         private:
+            bool rollingSoundPlaying = false;
             SoundType activeSounds;  // For storing active sound effects
             SoundType activeMusics;  // For storing active music tracks
     };

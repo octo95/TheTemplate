@@ -52,7 +52,7 @@ namespace Tmpl8
 
 	// Local functions
 	void loadAllCollectibles(int map);
-	void drawCollectibleMap(Camera* camera, Surface* screen);
+	void drawCollectibleMap(Camera* camera, Surface* screen, float deltaTime);
 	void manageCollectibleCollision(vec2 player_pos, GameSound* gamesound);
 	void manageCollectibleRespawn(float deltaTime);
 }

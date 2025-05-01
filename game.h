@@ -15,12 +15,12 @@
 #include "tilemap.h"
 #include "wall.h"
 #include "circular_buffer.h"
+#include "text.h"
 
 namespace Tmpl8 
 {
 	class Surface;
 	class Game
-
 	{
 	public:
 
@@ -28,9 +28,9 @@ namespace Tmpl8
 			player(camera),
 			ai_follow(player, camera),
 			debug(camera, tilemap, player, collectible, wall, ai_follow, level, collisions, menu, ai_patrol, ai_copy),
-			menu(level, player, tilemap, gamesound),
+			menu(level, player, tilemap, gamesound, text),
 			tilemap(player),
-			collisions(player, tilemap, ai_follow, collectible, wall, level, camera, gamesound, bell, ai_patrol, ai_copy),
+			collisions(player, tilemap, ai_follow, collectible, wall, level, camera, gamesound, bell, ai_patrol, ai_copy, menu),
 			level(tilemap, player, ai_follow, collectible, wall, gamesound, bell, ai_patrol, ai_copy),
 			health(player),
 			ai_patrol(player, camera),
@@ -74,6 +74,7 @@ namespace Tmpl8
 		Bell bell;
 		AI_Copy ai_copy;
 		CircularBuffer circular_buffer;
+		Text text;
 
 		int mousex, mousey;
 		bool start_game = false;

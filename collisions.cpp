@@ -5,7 +5,7 @@
 
 namespace Tmpl8
 {
-    Collisions::Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef, Camera& cameraRef, GameSound& gamesoundRef, Bell& bellRef, AI_Patrol& ai_patrolRef, AI_Copy& ai_copyRef) :
+    Collisions::Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef, Camera& cameraRef, GameSound& gamesoundRef, Bell& bellRef, AI_Patrol& ai_patrolRef, AI_Copy& ai_copyRef, Menu& menuRef) :
         player(playerRef),
         tilemap(tilemapRef),
         ai_follow(ai_followRef),
@@ -16,7 +16,8 @@ namespace Tmpl8
         gamesound(gamesoundRef),
         bell(bellRef),
         ai_patrol(ai_patrolRef),
-        ai_copy(ai_copyRef)
+        ai_copy(ai_copyRef),
+        menu(menuRef)
     {}
 
     Sprite img_water_slide_right(new Surface("assets/images/entities/img_water_slide_right.tga"), 3);
@@ -100,10 +101,16 @@ namespace Tmpl8
         bool FallNormal = player.velocity.y >= trigger_fall_normal && player.velocity.y < trigger_fall_hard;
         bool FallHard = player.velocity.y >= trigger_fall_hard;
 
-        if ((CheckBottom == TileType::Collision))
-        {
-            //gamesound.playSound(gamesound.snd_rolling);
-        }
+
+        //if ((CheckBottom == TileType::Collision && fabs(player.velocity.x) > 2.0f))
+        //{
+        //    gamesound.playRollingSound(gamesound.snd_rolling);
+        //}
+        //else
+        //{
+        //    gamesound.stopRollingSound();
+        //}
+
 
         // SFX: if falling from a high distance play <snd_fall_strong.wav>, otherwise from a smaller one play <snd_fall.wav> and if even smaller don't play any SFX.
         if ((CheckBottom == TileType::Collision || CheckBottom == TileType::Ice) && FallLight) 
@@ -141,6 +148,8 @@ namespace Tmpl8
                 return;
             }
             gamesound.playSound(gamesound.snd_level_finished);
+            menu.previousScore = menu.score;
+            menu.score += 100;
             level.level_finished = true;
             bell.touchedPlayer = false;
         }

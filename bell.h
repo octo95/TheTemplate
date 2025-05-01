@@ -25,8 +25,8 @@ namespace Tmpl8
             {
                 vec2 {8,21},
                 vec2 {1,36},
-                vec2 {0,10},
-                vec2 {0,30},
+                vec2 {2,3},
+                vec2 {2,3},
                 vec2 {2,3}
             };
             vec2 bell_current_pos = { 0,0 };
