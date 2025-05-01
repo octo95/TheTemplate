@@ -32,6 +32,7 @@ namespace Tmpl8
             bool can_jump = false;
 
             float angular_acceleration = 0.0f;
+            float gravity = 0.28f;
 		    float friction = 0.05f;                     // Friction on the ground, lower friction results in more momentum
             const float ENERGY_LOSS = 0.9f;             // How much energy the ball keeps after a bounce in %
 		    const float MAX_HORIZONTAL_SPEED = 3.0f;    // Max horizontal speed
@@ -53,7 +54,6 @@ namespace Tmpl8
         private:
             Camera& camera;
             bool is_touched_follow_ai = false;
-            float gravity = 0.28f;
             float vertical_speed = 0.0f;
             float horizontal_speed = 0.0f;
             float wall_force = 7.0f;

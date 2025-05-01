@@ -49,7 +49,8 @@ namespace Tmpl8
 			bool resume_game = true;
 
 			// Open menus
-			void openMainMenu(Surface* screen);
+			void drawMainBGPan(Surface* screen, float deltaTime);
+			void openMainMenu(Surface* screen, float deltaTime);
 			void openNextMenu(Surface* screen);
 			void openPauseMenu(Surface* screen);
 			void openEndMenu(Surface* screen);
@@ -80,6 +81,7 @@ namespace Tmpl8
 			bool manualPaused = false;
 			bool alreadyClickedNextLevel = false;
 			bool audioOn = true;
+			float main_bg_x = 0.0f;
 
 			// Menu flags
 			bool mainMenuOpen = true;

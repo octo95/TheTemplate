@@ -69,7 +69,6 @@ namespace Tmpl8
                 new_map.insert({ vec2{(float)x,(float)y}, type });
             }
         }
-
         map_collision = new_map;
     }
 }

@@ -27,22 +27,24 @@ namespace Tmpl8
                 AI_Copy& ai_copyRef
             );
 
+            const vec2 OFF_SCREEN = vec2{ -500, -500 };
+
 			// Default positions for the player and AIs
             const vec2 AI_FOLLOW_DEFAULT_POS[5] =
             {
-                vec2 {100,500},
-                vec2 {400,500},
-                vec2 {0,0},
-                vec2 {0,0},
-                vec2 {500,250}
+                OFF_SCREEN,
+                OFF_SCREEN,
+                vec2 {3*32,6*32}, // Show on level 3
+                OFF_SCREEN,
+                OFF_SCREEN
             };
             const vec2 AI_PATROL_DEFAULT_POS[5] =
             {
-                vec2 {660,224},
-                vec2 {5*32,40*32},
-                vec2 {0,0},
-                vec2 {0,0},
-                vec2 {500,250}
+                OFF_SCREEN,
+                vec2 {5*32,40*32}, // Show on level 2
+                OFF_SCREEN,
+                OFF_SCREEN,
+                OFF_SCREEN
             };
             const vec2 PLAYER_DEFAULT_POS[5] =
             {
@@ -60,6 +62,7 @@ namespace Tmpl8
 			// Functions
             void loadLevel(int i);
             void manageDefaultPos(int map_index);
+            void manageAIsPerMap(int map_index);
 
         private:
             TileMap& tilemap;

@@ -20,8 +20,8 @@ namespace Tmpl8
         
 		    // Variables
             float acceleration = 0;
-            vec2 default_pos = { -100, -100 }; // Make the AI appear out of bounds when not on screen
-            vec2 position = { 0, 0 };
+            vec2 default_pos = { -500, -500 }; // Make the AI appear out of bounds when not on screen
+            vec2 position = { -500, -500 };
 
 		    // Functions
             bool isTouchingPlayer();

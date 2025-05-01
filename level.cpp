@@ -17,30 +17,17 @@ namespace Tmpl8
 
     void Level::loadLevel(int map_index)
     {
-        // Reset AI copy
-        ai_copy.playerBuffer.reset();
-        ai_copy.position = ai_copy.default_pos;
-        ai_copy.copyTimer = 3.0f; 
-        ai_patrol.isDead = false;
         bell.touchedPlayer = false;
         collected_new = false;
-
-
         collectible_timer_active = false;
         collectibles_collected = 0;
-
-        // Set Map
         tilemap.loadMap(map_index);
-
         tilemap.current_level = map_index;
         player.position = player.default_pos;
         manageDefaultPos(map_index);
         loadAllCollectibles(map_index);
         loadAllWalls(map_index);
-
-        // AI movement
-        ai_follow.setAIFollowPos(AI_FOLLOW_DEFAULT_POS[map_index-1]);
-        ai_patrol.setAIPatrolPos(AI_PATROL_DEFAULT_POS[map_index-1]);
+        manageAIsPerMap(map_index);
     }
 
     void Level::manageDefaultPos(int map_index)
@@ -50,5 +37,43 @@ namespace Tmpl8
         player.setPlayerPos(PLAYER_DEFAULT_POS[map_index - 1]);
         ai_follow.setAIFollowDefaultPos(AI_FOLLOW_DEFAULT_POS[map_index - 1]);
         ai_follow.setAIFollowPos(AI_FOLLOW_DEFAULT_POS[map_index - 1]);
+    }
+
+    void Level::manageAIsPerMap(int map_index)
+    {
+        ai_follow.setAIFollowPos(AI_FOLLOW_DEFAULT_POS[map_index - 1]);
+        ai_patrol.setAIPatrolPos(AI_PATROL_DEFAULT_POS[map_index - 1]);
+        switch (map_index)
+        {
+        case 1: // No AI on LVL1
+            ai_copy.stop = true;
+            ai_patrol.isDead = true;
+            ai_follow.is_following = false;
+            break;
+        case 2: // AI patrol on LVL2
+            ai_copy.stop = true;
+            ai_patrol.isDead = false;
+            break;
+        case 3: // AI follow on LVL3
+            ai_copy.stop = true;
+            ai_follow.is_following = true;
+            break;
+        case 4: // AI copy on LVL4
+            ai_copy.stop = false;
+            ai_copy.playerBuffer.reset();
+            ai_copy.position = ai_copy.default_pos;
+            ai_copy.copyTimer = 3.0f;
+            ai_follow.is_following = false;
+            ai_patrol.isDead = true;
+            break;
+        case 5: // All AIs on LVL5
+            ai_copy.stop = false;
+            ai_copy.playerBuffer.reset();
+            ai_copy.position = ai_copy.default_pos;
+            ai_copy.copyTimer = 3.0f;
+            ai_follow.is_following = true;
+            ai_patrol.isDead = false;
+            break;
+        }
     }
 }

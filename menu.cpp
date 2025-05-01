@@ -81,11 +81,24 @@ namespace Tmpl8
         return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
     }
 
-    void Menu::openMainMenu(Surface* screen)
+    void Menu::drawMainBGPan(Surface* screen, float deltaTime)
+    {
+        float panning_speed = 150.0f; 
+        float bg_width = img_menu_main_bg.GetWidth();
+
+        main_bg_x += panning_speed * deltaTime;
+
+        if (main_bg_x >= bg_width) main_bg_x -= bg_width;
+
+        img_menu_main_bg.Draw(screen, -main_bg_x, 0);           
+        img_menu_main_bg.Draw(screen, -main_bg_x + bg_width, 0);
+    }
+
+    void Menu::openMainMenu(Surface* screen, float deltaTime)
     {
         if (!mainMenuOpen) return;
 
-        img_menu_main_bg.Draw(screen, 0, 0);
+        drawMainBGPan(screen, deltaTime);
 
         audioOpen = true;
         quitOpen = true;

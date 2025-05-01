@@ -20,6 +20,8 @@ namespace Tmpl8
 
     void Player::movePlayer(vec2& new_pos, Collisions* collisions, float deltaTime)
     {
+        printf("deltaTime: %f\n", deltaTime);
+
         // Left
         if (GetAsyncKeyState(VK_LEFT))
         {
@@ -39,7 +41,7 @@ namespace Tmpl8
         {
             if (velocity.x > 0)
             {
-                velocity.x -= friction;
+                velocity.x -= friction ;
                 if (velocity.x < 0) velocity.x = 0;
             }
             else if (velocity.x < 0)
@@ -58,27 +60,14 @@ namespace Tmpl8
         // Jump
         if (can_jump)
         {
-            velocity.y += -7.0f;
+            velocity.y = -7.0f;
             collectibles_collected--;
         }
 
         // Pass the velocity to the camera to make the player rotate while moving
         angular_acceleration = velocity.x * 90.0f;
 
-        //printf("deltaTime: %f\n", deltaTime);
-        // Apply horizontal movement
-        new_pos.x += velocity.x /* (deltaTime * 1000.0f) * 3.0f*/; 
-
-        // Apply vertical movement        
-        new_pos.y += velocity.y /*/ (deltaTime * 1000.0f) * 3.0f*/;
-
-        //// Apply horizontal movement
-        //new_pos.x += (velocity.x / (deltaTime * 1000.0f)) * 6.0f;
-        //
-        //// Apply vertical movement        
-        //new_pos.y += (velocity.y / (deltaTime * 1000.0f)) * 7.0f;
-
-
+        new_pos += velocity;
     }
 
     vec2 Player::camFollowPlayer(TileMap* map)
