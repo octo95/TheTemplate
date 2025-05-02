@@ -139,6 +139,7 @@ namespace Tmpl8
             level.loadLevel(tilemap.getCurrentLevel());
             gamesound.playSound(gamesound.snd_damage);
             camera.setShakeState(Camera::shakeConditions::Damage);
+            menu.score -= 15.0f;
         }
         else if (isEnd) 
         {

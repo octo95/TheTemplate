@@ -11,6 +11,10 @@ namespace Tmpl8
         deltaTime /= 1000.0f; // Convert deltaTime to seconds
         localTime = deltaTime;
 
+        //frameTime += deltaTime;
+        //if (frameTime < 1 / 60.0f) return;
+        //frameTime = 0.0f;
+
         // * Clear the screen black every tick
         screen->Clear(0);
 
@@ -67,6 +71,7 @@ namespace Tmpl8
             menu.manageMenus(screen);
             menu.scoreInGame(screen, localTime);
             menu.openScoreMenu(screen, deltaTime);
+            menu.timerInGame(screen, deltaTime);
 
             // * DEBUG: Enabled if pressing <SPACEBAR>
             debug.displayDebug(screen, localTime);  

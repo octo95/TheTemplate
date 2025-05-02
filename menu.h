@@ -70,8 +70,9 @@ namespace Tmpl8
 			void manageLevelSelect(int index);
 			void manageDifficultySelect(int index);
 			void audioManagerOpen(Surface* screen);
-			void scoreInGame(Surface* screen, float deltaTime);
 			void quitManagerOpen(Surface* screen);
+			void scoreInGame(Surface* screen, float deltaTime);
+			void timerInGame(Surface* screen, float deltaTime);
 
 			// Mouse functions
 			void setMousePosition(int x, int y); 
@@ -95,6 +96,7 @@ namespace Tmpl8
 			bool alreadyClickedNextLevel = false;
 			bool audioOn = true;
 			float main_bg_x = 0.0f;
+			float timer_current = 0.0f;
 
 			// Menu flags
 			bool mainMenuOpen = true;

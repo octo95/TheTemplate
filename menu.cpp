@@ -128,7 +128,8 @@ namespace Tmpl8
                 if (!wasHoveringLevel[i]) gamesound.playSound(gamesound.snd_hover);
                 lvl_hover_list[i]->Draw(screen, lvl_list_X[i], MAIN_LVLS_Y);
                 manageLevelSelect(i);
-                score = 0;
+                score = 0.0f;
+                timer_current = 0.0f;
             }
             else
             {
@@ -172,7 +173,8 @@ namespace Tmpl8
             if (!wasHoveringStart) gamesound.playSound(gamesound.snd_hover);
             img_menu_main_start_alt.Draw(screen, MAIN_START_X, MAIN_START_Y);
             manageLevelSelect(0);
-            score = 0;
+            score = 0.0f;
+            timer_current = 0.0f;
         }
         else
         {
@@ -389,6 +391,8 @@ namespace Tmpl8
             mainMenuOpen = true;
             level.game_finished = false;
             scoreMenuOpen = false;
+            score = 0.0f;
+            timer_current = 0.0f;
         }
 
         if (isHoveringReplay && isMousePressed)
@@ -403,6 +407,8 @@ namespace Tmpl8
             level.game_finished = false;
             level.loadLevel(1);
             scoreMenuOpen = false;
+            score = 0.0f;
+            timer_current = 0.0f;
         }
     }
 
@@ -459,7 +465,7 @@ namespace Tmpl8
 
     void Menu::scoreInGame(Surface* screen, float deltaTime)
     {
-        if (pauseMenuOpen) return;
+        if (pauseMenuOpen || nextMenuOpen || endMenuOpen) return;
 
         char buffer[50];
         bool score_updated = score != previousScore;
@@ -503,6 +509,8 @@ namespace Tmpl8
 
     void Menu::openScoreMenu(Surface* screen, float deltaTime)
     {
+        if (score <= 0) score = 0; // The score can't go below 0
+
         if (!scoreMenuOpen)
         {
             score_timer = 0.0f;
@@ -531,17 +539,12 @@ namespace Tmpl8
                 size = vec2(5.0f, 5.0f);
             }
         }
-
-
-
         char buffer[50];
         sprintf(buffer, "Score: %04d", score_value_current);
 
         std::string txt = buffer;
         int text_width = stb_easy_font_width((char*)txt.c_str());
         int text_height = stb_easy_font_height((char*)txt.c_str());
-
-
 
         vec2 draw_pos = vec2(
             (SCREEN_WIDTH - text_width * size.x) / 2.0f,
@@ -630,6 +633,33 @@ namespace Tmpl8
         }
 
         audioClickedLastFrame = isMousePressed;
+    }
+
+    void Menu::timerInGame(Surface* screen, float deltaTime)
+    {
+        if ( pauseMenuOpen || nextMenuOpen || endMenuOpen ) return;
+
+        timer_current += deltaTime;
+
+        int total_seconds = (int)(timer_current);
+        int minutes = total_seconds / 60;
+        int seconds = total_seconds % 60;
+
+        char buffer[50];
+        sprintf(buffer, "Time: %02d:%02d", minutes, seconds);
+
+        std::string txt = buffer;
+        int text_width = stb_easy_font_width((char*)txt.c_str());
+        int text_height = stb_easy_font_height((char*)txt.c_str());
+
+        vec2 size = vec2(1.0f,1.0f);
+        vec2 draw_pos = vec2(
+            SCREEN_WIDTH - text_width - 10.0f,
+            30.0f 
+        );
+
+        text.printOnScreen((char*)txt.c_str(), draw_pos + 2.0f, screen, size, 0x934712);
+        text.printOnScreen((char*)txt.c_str(), draw_pos, screen, size, 0xFFFFFF);
     }
 
     void Menu::setMousePosition(int x, int y)

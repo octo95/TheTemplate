@@ -81,5 +81,6 @@ namespace Tmpl8
 		vec2 player_pos;
 		bool isTDown = false;
 		float localTime = 0.0f;
+		float frameTime = 0.0f;
 	};
 }
