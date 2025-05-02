@@ -46,6 +46,9 @@ namespace Tmpl8
         switch (map_index)
         {
         case 1: // No AI on LVL1
+            // ai_map.insert(AI_Copy(player, jsp));
+            // ai_map.insert(AI_Follow(player, AI_FOLLOW_DEFAULT_POS[map_index - 1]));
+            // ai_map.insert(AI_Patrol(player, AI_PATROL_DEFAULT_POS[map_index - 1]));
             ai_copy.stop = true;
             ai_patrol.isDead = true;
             ai_follow.is_following = false;

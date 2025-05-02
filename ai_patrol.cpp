@@ -4,12 +4,6 @@
 
 namespace Tmpl8
 {
-
-    AI_Patrol::AI_Patrol(Player& playerRef, Camera& cameraRef) :
-        camera(cameraRef),
-        player(playerRef)
-    {}
-
     Sprite img_ai_patrol(new Surface("assets/images/entities/img_ai_patrol.png"), 1);
 
     void AI_Patrol::getStomped()

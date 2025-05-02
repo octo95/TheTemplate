@@ -1,4 +1,5 @@
 #pragma once
+#include "ai.h"
 #include "camera.h"
 #include "player.h"
 
@@ -6,20 +7,24 @@ namespace Tmpl8
 {
     extern Sprite img_ai_follow;
 
-    class AI_Follow 
+    class AI_Follow: public AI
     {
         public:
             // Constructor
             AI_Follow(
-                Player& playerRef, 
+                Player& playerRef,
+                vec2 spawn_pos,
                 Camera& cameraRef
-            );
+            ) : 
+                AI(playerRef, spawn_pos), 
+                camera(cameraRef)
+            {
+            };
 
 		    // Variables
-            vec2 default_pos = { 0, 0 };
-            vec2 position = default_pos;
             float angle = 0.0f;
             bool is_following = true;
+            Camera& camera;
 
             // Functions
             void followPlayer(float deltaTime);
@@ -28,8 +33,5 @@ namespace Tmpl8
             void getAIFollowPos(vec2& pos) { pos = position; }
             bool isTouchingPlayer();
 
-        private:
-            Player& player;
-            Camera& camera;
     };
 }

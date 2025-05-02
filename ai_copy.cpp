@@ -2,12 +2,6 @@
 
 namespace Tmpl8
 {
-
-    AI_Copy::AI_Copy(Player& playerRef) :
-        player(playerRef)
-    {}
-
-
     Sprite img_ai_copy(new Surface("assets/images/entities/img_ai_copy.png"), 1);
 
     void AI_Copy::setProperties()

@@ -37,6 +37,7 @@ namespace Tmpl8
                 manageCollectibleRespawn(localTime);
         
                 // AI logic
+                //workAI(ai_map, ...);
                 ai_copy.setProperties();
                 ai_copy.playerBuffer.add(player_pos, player.angular_acceleration);
                 ai_follow.followPlayer(localTime);

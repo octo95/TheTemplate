@@ -1,4 +1,5 @@
-#pragma once
+﻿#pragma once
+#include "ai.h"
 #include "ai_copy.h"
 #include "ai_follow.h"
 #include "ai_patrol.h"
@@ -26,22 +27,22 @@ namespace Tmpl8
 
 		Game() :
 			player(camera),
-			ai_follow(player, camera),
 			debug(camera, tilemap, player, collectible, wall, ai_follow, level, collisions, menu, ai_patrol, ai_copy),
 			menu(level, player, tilemap, gamesound, text),
 			tilemap(player),
 			collisions(player, tilemap, ai_follow, collectible, wall, level, camera, gamesound, bell, ai_patrol, ai_copy, menu),
 			level(tilemap, player, ai_follow, collectible, wall, gamesound, bell, ai_patrol, ai_copy),
 			health(player),
-			ai_patrol(player, camera),
-			ai_copy(player)
+			ai_follow(player, vec2(-500, -500), camera),   
+			ai_patrol(player, vec2(-500, -500), camera),   
+			ai_copy(player, vec2(-500, -500))              
 		{}
 
 		void SetTarget( Surface* surface ) { screen = surface; }
 		void Init();
 		void Shutdown();
 		void Tick( float deltaTime );
-		void MouseUp( int button ) { menu.setMouseState(false); }
+		void MouseUp(int button) { menu.setMouseState(false); }
 		void MouseDown(int button) { menu.setMouseState(true); }
 		void MouseMove(int x, int y) 
 		{ 
@@ -75,6 +76,27 @@ namespace Tmpl8
 		AI_Copy ai_copy;
 		CircularBuffer circular_buffer;
 		Text text;
+
+		std::vector<std::pair<AIType, AI*>> ai_map;
+
+		// Dans loadlevel, load ai_map
+
+		// void workAI(std::vector<std::pair<AIType, AI*>>& ai_map)
+		// for(auto &ai : ai_map) {
+		//		switch (ai.first())
+		//		case Follow {
+		//			AI_Follow* ai_follow = (AI_Follow*) ai.second()
+		//			// whatever the AI needs to call or whatever...
+		//		}
+		//		case Follow {
+		//			AI_Patrol* ai_patrol = (AI_Patrol*) ai.second()
+		//			// whatever the AI needs to call or whatever...
+		//		}
+		//		case Follow {
+		//			AI_Copy* ai_copy= (AI_Copy*) ai.second()
+		//			// whatever the AI needs to call or whatever...
+		//		}
+		// }
 
 		int mousex, mousey;
 		bool start_game = false;

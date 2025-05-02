@@ -2,11 +2,6 @@
 
 namespace Tmpl8
 {
-    AI_Follow::AI_Follow(Player& playerRef, Camera& cameraRef) :
-        camera(cameraRef),
-        player(playerRef)
-    {}
-
     Sprite img_ai_follow(new Surface("assets/images/entities/img_ai_follow.png"), 1);
 
     void AI_Follow::followPlayer(float deltaTime)
