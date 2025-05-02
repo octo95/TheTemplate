@@ -1,4 +1,5 @@
 #include "collectible.h"
+#include "menu.h"
 
 namespace Tmpl8
 {
@@ -72,7 +73,7 @@ namespace Tmpl8
 	}
 
 
-	void manageCollectibleCollision(vec2 player_pos, GameSound* gamesound)
+	void manageCollectibleCollision(vec2 player_pos, GameSound* gamesound, Menu* menu)
 	{
 		int x = (int)player_pos.x / TILE_SIZE;
 		int y = (int)player_pos.y / TILE_SIZE;
@@ -86,8 +87,8 @@ namespace Tmpl8
 				gamesound->playSound(gamesound->snd_collect);
 				collectibles_collected++;
 				collected_new = true;
-				//menu.previousScore = menu.score;
-				//menu.score += 100;
+				menu->previousScore = menu->score;
+				menu->score += 10;
 			}
 			else 
 			{

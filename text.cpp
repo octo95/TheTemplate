@@ -2,7 +2,7 @@
 
 namespace Tmpl8
 {
-    void Text::printOnScreen(const std::string& txt, vec2 pos, Surface* screen, Pixel c)
+    void Text::printOnScreen(const std::string& txt, vec2 pos, Surface* screen, vec2 size, Pixel c)
     {
         const int buffer_size = 99999;          // A large buffer static size just in case a text is too long
         static char vertexBuffer[buffer_size];  // Create the buffer of verts to read from to get the positions later for the draw of the lines
@@ -16,12 +16,11 @@ namespace Tmpl8
         for (int i = 0; i < num_quads; i++)     // Go through all the quads to draw all the lines from verts
         {
             int base = i * 16;                  // 1 quad = 4 verts, 1 vert = 2 floats (x;y), 1 float = 4 bytes, so 1 quad = 4 verts * 2 floats * 4 bytes = 32 bytes. We process 2 quads, so 32 bytes / 2 = 16 bytes per quad.
-            vec2 pos[4]; 
-                                                                    //                      -* OFFSETS: *-
-            vec2 pos0 = vec2(verts[base + 0], verts[base + 1]);     // Top Left      ->  x: 0 * 4 || y: x + 1   ->  So basically vertex = (x: i * 4 || y: i * 4 + 1)
-            vec2 pos1 = vec2(verts[base + 4], verts[base + 5]);     // Top Right     ->  x: 1 * 4 || y: x + 1       the y value is stored right after x so we add 1 to access
-            vec2 pos2 = vec2(verts[base + 8], verts[base + 9]);     // Bottom Right  ->  x: 2 * 4 || y: x + 1       it in the vertexBuffer
-            vec2 pos3 = vec2(verts[base + 12], verts[base + 13]);   // Bottom Left   ->  x: 3 * 4 || y: x + 1
+                                                                                            //                      -* OFFSETS: *-
+            vec2 pos0 = pos + (vec2(verts[base + 0], verts[base + 1]) - pos) * size;        // Top Left      ->  x: 0 * 4 || y: x + 1   ->  So basically vertex = (x: i * 4 || y: i * 4 + 1)
+            vec2 pos1 = pos + (vec2(verts[base + 4], verts[base + 5]) - pos) * size;        // Top Right     ->  x: 1 * 4 || y: x + 1       the y value is stored right after x so we add 1 to access
+            vec2 pos2 = pos + (vec2(verts[base + 8], verts[base + 9]) - pos) * size;        // Bottom Right  ->  x: 2 * 4 || y: x + 1       it in the vertexBuffer
+            vec2 pos3 = pos + (vec2(verts[base + 12], verts[base + 13]) - pos ) * size;     // Bottom Left   ->  x: 3 * 4 || y: x + 1
 
             screen->Line(pos0, pos1, c); // Top
             screen->Line(pos1, pos2, c); // Right

@@ -1,7 +1,6 @@
 #pragma once
 #include "gamesound.h"
 #include "surface.h"
-#include "tile.h"
 #include "tilemap.h"
 #include "vec2_hash.h"
 #include <unordered_map>
@@ -13,6 +12,8 @@ namespace Tmpl8
 	extern int collectibles_collected;
 	extern bool collectible_timer_active;
 	extern bool collected_new;
+
+	class Menu;
 
 	struct Collectible
 	{
@@ -53,6 +54,6 @@ namespace Tmpl8
 	// Local functions
 	void loadAllCollectibles(int map);
 	void drawCollectibleMap(Camera* camera, Surface* screen, float deltaTime);
-	void manageCollectibleCollision(vec2 player_pos, GameSound* gamesound);
+	void manageCollectibleCollision(vec2 player_pos, GameSound* gamesound, Menu* menu);
 	void manageCollectibleRespawn(float deltaTime);
 }

@@ -5,7 +5,6 @@
 #include "surface.h"
 #include "tilemap.h"
 #include "text.h"
-#include "collectible.h"
 
 namespace Tmpl8
 {
@@ -53,19 +52,25 @@ namespace Tmpl8
 			bool start_game = false;
 			bool resume_game = true;
 
+			// Score timer variables
+			float score_timer = 0.0f;
+			int score_value_current = 0;
+			bool score_is_counting = true;
+
 			// Open menus
 			void drawMainBGPan(Surface* screen, float deltaTime);
 			void openMainMenu(Surface* screen, float deltaTime);
 			void openNextMenu(Surface* screen);
 			void openPauseMenu(Surface* screen);
 			void openEndMenu(Surface* screen);
+			void openScoreMenu(Surface* screen, float deltaTime);
 
 			// Menu managers
 			void manageMenus(Surface* screen);
 			void manageLevelSelect(int index);
 			void manageDifficultySelect(int index);
 			void audioManagerOpen(Surface* screen);
-			void scoreManagerOpen(Surface* screen, float deltaTime);
+			void scoreInGame(Surface* screen, float deltaTime);
 			void quitManagerOpen(Surface* screen);
 
 			// Mouse functions
@@ -73,6 +78,7 @@ namespace Tmpl8
 			void setMouseState(bool isPressed) { isMousePressed = isPressed; }
 			bool isHoveringSurface(int x, int y, int width, int height);
 
+			bool scoreMenuOpen = false;
 
 		private:
 			Level& level;

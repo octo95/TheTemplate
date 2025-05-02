@@ -9,6 +9,7 @@ namespace Tmpl8
     void Game::Tick(float deltaTime)
     {
         deltaTime /= 1000.0f; // Convert deltaTime to seconds
+        localTime = deltaTime;
 
         // * Clear the screen black every tick
         screen->Clear(0);
@@ -22,24 +23,24 @@ namespace Tmpl8
                 
                 // Player logic
                 player.getPlayerPos(player_pos);
-                player.movePlayer(player_pos, &collisions, deltaTime);
+                player.movePlayer(player_pos, &collisions, localTime);
                 player.setJumpState(collisions.getJumpState(player_pos));
         
                 // Collisions logic
                 collisions.manageCollisions(player_pos, screen, &collectible);
                 manageWallCollision(player_pos, &gamesound);
-                manageCollectibleCollision(player_pos, &gamesound);
-                manageCollectibleRespawn(deltaTime);
+                manageCollectibleCollision(player_pos, &gamesound, &menu);
+                manageCollectibleRespawn(localTime);
         
                 // AI logic
                 ai_copy.setProperties();
                 ai_copy.playerBuffer.add(player_pos, player.angular_acceleration);
-                ai_follow.followPlayer(deltaTime);
-                ai_patrol.Patrol(deltaTime, &collisions);
+                ai_follow.followPlayer(localTime);
+                ai_patrol.Patrol(localTime, &collisions);
         
                 // Camera logic
                 camera.setCamPos(player.camFollowPlayer(&tilemap));
-                camera.shakeCamera(deltaTime);
+                camera.shakeCamera(localTime);
 
                 // Bell logic
                 bell.isBellTouchingPlayer(&player);
@@ -48,28 +49,31 @@ namespace Tmpl8
             else
             {
                 // Pause the time if the game is paused
-                deltaTime = 0.0f;
+                localTime = 0.0f;
             }
+
+
         
             // * Draw the objects on screen
             camera.drawWithCam(tilemap.current_map_draw, screen, vec2(0, 0));
             drawWallMap(&camera, screen, &this->wall);  
-            drawCollectibleMap(&camera, screen, deltaTime);       
-            camera.drawPlayer(&img_player, screen, player_pos, deltaTime, player.angular_acceleration);
-            camera.drawAICopy(&img_ai_copy, screen, ai_copy.position, deltaTime, ai_copy.acceleration);
+            drawCollectibleMap(&camera, screen, localTime);       
+            camera.drawPlayer(&img_player, screen, player_pos, localTime, player.angular_acceleration);
+            camera.drawAICopy(&img_ai_copy, screen, ai_copy.position, localTime, ai_copy.acceleration);
 			img_ai_follow.DrawRotated(screen, ai_follow.position + camera.getCamPos(), ai_follow.angle);
 			if(!ai_patrol.isDead) img_ai_patrol.DrawRotated(screen, ai_patrol.position + camera.getCamPos(), ai_patrol.angle);
-            collisions.drawSplash(screen, player_pos, deltaTime); 
+            collisions.drawSplash(screen, player_pos, localTime); 
             bell.drawBell(screen, &camera, tilemap.getCurrentLevel());
             menu.manageMenus(screen);
-            menu.scoreManagerOpen(screen, deltaTime);
-        
+            menu.scoreInGame(screen, localTime);
+            menu.openScoreMenu(screen, deltaTime);
+
             // * DEBUG: Enabled if pressing <SPACEBAR>
-            debug.displayDebug(screen, deltaTime);  
+            debug.displayDebug(screen, localTime);  
         }
         else
         {
-            menu.openMainMenu(screen, deltaTime); // As long as we don't start the game, stay in the menu screen
+            menu.openMainMenu(screen, localTime); // As long as we don't start the game, stay in the menu screen
         }
     }
 

@@ -145,6 +145,7 @@ namespace Tmpl8
             if (tilemap.getCurrentLevel() == MAP_AMOUNT) 
             {
                 level.game_finished = true;
+                
                 return;
             }
             gamesound.playSound(gamesound.snd_level_finished);

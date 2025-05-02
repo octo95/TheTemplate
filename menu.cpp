@@ -128,6 +128,7 @@ namespace Tmpl8
                 if (!wasHoveringLevel[i]) gamesound.playSound(gamesound.snd_hover);
                 lvl_hover_list[i]->Draw(screen, lvl_list_X[i], MAIN_LVLS_Y);
                 manageLevelSelect(i);
+                score = 0;
             }
             else
             {
@@ -171,6 +172,7 @@ namespace Tmpl8
             if (!wasHoveringStart) gamesound.playSound(gamesound.snd_hover);
             img_menu_main_start_alt.Draw(screen, MAIN_START_X, MAIN_START_Y);
             manageLevelSelect(0);
+            score = 0;
         }
         else
         {
@@ -210,6 +212,7 @@ namespace Tmpl8
 
     void Menu::openNextMenu(Surface* screen)
     {
+        scoreMenuOpen = true;
         nextMenuOpen = level.level_finished;
         if (!nextMenuOpen) return;
 
@@ -255,6 +258,7 @@ namespace Tmpl8
             level.level_finished = false;
             alreadyClickedNextLevel = true;
             nextMenuOpen = false;
+            scoreMenuOpen = false;
         }
         else if (!pressingNext)
         {
@@ -268,6 +272,7 @@ namespace Tmpl8
             start_game = false;
             nextMenuOpen = false;
             mainMenuOpen = true;
+            scoreMenuOpen = false;
         }
     }
 
@@ -338,6 +343,8 @@ namespace Tmpl8
     void Menu::openEndMenu(Surface* screen)
     {
         endMenuOpen = level.game_finished;
+        scoreMenuOpen = true;
+
         if (!endMenuOpen) return;
 
         img_menu_end_bg.Draw(screen, SCREEN_WIDTH / 2 - PAUSE_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_HEIGHT / 2);
@@ -381,6 +388,7 @@ namespace Tmpl8
             endMenuOpen = false;
             mainMenuOpen = true;
             level.game_finished = false;
+            scoreMenuOpen = false;
         }
 
         if (isHoveringReplay && isMousePressed)
@@ -394,6 +402,7 @@ namespace Tmpl8
             mainMenuOpen = false;
             level.game_finished = false;
             level.loadLevel(1);
+            scoreMenuOpen = false;
         }
     }
 
@@ -406,7 +415,7 @@ namespace Tmpl8
         bool press = isPDown && !pPressedLastFrame;
         if (press)
         {
-            pauseMenuOpen = true;
+            pauseMenuOpen = !pauseMenuOpen;
             manualPaused = !manualPaused;
         }
 
@@ -423,7 +432,7 @@ namespace Tmpl8
             resume_game = !manualPaused;
         }
 
-        static bool end_sound_played = false; // To play the end sound only once
+        static bool end_sound_played = false;
         if (level.game_finished)
         {
             if (!end_sound_played)
@@ -444,56 +453,43 @@ namespace Tmpl8
 
     /*
     * { TODO: }
-    * - Update actual score
-    * - Whenever it's updated make it scale up (add a float scale to the function)
     * - Play an SFX
     * - When it increases at the end of a level it can add up like angry faces did
     */
-#include <ctime>  // For time management
 
-    // Add a member variable to store the time of the last score update
-    float lastScoreUpdateTime = -1.0f;  // -1 means no update yet
-
-    void Menu::scoreManagerOpen(Surface* screen, float deltaTime)
+    void Menu::scoreInGame(Surface* screen, float deltaTime)
     {
+        if (pauseMenuOpen) return;
+
         char buffer[50];
-        bool score_updated = score != previousScore;  // Track if the score is updated
-        Pixel color = 0xFFFFFF;
+        bool score_updated = score != previousScore;
+        float color_update_time = 0.3f;
+        Pixel color = 0xFFFFFF;         // White by default
+        vec2 size = vec2(1.0f, 1.0f);   // Scale to 100% by default
 
-        // Check if the score was updated
-        if (score_updated)
-        {
-            // Store the current time when the score is updated
-            lastScoreUpdateTime = 0.0f;  // Reset the timer when score updates
-        }
-
-        // Change color if the score has been updated within the last second
-        if (lastScoreUpdateTime >= 0.0f && lastScoreUpdateTime < 1.0f)
-        {
-            color = 0xFFFF00;  // Yellow color for the updated score
-        }
-
-        // If more than 1 second has passed since the score update, reset the color
-        if (lastScoreUpdateTime >= 1.0f)
-        {
-            color = 0xFFFFFF;  // Reset to white after 1 second
-        }
-
-        // Increment the lastScoreUpdateTime by deltaTime
-        if (lastScoreUpdateTime >= 0.0f)
-        {
-            lastScoreUpdateTime += deltaTime;
-        }
-
-        // Save the current score as previousScore for the next frame
-        previousScore = score;
-
-        // Format the score as text
         sprintf(buffer, "Score: %04d", score);
 
         std::string txt = buffer;
         int text_width = stb_easy_font_width((char*)txt.c_str());
         float offset_to_corner = 10.0f;
+        static float lastScoreUpdateTime = -1.0f;
+        if (score_updated) 
+            lastScoreUpdateTime = 0.0f; 
+        if (lastScoreUpdateTime >= 0.0f && lastScoreUpdateTime < color_update_time && score!=0) 
+        {
+            size = vec2(1.05f, 1.05f);  // Scale to 105%
+            color = 0xFFFF00;           // Yellow
+            text_width *= size.x;       // Adjust width
+        }
+        if (lastScoreUpdateTime >= color_update_time) 
+        {
+            size = vec2(1.0f, 1.0f);
+            color = 0xFFFFFF;  
+        }
+        if (lastScoreUpdateTime >= 0.0f) 
+            lastScoreUpdateTime += deltaTime;
+
+        previousScore = score;
 
         vec2 draw_pos = vec2(
             SCREEN_WIDTH - text_width - offset_to_corner,
@@ -501,8 +497,58 @@ namespace Tmpl8
         );
 
         // Draw the text on the screen
-        text.printOnScreen((char*)txt.c_str(), draw_pos + 2.0f, screen, 0x934712);  // Drop shadow (dark orange)
-        text.printOnScreen((char*)txt.c_str(), draw_pos, screen, color);         // Actual text (color)
+        text.printOnScreen((char*)txt.c_str(), draw_pos + 2.0f, screen, size, 0x934712);  // Drop shadow (dark orange)
+        text.printOnScreen((char*)txt.c_str(), draw_pos, screen, size, color);            // Actual text (color)
+    }
+
+    void Menu::openScoreMenu(Surface* screen, float deltaTime)
+    {
+        if (!scoreMenuOpen)
+        {
+            score_timer = 0.0f;
+            score_value_current = 0;
+            score_is_counting = true;
+            return;
+        }
+
+        static const float counting_speed = 0.5f; // In secs
+        Pixel color = 0xFFFFFF;
+        vec2 size = vec2(4.0f, 4.0f);
+
+        score_timer += deltaTime;
+        for (int i = 0; i < score; i++)
+        {
+            score_value_current = score * score_timer / counting_speed;
+
+            color = 0xFFFF00;
+            size = vec2(5.2f, 5.2f);
+
+            if (score_value_current >= score)
+            {
+                score_value_current = score;
+                score_is_counting = false;
+                color = 0x00FF00;;
+                size = vec2(5.0f, 5.0f);
+            }
+        }
+
+
+
+        char buffer[50];
+        sprintf(buffer, "Score: %04d", score_value_current);
+
+        std::string txt = buffer;
+        int text_width = stb_easy_font_width((char*)txt.c_str());
+        int text_height = stb_easy_font_height((char*)txt.c_str());
+
+
+
+        vec2 draw_pos = vec2(
+            (SCREEN_WIDTH - text_width * size.x) / 2.0f,
+            (SCREEN_HEIGHT - text_height * size.y) / 2.0f
+        );
+
+        text.printOnScreen((char*)txt.c_str(), draw_pos, screen, size, color);
     }
 
 

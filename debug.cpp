@@ -65,6 +65,9 @@ namespace Tmpl8
             // PRESS <S> : Stop the AIs' movement.
             stopAIs();
 
+            // PRESS <J> : Get infinite jumps.
+            toggleInfiniteJump();
+
             // Display the entities' hitboxes
             drawPlayerHitbox(player.position, screen);
             drawPlayerTileHitbox(player.position, screen);
@@ -239,5 +242,8 @@ namespace Tmpl8
         screen->Print(collision_type_txt, 10, 130, 0xFFFF00);
     }
 
-    
+    void Debug::toggleInfiniteJump()
+    {
+        if (GetAsyncKeyState('J') & 0x8000) collectibles_collected = 9999;
+    }
 }

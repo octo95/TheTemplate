@@ -58,6 +58,7 @@ namespace Tmpl8
 		    // Getters / Setters
             int getFPS(float deltaTime);
             void getCurrentTileStatus(Surface* screen);
+            void toggleInfiniteJump();
 
         private:
             Camera& camera;

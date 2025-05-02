@@ -8,6 +8,6 @@ namespace Tmpl8
     class Text
     {
     public:
-        void printOnScreen(const std::string& txt, vec2 pos, Surface* screen, Pixel c);
+        void printOnScreen(const std::string& txt, vec2 pos, Surface* screen, vec2 size, Pixel c);
     };
 }
