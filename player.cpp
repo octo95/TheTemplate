@@ -25,14 +25,14 @@ namespace Tmpl8
         // Left
         if (GetAsyncKeyState(VK_LEFT))
         {
-            velocity.x -= ACCELERATION;
+            velocity.x -= ACCELERATION / deltaTime;
             if (velocity.x < -MAX_HORIZONTAL_SPEED) velocity.x = -MAX_HORIZONTAL_SPEED;
         }
 
         // Right
         else if (GetAsyncKeyState(VK_RIGHT))
         {
-            velocity.x += ACCELERATION;
+            velocity.x += ACCELERATION / deltaTime;
             if (velocity.x > MAX_HORIZONTAL_SPEED) velocity.x = MAX_HORIZONTAL_SPEED;
         }
 
@@ -60,12 +60,12 @@ namespace Tmpl8
         // Jump
         if (can_jump)
         {
-            velocity.y = -7.0f;
+            velocity.y = -4.0f;
             collectibles_collected--;
         }
 
         // Pass the velocity to the camera to make the player rotate while moving
-        angular_acceleration = velocity.x * 90.0f;
+        angular_acceleration = velocity.x * 270.0f;
 
         new_pos += velocity;
     }
@@ -128,11 +128,6 @@ namespace Tmpl8
         if (position.x < 0) position.x = 0;
         if (position.x + player_img_width > mapSize.x)
             position.x = mapSize.x - player_img_width;
-
-        // Vertically
-        if (position.y < 0) position.y = 0;
-        if (position.y + player_img_height > mapSize.y)
-            position.y = mapSize.y - player_img_height;
 
         return camPos;
     }

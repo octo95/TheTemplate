@@ -6,6 +6,7 @@ namespace Tmpl8
 {
     extern Sprite img_ai_copy;
 
+
     class AI_Copy 
     {
         public:

@@ -32,10 +32,10 @@ namespace Tmpl8
             bool can_jump = false;
 
             float angular_acceleration = 0.0f;
-            float gravity = 0.28f;
+            float gravity = 0.10f;
 		    float friction = 0.05f;                     // Friction on the ground, lower friction results in more momentum
             const float ENERGY_LOSS = 0.9f;             // How much energy the ball keeps after a bounce in %
-		    const float MAX_HORIZONTAL_SPEED = 3.0f;    // Max horizontal speed
+		    const float MAX_HORIZONTAL_SPEED = 2.0f;    // Max horizontal speed
 		    const float MAX_VERTICAL_SPEED = 10.0f;     // Max vertical speed
 		    const float PLAYER_DRAW_OFFSET_Y = -4.0f;   // Offset for the player sprite (since it has a reduced hitbox, to put it back on the ground)
 
@@ -57,6 +57,6 @@ namespace Tmpl8
             float vertical_speed = 0.0f;
             float horizontal_speed = 0.0f;
             float wall_force = 7.0f;
-            const float ACCELERATION = 0.3f;
+            const float ACCELERATION = 0.05f;
     };
 }

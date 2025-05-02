@@ -115,19 +115,19 @@ namespace Tmpl8
         // SFX: if falling from a high distance play <snd_fall_strong.wav>, otherwise from a smaller one play <snd_fall.wav> and if even smaller don't play any SFX.
         if ((CheckBottom == TileType::Collision || CheckBottom == TileType::Ice) && FallLight) 
         {
-            //printf("fall light: %.0f\n", player.velocity.y);
+            printf("fall light: %.0f\n", player.velocity.y);
             bouncing_force = 1.0f;
         }
         if ((CheckBottom == TileType::Collision || CheckBottom == TileType::Ice) && FallNormal) 
         {
             gamesound.playSound(gamesound.snd_fall);
-            //printf("fall normal: %.0f\n", player.velocity.y);
+            printf("fall normal: %.0f\n", player.velocity.y);
             bouncing_force = 1.5f;
         }
         if ((CheckBottom == TileType::Collision || CheckBottom == TileType::Ice) && FallHard) 
         {
             gamesound.playSound(gamesound.snd_fall_strong);
-            //printf("fall hard: %.0f\n", player.velocity.y);
+            printf("fall hard: %.0f\n", player.velocity.y);
             bouncing_force = 10.0f;
             camera.setShakeState(Camera::shakeConditions::FallHard);
         }
