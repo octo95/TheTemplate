@@ -20,21 +20,27 @@ namespace Tmpl8
 
     void Player::movePlayer(vec2& new_pos, Collisions* collisions, float deltaTime)
     {
-        //printf("deltaTime: %f\n", deltaTime);
 
         // Left
+        if (move_cooldown > 0.0f) move_cooldown -= deltaTime;
+
         if (GetAsyncKeyState(VK_LEFT))
         {
-            velocity.x -= ACCELERATION / deltaTime;
-            if (velocity.x < -MAX_HORIZONTAL_SPEED) velocity.x = -MAX_HORIZONTAL_SPEED;
+            if (move_cooldown <= 0.0f || velocity.x < 0)
+            {
+                velocity.x -= ACCELERATION / deltaTime;
+                if (velocity.x < -MAX_HORIZONTAL_SPEED) velocity.x = -MAX_HORIZONTAL_SPEED;
+            }
         }
-
-        // Right
         else if (GetAsyncKeyState(VK_RIGHT))
         {
-            velocity.x += ACCELERATION / deltaTime;
-            if (velocity.x > MAX_HORIZONTAL_SPEED) velocity.x = MAX_HORIZONTAL_SPEED;
+            if (move_cooldown <= 0.0f || velocity.x > 0)
+            {
+                velocity.x += ACCELERATION / deltaTime;
+                if (velocity.x > MAX_HORIZONTAL_SPEED) velocity.x = MAX_HORIZONTAL_SPEED;
+            }
         }
+
 
         // If no direction, slide
         else

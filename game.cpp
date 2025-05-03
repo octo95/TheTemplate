@@ -32,7 +32,7 @@ namespace Tmpl8
         
                 // Collisions logic
                 collisions.manageCollisions(player_pos, screen, &collectible);
-                manageWallCollision(player_pos, &gamesound);
+                manageWallCollision(&player, &gamesound);
                 manageCollectibleCollision(player_pos, &gamesound, &menu);
                 manageCollectibleRespawn(localTime);
         

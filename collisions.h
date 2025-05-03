@@ -1,20 +1,26 @@
 #pragma once
 #include "ai_follow.h"
 #include "ai_patrol.h"
-#include "bell.h"
 #include "camera.h"
-#include "collectible.h"
 #include "gamesound.h"
 #include "level.h"
 #include "player.h"
 #include "tilemap.h"
-#include "wall.h"
 #include "ai_copy.h"
 #include "menu.h"
 
 namespace Tmpl8
 {
     extern Sprite img_water_slide;
+
+    //enum TouchType {
+    //    NoneX,
+    //    NoneY,
+    //    Damage,
+    //    End,
+    //    Collision,
+    //    Ice
+    //};
 
     class Collisions {
     public:
@@ -23,12 +29,9 @@ namespace Tmpl8
             Player& playerRef,
             TileMap& tilemapRef,
             AI_Follow& ai_followRef,
-            CollectibleMap& collectibleRef,
-            WallMap& wallRef,
             Level& levelRef,
             Camera& cameraRef,
             GameSound& gamesoundRef,
-            Bell& bellRef,
             AI_Patrol& ai_patrolRef,
             AI_Copy& ai_copyRef,
             Menu& menuRef
@@ -37,18 +40,20 @@ namespace Tmpl8
 		// Variables
         bool playerHitAI = false;
         bool isOnIce = false;
-
+  
         // Collision checks
-        TileType CheckCollisionBottom(const vec2& pos);
-        TileType CheckCollisionTop(const vec2& pos);
-        TileType CheckCollisionRight(const vec2& pos);
-        TileType CheckCollisionLeft(const vec2& pos);
+        TileType checkCollisionBottom(const vec2& pos);
+        TileType checkCollisionTop(const vec2& pos);
+        TileType checkCollisionRight(const vec2& pos);
+        TileType checkCollisionLeft(const vec2& pos);
 
 		// Other functions
         TileType checkCollisionAtOffset(const vec2& pos, const vec2& offset);
+        TileType getCollisionType(vec2& new_pos);
         void manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles);
         void applyBouncingPhysics(vec2& new_pos);
         void drawSplash(Surface* screen, vec2 player_pos, float deltaTime);
+        void hitWall();
 
 		// Getters / Setters
         bool getJumpState(vec2& new_pos);
@@ -58,12 +63,9 @@ namespace Tmpl8
         Player& player;
         TileMap& tilemap;
         AI_Follow& ai_follow;
-        CollectibleMap& collectible;
-        WallMap& wall;
         Level& level;
         Camera& camera;
         GameSound& gamesound;
-        Bell& bell;
         AI_Patrol& ai_patrol;
         AI_Copy& ai_copy;
         Menu& menu;
@@ -71,7 +73,6 @@ namespace Tmpl8
         bool canPlayerJump = false;
         float bouncing_force = 1.0f;
         float gravity = 0.5f;
-        float wall_force = 2.0f;
         float trigger_fall_light = 2.0f;
         float trigger_fall_normal = 5.0f;
         float trigger_fall_hard = 9.0f;

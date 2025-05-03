@@ -30,12 +30,13 @@ namespace Tmpl8
 			debug(camera, tilemap, player, collectible, wall, ai_follow, level, collisions, menu, ai_patrol, ai_copy),
 			menu(level, player, tilemap, gamesound, text),
 			tilemap(player),
-			collisions(player, tilemap, ai_follow, collectible, wall, level, camera, gamesound, bell, ai_patrol, ai_copy, menu),
-			level(tilemap, player, ai_follow, collectible, wall, gamesound, bell, ai_patrol, ai_copy),
+			collisions(player, tilemap, ai_follow, level, camera, gamesound, ai_patrol, ai_copy, menu),
+			level(tilemap, player, ai_follow, collectible, wall, gamesound, ai_patrol, ai_copy),
 			health(player),
 			ai_follow(player, vec2(-500, -500), camera),   
 			ai_patrol(player, vec2(-500, -500), camera),   
-			ai_copy(player, vec2(-500, -500))              
+			ai_copy(player, vec2(-500, -500)),
+			bell(level)
 		{}
 
 		void SetTarget( Surface* surface ) { screen = surface; }

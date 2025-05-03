@@ -29,12 +29,14 @@ namespace Tmpl8
             vec2 velocity = { 0, 0 };
             vec2 position = { 0, 0 };
             vec2 default_pos = { 0, 0 };
-            bool can_jump = false;
 
+            bool can_jump = false;
+            bool is_hurt = false;
+            float move_cooldown = 0.0f;
             float angular_acceleration = 0.0f;
             float gravity = 0.10f;
 		    float friction = 0.05f;                     // Friction on the ground, lower friction results in more momentum
-            const float ENERGY_LOSS = 0.9f;             // How much energy the ball keeps after a bounce in %
+            const float ENERGY_LOSS = 0.7f;             // How much energy the ball keeps after a bounce in %
 		    const float MAX_HORIZONTAL_SPEED = 2.0f;    // Max horizontal speed
 		    const float MAX_VERTICAL_SPEED = 10.0f;     // Max vertical speed
 		    const float PLAYER_DRAW_OFFSET_Y = -4.0f;   // Offset for the player sprite (since it has a reduced hitbox, to put it back on the ground)
@@ -56,7 +58,7 @@ namespace Tmpl8
             bool is_touched_follow_ai = false;
             float vertical_speed = 0.0f;
             float horizontal_speed = 0.0f;
-            float wall_force = 7.0f;
             const float ACCELERATION = 0.05f;
+
     };
 }

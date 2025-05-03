@@ -5,7 +5,6 @@
 #include "collectible.h"
 #include "wall.h"
 #include "gamesound.h"
-#include "bell.h"
 #include "ai_patrol.h"
 #include "ai_copy.h"
 
@@ -22,7 +21,6 @@ namespace Tmpl8
                 CollectibleMap& collectibleRef,
                 WallMap& wallRef,
                 GameSound& gamesoundRef,
-                Bell& bellRef,
                 AI_Patrol& ai_patrolRef,
                 AI_Copy& ai_copyRef
             );
@@ -61,6 +59,7 @@ namespace Tmpl8
             
 			// Functions
             void loadLevel(int i);
+            void nextLevel();
             void manageDefaultPos(int map_index);
             void manageAIsPerMap(int map_index);
 
@@ -71,7 +70,6 @@ namespace Tmpl8
             CollectibleMap& collectible;
             WallMap& wall;
             GameSound& gamesound;
-            Bell& bell;
             AI_Patrol& ai_patrol;
             AI_Copy& ai_copy;
     };

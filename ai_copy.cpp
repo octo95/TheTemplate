@@ -40,7 +40,10 @@ namespace Tmpl8
         float dy = ai_center_y - player_center_y;
         float distance = sqrtf(dx * dx + dy * dy);
 
-        return (distance <= radii_sum);
+        bool touched_player = distance <= radii_sum;
+        player.is_hurt = touched_player ? true : false;
+
+        return (touched_player);
     }
 }
 

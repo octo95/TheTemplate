@@ -26,7 +26,7 @@ namespace Tmpl8
         vec2 {6,21}
     };
     const vec2 MAP1_WALLS[2] = {
-        vec2 {22,1},
+        vec2 {4,2},
         vec2 {8,18}
     };
     

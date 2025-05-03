@@ -8,10 +8,12 @@
 #include "vec2_hash.h"
 #include "gamesound.h"
 #include "tilemap.h"
+#include "player.h"
+
 namespace Tmpl8
 {
 	extern Sprite img_wall;
-	extern int walls_collected;
+	extern int walls_count;
 
 	struct Wall
 	{
@@ -43,5 +45,5 @@ namespace Tmpl8
 	// Local functions
 	void loadAllWalls(int map);
 	void drawWallMap(Camera* camera, Surface* screen, WallMap* collectibles);
-	void manageWallCollision(vec2 player_pos, GameSound* gamesound);
+	void manageWallCollision(Player* player, GameSound* gamesound);
 }

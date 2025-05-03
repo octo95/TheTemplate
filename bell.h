@@ -2,6 +2,7 @@
 #include "surface.h"
 #include "camera.h"
 #include "player.h"
+#include "level.h"
 
 namespace Tmpl8
 {
@@ -11,16 +12,14 @@ namespace Tmpl8
     {
         public:
             // Constructor
-            Bell();
-
-            // Variables
-            bool touchedPlayer = false;
+            Bell(Level& level);
 
             // Functions
             void isBellTouchingPlayer(Player* player);
             void drawBell(Surface* screen, Camera* camera, int map_index);
 
         private:
+            Level& level;
             vec2 BELL_POS[5] =
             {
                 vec2 {8,21},

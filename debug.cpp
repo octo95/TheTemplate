@@ -223,10 +223,10 @@ namespace Tmpl8
     void Debug::getCurrentTileStatus(Surface* screen)
     {
         // Check collisions with offsets of 1 to compare with the tile next to it.
-        TileType CheckLeft = collisions.CheckCollisionLeft({ player.position.x - 1, player.position.y });
-        TileType CheckRight = collisions.CheckCollisionRight({ player.position.x + 1, player.position.y });
-        TileType CheckBottom = collisions.CheckCollisionBottom({ player.position.x, player.position.y + 1 });
-        TileType CheckTop = collisions.CheckCollisionTop({ player.position.x, player.position.y - 1 });
+        TileType CheckLeft = collisions.checkCollisionLeft({ player.position.x - 1, player.position.y });
+        TileType CheckRight = collisions.checkCollisionRight({ player.position.x + 1, player.position.y });
+        TileType CheckBottom = collisions.checkCollisionBottom({ player.position.x, player.position.y + 1 });
+        TileType CheckTop = collisions.checkCollisionTop({ player.position.x, player.position.y - 1 });
 
         std::string collisionInfo = "";
 

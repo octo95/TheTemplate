@@ -72,17 +72,29 @@ namespace Tmpl8
 		}
 	}
 
-
 	void manageCollectibleCollision(vec2 player_pos, GameSound* gamesound, Menu* menu)
 	{
-		int x = (int)player_pos.x / TILE_SIZE;
-		int y = (int)player_pos.y / TILE_SIZE;
+		float player_x = player_pos.x;
+		float player_y = player_pos.y;
+		float player_hitbox = hitbox_radius;
+
 		CollectibleMap::iterator c = cmap.begin();
-		for (; c != cmap.end();)
+		while (c != cmap.end())
 		{
-			int cx = (int)(c->first.x);
-			int cy = (int)(c->first.y);
-			if (cx == x && cy == y) {
+			float col_x = c->first.x * TILE_SIZE;
+			float col_y = c->first.y * TILE_SIZE;
+			float col_width = TILE_SIZE;
+			float col_height = TILE_SIZE;
+
+			// AABB collision check
+			bool overlap =
+				player_x < col_x + col_width &&
+				player_x + player_hitbox > col_x &&
+				player_y < col_y + col_height &&
+				player_y + player_hitbox > col_y;
+
+			if (overlap)
+			{
 				c = cmap.erase(c);
 				gamesound->playSound(gamesound->snd_collect);
 				collectibles_collected++;
@@ -96,6 +108,7 @@ namespace Tmpl8
 			}
 		}
 	}
+
 	void manageCollectibleRespawn(float deltaTime)
 	{
 		if (collectibles_collected < 1 && collected_new)

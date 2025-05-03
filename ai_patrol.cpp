@@ -23,11 +23,11 @@ namespace Tmpl8
         getStomped();
         float spawn_x = this->position.x;
 
-        bool CheckLeft = collisions->CheckCollisionLeft(position) == TileType::Collision;
-        bool CheckRight = collisions->CheckCollisionRight(position) == TileType::Collision;
+        bool CheckLeft = collisions->checkCollisionLeft(position) == TileType::Collision;
+        bool CheckRight = collisions->checkCollisionRight(position) == TileType::Collision;
 
-        bool EdgeRight = collisions->CheckCollisionBottom(vec2(position.x + TILE_SIZE, position.y + TILE_SIZE)) == TileType::None;
-		bool EdgeLeft = collisions->CheckCollisionBottom(vec2(position.x - TILE_SIZE, position.y + TILE_SIZE)) == TileType::None;
+        bool EdgeRight = collisions->checkCollisionBottom(vec2(position.x + TILE_SIZE, position.y + TILE_SIZE)) == TileType::None;
+		bool EdgeLeft = collisions->checkCollisionBottom(vec2(position.x - TILE_SIZE, position.y + TILE_SIZE)) == TileType::None;
 
         float position_speed = 100.0f;
         float rotation_speed = 3.0f;
@@ -79,7 +79,10 @@ namespace Tmpl8
         float dy = ai_center_y - player_center_y;
         float distance = sqrtf(dx * dx + dy * dy);
 
-        return (distance <= radii_sum);
+        bool touched_player = distance <= radii_sum;
+        player.is_hurt = touched_player ? true : false;
+
+        return (touched_player);
     }
 }
 

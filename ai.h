@@ -23,11 +23,11 @@ namespace Tmpl8 {
         };
 
         // Variables
-        bool stop = false;          // Stops the AI if true (for debug)
-        Player& player;
         float acceleration = 0;
-        vec2 default_pos = { -500, -500 }; // Make the AI appear out of bounds when not on screen
+        bool stop = false;                  // Stops the AI if true (for debug)
+        vec2 default_pos = { -500, -500 };  // Make the AI appear out of bounds when not on screen
         vec2 position;
+        Player& player;
 
         // Functions
         bool isTouchingPlayer() { return false; };

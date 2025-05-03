@@ -3,7 +3,7 @@
 namespace Tmpl8
 {
 	Sprite img_wall(new Surface("assets/images/map/img_wall.png"), 1);
-	int walls_collected = 0;
+	int walls_count = 0;
 
 	WallMap wmap;
 
@@ -58,23 +58,43 @@ namespace Tmpl8
 		}
 	}
 
-	void manageWallCollision(vec2 player_pos, GameSound* gamesound) {
-		int x = (int)player_pos.x / TILE_SIZE;
-		int y = (int)player_pos.y / TILE_SIZE;
+	void manageWallCollision(Player* player, GameSound* gamesound)
+	{
+		float player_x = player->position.x;
+		float player_y = player->position.y;
+
+		float player_hitbox = hitbox_radius;
 
 		WallMap::iterator c = wmap.begin();
-		for (; c != wmap.end();)
+		while (c != wmap.end())
 		{
-			int cx = static_cast<int>(c->first.x);
-			int cy = static_cast<int>(c->first.y);
-			if (cx == x && cy == y) {
-				c = wmap.erase(c);
+			float wall_x = c->first.x * TILE_SIZE;
+			float wall_y = c->first.y * TILE_SIZE;
+			float wall_width = TILE_SIZE;
+			float wall_height = TILE_SIZE;
+
+			// AABB collision check
+			bool overlap =
+								player_x < wall_x + wall_width &&
+				player_x + player_hitbox > wall_x &&
+								player_y < wall_y + wall_height  &&
+				player_y + player_hitbox > wall_y ;
+
+			if (overlap)
+			{
+				player->move_cooldown = 0.30f;						// Stop the player's input for 0.3 seconds
+				player->velocity.x = -player->velocity.x * 2.0f;	// Make the player bounce back in the opposite direction
+				player->velocity.y = player->velocity.x / 2.0f;		// Make the player bounce back up based on its horizontal speed
+
 				gamesound->playSound(gamesound->snd_break_wall);
-				walls_collected++;
+
+				c = wmap.erase(c);
 			}
-			else {
+			else
+			{
 				++c;
 			}
 		}
 	}
+
 }

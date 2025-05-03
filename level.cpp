@@ -3,21 +3,19 @@
 
 namespace Tmpl8
 {
-    Level::Level(TileMap& tilemapRef, Player& playerRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef,WallMap& wallRef, GameSound& gamesoundRef, Bell& bellRef, AI_Patrol& ai_patrolRef, AI_Copy& ai_copyRef) :
+    Level::Level(TileMap& tilemapRef, Player& playerRef, AI_Follow& ai_followRef, CollectibleMap& collectibleRef,WallMap& wallRef, GameSound& gamesoundRef, AI_Patrol& ai_patrolRef, AI_Copy& ai_copyRef) :
         tilemap(tilemapRef),
         player(playerRef),
         ai_follow(ai_followRef),
         collectible(collectibleRef),
         wall(wallRef),
         gamesound(gamesoundRef),
-        bell(bellRef),
         ai_patrol(ai_patrolRef),
         ai_copy(ai_copyRef)
     {}
 
     void Level::loadLevel(int map_index)
     {
-        bell.touchedPlayer = false;
         collected_new = false;
         collectible_timer_active = false;
         collectibles_collected = 0;
@@ -46,7 +44,7 @@ namespace Tmpl8
         switch (map_index)
         {
         case 1: // No AI on LVL1
-            // ai_map.insert(AI_Copy(player, jsp));
+            // ai_map.insert(AI_Copy(player, AI_FOLLOW_DEFAULT_POS[map_index - 1]));
             // ai_map.insert(AI_Follow(player, AI_FOLLOW_DEFAULT_POS[map_index - 1]));
             // ai_map.insert(AI_Patrol(player, AI_PATROL_DEFAULT_POS[map_index - 1]));
             ai_copy.stop = true;
@@ -78,5 +76,18 @@ namespace Tmpl8
             ai_patrol.isDead = false;
             break;
         }
+    }
+
+    void Level::nextLevel()
+    {
+        if (tilemap.getCurrentLevel() == MAP_AMOUNT)
+        {
+            game_finished = true;
+            return;
+        }
+        gamesound.playSound(gamesound.snd_level_finished);
+        //menu.previousScore = menu.score;
+        //menu.score += 100;
+        level_finished = true;
     }
 }

@@ -35,6 +35,9 @@ namespace Tmpl8
         float dy = (this->position.y + ai_rad) - (player.position.y + player_rad);
         float distance = sqrtf(dx * dx + dy * dy);
 
-        return (distance <= radii_sum);
+        bool touched_player = distance <= radii_sum;
+        player.is_hurt = touched_player ? true : false;
+
+        return (touched_player);
     }
 }
