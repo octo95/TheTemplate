@@ -232,6 +232,7 @@
     <ClCompile Include="ai_patrol.cpp" />
     <ClCompile Include="bell.cpp" />
     <ClCompile Include="circular_buffer.cpp" />
+    <ClCompile Include="collisions_old.cpp" />
     <ClCompile Include="gamesound.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="collectible.cpp" />
@@ -275,6 +276,7 @@
     <ClInclude Include="wall.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="trash.txt" />
     <Text Include="_readme.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

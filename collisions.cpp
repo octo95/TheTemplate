@@ -6,7 +6,7 @@
 namespace Tmpl8
 {
     Collisions::Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, Level& levelRef, Camera& cameraRef, GameSound& gamesoundRef, AI_Patrol& ai_patrolRef, AI_Copy& ai_copyRef, Menu& menuRef) :
-        player(playerRef), 
+        player(playerRef),
         tilemap(tilemapRef),
         ai_follow(ai_followRef),
         camera(cameraRef),
@@ -15,29 +15,62 @@ namespace Tmpl8
         ai_patrol(ai_patrolRef),
         ai_copy(ai_copyRef),
         menu(menuRef)
-    {}
+    {
+    }
 
     Sprite img_water_slide_right(new Surface("assets/images/entities/img_water_slide_right.tga"), 3);
     Sprite img_water_slide_left(new Surface("assets/images/entities/img_water_slide_left.tga"), 3);
 
-    TileType Collisions::checkCollisionTop(const vec2& pos)
-    {
-        return checkCollisionAtOffset(pos, vec2(hitbox_radius, 0));  // Top center
-    }
-
-    TileType Collisions::checkCollisionRight(const vec2& pos)
-    {
-        return checkCollisionAtOffset(pos, vec2(hitbox_radius * 2, hitbox_radius));  // Right center
-    }
-
     TileType Collisions::checkCollisionBottom(const vec2& pos)
     {
-        return checkCollisionAtOffset(pos, vec2(hitbox_radius, hitbox_radius * 2));  // Bottom center
+        TileType type = TileType::None;
+
+        // Check bottom left
+        type = checkCollisionAtOffset(pos, vec2(0, hitbox_radius * 2));
+        if (type != TileType::None) return type;
+
+        // Check bottom right
+        type = checkCollisionAtOffset(pos, vec2(hitbox_radius * 2, hitbox_radius * 2));
+        return type;
     }
 
     TileType Collisions::checkCollisionLeft(const vec2& pos)
     {
-        return checkCollisionAtOffset(pos, vec2(0, hitbox_radius));  // Left center
+        TileType type = TileType::None;
+
+        // Check top-left
+        type = checkCollisionAtOffset(pos, vec2(0, 0));
+        if (type != TileType::None) return type;
+
+        // Check bottom-left
+        type = checkCollisionAtOffset(pos, vec2(0, hitbox_radius * 2));
+        return type;
+    }
+
+    TileType Collisions::checkCollisionRight(const vec2& pos)
+    {
+        TileType type = TileType::None;
+
+        // Check top-right
+        type = checkCollisionAtOffset(pos, vec2(hitbox_radius * 2, 0));
+        if (type != TileType::None) return type;
+
+        // Check bottom-right
+        type = checkCollisionAtOffset(pos, vec2(hitbox_radius * 2, hitbox_radius * 2));
+        return type;
+    }
+
+    TileType Collisions::checkCollisionTop(const vec2& pos)
+    {
+        TileType type = TileType::None;
+
+        // Check top-left
+        type = checkCollisionAtOffset(pos, vec2(0, 0));
+        if (type != TileType::None) return type;
+
+        // Check top-right
+        type = checkCollisionAtOffset(pos, vec2(hitbox_radius * 2, 0));
+        return type;
     }
 
     TileType Collisions::checkCollisionAtOffset(const vec2& pos, const vec2& offset)
@@ -48,116 +81,45 @@ namespace Tmpl8
         return (tile != TileType::None) ? tile : TileType::None;
     }
 
-    const char* TileTypeToString(TileType type)
-    {
-        switch (type)
-        {
-        case TileType::None:       return "None";
-        case TileType::Collision:  return "Collision";
-        case TileType::Damage:     return "Damage";
-        case TileType::Ice:        return "Ice";
-        case TileType::End:        return "End";
-        default:                   return "Unknown";
-        }
-    }
-
     TileType Collisions::getCollisionType(vec2& new_pos)
     {
-        TileType CheckT = checkCollisionTop(new_pos);
-        TileType CheckR = checkCollisionRight(new_pos);
-        TileType CheckB = checkCollisionBottom(new_pos);
-        TileType CheckL = checkCollisionLeft(new_pos);
+        TileType CheckLeft = checkCollisionLeft(new_pos + vec2(-1, 0));
+        TileType CheckRight = checkCollisionRight(new_pos + vec2(1, 0));
+        TileType CheckBottom = checkCollisionBottom(new_pos + vec2(0, 1));
+        TileType CheckTop = checkCollisionTop(new_pos + vec2(0, -1));
 
-        printf("-----------\n");
-        printf("Top - %s\n", TileTypeToString(CheckT));
-        printf("Right - %s\n", TileTypeToString(CheckR));
-        printf("Bottom - %s\n", TileTypeToString(CheckB));
-        printf("Left - %s\n", TileTypeToString(CheckL));
+        printf("CheckLeft: %d, CheckRight: %d, CheckBottom: %d, CheckTop: %d\n",
+            (int)CheckLeft, (int)CheckRight, (int)CheckBottom, (int)CheckTop);
 
-        bool isDamage = (
-            CheckT == TileType::Damage ||
-            CheckR == TileType::Damage ||
-            CheckL == TileType::Damage ||
-            CheckB == TileType::Damage ||
-            ai_follow.isTouchingPlayer() ||
-            ai_patrol.isTouchingPlayer() /*&& !ai_patrolisAILowerThanPlayer())*/ ||
-            ai_copy.isTouchingPlayer()
-            );
+        bool isNone = (CheckLeft == TileType::None || CheckRight == TileType::None || CheckBottom == TileType::None || CheckTop == TileType::None);
+        bool isDamage = (CheckLeft == TileType::Damage || CheckRight == TileType::Damage || CheckBottom == TileType::Damage || CheckTop == TileType::Damage || ai_follow.isTouchingPlayer() || (ai_patrol.isTouchingPlayer() && !ai_patrol.isAILowerThanPlayer || ai_copy.isTouchingPlayer()));
+        bool isCollision = (CheckLeft == TileType::Collision || CheckRight == TileType::Collision || CheckBottom == TileType::Collision || CheckTop == TileType::Collision);
+        bool isIce = (CheckBottom == TileType::Ice || CheckTop == TileType::Ice);
 
-        bool isNone = (
-            CheckT == TileType::None ||
-            CheckR == TileType::None ||
-            CheckL == TileType::None ||
-            CheckB == TileType::None
-            );
+        TileType type;
 
-        bool isIce = (
-            CheckL == TileType::Ice ||
-            CheckR == TileType::Ice ||
-            CheckT == TileType::Ice ||
-            CheckB == TileType::Ice
-            );
-
-        bool isCollision = (
-            CheckT == TileType::Collision ||
-            CheckR == TileType::Collision ||
-            CheckL == TileType::Collision ||
-            CheckB == TileType::Collision
-            );
-
-        TileType type = TileType::None;
-        bool isGrounded = 
-            (       
-                    CheckT == 0 && 
-             CheckL == 0 && CheckR == 0 && 
-                    CheckB == 3
-            ) ||
-            (       
-                    CheckT == 0 && 
-             CheckL == 3 && CheckR == 0 && 
-                    CheckB == 3
-            ) ||
-            (       
-                    CheckT == 0 && 
-             CheckL == 0 && CheckR == 3 && 
-                    CheckB == 3
-            ) ||
-            (       
-                    CheckT == 0 &&          // <= If this happens I messed up somehow
-             CheckL == 3 && CheckR == 3 && 
-                    CheckB == 3
-            );
-
-        printf("Grounded: %d\n", isGrounded);
-
-        if (isGrounded)
-        {
-            // PRIORITY -> None : Player can input
-            if (isDamage)           type = TileType::Damage;    //
-            else if (isNone)        type = TileType::None;      // <== None
-            else if (isIce)         type = TileType::Ice;       //
-            else if (isCollision)   type = TileType::Collision; // <== Collision
-        }
-        else
-        {
-            // PRIORITY -> Collision : Player can't input
-            if (isDamage)           type = TileType::Damage;    //
-            else if (isCollision)   type = TileType::Collision; // <== Collision
-            else if (isIce)         type = TileType::Ice;       //
-            else if (isNone)        type = TileType::None;      // <== None
-        }
+        if (isNone)             type = TileType::None;
+        else if (isDamage)      type = TileType::Damage;
+        else if (isCollision)   type = TileType::Collision;
+        else if (isIce)         type = TileType::Ice;
 
         return type;
-        // The order at which they are checked represents the priority order, so we have the priority: Damage > None > Ice > Collision
     }
- 
+
     void Collisions::manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles)
     {
         bool FallLight = player.velocity.y >= trigger_fall_light && player.velocity.y < trigger_fall_normal;
         bool FallNormal = player.velocity.y >= trigger_fall_normal && player.velocity.y < trigger_fall_hard;
         bool FallHard = player.velocity.y >= trigger_fall_hard;
 
-        printf("RETURNED TYPE: %s\n", TileTypeToString(getCollisionType(new_pos)));
+        TileType collisionType = getCollisionType(new_pos);
+        printf("Collision Type: %s (%d)\n",
+            collisionType == TileType::None ? "None" :
+            collisionType == TileType::Damage ? "Damage" :
+            collisionType == TileType::Collision ? "Collision" :
+            collisionType == TileType::Ice ? "Ice" : "Unknown",
+            (int)collisionType);
+
         switch (getCollisionType(new_pos))
         {
         case TileType::None:
@@ -186,44 +148,35 @@ namespace Tmpl8
 
     bool Collisions::getJumpState(vec2& new_pos)
     {
-        TileType CheckTop = checkCollisionTop(new_pos);
-        TileType CheckRight = checkCollisionRight(new_pos);
-        TileType CheckBottom = checkCollisionBottom(new_pos);
-        TileType CheckLeft = checkCollisionLeft(new_pos);
+        bool canPlayerJump = false;
+        TileType CheckBottom = checkCollisionBottom(new_pos + vec2(0,1));
+        canPlayerJump = GetAsyncKeyState(VK_UP) && (CheckBottom == 3 || CheckBottom == 4);
 
-        bool canJump = (CheckLeft || CheckBottom) != TileType::None && (CheckTop || CheckRight) == TileType::None;
-
-        return canJump && GetAsyncKeyState(VK_UP);
+        return canPlayerJump;
     }
 
     void Collisions::applyBouncingPhysics(vec2& new_pos)
     {
-        TileType CheckTop = checkCollisionTop(new_pos);
-        TileType CheckRight = checkCollisionRight(new_pos);
-        TileType CheckBottom = checkCollisionBottom(new_pos);
-        TileType CheckLeft = checkCollisionLeft(new_pos);
+        bool CheckLeft = checkCollisionLeft(new_pos + vec2(-1, 0)) != TileType::None;
+        bool CheckRight = checkCollisionRight(new_pos+ vec2(1, 0)) != TileType::None;
+        bool CheckBottom = checkCollisionBottom(new_pos + vec2(0, 1)) != TileType::None;
+        bool CheckTop = checkCollisionTop(new_pos + vec2(0, -1)) != TileType::None;
 
-        bool CheckX = ((CheckTop && CheckLeft) || (CheckRight && CheckBottom)) != TileType::None;
-        bool CheckY = ((CheckLeft && CheckBottom) || (CheckTop && CheckRight)) != TileType::None;
+        float norm = sqrtf(pow(player.velocity.x, 2) + pow(player.velocity.y, 2));
+        float angle = acosf(player.velocity.x / norm);
 
-        if (CheckX)
+        if (CheckLeft || CheckRight)
         {
-            float norm = sqrtf(pow(player.velocity.x, 2) + pow(player.velocity.y, 2));
-            float angle = acosf(player.velocity.x / norm);
-
             player.velocity.x = -norm * cos(angle);
             player.velocity.y = norm * sin(angle);
 
             // Apply the power loss for the sides collisions
             player.velocity.x *= powf(player.ENERGY_LOSS, 2);
         }
-
-        if (CheckY)
+        //printf("Bottom: %d, VelY: %f\n", (int)CheckBottom, player.velocity.y);
+        if (CheckBottom || CheckTop)
         {
-            float norm = sqrtf(pow(player.velocity.x, 2) + pow(player.velocity.y, 2));
-            float angle = acosf(player.velocity.x / norm);
-
-            player.velocity.x = norm * cos(angle);
+                     player.velocity.x = norm * cos(angle);
             player.velocity.y = -norm * sin(angle);
 
             // Apply the power loss for the bottom collisions
@@ -254,12 +207,14 @@ namespace Tmpl8
 
         vec2 draw_pos = player_pos + camera.getCamPos() + offset;
 
-        if (player.velocity.x > 0) img_water_slide_right.Draw(screen, draw_pos);
-        else img_water_slide_left.Draw(screen, draw_pos);
+        if (player.velocity.x > 0)   img_water_slide_right.Draw(screen, draw_pos);
+        else                         img_water_slide_left.Draw(screen, draw_pos);
     }
-
 }
 
+
+
+// AABB Version of the collisions (scrapped)
 /*
 #define WIN32_LEAN_AND_MEAN
 #include "windows.h"
@@ -519,4 +474,333 @@ namespace Tmpl8
 }
 
 
+*/
+
+// MIDLE EDGE Version of the collision (scrapped)
+/*
+#define WIN32_LEAN_AND_MEAN
+#include "windows.h"
+#include "collisions.h"
+#include <cmath>
+
+namespace Tmpl8
+{
+    Collisions::Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, Level& levelRef, Camera& cameraRef, GameSound& gamesoundRef, AI_Patrol& ai_patrolRef, AI_Copy& ai_copyRef, Menu& menuRef) :
+        player(playerRef),
+        tilemap(tilemapRef),
+        ai_follow(ai_followRef),
+        camera(cameraRef),
+        gamesound(gamesoundRef),
+        level(levelRef),
+        ai_patrol(ai_patrolRef),
+        ai_copy(ai_copyRef),
+        menu(menuRef)
+    {
+    }
+
+    Sprite img_water_slide_right(new Surface("assets/images/entities/img_water_slide_right.tga"), 3);
+    Sprite img_water_slide_left(new Surface("assets/images/entities/img_water_slide_left.tga"), 3);
+
+    TileType Collisions::checkCollisionTop(const vec2& pos)
+    {
+        return checkCollisionAtOffset(pos, vec2(hitbox_radius, 0));  // Top center
+    }
+
+    TileType Collisions::checkCollisionRight(const vec2& pos)
+    {
+        return checkCollisionAtOffset(pos, vec2(hitbox_radius * 2, hitbox_radius));  // Right center
+    }
+
+    TileType Collisions::checkCollisionBottom(const vec2& pos)
+    {
+        return checkCollisionAtOffset(pos, vec2(hitbox_radius, hitbox_radius * 2));  // Bottom center
+    }
+
+    TileType Collisions::checkCollisionLeft(const vec2& pos)
+    {
+        return checkCollisionAtOffset(pos, vec2(0, hitbox_radius));  // Left center
+    }
+
+    TileType Collisions::checkCollisionAtOffset(const vec2& pos, const vec2& offset)
+    {
+        vec2 adjusted_pos = pos + offset;
+        vec2 tiled_pos = vec2(floor(adjusted_pos.x / TILE_SIZE) * TILE_SIZE, floor(adjusted_pos.y / TILE_SIZE) * TILE_SIZE);
+        auto tile = tilemap.map_collision[tiled_pos];
+        return (tile != TileType::None) ? tile : TileType::None;
+    }
+
+    const char* TileTypeToString(TileType type)
+    {
+        switch (type)
+        {
+        case TileType::None:       return "None";
+        case TileType::Collision:  return "Collision";
+        case TileType::Damage:     return "Damage";
+        case TileType::Ice:        return "Ice";
+        case TileType::End:        return "End";
+        default:                   return "Unknown";
+        }
+    }
+
+    TileType Collisions::getCollisionType(vec2& new_pos)
+    {
+        TileType CheckT = checkCollisionTop(new_pos);
+        TileType CheckR = checkCollisionRight(new_pos);
+        TileType CheckB = checkCollisionBottom(new_pos);
+        TileType CheckL = checkCollisionLeft(new_pos);
+
+        printf("-----------\n");
+        printf("Top - %s\n", TileTypeToString(CheckT));
+        printf("Right - %s\n", TileTypeToString(CheckR));
+        printf("Bottom - %s\n", TileTypeToString(CheckB));
+        printf("Left - %s\n", TileTypeToString(CheckL));
+
+        bool isDamage = (
+            CheckT == TileType::Damage ||
+            CheckR == TileType::Damage ||
+            CheckL == TileType::Damage ||
+            CheckB == TileType::Damage ||
+            ai_follow.isTouchingPlayer() ||
+            ai_patrol.isTouchingPlayer() ||
+                ai_copy.isTouchingPlayer()
+                );
+
+                bool isNone = (
+                    CheckT == TileType::None ||
+                    CheckR == TileType::None ||
+                    CheckL == TileType::None ||
+                    CheckB == TileType::None
+                    );
+
+                bool isIce = (
+                    CheckL == TileType::Ice ||
+                    CheckR == TileType::Ice ||
+                    CheckT == TileType::Ice ||
+                    CheckB == TileType::Ice
+                    );
+
+                bool isCollision = (
+                    CheckT == TileType::Collision ||
+                    CheckR == TileType::Collision ||
+                    CheckL == TileType::Collision ||
+                    CheckB == TileType::Collision
+                    );
+
+                TileType type = TileType::None;
+                bool isGrounded =
+                    (
+                        CheckT == 0 &&
+                        CheckL == 0 && CheckR == 0 &&
+                        CheckB == 3
+                        ) ||
+                    (
+                        CheckT == 0 &&
+                        CheckL == 3 && CheckR == 0 &&
+                        CheckB == 3
+                        ) ||
+                    (
+                        CheckT == 0 &&
+                        CheckL == 0 && CheckR == 3 &&
+                        CheckB == 3
+                        ) ||
+                    (
+                        CheckT == 0 &&          // <= If this happens I messed up somehow
+                        CheckL == 3 && CheckR == 3 &&
+                        CheckB == 3
+                        );
+
+                printf("Grounded: %d\n", isGrounded);
+
+                if (isGrounded)
+                {
+                    // PRIORITY -> None : Player can input
+                    if (isDamage)           type = TileType::Damage;    //
+                    else if (isNone)        type = TileType::None;      // <== None
+                    else if (isIce)         type = TileType::Ice;       //
+                    else if (isCollision)   type = TileType::Collision; // <== Collision
+                }
+                else
+                {
+                    // PRIORITY -> Collision : Player can't input
+                    if (isDamage)           type = TileType::Damage;    //
+                    else if (isCollision)   type = TileType::Collision; // <== Collision
+                    else if (isIce)         type = TileType::Ice;       //
+                    else if (isNone)        type = TileType::None;      // <== None
+                }
+
+                return type;
+                // The order at which they are checked represents the priority order, so we have the priority: Damage > None > Ice > Collision
+    }
+
+    void Collisions::manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles)
+    {
+        bool FallLight = player.velocity.y >= trigger_fall_light && player.velocity.y < trigger_fall_normal;
+        bool FallNormal = player.velocity.y >= trigger_fall_normal && player.velocity.y < trigger_fall_hard;
+        bool FallHard = player.velocity.y >= trigger_fall_hard;
+
+        printf("RETURNED TYPE: %s\n", TileTypeToString(getCollisionType(new_pos)));
+        switch (getCollisionType(new_pos))
+        {
+        case TileType::None:
+            player.position = new_pos;
+            break;
+        case TileType::Damage:
+            level.loadLevel(tilemap.getCurrentLevel());
+            gamesound.playSound(gamesound.snd_damage);
+            camera.setShakeState(Camera::shakeConditions::Damage);
+            menu.score -= 15.0f;
+            break;
+        case TileType::Collision:
+            isOnIce = false;
+            player.friction = 0.5f;
+            player.velocity.y = 0;
+            player.position.y = (new_pos.y > player.position.y) ? player.position.y : new_pos.y;
+            break;
+        case TileType::Ice:
+            isOnIce = true;
+            player.friction = 0.0f;
+            player.velocity.y = 0;
+            player.position.y = (new_pos.y > player.position.y) ? player.position.y : new_pos.y;
+            break;
+        }
+    }
+
+    bool Collisions::getJumpState(vec2& new_pos)
+    {
+        TileType CheckTop = checkCollisionTop(new_pos);
+        TileType CheckRight = checkCollisionRight(new_pos);
+        TileType CheckBottom = checkCollisionBottom(new_pos);
+        TileType CheckLeft = checkCollisionLeft(new_pos);
+
+        bool canJump = (CheckLeft || CheckBottom) != TileType::None && (CheckTop || CheckRight) == TileType::None;
+
+        return canJump && GetAsyncKeyState(VK_UP);
+    }
+
+    void Collisions::applyBouncingPhysics(vec2& new_pos)
+    {
+        TileType CheckTop = checkCollisionTop(new_pos);
+        TileType CheckRight = checkCollisionRight(new_pos);
+        TileType CheckBottom = checkCollisionBottom(new_pos);
+        TileType CheckLeft = checkCollisionLeft(new_pos);
+
+        bool CheckX = ((CheckTop && CheckLeft) || (CheckRight && CheckBottom)) != TileType::None;
+        bool CheckY = ((CheckLeft && CheckBottom) || (CheckTop && CheckRight)) != TileType::None;
+
+        if (CheckX)
+        {
+            float norm = sqrtf(pow(player.velocity.x, 2) + pow(player.velocity.y, 2));
+            float angle = acosf(player.velocity.x / norm);
+
+            player.velocity.x = -norm * cos(angle);
+            player.velocity.y = norm * sin(angle);
+
+            // Apply the power loss for the sides collisions
+            player.velocity.x *= powf(player.ENERGY_LOSS, 2);
+        }
+
+        if (CheckY)
+        {
+            float norm = sqrtf(pow(player.velocity.x, 2) + pow(player.velocity.y, 2));
+            float angle = acosf(player.velocity.x / norm);
+
+            player.velocity.x = norm * cos(angle);
+            player.velocity.y = -norm * sin(angle);
+
+            // Apply the power loss for the bottom collisions
+            player.velocity.y *= powf(player.ENERGY_LOSS, 2);
+
+            // Threshold of 0.5 to the velocity.y to prevent the player from bouncing when on the ground with a low velocity
+            if (fabs(player.velocity.y) < 0.5f) player.velocity.y = 0.0f;
+        }
+    }
+
+    void Collisions::drawSplash(Surface* screen, vec2 player_pos, float deltaTime)
+    {
+        if (getCollisionType(player_pos) != TileType::Ice) return;
+
+        static float frame = 0.0f;
+        const float animation_fps = 10.0f;
+
+        frame += animation_fps * deltaTime;
+        if (frame >= 3.0f) frame -= 3.0f;
+
+        img_water_slide_right.SetFrame(frame);
+        img_water_slide_left.SetFrame(frame);
+
+        vec2 offset = vec2(
+            img_water_slide_right.GetWidth() / 2 - player_img_width / 2,
+            img_water_slide_right.GetHeight() / 2 - player_img_height / 2 + player.PLAYER_DRAW_OFFSET_Y + 1
+        );
+
+        vec2 draw_pos = player_pos + camera.getCamPos() + offset;
+
+        if (player.velocity.x > 0) img_water_slide_right.Draw(screen, draw_pos);
+        else img_water_slide_left.Draw(screen, draw_pos);
+    }
+
+}
+*/
+
+// OTHER
+
+//if ((CheckBottom == TileType::Collision && fabs(player.velocity.x) > 2.0f))
+//{
+//    gamesound.playRollingSound(gamesound.snd_rolling);
+//}
+//else
+//{
+//    gamesound.stopRollingSound();
+//}
+// 
+// SFX: if falling from a high distance play <snd_fall_strong.wav>, otherwise from a smaller one play <snd_fall.wav> and if even smaller don't play any SFX.
+//if ((TileType::Collision || TileType::Ice) && FallLight) 
+//{
+//    printf("fall light: %.0f\n", player.velocity.y);
+//    bouncing_force = 1.0f;
+//}
+//if ((TileType::Collision || TileType::Ice) && FallNormal) 
+//{
+//    gamesound.playSound(gamesound.snd_fall);
+//    printf("fall normal: %.0f\n", player.velocity.y);
+//    bouncing_force = 1.5f;
+//}
+//if ((TileType::Collision || TileType::Ice) && FallHard) 
+//{
+//    gamesound.playSound(gamesound.snd_fall_strong);
+//    printf("fall hard: %.0f\n", player.velocity.y);
+//    bouncing_force = 10.0f;
+//    camera.setShakeState(Camera::shakeConditions::FallHard);
+//}
+
+/*  + OLD COLLISION CHECK SYSTEM (for documentation purpose)
+
+    TileType Collisions::CheckCollisionBottom(const vec2int& pos)
+    {
+        TileType t_left = TileType::None;
+        TileType t_right = TileType::None;
+
+        int clamp_pos_x = pos.x / TILE_radius * TILE_radius;
+        int clamp_pos_y = pos.y / TILE_radius * TILE_radius;
+
+        if (((pos.y - clamp_pos_y) + hitbox_radius * 2) >= TILE_radius) {
+            auto l = tilemap.tile_at(clamp_pos_x, pos.y + TILE_radius);
+            if (l.type != TileType::None) t_left = l.type;
+
+            auto r = tilemap.tile_at((pos.x + (hitbox_radius * 2)) / TILE_radius * TILE_radius, pos.y + TILE_radius);
+            if (r.type != TileType::None) t_right = r.type;
+        }
+
+        // If the player is more than half on the left
+        if ((t_left == TileType::Damage || t_left == TileType::End) && (pos.x - (pos.x / TILE_radius * TILE_radius)) < hitbox_radius) {
+            return t_left;
+        }
+
+        // If the player is more than half on the right
+        if ((t_right == TileType::Damage || t_right == TileType::End) && (pos.x - (pos.x / TILE_radius * TILE_radius)) >= hitbox_radius) {
+            return t_right;
+        }
+
+        return (t_left == TileType::Collision || t_left == TileType::Ice) ? t_left : t_right;
+    }
 */

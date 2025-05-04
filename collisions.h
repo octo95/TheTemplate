@@ -37,15 +37,11 @@ namespace Tmpl8
             Menu& menuRef
         );
 
-		// Variables
+        // Variables
         bool playerHitAI = false;
         bool isOnIce = false;
-  
+
         // Collision checks
-        //TileType checkCollisionBottom(const vec2& pos);
-        //TileType checkCollisionTop(const vec2& pos);
-        //TileType checkCollisionRight(const vec2& pos);
-        //TileType checkCollisionLeft(const vec2& pos);
         //TileType checkCollisionTL(const vec2& pos);
         //TileType checkCollisionTR(const vec2& pos);
         //TileType checkCollisionBR(const vec2& pos);
@@ -56,15 +52,14 @@ namespace Tmpl8
         TileType checkCollisionLeft(const vec2& pos);
 
 
-		// Other functions
+        // Other functions
         TileType checkCollisionAtOffset(const vec2& pos, const vec2& offset);
         TileType getCollisionType(vec2& new_pos);
         void manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles);
         void applyBouncingPhysics(vec2& new_pos);
         void drawSplash(Surface* screen, vec2 player_pos, float deltaTime);
-        void hitWall();
 
-		// Getters / Setters
+        // Getters / Setters
         bool getJumpState(vec2& new_pos);
         void setTouchStateFollowAI(bool isTouched) { playerHitAI = isTouched; }
 

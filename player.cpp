@@ -29,7 +29,7 @@ namespace Tmpl8
             if (move_cooldown <= 0.0f || velocity.x < 0)
             {
                 velocity.x -= ACCELERATION / deltaTime;
-                if (velocity.x < -MAX_HORIZONTAL_SPEED) velocity.x = -MAX_HORIZONTAL_SPEED;
+                if (velocity.x < -max_horizontal_speed) velocity.x = -max_horizontal_speed;
             }
         }
         else if (GetAsyncKeyState(VK_RIGHT))
@@ -37,7 +37,7 @@ namespace Tmpl8
             if (move_cooldown <= 0.0f || velocity.x > 0)
             {
                 velocity.x += ACCELERATION / deltaTime;
-                if (velocity.x > MAX_HORIZONTAL_SPEED) velocity.x = MAX_HORIZONTAL_SPEED;
+                if (velocity.x > max_horizontal_speed) velocity.x = max_horizontal_speed;
             }
         }
 
@@ -59,7 +59,7 @@ namespace Tmpl8
 
         // Clamp fall speed
         velocity.y += gravity;
-        if (velocity.y > MAX_VERTICAL_SPEED) velocity.y = MAX_VERTICAL_SPEED;
+        if (velocity.y > max_vertical_speed) velocity.y = max_vertical_speed;
 
         collisions->applyBouncingPhysics(new_pos);
 

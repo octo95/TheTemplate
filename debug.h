@@ -59,6 +59,7 @@ namespace Tmpl8
             int getFPS(float deltaTime);
             void getCurrentTileStatus(Surface* screen);
             void toggleInfiniteJump();
+            void adjustPlayerSpeed();
 
         private:
             Camera& camera;

@@ -67,6 +67,9 @@
     <ClCompile Include="ai.cpp">
       <Filter>Solutions\AIs</Filter>
     </ClCompile>
+    <ClCompile Include="collisions_old.cpp">
+      <Filter>Other</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="player.h">
@@ -158,6 +161,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="_readme.txt">
+      <Filter>Other</Filter>
+    </Text>
+    <Text Include="trash.txt">
       <Filter>Other</Filter>
     </Text>
   </ItemGroup>
