@@ -222,24 +222,24 @@ namespace Tmpl8
 
     void Debug::getCurrentTileStatus(Surface* screen)
     {
-        // Check collisions with offsets of 1 to compare with the tile next to it.
-        TileType CheckLeft = collisions.checkCollisionLeft({ player.position.x - 1, player.position.y });
-        TileType CheckRight = collisions.checkCollisionRight({ player.position.x + 1, player.position.y });
-        TileType CheckBottom = collisions.checkCollisionBottom({ player.position.x, player.position.y + 1 });
-        TileType CheckTop = collisions.checkCollisionTop({ player.position.x, player.position.y - 1 });
-
-        std::string collisionInfo = "";
-
-        if (CheckLeft != TileType::None)    collisionInfo += "Left (" + std::string(getTileTypeName(CheckLeft)) + ") ";
-        if (CheckRight != TileType::None)   collisionInfo += "Right (" + std::string(getTileTypeName(CheckRight)) + ") ";
-        if (CheckBottom != TileType::None)  collisionInfo += "Bottom (" + std::string(getTileTypeName(CheckBottom)) + ") ";
-        if (CheckTop != TileType::None)     collisionInfo += "Top (" + std::string(getTileTypeName(CheckTop)) + ") ";
-        if (collisionInfo.empty())          collisionInfo = "Collision: None";
-        else                                collisionInfo = "Collision: " + collisionInfo;
-
-        char collision_type_txt[256];
-        sprintf(collision_type_txt, "%s", collisionInfo.c_str());
-        screen->Print(collision_type_txt, 10, 130, 0xFFFF00);
+        //// Check collisions with offsets of 1 to compare with the tile next to it.
+        //TileType CheckLeft = collisions.checkCollisionLeft({ player.position.x - 1, player.position.y });
+        //TileType CheckRight = collisions.checkCollisionRight({ player.position.x + 1, player.position.y });
+        //TileType CheckBottom = collisions.checkCollisionBottom({ player.position.x, player.position.y + 1 });
+        //TileType CheckTop = collisions.checkCollisionTop({ player.position.x, player.position.y - 1 });
+        //
+        //std::string collisionInfo = "";
+        //
+        //if (CheckLeft != TileType::None)    collisionInfo += "Left (" + std::string(getTileTypeName(CheckLeft)) + ") ";
+        //if (CheckRight != TileType::None)   collisionInfo += "Right (" + std::string(getTileTypeName(CheckRight)) + ") ";
+        //if (CheckBottom != TileType::None)  collisionInfo += "Bottom (" + std::string(getTileTypeName(CheckBottom)) + ") ";
+        //if (CheckTop != TileType::None)     collisionInfo += "Top (" + std::string(getTileTypeName(CheckTop)) + ") ";
+        //if (collisionInfo.empty())          collisionInfo = "Collision: None";
+        //else                                collisionInfo = "Collision: " + collisionInfo;
+        //
+        //char collision_type_txt[256];
+        //sprintf(collision_type_txt, "%s", collisionInfo.c_str());
+        //screen->Print(collision_type_txt, 10, 130, 0xFFFF00);
     }
 
     void Debug::toggleInfiniteJump()

@@ -37,7 +37,7 @@ namespace Tmpl8
             float gravity = 0.10f;
 		    float friction = 0.05f;                     // Friction on the ground, lower friction results in more momentum
             const float ENERGY_LOSS = 0.7f;             // How much energy the ball keeps after a bounce in %
-		    const float MAX_HORIZONTAL_SPEED = 2.0f;    // Max horizontal speed
+		    const float MAX_HORIZONTAL_SPEED = 1.0f;    // Max horizontal speed
 		    const float MAX_VERTICAL_SPEED = 10.0f;     // Max vertical speed
 		    const float PLAYER_DRAW_OFFSET_Y = -4.0f;   // Offset for the player sprite (since it has a reduced hitbox, to put it back on the ground)
 

@@ -101,7 +101,7 @@ namespace Tmpl8
 
 		int mousex, mousey;
 		bool start_game = false;
-		vec2 player_pos;
+		vec2 new_pos;
 		bool isTDown = false;
 		float localTime = 0.0f;
 		float frameTime = 0.0f;

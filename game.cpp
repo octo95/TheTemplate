@@ -26,20 +26,20 @@ namespace Tmpl8
                 // * Initialize game logic
                 
                 // Player logic
-                player.getPlayerPos(player_pos);
-                player.movePlayer(player_pos, &collisions, localTime);
-                player.setJumpState(collisions.getJumpState(player_pos));
+                player.getPlayerPos(new_pos);
+                player.movePlayer(new_pos, &collisions, localTime);
+                player.setJumpState(collisions.getJumpState(new_pos));
+                collisions.manageCollisions(new_pos, screen, &collectible);
         
                 // Collisions logic
-                collisions.manageCollisions(player_pos, screen, &collectible);
                 manageWallCollision(&player, &gamesound);
-                manageCollectibleCollision(player_pos, &gamesound, &menu);
+                manageCollectibleCollision(new_pos, &gamesound, &menu);
                 manageCollectibleRespawn(localTime);
         
                 // AI logic
                 //workAI(ai_map, ...);
                 ai_copy.setProperties();
-                ai_copy.playerBuffer.add(player_pos, player.angular_acceleration);
+                ai_copy.playerBuffer.add(new_pos, player.angular_acceleration);
                 ai_follow.followPlayer(localTime);
                 ai_patrol.Patrol(localTime, &collisions);
         
@@ -63,11 +63,11 @@ namespace Tmpl8
             camera.drawWithCam(tilemap.current_map_draw, screen, vec2(0, 0));
             drawWallMap(&camera, screen, &this->wall);  
             drawCollectibleMap(&camera, screen, localTime);       
-            camera.drawPlayer(&img_player, screen, player_pos, localTime, player.angular_acceleration);
+            camera.drawPlayer(&img_player, screen, player.position, localTime, player.angular_acceleration);
             camera.drawAICopy(&img_ai_copy, screen, ai_copy.position, localTime, ai_copy.acceleration);
 			img_ai_follow.DrawRotated(screen, ai_follow.position + camera.getCamPos(), ai_follow.angle);
 			if(!ai_patrol.isDead) img_ai_patrol.DrawRotated(screen, ai_patrol.position + camera.getCamPos(), ai_patrol.angle);
-            collisions.drawSplash(screen, player_pos, localTime); 
+            collisions.drawSplash(screen, new_pos, localTime); 
             bell.drawBell(screen, &camera, tilemap.getCurrentLevel());
             menu.manageMenus(screen);
             menu.scoreInGame(screen, localTime);
