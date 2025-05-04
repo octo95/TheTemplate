@@ -2,6 +2,7 @@
 #include "ai_follow.h"
 #include "ai_patrol.h"
 #include "camera.h"
+#include "collectible.h"
 #include "gamesound.h"
 #include "level.h"
 #include "player.h"
@@ -13,15 +14,6 @@ namespace Tmpl8
 {
     extern Sprite img_water_slide;
 
-    //enum TouchType {
-    //    NoneX,
-    //    NoneY,
-    //    Damage,
-    //    End,
-    //    Collision,
-    //    Ice
-    //};
-
     class Collisions {
     public:
         // Constructor
@@ -29,6 +21,7 @@ namespace Tmpl8
             Player& playerRef,
             TileMap& tilemapRef,
             AI_Follow& ai_followRef,
+            CollectibleMap& collectibleRef,
             Level& levelRef,
             Camera& cameraRef,
             GameSound& gamesoundRef,
@@ -42,19 +35,17 @@ namespace Tmpl8
         bool isOnIce = false;
 
         // Collision checks
+        TileType checkCollisionBottom(const vec2& pos);
+        TileType checkCollisionTop(const vec2& pos);
+        TileType checkCollisionRight(const vec2& pos);
+        TileType checkCollisionLeft(const vec2& pos);
         //TileType checkCollisionTL(const vec2& pos);
         //TileType checkCollisionTR(const vec2& pos);
         //TileType checkCollisionBR(const vec2& pos);
         //TileType checkCollisionBL(const vec2& pos);
-        TileType checkCollisionTop(const vec2& pos);
-        TileType checkCollisionRight(const vec2& pos);
-        TileType checkCollisionBottom(const vec2& pos);
-        TileType checkCollisionLeft(const vec2& pos);
-
 
         // Other functions
         TileType checkCollisionAtOffset(const vec2& pos, const vec2& offset);
-        TileType getCollisionType(vec2& new_pos);
         void manageCollisions(vec2& new_pos, Surface* screen, CollectibleMap* collectibles);
         void applyBouncingPhysics(vec2& new_pos);
         void drawSplash(Surface* screen, vec2 player_pos, float deltaTime);
@@ -67,6 +58,7 @@ namespace Tmpl8
         Player& player;
         TileMap& tilemap;
         AI_Follow& ai_follow;
+        CollectibleMap& collectible;
         Level& level;
         Camera& camera;
         GameSound& gamesound;
@@ -77,6 +69,7 @@ namespace Tmpl8
         bool canPlayerJump = false;
         float bouncing_force = 1.0f;
         float gravity = 0.5f;
+        float wall_force = 2.0f;
         float trigger_fall_light = 2.0f;
         float trigger_fall_normal = 5.0f;
         float trigger_fall_hard = 9.0f;
