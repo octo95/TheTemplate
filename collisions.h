@@ -46,10 +46,15 @@ namespace Tmpl8
         //TileType checkCollisionTop(const vec2& pos);
         //TileType checkCollisionRight(const vec2& pos);
         //TileType checkCollisionLeft(const vec2& pos);
-        TileType checkCollisionTL(const vec2& pos);
-        TileType checkCollisionTR(const vec2& pos);
-        TileType checkCollisionBR(const vec2& pos);
-        TileType checkCollisionBL(const vec2& pos);
+        //TileType checkCollisionTL(const vec2& pos);
+        //TileType checkCollisionTR(const vec2& pos);
+        //TileType checkCollisionBR(const vec2& pos);
+        //TileType checkCollisionBL(const vec2& pos);
+        TileType checkCollisionTop(const vec2& pos);
+        TileType checkCollisionRight(const vec2& pos);
+        TileType checkCollisionBottom(const vec2& pos);
+        TileType checkCollisionLeft(const vec2& pos);
+
 
 		// Other functions
         TileType checkCollisionAtOffset(const vec2& pos, const vec2& offset);
