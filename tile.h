@@ -12,11 +12,11 @@ namespace Tmpl8
     const int TILE_SIZE = 32;
     enum TileType 
     {
-        None,
-        Damage,
-        End,
-        Collision,
-        Ice
+        None = 0,
+        Damage = 1,
+        End = 2,
+        Collision = 3,
+        Ice = 4
     };
 
     // Tile struct

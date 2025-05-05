@@ -29,13 +29,13 @@ namespace Tmpl8
                 player.getPlayerPos(new_pos);
                 player.movePlayer(new_pos, &collisions, localTime);
                 player.setJumpState(collisions.getJumpState(new_pos));
-                collisions.manageCollisions(new_pos, screen, &collectible);
+                collisions.manageCollisions(new_pos);
         
                 // Collisions logic
                 manageWallCollision(&player, &gamesound);
                 manageCollectibleCollision(new_pos, &gamesound, &menu);
                 manageCollectibleRespawn(localTime);
-        
+                
                 // AI logic
                 //workAI(ai_map, ...);
                 ai_copy.setProperties();

@@ -61,7 +61,7 @@ namespace Tmpl8
         velocity.y += gravity;
         if (velocity.y > max_vertical_speed) velocity.y = max_vertical_speed;
 
-        collisions->applyBouncingPhysics(new_pos);
+        //collisions->applyBouncingPhysics(new_pos);
 
         // Jump
         if (can_jump)

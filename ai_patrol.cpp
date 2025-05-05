@@ -23,11 +23,11 @@ namespace Tmpl8
         getStomped();
         float spawn_x = this->position.x;
 
-        bool CheckLeft = collisions->checkCollisionLeft(position) == TileType::Collision;
-        bool CheckRight = collisions->checkCollisionRight(position) == TileType::Collision;
+        bool CheckLeft = collisions->checkCollisionL(position) == TileType::Collision;
+        bool CheckRight = collisions->checkCollisionR(position) == TileType::Collision;
         
-        bool EdgeRight = collisions->checkCollisionBottom(vec2(position.x + TILE_SIZE, position.y + TILE_SIZE)) == TileType::None;
-		bool EdgeLeft = collisions->checkCollisionBottom(vec2(position.x - TILE_SIZE, position.y + TILE_SIZE)) == TileType::None;
+        bool EdgeRight = collisions->checkCollisionB(vec2(position.x + TILE_SIZE, position.y + TILE_SIZE)) == TileType::None;
+		bool EdgeLeft = collisions->checkCollisionB(vec2(position.x - TILE_SIZE, position.y + TILE_SIZE)) == TileType::None;
         
         float position_speed = 100.0f;
         float rotation_speed = 3.0f;

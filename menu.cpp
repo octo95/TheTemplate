@@ -160,7 +160,16 @@ namespace Tmpl8
             // Draw the selected difficulty marker
             if (difficulty == i + 1)
             {
-                img_selected.Draw(screen, difficulty_X[i] + MAIN_DIFFICULTY_WIDTH / 2 - img_selected.GetWidth() / 2, MAIN_DIFFICULTIES_Y + MAIN_DIFFICULTY_HEIGHT );
+                static float totalTime = 0.0f;
+                float floating_time = 2.0f;
+                float amplitude = 5.0f;
+                vec2 draw_pos = vec2(
+                    difficulty_X[i] + MAIN_DIFFICULTY_WIDTH / 2 - img_selected.GetWidth() / 2,
+                    MAIN_DIFFICULTIES_Y + MAIN_DIFFICULTY_HEIGHT + 10.0f
+                );
+                totalTime += deltaTime;
+                draw_pos.y += sin((totalTime / floating_time) * 2.0f * 3.1416f) * amplitude - 4.0f;
+                img_selected.Draw(screen, draw_pos);
             }
         }
 
