@@ -18,7 +18,7 @@ namespace Tmpl8
     int player_img_height = img_player.GetHeight();
     bool canJump = false;
 
-    void Player::movePlayer(vec2& new_pos, Collisions* collisions, float deltaTime)
+    vec2 Player::movePlayer(Collisions* collisions, float deltaTime)
     {
 
         // Left
@@ -26,7 +26,7 @@ namespace Tmpl8
 
         if (GetAsyncKeyState(VK_LEFT))
         {
-            if (move_cooldown <= 0.0f || velocity.x < 0)
+            if (move_cooldown <= 0.0f)
             {
                 velocity.x -= ACCELERATION / deltaTime;
                 if (velocity.x < -max_horizontal_speed) velocity.x = -max_horizontal_speed;
@@ -34,13 +34,12 @@ namespace Tmpl8
         }
         else if (GetAsyncKeyState(VK_RIGHT))
         {
-            if (move_cooldown <= 0.0f || velocity.x > 0)
+            if (move_cooldown <= 0.0f)
             {
                 velocity.x += ACCELERATION / deltaTime;
                 if (velocity.x > max_horizontal_speed) velocity.x = max_horizontal_speed;
             }
         }
-
 
         // If no direction, slide
         else
@@ -61,19 +60,38 @@ namespace Tmpl8
         velocity.y += gravity;
         if (velocity.y > max_vertical_speed) velocity.y = max_vertical_speed;
 
-        //collisions->applyBouncingPhysics(new_pos);
-
         // Jump
-        if (can_jump)
+        if (GetAsyncKeyState(VK_UP) & 0x8000 && can_jump && !jumping)
         {
-            velocity.y = -4.0f;
-            collectibles_collected--;
+            jumping = true;
+            jumping_cooldown = 0.0f;
         }
 
+        float jumping_max_time = 0.3f;
+        static float jumping_vel_factor = 2.0f;
+
+        if (jumping)
+        {
+            jumping_cooldown += deltaTime;
+
+            if (GetAsyncKeyState(VK_UP) & 0x8000 && jumping_cooldown < jumping_max_time)
+            {
+                jumping_vel_factor -= 0.05f;
+                velocity.y = -1.5f;
+                
+            }
+            else
+            {
+                jumping = false;
+                jumping_vel_factor = 5.0f;
+            }
+        }
         // Pass the velocity to the camera to make the player rotate while moving
         angular_acceleration = velocity.x * 270.0f;
 
-        new_pos += velocity;
+        dash();
+
+        return position + velocity;
     }
 
     vec2 Player::camFollowPlayer(TileMap* map)
@@ -128,9 +146,7 @@ namespace Tmpl8
             }
         }
 
-        // + Clamp to not go out of bounds
-
-        // Horizontally
+        // + Clamp to not go out of bounds horizontally
         if (position.x < 0) position.x = 0;
         if (position.x + player_img_width > mapSize.x)
             position.x = mapSize.x - player_img_width;
@@ -138,5 +154,19 @@ namespace Tmpl8
         return camPos;
     }
 
+    void Player::dash()
+    {
+        if (GetAsyncKeyState('X'))
+        {
+           if (GetAsyncKeyState(VK_RIGHT))
+            {
+                position.x += 10.0f;
+            }
+            if (GetAsyncKeyState(VK_LEFT))
+            {
+                position.x -= 10.0f;
+            }
+        }
+    }
 
 };

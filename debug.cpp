@@ -21,14 +21,15 @@ namespace Tmpl8
     
     void Debug::drawPlayerHitbox(const vec2& pos, Surface* screen)
     {
-        vec2 offset(player_img_width / 2.0f, player_img_height / 2.0f); 
-        vec2 hitbox_size(hitbox_radius, hitbox_radius);
-        vec2 center = pos + camera.getCamPos() + offset;
+        //vec2 offset(player_img_width / 2.0f, player_img_height / 2.0f); 
+        //vec2 hitbox_size(hitbox_radius, hitbox_radius);
+        //vec2 center = pos + camera.getCamPos() + offset;
 
-        vec2 pos1 = center - hitbox_size;
-        vec2 pos2 = center + hitbox_size;
+        vec2 pos1 = pos + vec2(-hitbox_radius, -hitbox_radius) + camera.getCamPos();
+        vec2 pos2 = pos + vec2(hitbox_radius, hitbox_radius) + camera.getCamPos();
 
         screen->Box(pos1, pos2, 0xFF0000);
+        screen->Box(pos + vec2(-2,-2) + camera.getCamPos(), pos + vec2(2, 2) + camera.getCamPos(), 0x5555DF);
     }
 
 
@@ -182,8 +183,8 @@ namespace Tmpl8
     void Debug::drawVelocityNorm(Surface* screen)
     { 
         float lineSize = 10.0f;
-        float start_x = player.position.x + camera.getCamPos().x + player_img_width / 2;
-        float start_y = player.position.y + camera.getCamPos().y + player_img_height / 2;
+        float start_x = player.position.x + camera.getCamPos().x;
+        float start_y = player.position.y + camera.getCamPos().y;
         float end_x = start_x + player.velocity.x * lineSize;
         float end_y = start_y + player.velocity.y * lineSize;
 

@@ -27,7 +27,7 @@ namespace Tmpl8
 			// Getters / Setters
 			vec2 getCamPos() const { return position + shake; }
 			void setCamPos(const vec2& position) { this->position = position; }
-			void setShakeState(shakeConditions condition) { shake_conditions = condition, printf("set: %d\n", (int)shake_conditions); }
+			void setShakeState(shakeConditions condition) { shake_conditions = condition; }
 
 		private:
 			vec2 position = { 0, 0 };

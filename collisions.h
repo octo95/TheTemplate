@@ -43,16 +43,20 @@ namespace Tmpl8
 
         // Collision checks
         TileType checkCollisionB(const vec2& pos);
+        TileType checkCollisionBottom(const vec2& pos, bool left, bool right);
         TileType checkCollisionT(const vec2& pos);
+        TileType checkCollisionTop(const vec2& pos, bool left, bool right);
         TileType checkCollisionR(const vec2& pos);
+        TileType checkCollisionRight(const vec2& pos);
         TileType checkCollisionL(const vec2& pos);
+        TileType checkCollisionLeft(const vec2& pos);
 
         // Other functions
         TileType checkCollisionAtOffset(const vec2& pos, const vec2& offset);
         TileType getCollisionType(vec2& new_pos);
         void manageCollisions(vec2& new_pos);
-        void applyBouncingPhysics(vec2& new_pos);
         void drawSplash(Surface* screen, vec2 player_pos, float deltaTime);
+        void applyBouncingPhysics(vec2& new_pos, bool left, bool right, bool bottom, bool top);
         void hitWall();
 
         // Getters / Setters

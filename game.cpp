@@ -11,6 +11,7 @@ namespace Tmpl8
         deltaTime /= 1000.0f; // Convert deltaTime to seconds
         localTime = deltaTime;
 
+        vec2 new_pos;
         //frameTime += deltaTime;
         //if (frameTime < 1 / 60.0f) return;
         //frameTime = 0.0f;
@@ -26,8 +27,8 @@ namespace Tmpl8
                 // * Initialize game logic
                 
                 // Player logic
-                player.getPlayerPos(new_pos);
-                player.movePlayer(new_pos, &collisions, localTime);
+                //player.getPlayerPos(new_pos);
+                new_pos = player.movePlayer(&collisions, localTime);
                 player.setJumpState(collisions.getJumpState(new_pos));
                 collisions.manageCollisions(new_pos);
         
@@ -67,7 +68,7 @@ namespace Tmpl8
             camera.drawAICopy(&img_ai_copy, screen, ai_copy.position, localTime, ai_copy.acceleration);
 			img_ai_follow.DrawRotated(screen, ai_follow.position + camera.getCamPos(), ai_follow.angle);
 			if(!ai_patrol.isDead) img_ai_patrol.DrawRotated(screen, ai_patrol.position + camera.getCamPos(), ai_patrol.angle);
-            collisions.drawSplash(screen, new_pos, localTime); 
+            //collisions.drawSplash(screen, new_pos, localTime); 
             bell.drawBell(screen, &camera, tilemap.getCurrentLevel());
             menu.manageMenus(screen);
             menu.scoreInGame(screen, localTime);

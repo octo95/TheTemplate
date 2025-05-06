@@ -33,6 +33,8 @@ namespace Tmpl8
             bool can_jump = false;
             bool is_hurt = false;
             float move_cooldown = 0.0f;
+            bool jumping = false;
+            float jumping_cooldown = 0.0f;
             float angular_acceleration = 0.0f;
             float gravity = 0.10f;
 		    float friction = 0.05f;                     // Friction on the ground, lower friction results in more momentum
@@ -42,8 +44,9 @@ namespace Tmpl8
 		    const float PLAYER_DRAW_OFFSET_Y = -4.0f;   // Offset for the player sprite (since it has a reduced hitbox, to put it back on the ground)
 
             // Functions
-            void movePlayer(vec2& new_pos, Collisions* collisions, float deltaTime);
+            vec2 movePlayer(Collisions* collisions, float deltaTime);
             vec2 camFollowPlayer(TileMap* map);
+            void dash();
 
 		    // Getters / Setters
             void getPlayerPos(vec2& pos) { pos = position; }
