@@ -516,6 +516,30 @@ namespace Tmpl8
         text.printOnScreen((char*)txt.c_str(), draw_pos, screen, size, color);            // Actual text (color)
     }
 
+    void Menu::dashCountInGame(Surface* screen, float deltaTime)
+    {
+        if (pauseMenuOpen || nextMenuOpen || endMenuOpen) return;
+
+        char buffer[50];
+        Pixel color = 0xFFFFFF;         
+        vec2 size = vec2(1.0f, 1.0f);   
+
+        sprintf(buffer, "Dashes: %d", player.dash_count);
+
+        std::string txt = buffer;
+        int text_width = stb_easy_font_width((char*)txt.c_str());
+        float offset_to_corner = 10.0f;
+   
+        vec2 draw_pos = vec2(
+            SCREEN_WIDTH - text_width - offset_to_corner,
+            offset_to_corner + 40.0f
+        );
+
+        // Draw the text on the screen
+        text.printOnScreen((char*)txt.c_str(), draw_pos + 2.0f, screen, size, 0x934712);  // Drop shadow (dark orange)
+        text.printOnScreen((char*)txt.c_str(), draw_pos, screen, size, color);            // Actual text (color)
+    }
+
     void Menu::openScoreMenu(Surface* screen, float deltaTime)
     {
         if (score <= 0) score = 0; // The score can't go below 0

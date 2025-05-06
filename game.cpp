@@ -34,7 +34,7 @@ namespace Tmpl8
         
                 // Collisions logic
                 manageWallCollision(&player, &gamesound);
-                manageCollectibleCollision(new_pos, &gamesound, &menu);
+                manageCollectibleCollision(&player, &gamesound, &menu);
                 manageCollectibleRespawn(localTime);
                 
                 // AI logic
@@ -72,8 +72,10 @@ namespace Tmpl8
             bell.drawBell(screen, &camera, tilemap.getCurrentLevel());
             menu.manageMenus(screen);
             menu.scoreInGame(screen, localTime);
+            menu.dashCountInGame(screen, localTime);
             menu.openScoreMenu(screen, deltaTime);
             menu.timerInGame(screen, deltaTime);
+            collisions.drawSplash(screen, new_pos, localTime);
 
             // * DEBUG: Enabled if pressing <SPACEBAR>
             debug.displayDebug(screen, localTime);  

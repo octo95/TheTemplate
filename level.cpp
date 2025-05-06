@@ -18,7 +18,7 @@ namespace Tmpl8
     {
         collected_new = false;
         collectible_timer_active = false;
-        collectibles_collected = 0;
+        player.dash_count = 0;
         tilemap.loadMap(map_index);
         tilemap.current_level = map_index;
         player.position = player.default_pos;

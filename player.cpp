@@ -68,7 +68,6 @@ namespace Tmpl8
         }
 
         float jumping_max_time = 0.3f;
-        static float jumping_vel_factor = 2.0f;
 
         if (jumping)
         {
@@ -76,20 +75,18 @@ namespace Tmpl8
 
             if (GetAsyncKeyState(VK_UP) & 0x8000 && jumping_cooldown < jumping_max_time)
             {
-                jumping_vel_factor -= 0.05f;
                 velocity.y = -1.5f;
                 
             }
             else
             {
                 jumping = false;
-                jumping_vel_factor = 5.0f;
             }
         }
         // Pass the velocity to the camera to make the player rotate while moving
         angular_acceleration = velocity.x * 270.0f;
 
-        dash();
+        manageDash(deltaTime);
 
         return position + velocity;
     }
@@ -146,25 +143,38 @@ namespace Tmpl8
             }
         }
 
-        // + Clamp to not go out of bounds horizontally
-        if (position.x < 0) position.x = 0;
-        if (position.x + player_img_width > mapSize.x)
-            position.x = mapSize.x - player_img_width;
-
         return camPos;
     }
 
-    void Player::dash()
+    void Player::manageDash(float deltaTime)
     {
-        if (GetAsyncKeyState('X'))
+        float dashing_max_time = 0.2f;
+        float direction = 1.0f;
+        bool can_dash = dash_count > 0;
+
+        if (velocity.x >= 0) direction =  1.0f;
+        if (velocity.x < 0)  direction = -1.0f;
+
+        if (GetAsyncKeyState('X') & 0x8000 && can_dash && !dashing)
         {
-           if (GetAsyncKeyState(VK_RIGHT))
+            dashing = true;
+            dashing_cooldown = 0.0f;
+            move_cooldown = dashing_max_time;
+            dash_count--;
+            camera.shakeCamera(deltaTime);
+        }
+
+        if (dashing)
+        {
+            dashing_cooldown += deltaTime;
+
+            if (dashing_cooldown < dashing_max_time)
             {
-                position.x += 10.0f;
+                velocity.x = direction * 6.0f;
             }
-            if (GetAsyncKeyState(VK_LEFT))
+            else
             {
-                position.x -= 10.0f;
+                dashing = false;
             }
         }
     }

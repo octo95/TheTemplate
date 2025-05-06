@@ -53,11 +53,10 @@ namespace Tmpl8
 
         // Other functions
         TileType checkCollisionAtOffset(const vec2& pos, const vec2& offset);
-        TileType getCollisionType(vec2& new_pos);
         void manageCollisions(vec2& new_pos);
         void drawSplash(Surface* screen, vec2 player_pos, float deltaTime);
         void applyBouncingPhysics(vec2& new_pos, bool left, bool right, bool bottom, bool top);
-        void hitWall();
+        void collisionsSFX(bool bottom, bool isIce);
 
         // Getters / Setters
         bool getJumpState(vec2& new_pos);

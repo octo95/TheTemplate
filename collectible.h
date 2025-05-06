@@ -13,6 +13,7 @@ namespace Tmpl8
 	extern bool collectible_timer_active;
 	extern bool collected_new;
 
+	class Player;
 	class Menu;
 
 	struct Collectible
@@ -54,6 +55,6 @@ namespace Tmpl8
 	// Local functions
 	void loadAllCollectibles(int map);
 	void drawCollectibleMap(Camera* camera, Surface* screen, float deltaTime);
-	void manageCollectibleCollision(vec2 player_pos, GameSound* gamesound, Menu* menu);
+	void manageCollectibleCollision(Player* player, GameSound* gamesound, Menu* menu);
 	void manageCollectibleRespawn(float deltaTime);
 }

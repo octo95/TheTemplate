@@ -35,8 +35,11 @@ namespace Tmpl8
             float move_cooldown = 0.0f;
             bool jumping = false;
             float jumping_cooldown = 0.0f;
+            bool dashing = false;
+            float dashing_cooldown = 0.0f;
             float angular_acceleration = 0.0f;
             float gravity = 0.10f;
+            int dash_count = 0;
 		    float friction = 0.05f;                     // Friction on the ground, lower friction results in more momentum
 		    float max_horizontal_speed = 1.5f;          // Max horizontal speed
 		    float max_vertical_speed = 10.0f;           // Max vertical speed
@@ -46,7 +49,7 @@ namespace Tmpl8
             // Functions
             vec2 movePlayer(Collisions* collisions, float deltaTime);
             vec2 camFollowPlayer(TileMap* map);
-            void dash();
+            void manageDash(float deltaTime);
 
 		    // Getters / Setters
             void getPlayerPos(vec2& pos) { pos = position; }

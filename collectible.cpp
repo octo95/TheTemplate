@@ -72,10 +72,10 @@ namespace Tmpl8
 		}
 	}
 
-	void manageCollectibleCollision(vec2 player_pos, GameSound* gamesound, Menu* menu)
+	void manageCollectibleCollision(Player* player, GameSound* gamesound, Menu* menu)
 	{
-		float player_x = player_pos.x;
-		float player_y = player_pos.y;
+		float player_x = player->position.x;
+		float player_y = player->position.y;
 		float player_hitbox = hitbox_radius;
 
 		CollectibleMap::iterator c = cmap.begin();
@@ -98,6 +98,7 @@ namespace Tmpl8
 				c = cmap.erase(c);
 				gamesound->playSound(gamesound->snd_collect);
 				collectibles_collected++;
+				player->dash_count++;
 				collected_new = true;
 				menu->previousScore = menu->score;
 				menu->score += 10;

@@ -72,6 +72,7 @@ namespace Tmpl8
 			void audioManagerOpen(Surface* screen);
 			void quitManagerOpen(Surface* screen);
 			void scoreInGame(Surface* screen, float deltaTime);
+			void dashCountInGame(Surface* screen, float deltaTime);
 			void timerInGame(Surface* screen, float deltaTime);
 
 			// Mouse functions

@@ -57,8 +57,7 @@ namespace Tmpl8
 
 		    // Getters / Setters
             int getFPS(float deltaTime);
-            void getCurrentTileStatus(Surface* screen);
-            void toggleInfiniteJump();
+            void toggleInfiniteDashes();
             void adjustPlayerSpeed();
 
         private:

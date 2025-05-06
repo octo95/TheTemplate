@@ -281,6 +281,8 @@ namespace Tmpl8
             player.friction = 0.05f;
             player.max_horizontal_speed = 1.5f;
         }
+
+        collisionsSFX(CheckB, isIce);
     }
 
     bool Collisions::getJumpState(vec2& new_pos)
@@ -293,7 +295,6 @@ namespace Tmpl8
     void Collisions::drawSplash(Surface* screen, vec2 player_pos, float deltaTime)
     {
         if (!isOnIce) return;
-        printf("aaa");
 
         static float frame = 0.0f;
         const float animation_fps = 10.0f;
@@ -305,13 +306,53 @@ namespace Tmpl8
         img_water_slide_left.SetFrame(frame);
         
         vec2 offset = vec2(
-            img_water_slide_right.GetWidth() / 2 - player_img_width / 2,
-            img_water_slide_right.GetHeight() / 2 - player_img_height / 2 + player.PLAYER_DRAW_OFFSET_Y + 1
+            -hitbox_radius,
+            -hitbox_radius - 2.0f
         );
         
         vec2 draw_pos = player_pos + camera.getCamPos() + offset;
         
         if (player.velocity.x > 0)   img_water_slide_right.Draw(screen, draw_pos);
         else                         img_water_slide_left.Draw(screen, draw_pos);
+    }
+
+    void Collisions::collisionsSFX(bool bottom, bool isIce)
+    {
+        bool FallLight = player.velocity.y >= trigger_fall_light && player.velocity.y < trigger_fall_normal;
+        bool FallNormal = player.velocity.y >= trigger_fall_normal && player.velocity.y < trigger_fall_hard;
+        bool FallHard = player.velocity.y >= trigger_fall_hard;
+
+        if (bottom && isIce)
+        {
+            gamesound.playRollingSound(gamesound.snd_slide);
+        }
+        else if (bottom && !isIce && fabs(player.velocity.x) > 0.5f)
+        {
+            gamesound.playRollingSound(gamesound.snd_rolling);
+        }
+        else
+        {
+            gamesound.stopRollingSound();
+        }
+
+        //SFX: if falling from a high distance play <snd_fall_strong.wav>, otherwise from a smaller one play <snd_fall.wav> and if even smaller don't play any SFX.
+        if (bottom && FallLight)
+        {
+            printf("fall light: %.0f\n", player.velocity.y);
+            bouncing_force = 1.0f;
+        }
+        if (bottom && FallNormal)
+        {
+            gamesound.playSound(gamesound.snd_fall);
+            printf("fall normal: %.0f\n", player.velocity.y);
+            bouncing_force = 1.5f;
+        }
+        if (bottom && FallHard)
+        {
+            gamesound.playSound(gamesound.snd_fall_strong);
+            printf("fall hard: %.0f\n", player.velocity.y);
+            bouncing_force = 10.0f;
+            camera.setShakeState(Camera::shakeConditions::FallHard);
+        }
     }
 }
