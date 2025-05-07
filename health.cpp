@@ -8,7 +8,7 @@ namespace Tmpl8
 
     Sprite img_heart(new Surface("assets/images/UI/img_heart.png"), 1);
 
-    void Health::drawHealthBar(Surface* screen, Menu* menu)
+    void Health::drawHealthBar(Surface* screen, Menu* menu, GameSound* gamesound)
     {
         if (!menu->start_game) return;
 
@@ -31,10 +31,16 @@ namespace Tmpl8
             img_heart.Draw(screen, draw_pos);
         }
 
-        if (player_hp == 0)
+        if (player_killed)
+        {
+            gamesound->playSound(gamesound->snd_game_over);
+            menu->overMenuOpen = true;
+            player_killed = false;
+        }
+
+        if (menu->overMenuOpen)
         {
             menu->resume_game = false;
-            menu->overMenuOpen = true;
             menu->openEndMenu(screen);
         }
     }
@@ -45,7 +51,8 @@ namespace Tmpl8
         {
         case 1: player_hp = 15; break;
         case 2: player_hp = 10; break;
-        case 3: player_hp = 2;  break;
+        case 3: player_hp = 1;  break;
         }
     }
+
 }

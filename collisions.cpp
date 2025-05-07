@@ -222,6 +222,7 @@ namespace Tmpl8
             camera.setShakeState(Camera::shakeConditions::Damage);
             menu.score -= 15.0f;
             health.player_hp--;
+            if (health.player_hp == 0) health.player_killed = true;
         }
 
         if(isIce)

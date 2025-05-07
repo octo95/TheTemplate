@@ -109,12 +109,12 @@ namespace Tmpl8
 			float timer_current = 0.0f;
 
 			// Menu flags
+			bool endMenuOpen = false;
 			bool mainMenuOpen = true;
 			bool audioOpen = true;
 			bool quitOpen = true;
 			bool pauseMenuOpen = false;
 			bool nextMenuOpen = false;
-			bool endMenuOpen = false;
 
 
 			// Other consts

@@ -197,13 +197,13 @@ namespace Tmpl8
         wasHoveringStart = isHoveringStart;
     }
 
-
     void Menu::manageLevelSelect(int index)
     {
         if (isMousePressed)
         {
             gamesound.playSound(gamesound.snd_select);
             gamesound.playMusic(gamesound.mus_level);
+            health.initHealth(this);
             audioOpen = false;
             quitOpen = false;
             level.level_finished = false;
@@ -211,6 +211,7 @@ namespace Tmpl8
             resume_game = true;
             manualPaused = false;
             mainMenuOpen = false;
+            endMenuOpen = false;
             level.loadLevel(index + 1);
         }
     }
@@ -361,11 +362,9 @@ namespace Tmpl8
         endMenuOpen = level.game_finished;
         scoreMenuOpen = true;
 
-        if(endMenuOpen)         img_menu_end_bg.Draw(screen, SCREEN_WIDTH / 2 - PAUSE_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_HEIGHT / 2);
-        else if(overMenuOpen)   img_menu_over_bg.Draw(screen, SCREEN_WIDTH / 2 - PAUSE_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_HEIGHT / 2);
-
-        printf("end: %d\n", endMenuOpen);
-        printf("over: % d\n", overMenuOpen);
+        if (endMenuOpen)         img_menu_end_bg.Draw(screen, SCREEN_WIDTH / 2 - PAUSE_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_HEIGHT / 2);
+        else if (overMenuOpen)   img_menu_over_bg.Draw(screen, SCREEN_WIDTH / 2 - PAUSE_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_HEIGHT / 2);
+        else return;
 
         static bool wasHoveringMenu = false;
         static bool wasHoveringReplay = false;
@@ -423,6 +422,7 @@ namespace Tmpl8
             overMenuOpen = false;
             mainMenuOpen = false;
             level.game_finished = false;
+            health.initHealth(this);
             level.loadLevel(1);
             scoreMenuOpen = false;
             score = 0.0f;
@@ -462,7 +462,7 @@ namespace Tmpl8
             if (!end_sound_played)
             {
                 gamesound.stopMusic();
-                gamesound.playSound(gamesound.snd_level_finished);
+                if(score <= 0) gamesound.playSound(gamesound.snd_level_finished); // If the player has 0 score, play the SFX instantly instead of waiting for the countdown
                 end_sound_played = true;
             }
             openEndMenu(screen);
@@ -573,10 +573,11 @@ namespace Tmpl8
             {
                 score_value_current = score;
                 score_is_counting = false;
-                color = 0x00FF00;;
+                if (endMenuOpen) color = 0x00FF00;
+                else color = 0xFFFFFF;
                 size = vec2(5.0f, 5.0f);
 
-                if(!finish_sfx_played) // Play a victory SFX once the count finishes
+                if(!finish_sfx_played && endMenuOpen) // Play a victory SFX once the count finishes
                 {
                     gamesound.playSound(gamesound.snd_level_finished);
                     finish_sfx_played = true;
