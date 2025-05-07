@@ -8,6 +8,7 @@
 #include "tilemap.h"
 #include "ai_copy.h"
 #include "menu.h"
+#include "health.h"
 
 namespace Tmpl8
 {
@@ -34,7 +35,8 @@ namespace Tmpl8
             GameSound& gamesoundRef,
             AI_Patrol& ai_patrolRef,
             AI_Copy& ai_copyRef,
-            Menu& menuRef
+            Menu& menuRef,
+            Health& healthRef
         );
 
         // Variables
@@ -42,17 +44,12 @@ namespace Tmpl8
         bool isOnIce = false;
 
         // Collision checks
-        TileType checkCollisionB(const vec2& pos);
-        TileType checkCollisionBottom(const vec2& pos, bool left, bool right);
-        TileType checkCollisionT(const vec2& pos);
-        TileType checkCollisionTop(const vec2& pos, bool left, bool right);
+        TileType checkCollisionB(const vec2& pos, bool left, bool right);
+        TileType checkCollisionT(const vec2& pos, bool left, bool right);
         TileType checkCollisionR(const vec2& pos);
-        TileType checkCollisionRight(const vec2& pos);
         TileType checkCollisionL(const vec2& pos);
-        TileType checkCollisionLeft(const vec2& pos);
 
         // Other functions
-        TileType checkCollisionAtOffset(const vec2& pos, const vec2& offset);
         void manageCollisions(vec2& new_pos);
         void drawSplash(Surface* screen, vec2 player_pos, float deltaTime);
         void applyBouncingPhysics(vec2& new_pos, bool left, bool right, bool bottom, bool top);
@@ -72,12 +69,11 @@ namespace Tmpl8
         AI_Patrol& ai_patrol;
         AI_Copy& ai_copy;
         Menu& menu;
+        Health& health;
 
+        bool FallNormal = false;
+        bool FallHard = false;
         bool canPlayerJump = false;
-        float bouncing_force = 1.0f;
         float gravity = 0.5f;
-        float trigger_fall_light = 2.0f;
-        float trigger_fall_normal = 5.0f;
-        float trigger_fall_hard = 9.0f;
     };
 }

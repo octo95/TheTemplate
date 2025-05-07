@@ -4,12 +4,13 @@
 
 namespace Tmpl8
 {
-    Menu::Menu(Level& levelRef, Player& playerRef, TileMap& tilemapRef, GameSound& gamesoundRef, Text& textRef) :
+    Menu::Menu(Level& levelRef, Player& playerRef, TileMap& tilemapRef, GameSound& gamesoundRef, Text& textRef, Health& healthRef) :
         level(levelRef),
         player(playerRef),
         tilemap(tilemapRef),
         gamesound(gamesoundRef),
-        text(textRef)
+        text(textRef),
+        health(healthRef)
     {}
 
     // + MAIN MENU
@@ -61,6 +62,9 @@ namespace Tmpl8
         // - Hover
     Sprite img_menu_end_menu_alt(new Surface("assets/images/menus/end_menu/img_menu_end_menu_alt.png"), 1);
     Sprite img_menu_end_replay_alt(new Surface("assets/images/menus/end_menu/img_menu_end_menu_replay_alt.png"), 1);
+
+    // + OVER MENU
+    Sprite img_menu_over_bg(new Surface("assets/images/menus/over_menu/img_menu_over_bg.png"), 1);
 
     // + AUDIO MANAGER
     Sprite img_audio_on(new Surface("assets/images/UI/img_audio_on.png"), 1);
@@ -213,6 +217,7 @@ namespace Tmpl8
 
     void Menu::manageDifficultySelect(int index)
     {
+        health.hp_initialized = false;
         if (isMousePressed && difficulty != index + 1)
         {
             gamesound.playSound(gamesound.snd_select);  
@@ -356,9 +361,11 @@ namespace Tmpl8
         endMenuOpen = level.game_finished;
         scoreMenuOpen = true;
 
-        if (!endMenuOpen) return;
+        if(endMenuOpen)         img_menu_end_bg.Draw(screen, SCREEN_WIDTH / 2 - PAUSE_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_HEIGHT / 2);
+        else if(overMenuOpen)   img_menu_over_bg.Draw(screen, SCREEN_WIDTH / 2 - PAUSE_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_HEIGHT / 2);
 
-        img_menu_end_bg.Draw(screen, SCREEN_WIDTH / 2 - PAUSE_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_HEIGHT / 2);
+        printf("end: %d\n", endMenuOpen);
+        printf("over: % d\n", overMenuOpen);
 
         static bool wasHoveringMenu = false;
         static bool wasHoveringReplay = false;
@@ -397,6 +404,7 @@ namespace Tmpl8
             resume_game = false;
             pauseMenuOpen = false;
             endMenuOpen = false;
+            overMenuOpen = false;
             mainMenuOpen = true;
             level.game_finished = false;
             scoreMenuOpen = false;
@@ -412,6 +420,7 @@ namespace Tmpl8
             resume_game = true;
             pauseMenuOpen = false;
             endMenuOpen = false;
+            overMenuOpen = false;
             mainMenuOpen = false;
             level.game_finished = false;
             level.loadLevel(1);
@@ -422,7 +431,7 @@ namespace Tmpl8
     }
 
 
-    void Menu::manageMenus(Surface* screen)
+    void Menu::manageMenus(Surface* screen, float deltaTime)
     {
         // Toggle <P> to open/close the pause menu
         static bool pPressedLastFrame = false;
@@ -466,15 +475,9 @@ namespace Tmpl8
 
     }
 
-    /*
-    * { TODO: }
-    * - Play an SFX
-    * - When it increases at the end of a level it can add up like angry faces did
-    */
-
     void Menu::scoreInGame(Surface* screen, float deltaTime)
     {
-        if (pauseMenuOpen || nextMenuOpen || endMenuOpen) return;
+        if (pauseMenuOpen || nextMenuOpen || endMenuOpen || overMenuOpen) return;
 
         char buffer[50];
         bool score_updated = score != previousScore;
@@ -494,7 +497,7 @@ namespace Tmpl8
         {
             size = vec2(1.05f, 1.05f);  // Scale to 105%
             color = 0xFFFF00;           // Yellow
-            text_width *= size.x;       // Adjust width
+            text_width *= size.x;       // Adjust width (unused)
         }
         if (lastScoreUpdateTime >= color_update_time) 
         {
@@ -507,7 +510,7 @@ namespace Tmpl8
         previousScore = score;
 
         vec2 draw_pos = vec2(
-            SCREEN_WIDTH - text_width - offset_to_corner,
+            offset_to_corner,
             offset_to_corner
         );
 
@@ -518,7 +521,7 @@ namespace Tmpl8
 
     void Menu::dashCountInGame(Surface* screen, float deltaTime)
     {
-        if (pauseMenuOpen || nextMenuOpen || endMenuOpen) return;
+        if (pauseMenuOpen || nextMenuOpen || endMenuOpen || overMenuOpen) return;
 
         char buffer[50];
         Pixel color = 0xFFFFFF;         
@@ -531,7 +534,7 @@ namespace Tmpl8
         float offset_to_corner = 10.0f;
    
         vec2 draw_pos = vec2(
-            SCREEN_WIDTH - text_width - offset_to_corner,
+            offset_to_corner,
             offset_to_corner + 40.0f
         );
 
@@ -549,10 +552,12 @@ namespace Tmpl8
             score_timer = 0.0f;
             score_value_current = 0;
             score_is_counting = true;
+            finish_sfx_played = false;
             return;
         }
 
         static const float counting_speed = 0.5f; // In secs
+
         Pixel color = 0xFFFFFF;
         vec2 size = vec2(4.0f, 4.0f);
 
@@ -570,6 +575,12 @@ namespace Tmpl8
                 score_is_counting = false;
                 color = 0x00FF00;;
                 size = vec2(5.0f, 5.0f);
+
+                if(!finish_sfx_played) // Play a victory SFX once the count finishes
+                {
+                    gamesound.playSound(gamesound.snd_level_finished);
+                    finish_sfx_played = true;
+                }
             }
         }
         char buffer[50];
@@ -670,7 +681,7 @@ namespace Tmpl8
 
     void Menu::timerInGame(Surface* screen, float deltaTime)
     {
-        if ( pauseMenuOpen || nextMenuOpen || endMenuOpen ) return;
+        if ( pauseMenuOpen || nextMenuOpen || endMenuOpen || overMenuOpen) return;
 
         timer_current += deltaTime;
 
@@ -687,7 +698,7 @@ namespace Tmpl8
 
         vec2 size = vec2(1.0f,1.0f);
         vec2 draw_pos = vec2(
-            SCREEN_WIDTH - text_width - 10.0f,
+            10.0f,
             30.0f 
         );
 

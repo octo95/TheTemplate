@@ -27,7 +27,6 @@ namespace Tmpl8
                 // * Initialize game logic
                 
                 // Player logic
-                //player.getPlayerPos(new_pos);
                 new_pos = player.movePlayer(&collisions, localTime);
                 player.setJumpState(collisions.getJumpState(new_pos));
                 collisions.manageCollisions(new_pos);
@@ -49,7 +48,7 @@ namespace Tmpl8
                 camera.shakeCamera(localTime);
 
                 // Bell logic
-                bell.isBellTouchingPlayer(&player);
+                bell.isBellTouchingPlayer(&player, &gamesound);
 
             }
             else
@@ -70,12 +69,13 @@ namespace Tmpl8
 			if(!ai_patrol.isDead) img_ai_patrol.DrawRotated(screen, ai_patrol.position + camera.getCamPos(), ai_patrol.angle);
             //collisions.drawSplash(screen, new_pos, localTime); 
             bell.drawBell(screen, &camera, tilemap.getCurrentLevel());
-            menu.manageMenus(screen);
+            menu.manageMenus(screen, deltaTime);
             menu.scoreInGame(screen, localTime);
             menu.dashCountInGame(screen, localTime);
             menu.openScoreMenu(screen, deltaTime);
             menu.timerInGame(screen, deltaTime);
             collisions.drawSplash(screen, new_pos, localTime);
+            health.drawHealthBar(screen, &menu);
 
             // * DEBUG: Enabled if pressing <SPACEBAR>
             debug.displayDebug(screen, localTime);  

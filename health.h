@@ -17,8 +17,14 @@ namespace Tmpl8
             );
 			// Functions
             void drawHealthBar(Surface* screen, Menu* menu);
+            void initHealth(Menu* menu);
+
+            // Variables
+            int player_hp = 15;
+            bool hp_initialized = false; 
 
         private:
             Player& player;
+
     };
 }

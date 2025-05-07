@@ -18,45 +18,45 @@ namespace Tmpl8
 
     void AI_Patrol::Patrol(float deltaTime, Collisions* collisions)
     {
-        //if (isDead) return;
-        //
-        //getStomped();
-        //float spawn_x = this->position.x;
-        //
-        //bool CheckLeft = collisions->checkCollisionL(position) == TileType::Collision;
-        //bool CheckRight = collisions->checkCollisionR(position) == TileType::Collision;
-        //
-        //bool EdgeRight = collisions->checkCollisionB(vec2(position.x + TILE_SIZE, position.y + TILE_SIZE)) == TileType::None;
-		//bool EdgeLeft = collisions->checkCollisionB(vec2(position.x - TILE_SIZE, position.y + TILE_SIZE)) == TileType::None;
-        //
-        //float position_speed = 100.0f;
-        //float rotation_speed = 3.0f;
-        //
-        //if (stop) position_speed = 0.0f;
-        //
-        //bool conditionTurnRight =   (direction != Direction::LEFT && direction != Direction::RIGHT) ||  // If default case           => TURN RIGHT
-        //                            (CheckLeft && direction == Direction::LEFT) ||                      // If blocked on the left
-        //                            (EdgeRight && direction == Direction::LEFT) ||                      // If on the right edge
-        //                            (EdgeLeft && direction == Direction::LEFT);                         // If on the left edge
-        //
-        //bool conditionTurnLeft =    ((CheckRight && direction == Direction::RIGHT) || EdgeRight) ||     // If blocked on the right   => TURN LEFT
-        //                            (EdgeRight && direction == Direction::RIGHT) ||                     // If on the right edge
-        //                            (EdgeRight && direction == Direction::RIGHT) || 				    // If on the right edge
-        //                            (EdgeLeft && direction == Direction::RIGHT);                        // If on the left edge
-        //
-        //// Set the direction
-        //if (conditionTurnRight)
-		//	direction = Direction::RIGHT;
-        //else if (conditionTurnLeft)
-        //    direction = Direction::LEFT;
-        //
-        //// Set the motion
-        //if (!CheckRight && direction == Direction::RIGHT)
-        //    position.x += deltaTime * position_speed;  
-        //else if (!CheckLeft && direction == Direction::LEFT)
-        //    position.x -= deltaTime * position_speed; 
-        //
-        //angle += (position.x - spawn_x) * rotation_speed;
+        if (isDead) return;
+        
+        getStomped();
+        float spawn_x = this->position.x;
+        
+        bool CheckL = collisions->checkCollisionL(position) == TileType::Collision;
+        bool CheckR = collisions->checkCollisionR(position) == TileType::Collision;
+        
+        bool EdgeRight = collisions->checkCollisionB(vec2(position.x + TILE_SIZE, position.y + TILE_SIZE), CheckL != None, CheckR != None) == TileType::None;
+		bool EdgeLeft  = collisions->checkCollisionB(vec2(position.x - TILE_SIZE, position.y + TILE_SIZE), CheckL != None, CheckR != None) == TileType::None;
+        
+        float position_speed = 100.0f;
+        float rotation_speed = 3.0f;
+        
+        if (stop) position_speed = 0.0f;
+        
+        bool conditionTurnRight =   (direction != Direction::LEFT && direction != Direction::RIGHT) ||  // If default case           => TURN RIGHT
+                                    (CheckL && direction == Direction::LEFT) ||                         // If blocked on the left
+                                    (EdgeRight && direction == Direction::LEFT) ||                      // If on the right edge
+                                    (EdgeLeft && direction == Direction::LEFT);                         // If on the left edge
+        
+        bool conditionTurnLeft =    ((CheckR && direction == Direction::RIGHT) || EdgeRight) ||         // If blocked on the right   => TURN LEFT
+                                    (EdgeRight && direction == Direction::RIGHT) ||                     // If on the right edge
+                                    (EdgeRight && direction == Direction::RIGHT) || 				    // If on the right edge
+                                    (EdgeLeft && direction == Direction::RIGHT);                        // If on the left edge
+        
+        // Set the direction
+        if (conditionTurnRight)
+			direction = Direction::RIGHT;
+        else if (conditionTurnLeft)
+            direction = Direction::LEFT;
+        
+        // Set the motion
+        if (!CheckR && direction == Direction::RIGHT)
+            position.x += deltaTime * position_speed;  
+        else if (!CheckL && direction == Direction::LEFT)
+            position.x -= deltaTime * position_speed; 
+        
+        angle += (position.x - spawn_x) * rotation_speed;
     }
 
     bool AI_Patrol::isTouchingPlayer()

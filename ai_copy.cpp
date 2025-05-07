@@ -15,7 +15,7 @@ namespace Tmpl8
         }
 
         PlayerState pastState = playerBuffer.read(); 
-        this->position = pastState.position;
+        this->position = pastState.position + vec2(-hitbox_radius, -hitbox_radius);
         this->acceleration = pastState.acceleration;
     }
 
@@ -23,21 +23,16 @@ namespace Tmpl8
     bool AI_Copy::isTouchingPlayer()
     {
         float ai_rad = img_ai_copy.GetWidth() / 2.0f;
-        float player_rad = player_img_width / 2.0f;
 
-        float radii_sum = ai_rad + player_rad;
+        float radii_sum = ai_rad + hitbox_radius;
 
         // AI center
         float ai_center_x = this->position.x + ai_rad;
         float ai_center_y = this->position.y + ai_rad;
 
-        // Player center
-        float player_center_x = player.position.x + player_rad;
-        float player_center_y = player.position.y + player_rad;
-
         // Distance between AI's center and the player's one.
-        float dx = ai_center_x - player_center_x;
-        float dy = ai_center_y - player_center_y;
+        float dx = ai_center_x - player.position.x;
+        float dy = ai_center_y - player.position.y;
         float distance = sqrtf(dx * dx + dy * dy);
 
         bool touched_player = distance <= radii_sum;

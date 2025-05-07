@@ -142,6 +142,11 @@ namespace Tmpl8
                 camPos.x = maxCam.x;
             }
         }
+        
+        // + Clamp the player on screen
+        if (position.x < 0) position.x = 0;                 // On the left
+        if (position.x + player_img_width / 2 > mapSize.x)  // On the right
+            position.x = mapSize.x - player_img_width / 2;
 
         return camPos;
     }

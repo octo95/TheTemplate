@@ -10,13 +10,12 @@ namespace Tmpl8
 	const int BELL_HEIGHT = img_bell.GetHeight();
 	const int BELL_WIDTH = img_bell.GetWidth();
 
-    void Bell::isBellTouchingPlayer(Player* player)
+    void Bell::isBellTouchingPlayer(Player* player, GameSound* gamesound)
     {
         // Define player bounding box
         float player_x = player->position.x;
         float player_y = player->position.y;
         float player_hitbox = hitbox_radius;  
-
 
         float reduce_hitbox = 10.0f; // Shrink the bell's hitbox
         float bell_x = bell_current_pos.x + reduce_hitbox;
@@ -32,7 +31,11 @@ namespace Tmpl8
             player_y + player_hitbox > bell_y;
 
 
-        if (overlap) level.nextLevel();
+        if (overlap)
+        {
+            gamesound->playSound(gamesound->snd_bell);
+            level.nextLevel();
+        }
     }
 
 	void Bell::drawBell(Surface* screen, Camera* camera, int map_index)

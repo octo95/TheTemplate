@@ -3,6 +3,7 @@
 #include "camera.h"
 #include "player.h"
 #include "level.h"
+#include "gamesound.h"
 
 namespace Tmpl8
 {
@@ -15,7 +16,7 @@ namespace Tmpl8
             Bell(Level& level);
 
             // Functions
-            void isBellTouchingPlayer(Player* player);
+            void isBellTouchingPlayer(Player* player, GameSound* gamesound);
             void drawBell(Surface* screen, Camera* camera, int map_index);
 
         private:

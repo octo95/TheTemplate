@@ -5,6 +5,7 @@
 #include "surface.h"
 #include "tilemap.h"
 #include "text.h"
+#include "health.h"
 
 namespace Tmpl8
 {
@@ -33,6 +34,8 @@ namespace Tmpl8
 	extern Sprite img_menu_main_difficulty_hard;
 	extern Sprite img_quit;
 
+	class Health;
+
 	class Menu
 	{
 		public:
@@ -43,7 +46,8 @@ namespace Tmpl8
 				Player& playerRef, 
 				TileMap& tilemapRef, 
 				GameSound& gamesoundRef,
-				Text& textRef
+				Text& textRef,
+				Health& healthRef
 			);
 
 			// Variables
@@ -51,6 +55,7 @@ namespace Tmpl8
 			int previousScore = 0;
 			bool start_game = false;
 			bool resume_game = true;
+			float finish_sfx_played = false;
 
 			// Score timer variables
 			float score_timer = 0.0f;
@@ -66,11 +71,13 @@ namespace Tmpl8
 			void openScoreMenu(Surface* screen, float deltaTime);
 
 			// Menu managers
-			void manageMenus(Surface* screen);
+			void manageMenus(Surface* screen, float deltaTime);
 			void manageLevelSelect(int index);
 			void manageDifficultySelect(int index);
 			void audioManagerOpen(Surface* screen);
 			void quitManagerOpen(Surface* screen);
+
+			// In game menus
 			void scoreInGame(Surface* screen, float deltaTime);
 			void dashCountInGame(Surface* screen, float deltaTime);
 			void timerInGame(Surface* screen, float deltaTime);
@@ -81,17 +88,19 @@ namespace Tmpl8
 			bool isHoveringSurface(int x, int y, int width, int height);
 
 			bool scoreMenuOpen = false;
+			bool overMenuOpen = false;
 
+			int difficulty = 2; // 1: easy, 2: medium (default), 3: hard
 		private:
 			Level& level;
 			Player& player;
 			TileMap& tilemap;
 			GameSound& gamesound;
 			Text& text;
+			Health& health;
 
 			// Variables
 			int mouseX, mouseY; 
-			int difficulty = 2; // 1: easy, 2: medium (default), 3: hard
 			bool isMousePressed = false;
 			bool manualPaused = false;
 			bool alreadyClickedNextLevel = false;
@@ -106,6 +115,7 @@ namespace Tmpl8
 			bool pauseMenuOpen = false;
 			bool nextMenuOpen = false;
 			bool endMenuOpen = false;
+
 
 			// Other consts
 			const int SCREEN_HALF_WIDTH = SCREEN_WIDTH / 2;

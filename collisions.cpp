@@ -5,7 +5,7 @@
 
 namespace Tmpl8
 {
-    Collisions::Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, Level& levelRef, Camera& cameraRef, GameSound& gamesoundRef, AI_Patrol& ai_patrolRef, AI_Copy& ai_copyRef, Menu& menuRef) :
+    Collisions::Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, Level& levelRef, Camera& cameraRef, GameSound& gamesoundRef, AI_Patrol& ai_patrolRef, AI_Copy& ai_copyRef, Menu& menuRef, Health& healthRef) :
         player(playerRef),
         tilemap(tilemapRef),
         ai_follow(ai_followRef),
@@ -14,53 +14,14 @@ namespace Tmpl8
         level(levelRef),
         ai_patrol(ai_patrolRef),
         ai_copy(ai_copyRef),
-        menu(menuRef)
-    {
-    }
+        menu(menuRef),
+        health(healthRef)
+    {}
 
     Sprite img_water_slide_right(new Surface("assets/images/entities/img_water_slide_right.tga"), 3);
-    Sprite img_water_slide_left(new Surface("assets/images/entities/img_water_slide_left.tga"), 3);
+    Sprite img_water_slide_left(new Surface("assets/images/entities/img_water_slide_left.tga"), 3);  
 
-
-
-
-
-
-
-
-
-
-    //TileType Collisions::CheckCollisionBottom(const vec2int& pos)
-    //{
-    //    TileType t_left = TileType::None;
-    //    TileType t_right = TileType::None;
-    //
-    //    int clamp_pos_x = pos.x / TILE_radius * TILE_radius;
-    //    int clamp_pos_y = pos.y / TILE_radius * TILE_radius;
-    //
-    //    if (((pos.y - clamp_pos_y) + hitbox_radius * 2) >= TILE_radius) {
-    //        auto l = tilemap.tile_at(clamp_pos_x, pos.y + TILE_radius);
-    //        if (l.type != TileType::None) t_left = l.type;
-    //
-    //        auto r = tilemap.tile_at((pos.x + (hitbox_radius * 2)) / TILE_radius * TILE_radius, pos.y + TILE_radius);
-    //        if (r.type != TileType::None) t_right = r.type;
-    //    }
-    //
-    //    // If the player is more than half on the left
-    //    if ((t_left == TileType::Damage || t_left == TileType::End) && (pos.x - (pos.x / TILE_radius * TILE_radius)) < hitbox_radius) {
-    //        return t_left;
-    //    }
-    //
-    //    // If the player is more than half on the right
-    //    if ((t_right == TileType::Damage || t_right == TileType::End) && (pos.x - (pos.x / TILE_radius * TILE_radius)) >= hitbox_radius) {
-    //        return t_right;
-    //    }
-    //
-    //    return (t_left == TileType::Collision || t_left == TileType::Ice) ? t_left : t_right;
-    //}
-    
-
-    TileType Collisions::checkCollisionTop(const vec2& pos, bool left, bool right)
+    TileType Collisions::checkCollisionT(const vec2& pos, bool left, bool right)
     {
         vec2 tile_origin = vec2(floor(pos.x / TILE_SIZE) * TILE_SIZE, floor(pos.y / TILE_SIZE) * TILE_SIZE);
 
@@ -85,7 +46,7 @@ namespace Tmpl8
         return None;
     }
 
-    TileType Collisions::checkCollisionBottom(const vec2& pos, bool left, bool right)
+    TileType Collisions::checkCollisionB(const vec2& pos, bool left, bool right)
     {
         TileType left_tile = None;
         TileType right_tile = None;
@@ -123,7 +84,7 @@ namespace Tmpl8
         return None;
     }
 
-    TileType Collisions::checkCollisionLeft(const vec2& pos)
+    TileType Collisions::checkCollisionL(const vec2& pos)
     {
         vec2 tile_origin = vec2(floor(pos.x / TILE_SIZE) * TILE_SIZE, floor(pos.y / TILE_SIZE) * TILE_SIZE);
 
@@ -148,7 +109,7 @@ namespace Tmpl8
         return None;
     }
 
-    TileType Collisions::checkCollisionRight(const vec2& pos)
+    TileType Collisions::checkCollisionR(const vec2& pos)
     {
         vec2 tile_origin = vec2(floor(pos.x / TILE_SIZE) * TILE_SIZE, floor(pos.y / TILE_SIZE) * TILE_SIZE);
 
@@ -173,14 +134,6 @@ namespace Tmpl8
         return None;
     }
 
-    TileType Collisions::checkCollisionAtOffset(const vec2& pos, const vec2& offset)
-    {
-        vec2 adjusted_pos = pos + offset;
-        vec2 tiled_pos = vec2(floor(adjusted_pos.x / TILE_SIZE) * TILE_SIZE, floor(adjusted_pos.y / TILE_SIZE) * TILE_SIZE);
-        auto tile = tilemap.map_collision[tiled_pos];
-        return (tile != TileType::None) ? tile : TileType::None;
-    }
-
     void Collisions::applyBouncingPhysics(
         vec2& new_pos,
         bool left,
@@ -203,7 +156,8 @@ namespace Tmpl8
                 player.velocity.y *= powf(player.ENERGY_LOSS, 2);
                 new_pos += player.velocity;
             }
-            else if(!top) {
+            else if(!top) 
+            {
                 // Cancel gravity when on the floor
                 player.velocity.y = 0.0f;
             }            
@@ -212,10 +166,10 @@ namespace Tmpl8
 
     void Collisions::manageCollisions(vec2& new_pos)
     {
-        TileType CheckL = checkCollisionLeft(new_pos);
-        TileType CheckR = checkCollisionRight(new_pos);
-        TileType CheckB = checkCollisionBottom(new_pos, CheckL != None, CheckR != None);
-        TileType CheckT = checkCollisionTop(new_pos, CheckL != None, CheckR != None);
+        TileType CheckL = checkCollisionL(new_pos);
+        TileType CheckR = checkCollisionR(new_pos);
+        TileType CheckB = checkCollisionB(new_pos, CheckL != None, CheckR != None);
+        TileType CheckT = checkCollisionT(new_pos, CheckL != None, CheckR != None);
 
         // Block on collisions
         player.position.x = (CheckL != None || CheckR != None) ? 
@@ -225,15 +179,7 @@ namespace Tmpl8
             (((new_pos.y < player.position.y && CheckT != None) || (new_pos.y > player.position.y && CheckB != None)) ? player.position.y : new_pos.y)
             : new_pos.y;
         
-        applyBouncingPhysics(
-            new_pos,
-            CheckL != None,
-            CheckR != None,
-            CheckB != None,
-            CheckT != None
-        );
-
-        bool isDamage = 
+        bool isDamage =
         (
             CheckL == Damage ||
             CheckR == Damage ||
@@ -259,13 +205,23 @@ namespace Tmpl8
             CheckB == Collision ||
             CheckT == Collision
         );
-        
+
+        collisionsSFX(CheckB, isIce);
+        applyBouncingPhysics(
+            new_pos,
+            CheckL != None,
+            CheckR != None,
+            CheckB != None,
+            CheckT != None
+        );
+
         if (isDamage)
         {
             level.loadLevel(tilemap.getCurrentLevel());
             gamesound.playSound(gamesound.snd_damage);
             camera.setShakeState(Camera::shakeConditions::Damage);
             menu.score -= 15.0f;
+            health.player_hp--;
         }
 
         if(isIce)
@@ -282,13 +238,12 @@ namespace Tmpl8
             player.max_horizontal_speed = 1.5f;
         }
 
-        collisionsSFX(CheckB, isIce);
     }
 
     bool Collisions::getJumpState(vec2& new_pos)
     {
         bool canPlayerJump = false;
-        canPlayerJump = checkCollisionBottom(new_pos, checkCollisionLeft(new_pos) != None, checkCollisionRight(new_pos) != None) != TileType::None;
+        canPlayerJump = checkCollisionB(new_pos, checkCollisionL(new_pos) != None, checkCollisionR(new_pos) != None) != TileType::None;
         return canPlayerJump; 
     }
 
@@ -318,41 +273,34 @@ namespace Tmpl8
 
     void Collisions::collisionsSFX(bool bottom, bool isIce)
     {
-        bool FallLight = player.velocity.y >= trigger_fall_light && player.velocity.y < trigger_fall_normal;
-        bool FallNormal = player.velocity.y >= trigger_fall_normal && player.velocity.y < trigger_fall_hard;
-        bool FallHard = player.velocity.y >= trigger_fall_hard;
+        float trigger_fall_normal = 5.0f;
+        float trigger_fall_hard = 7.0f;
 
-        if (bottom && isIce)
-        {
-            gamesound.playRollingSound(gamesound.snd_slide);
-        }
-        else if (bottom && !isIce && fabs(player.velocity.x) > 0.5f)
-        {
-            gamesound.playRollingSound(gamesound.snd_rolling);
-        }
-        else
-        {
-            gamesound.stopRollingSound();
-        }
+        FallNormal = player.velocity.y >= trigger_fall_normal && player.velocity.y < trigger_fall_hard;
+        FallHard = fabs(player.velocity.y) >= trigger_fall_hard;
 
-        //SFX: if falling from a high distance play <snd_fall_strong.wav>, otherwise from a smaller one play <snd_fall.wav> and if even smaller don't play any SFX.
-        if (bottom && FallLight)
-        {
-            printf("fall light: %.0f\n", player.velocity.y);
-            bouncing_force = 1.0f;
-        }
         if (bottom && FallNormal)
         {
             gamesound.playSound(gamesound.snd_fall);
-            printf("fall normal: %.0f\n", player.velocity.y);
-            bouncing_force = 1.5f;
         }
         if (bottom && FallHard)
         {
             gamesound.playSound(gamesound.snd_fall_strong);
-            printf("fall hard: %.0f\n", player.velocity.y);
-            bouncing_force = 10.0f;
             camera.setShakeState(Camera::shakeConditions::FallHard);
         }
+
+        // + LAGS THE GAME, DISABLED
+        //if (bottom && isIce)
+        //{
+        //    gamesound.playRollingSound(gamesound.snd_slide);
+        //}
+        //else if (bottom && !isIce && fabs(player.velocity.x) > 0.5f)
+        //{
+        //    gamesound.playRollingSound(gamesound.snd_rolling);
+        //}
+        //else
+        //{
+        //    gamesound.stopRollingSound();
+        //}
     }
 }

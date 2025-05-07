@@ -85,9 +85,6 @@ namespace Tmpl8
             game_finished = true;
             return;
         }
-        gamesound.playSound(gamesound.snd_level_finished);
-        //menu.previousScore = menu.score;
-        //menu.score += 100;
         level_finished = true;
     }
 }

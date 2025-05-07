@@ -192,8 +192,8 @@ namespace Tmpl8
 
     void Debug::drawDistancePlayerToAI(vec2 ai_pos, int size, Surface* screen)
     {
-        int start_x = player.position.x + player_img_width / 2 + camera.getCamPos().x;
-        int start_y = player.position.y + (player_img_height / 2 - 4) + camera.getCamPos().y;
+        int start_x = player.position.x + camera.getCamPos().x;
+        int start_y = player.position.y  - 4 + camera.getCamPos().y;
         int end_y = ai_pos.y + size / 2 + camera.getCamPos().y;
         int end_x = ai_pos.x + size / 2 + camera.getCamPos().x;
 
