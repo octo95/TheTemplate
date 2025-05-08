@@ -57,7 +57,7 @@ namespace Tmpl8
         }
 
         // Clamp fall speed
-        velocity.y += gravity;
+        velocity.y += GRAVITY;
         if (velocity.y > max_vertical_speed) velocity.y = max_vertical_speed;
 
         // Jump
@@ -92,7 +92,7 @@ namespace Tmpl8
 
     vec2 Player::camFollowPlayer(TileMap* map)
     {
-        vec2 camPos = vec2(0.0f, 0.0f); // Offset the camera by one tile to the right
+        vec2 camPos = vec2(0.0f, 0.0f);
 
         vec2 playerCenter = vec2(
             position.x + player_img_width / 2.0f,

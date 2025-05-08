@@ -8,7 +8,7 @@
 namespace Tmpl8
 {
 	// External variables
-	extern Sprite img_collectible_jump;
+	extern Sprite img_collectible_dash;
 	extern int collectibles_collected;
 	extern bool collectible_timer_active;
 	extern bool collected_new;
@@ -23,9 +23,9 @@ namespace Tmpl8
 		vec2 pos;
 		enum class CollectibleType
 		{
-			Jump,
+			Dash,
 			Health,
-			Bullet
+			HealthCollected
 		};
 		
 		CollectibleType type;
@@ -33,7 +33,7 @@ namespace Tmpl8
 		// Default Constructor
 		Collectible() :
 			pos(vec2{ 0,0 }),
-			type(CollectibleType::Health)
+			type(CollectibleType::Dash)
 		{};
 
 		// Constructor

@@ -13,7 +13,7 @@ namespace Tmpl8
     {
     public:
         CircularBuffer playerBuffer;
-        float copyTimer = 3.0f;     // Wait 3 seconds before starting to read the buffer when loading a new level
+        float copyTimer = 4.0f;     // Wait 4 seconds before starting to read the buffer when loading a new level
 
         // Constructor
         AI_Copy(
@@ -24,7 +24,7 @@ namespace Tmpl8
         {
         };
 
-        bool isTouchingPlayer();
+        //bool isTouchingPlayer();
 
         void setProperties();
     };

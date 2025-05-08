@@ -31,18 +31,17 @@ namespace Tmpl8
             vec2 default_pos = { 0, 0 };
 
             bool can_jump = false;
-            bool is_hurt = false;
             float move_cooldown = 0.0f;
             bool jumping = false;
             float jumping_cooldown = 0.0f;
             bool dashing = false;
             float dashing_cooldown = 0.0f;
             float angular_acceleration = 0.0f;
-            float gravity = 0.10f;
             int dash_count = 0;
 		    float friction = 0.05f;                     // Friction on the ground, lower friction results in more momentum
 		    float max_horizontal_speed = 1.5f;          // Max horizontal speed
 		    float max_vertical_speed = 10.0f;           // Max vertical speed
+            const float GRAVITY = 0.10f;
             const float ENERGY_LOSS = 0.7f;             // How much energy the ball keeps after a bounce in %
 		    const float PLAYER_DRAW_OFFSET_Y = -4.0f;   // Offset for the player sprite (since it has a reduced hitbox, to put it back on the ground)
 

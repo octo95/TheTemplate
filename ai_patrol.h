@@ -26,12 +26,9 @@ namespace Tmpl8
             bool stop = false;
             bool isDead = false;
             bool isAILowerThanPlayer = true;
-            vec2 default_pos = { 0, 0 };
-            vec2 position = { 0, 0 };
 
             // Functions
             void setAIPatrolPos(const vec2& pos) { position = pos; }
-            bool isTouchingPlayer();
             void getStomped();
             void Patrol(float deltaTime, Collisions* collisions);
 

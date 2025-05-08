@@ -20,25 +20,24 @@ namespace Tmpl8
     }
 
 
-    bool AI_Copy::isTouchingPlayer()
-    {
-        float ai_rad = img_ai_copy.GetWidth() / 2.0f;
+    //bool AI_Copy::isTouchingPlayer()
+    //{
+    //    float ai_rad = img_ai_copy.GetWidth() / 2.0f;
 
-        float radii_sum = ai_rad + hitbox_radius;
+    //    float radii_sum = ai_rad + hitbox_radius;
 
-        // AI center
-        float ai_center_x = this->position.x + ai_rad;
-        float ai_center_y = this->position.y + ai_rad;
+    //    // AI center
+    //    float ai_center_x = this->position.x + ai_rad;
+    //    float ai_center_y = this->position.y + ai_rad;
 
-        // Distance between AI's center and the player's one.
-        float dx = ai_center_x - player.position.x;
-        float dy = ai_center_y - player.position.y;
-        float distance = sqrtf(dx * dx + dy * dy);
+    //    // Distance between AI's center and the player's one.
+    //    float dx = ai_center_x - player.position.x;
+    //    float dy = ai_center_y - player.position.y;
+    //    float distance = sqrtf(dx * dx + dy * dy);
 
-        bool touched_player = distance <= radii_sum;
-        player.is_hurt = touched_player ? true : false;
+    //    bool touched_player = distance <= radii_sum;
 
-        return (touched_player);
-    }
+    //    return (touched_player);
+    //}
 }
 

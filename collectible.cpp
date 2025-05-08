@@ -3,8 +3,9 @@
 
 namespace Tmpl8
 {
-	Sprite img_collectible_jump(new Surface("assets/images/map/img_collectible_jump.png"), 1);
-	Sprite img_collectible_health(new Surface("assets/images/map/img_collectible_health.png"), 1);
+	Sprite img_collectible_dash(new Surface("assets/images/UI/img_collectible_dash.png"), 1);
+	Sprite img_collectible_health(new Surface("assets/images/UI/img_collectible_health.png"), 1);
+	Sprite img_collectible_health_collected(new Surface("assets/images/UI/img_collectible_health_collected.png"), 1);
 
 	int collectibles_collected = 0;
 	int current_map = 1;
@@ -27,32 +28,32 @@ namespace Tmpl8
 		switch (map_index)
 		{
 		case 1:
-			jump_ptr = MAP1_COLLEC_JUMP;
-			jump_size = sizeof(MAP1_COLLEC_JUMP) / sizeof(MAP1_COLLEC_JUMP[0]);
+			jump_ptr = MAP1_COLLEC_DASH;
+			jump_size = sizeof(MAP1_COLLEC_DASH) / sizeof(MAP1_COLLEC_DASH[0]);
 			health_ptr = MAP1_COLLEC_HEALTH;
 			health_size = sizeof(MAP1_COLLEC_HEALTH) / sizeof(MAP1_COLLEC_HEALTH[0]);
 			break;
 		case 2:
-			jump_ptr = MAP2_COLLEC_JUMP;
-			jump_size = sizeof(MAP2_COLLEC_JUMP) / sizeof(MAP2_COLLEC_JUMP[0]);
+			jump_ptr = MAP2_COLLEC_DASH;
+			jump_size = sizeof(MAP2_COLLEC_DASH) / sizeof(MAP2_COLLEC_DASH[0]);
 			health_ptr = MAP2_COLLEC_HEALTH;
 			health_size = sizeof(MAP2_COLLEC_HEALTH) / sizeof(MAP2_COLLEC_HEALTH[0]);
 			break;
 		case 3:
-			jump_ptr = MAP3_COLLEC_JUMP;
-			jump_size = sizeof(MAP3_COLLEC_JUMP) / sizeof(MAP3_COLLEC_JUMP[0]);
+			jump_ptr = MAP3_COLLEC_DASH;
+			jump_size = sizeof(MAP3_COLLEC_DASH) / sizeof(MAP3_COLLEC_DASH[0]);
 			health_ptr = MAP3_COLLEC_HEALTH;
 			health_size = sizeof(MAP3_COLLEC_HEALTH) / sizeof(MAP3_COLLEC_HEALTH[0]);
 			break;
 		case 4:
-			jump_ptr = MAP4_COLLEC_JUMP;
-			jump_size = sizeof(MAP4_COLLEC_JUMP) / sizeof(MAP4_COLLEC_JUMP[0]);
+			jump_ptr = MAP4_COLLEC_DASH;
+			jump_size = sizeof(MAP4_COLLEC_DASH) / sizeof(MAP4_COLLEC_DASH[0]);
 			health_ptr = MAP4_COLLEC_HEALTH;
 			health_size = sizeof(MAP4_COLLEC_HEALTH) / sizeof(MAP4_COLLEC_HEALTH[0]);
 			break;
 		case 5:
-			jump_ptr = MAP5_COLLEC_JUMP;
-			jump_size = sizeof(MAP5_COLLEC_JUMP) / sizeof(MAP5_COLLEC_JUMP[0]);
+			jump_ptr = MAP5_COLLEC_DASH;
+			jump_size = sizeof(MAP5_COLLEC_DASH) / sizeof(MAP5_COLLEC_DASH[0]);
 			health_ptr = MAP5_COLLEC_HEALTH;
 			health_size = sizeof(MAP5_COLLEC_HEALTH) / sizeof(MAP5_COLLEC_HEALTH[0]);
 			break;
@@ -60,7 +61,7 @@ namespace Tmpl8
 
 		// Insert Jump collectibles
 		for (int i = 0; i < jump_size; i++)
-			cmap.insert({ jump_ptr[i], Collectible(jump_ptr[i], Collectible::CollectibleType::Jump) });
+			cmap.insert({ jump_ptr[i], Collectible(jump_ptr[i], Collectible::CollectibleType::Dash) });
 
 		// Insert Health collectibles
 		for (int i = 0; i < health_size; i++)
@@ -86,17 +87,21 @@ namespace Tmpl8
 			// Offset to make the collectibles float, adding an offset of 4 to put it a bit higher to the ground
 			draw_pos.y += sin((totalTime / floating_time) * 2.0f * 3.1416f) * amplitude - 4.0f;
 
-			camera->drawWithCam(&img_collectible_jump, screen, draw_pos);
+			camera->drawWithCam(&img_collectible_dash, screen, draw_pos);
 
 			Collectible::CollectibleType type = c.second.type;
 
-			if (type == Collectible::CollectibleType::Jump)
+			if (type == Collectible::CollectibleType::Dash)
 			{
-				camera->drawWithCam(&img_collectible_jump, screen, draw_pos);
+				camera->drawWithCam(&img_collectible_dash, screen, draw_pos);
 			}
 			else if (type == Collectible::CollectibleType::Health)
 			{
 				camera->drawWithCam(&img_collectible_health, screen, draw_pos);
+			}
+			else if (type == Collectible::CollectibleType::HealthCollected)	// UNUSED
+			{
+				camera->drawWithCam(&img_collectible_health_collected, screen, draw_pos);
 			}
 		}
 	}
@@ -124,6 +129,7 @@ namespace Tmpl8
 				player_y + player_hitbox > col_y;
 
 			// The player touches the collectible, erase it from the map and play its logic
+			
 			if (overlap)
 			{
 				Collectible::CollectibleType type = c->second.type;
@@ -133,7 +139,7 @@ namespace Tmpl8
 
 				switch (type)
 				{
-				case Collectible::CollectibleType::Jump:
+				case Collectible::CollectibleType::Dash:
 					player->dash_count++;
 					collectibles_collected = player->dash_count;
 					collected_new = true;

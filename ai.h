@@ -30,7 +30,7 @@ namespace Tmpl8 {
         Player& player;
 
         // Functions
-        bool isTouchingPlayer() { return false; };
+        bool isTouchingPlayer(Sprite* img);
         void setProperties() {};
     };
 }

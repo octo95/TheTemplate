@@ -14,15 +14,6 @@ namespace Tmpl8
 {
     extern Sprite img_water_slide;
 
-    //enum TouchType {
-    //    NoneX,
-    //    NoneY,
-    //    Damage,
-    //    End,
-    //    Collision,
-    //    Ice
-    //};
-
     class Collisions {
     public:
         // Constructor
@@ -74,6 +65,5 @@ namespace Tmpl8
         bool FallNormal = false;
         bool FallHard = false;
         bool canPlayerJump = false;
-        float gravity = 0.5f;
     };
 }

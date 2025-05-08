@@ -185,9 +185,9 @@ namespace Tmpl8
             CheckR == Damage ||
             CheckB == Damage ||
             CheckT == Damage ||
-            ai_follow.isTouchingPlayer() ||
-            ai_patrol.isTouchingPlayer() && !ai_patrol.isAILowerThanPlayer ||
-            ai_copy.isTouchingPlayer()
+            ai_follow.isTouchingPlayer(&img_ai_follow) ||
+            ai_patrol.isTouchingPlayer(&img_ai_patrol) && !ai_patrol.isAILowerThanPlayer ||
+            ai_copy.isTouchingPlayer(&img_ai_copy)
         );
 
         bool isIce =

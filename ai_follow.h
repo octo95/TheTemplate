@@ -31,7 +31,5 @@ namespace Tmpl8
             void setAIFollowDefaultPos(const vec2& pos) { default_pos = pos; }
             void setAIFollowPos(const vec2& pos) { position = pos; }
             void getAIFollowPos(vec2& pos) { pos = position; }
-            bool isTouchingPlayer();
-
     };
 }

@@ -14,28 +14,40 @@ namespace Tmpl8
     extern Sprite img_map1_data_read;
 
     // Jump collectibles
-    const vec2 MAP1_COLLEC_JUMP[1] = {
+    const vec2 MAP1_COLLEC_DASH[1] = {
         vec2 {10,12}
     };
-    const vec2 MAP2_COLLEC_JUMP[2] = {
+    const vec2 MAP2_COLLEC_DASH[2] = {
         vec2 {12,15},
         vec2 {12,29}
     };
-    const vec2 MAP3_COLLEC_JUMP[4] = {
+    const vec2 MAP3_COLLEC_DASH[4] = {
         vec2 {19,3},
         vec2 {29,4}
     };
-    const vec2 MAP4_COLLEC_JUMP[4] = {
-        vec2 {3,2},
-        vec2 {11,9},
-        vec2 {9,11},
-        vec2 {12,1}
+    const vec2 MAP4_COLLEC_DASH[10] = {
+        vec2 {30,7},
+        vec2 {23,6},
+        vec2 {18,7},
+        vec2 {17,7},
+        vec2 {12,6},
+        vec2 {2,15},
+        vec2 {10,14},
+        vec2 {26,12},
+        vec2 {9,25},
+        vec2 {32,25}
     };
-    const vec2 MAP5_COLLEC_JUMP[4] = {
-        vec2 {3,2},
-        vec2 {11,9},
-        vec2 {9,11},
-        vec2 {12,1}
+    const vec2 MAP5_COLLEC_DASH[10] = {
+        vec2 {2,5},
+        vec2 {15,5},
+        vec2 {23,5},
+        vec2 {30,4},
+        vec2 {43,4},
+        vec2 {53,5},
+        vec2 {58,13},
+        vec2 {59,20},
+        vec2 {12,35},
+        vec2 {17,35}
     };
 
     // Health collectibles
@@ -49,10 +61,10 @@ namespace Tmpl8
         vec2 {5,2}
     };
     const vec2 MAP4_COLLEC_HEALTH[1] = {
-        vec2 {0,0}
+        vec2 {4,20}
     };
     const vec2 MAP5_COLLEC_HEALTH[1] = {
-        vec2 {0,0}
+        vec2 {30,24}
     };
   
 
@@ -73,17 +85,21 @@ namespace Tmpl8
         vec2 {41,14},
         vec2 {46,14}
     };
-    const vec2 MAP4_WALLS[4] = {
-        vec2 {5,7},
-        vec2 {1,1},
-        vec2 {3,3},
-        vec2 {5,4}
+    const vec2 MAP4_WALLS[6] = {
+        vec2 {36,17},
+        vec2 {6,29},
+        vec2 {6,28},
+        vec2 {56,35},
+        vec2 {53,31},
+        vec2 {53,30}
     };
-    const vec2 MAP5_WALLS[4] = {
-        vec2 {5,7},
-        vec2 {1,1},
-        vec2 {3,3},
-        vec2 {5,4}
+    const vec2 MAP5_WALLS[6] = {
+        vec2 {47,36},
+        vec2 {47,35},
+        vec2 {56,36},
+        vec2 {56,35},
+        vec2 {57,31},
+        vec2 {57,30}
     };
 
     class Player;

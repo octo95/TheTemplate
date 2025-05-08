@@ -12,6 +12,7 @@ namespace Tmpl8
         localTime = deltaTime;
 
         vec2 new_pos;
+
         //frameTime += deltaTime;
         //if (frameTime < 1 / 60.0f) return;
         //frameTime = 0.0f;
