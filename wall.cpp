@@ -60,39 +60,50 @@ namespace Tmpl8
 
 	void manageWallCollision(Player* player, GameSound* gamesound)
 	{
-		float player_x = player->position.x;
-		float player_y = player->position.y;
+		WallMap::iterator wallIt = wmap.begin();
+		WallMap::iterator wallColumnIt = wmap.begin();
 
-		float player_hitbox = hitbox_radius;
-
-		WallMap::iterator c = wmap.begin();
-		while (c != wmap.end())
+		while (wallIt != wmap.end())
 		{
-			float wall_x = c->first.x * TILE_SIZE;
-			float wall_y = c->first.y * TILE_SIZE;
-			float wall_width = TILE_SIZE;
-			float wall_height = TILE_SIZE;
+			float wall_x = wallIt->first.x * TILE_SIZE;
+			float wall_y = wallIt->first.y * TILE_SIZE;
+			float wall_width = img_wall.GetWidth();
+			float wall_height = img_wall.GetHeight();
 
 			// AABB collision check
 			bool overlap =
-								player_x < wall_x + wall_width &&
-				player_x + player_hitbox > wall_x &&
-								player_y < wall_y + wall_height  &&
-				player_y + player_hitbox > wall_y ;
+								player->position.x < wall_x + wall_width &&
+				player->position.x + hitbox_radius > wall_x &&
+								player->position.y < wall_y + wall_height  &&
+				player->position.y + hitbox_radius > wall_y ;
 
 			if (overlap)
 			{
+				// Bounce the player
 				player->move_cooldown = 0.30f;						// Stop the player's input for 0.3 seconds
 				player->velocity.x = -player->velocity.x * 1.5f;	// Make the player bounce back in the opposite direction
-				player->velocity.y = player->velocity.x * 1.8f;			// Make the player bounce back up based on its horizontal speed
-
+				player->velocity.y = player->velocity.x * 1.8f;		// Make the player bounce back up based on its horizontal speed
 				gamesound->playSound(gamesound->snd_break_wall);
 
-				c = wmap.erase(c);
+				// Remove all the wall that are on the same column to make bigger walls
+				int hitX = wallIt->first.x; 
+
+				while (wallColumnIt != wmap.end()) // Check through the map a second time to detect walls within the same column
+				{
+					if (wallColumnIt->first.x == hitX)	// Compare with the wall hit kept in the previous iterator
+					{
+						wallColumnIt = wmap.erase(wallColumnIt);
+					}
+					else
+					{
+						++wallColumnIt;
+					}
+				}
+				break;
 			}
 			else
 			{
-				++c;
+				++wallIt;
 			}
 		}
 	}

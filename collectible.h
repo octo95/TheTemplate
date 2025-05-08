@@ -56,5 +56,5 @@ namespace Tmpl8
 	void loadAllCollectibles(int map);
 	void drawCollectibleMap(Camera* camera, Surface* screen, float deltaTime);
 	void manageCollectibleCollision(Player* player, GameSound* gamesound, Menu* menu);
-	void manageCollectibleRespawn(float deltaTime);
+	void manageCollectibleRespawn(float deltaTime, Player* player);
 }

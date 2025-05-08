@@ -54,6 +54,7 @@ namespace Tmpl8
         case 2: // AI patrol on LVL2
             ai_copy.stop = true;
             ai_patrol.isDead = false;
+            ai_follow.is_following = false;
             break;
         case 3: // AI follow on LVL3
             ai_copy.stop = true;

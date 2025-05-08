@@ -8,10 +8,10 @@ namespace Tmpl8
 
     void AI_Patrol::getStomped()
     {
-        isAILowerThanPlayer = (position.y + img_ai_patrol.GetHeight() / 2.0f) >= (player.position.y + hitbox_radius + TILE_SIZE / 1.5);
+        isAILowerThanPlayer = (position.y + img_ai_patrol.GetHeight() / 2.0f) >= (player.position.y + TILE_SIZE / 1.5);
         if (isTouchingPlayer() && isAILowerThanPlayer)
         {
-			player.velocity.y -= 12.0f;
+			player.velocity.y -= 6.0f;
             isDead = true;
         }
     }
@@ -23,26 +23,32 @@ namespace Tmpl8
         getStomped();
         float spawn_x = this->position.x;
         
-        bool CheckL = collisions->checkCollisionL(position) == TileType::Collision;
-        bool CheckR = collisions->checkCollisionR(position) == TileType::Collision;
-        
-        bool EdgeRight = collisions->checkCollisionB(vec2(position.x + TILE_SIZE, position.y + TILE_SIZE), CheckL != None, CheckR != None) == TileType::None;
-		bool EdgeLeft  = collisions->checkCollisionB(vec2(position.x - TILE_SIZE, position.y + TILE_SIZE), CheckL != None, CheckR != None) == TileType::None;
-        
+        vec2 center_pos = position + vec2(img_ai_patrol.GetWidth() / 2, img_ai_patrol.GetHeight() / 2);
+        bool CheckL = collisions->checkCollisionL(center_pos) != None;
+        bool CheckR = collisions->checkCollisionR(center_pos) != None;
+
         float position_speed = 100.0f;
         float rotation_speed = 3.0f;
         
         if (stop) position_speed = 0.0f;
         
-        bool conditionTurnRight =   (direction != Direction::LEFT && direction != Direction::RIGHT) ||  // If default case           => TURN RIGHT
-                                    (CheckL && direction == Direction::LEFT) ||                         // If blocked on the left
-                                    (EdgeRight && direction == Direction::LEFT) ||                      // If on the right edge
-                                    (EdgeLeft && direction == Direction::LEFT);                         // If on the left edge
+        // Unused
+        //bool conditionTurnRight =   (direction != Direction::LEFT && direction != Direction::RIGHT) ||  // If default case           => TURN RIGHT
+        //                            (CheckL && direction == Direction::LEFT) ||                         // If blocked on the left
+        //                            (EdgeRight && direction == Direction::LEFT) ||                      // If on the right edge
+        //                            (EdgeLeft && direction == Direction::LEFT);                         // If on the left edge
+        //
+        //bool conditionTurnLeft =    ((CheckR && direction == Direction::RIGHT) || EdgeRight) ||         // If blocked on the right   => TURN LEFT
+        //                            (EdgeRight && direction == Direction::RIGHT) ||                     // If on the right edge
+        //                            (EdgeRight && direction == Direction::RIGHT) || 				    // If on the right edge
+        //                            (EdgeLeft && direction == Direction::RIGHT);                        // If on the left edge
+
+        bool conditionTurnRight =   (direction != Direction::LEFT && direction != Direction::RIGHT) ||  // If default case
+                                    (position.x <= 0 && direction == Direction::RIGHT) ||               // If touches left screen boundary
+                                    (CheckL && direction == Direction::LEFT);                           // If touches left collision
         
-        bool conditionTurnLeft =    ((CheckR && direction == Direction::RIGHT) || EdgeRight) ||         // If blocked on the right   => TURN LEFT
-                                    (EdgeRight && direction == Direction::RIGHT) ||                     // If on the right edge
-                                    (EdgeRight && direction == Direction::RIGHT) || 				    // If on the right edge
-                                    (EdgeLeft && direction == Direction::RIGHT);                        // If on the left edge
+        bool conditionTurnLeft =    ((CheckR && direction == Direction::RIGHT)) ||                                              // If touches right
+                                    (position.x + img_ai_patrol.GetWidth() > SCREEN_WIDTH && direction == Direction::RIGHT);    // If touches right screen boundary
         
         // Set the direction
         if (conditionTurnRight)
@@ -71,8 +77,8 @@ namespace Tmpl8
         float ai_center_y = this->position.y + ai_rad;
 
         // Player center
-        float player_center_x = player.position.x + player_rad;
-        float player_center_y = player.position.y + player_rad;
+        float player_center_x = player.position.x;
+        float player_center_y = player.position.y;
 
         // Distance between AI's center and the player's one.
         float dx = ai_center_x - player_center_x;

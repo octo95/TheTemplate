@@ -67,16 +67,15 @@ namespace Tmpl8
             jumping_cooldown = 0.0f;
         }
 
-        float jumping_max_time = 0.3f;
+        float jumping_max_time = 0.2f;
 
         if (jumping)
         {
-            jumping_cooldown += deltaTime;
+            jumping_cooldown += deltaTime; 
 
             if (GetAsyncKeyState(VK_UP) & 0x8000 && jumping_cooldown < jumping_max_time)
             {
-                velocity.y = -1.5f;
-                
+                velocity.y = -2.0f;
             }
             else
             {
@@ -144,8 +143,8 @@ namespace Tmpl8
         }
         
         // + Clamp the player on screen
-        if (position.x < 0) position.x = 0;                 // On the left
-        if (position.x + player_img_width / 2 > mapSize.x)  // On the right
+        if (position.x - player_img_width / 2 < 0) position.x = player_img_width / 2;              // On the left
+        if (position.x + player_img_width / 2 > mapSize.x)                      // On the right
             position.x = mapSize.x - player_img_width / 2;
 
         return camPos;

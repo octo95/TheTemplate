@@ -58,7 +58,6 @@ namespace Tmpl8
 		    // Getters / Setters
             int getFPS(float deltaTime);
             void toggleInfiniteDashes();
-            void adjustPlayerSpeed();
 
         private:
             Camera& camera;

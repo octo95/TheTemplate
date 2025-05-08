@@ -23,9 +23,9 @@ namespace Tmpl8
             Level& level;
             vec2 BELL_POS[5] =
             {
-                vec2 {8,21},
-                vec2 {1,36},
-                vec2 {2,3},
+                vec2 {21,14},
+                vec2 {1,26},
+                vec2 {48,15},
                 vec2 {2,3},
                 vec2 {2,3}
             };

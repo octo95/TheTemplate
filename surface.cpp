@@ -495,7 +495,6 @@ void Sprite::DrawRotated(Surface* a_Target, int a_X, int a_Y, float a_Angle)
 			}
 		}
 	}
-
 }
 
 void Sprite::DrawRotated(Surface* a_Target, vec2 a_Pos, float a_Angle)

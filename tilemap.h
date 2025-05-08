@@ -13,59 +13,34 @@ namespace Tmpl8
 
     extern Sprite img_map1_data_read;
 
-    const vec2 MAP1_COLLECTIBLES[10] = {
-        vec2 {15,3},
-        vec2 {23,11},
-        vec2 {20,10},
-        vec2 {30,25},
-        vec2 {23,25},
-        vec2 {8,25},
-        vec2 {6,24},
-        vec2 {3,23},
-        vec2 {1,22},
-        vec2 {6,21}
+    const vec2 MAP1_COLLECTIBLES[1] = {
+        vec2 {10,12}
     };
-    const vec2 MAP1_WALLS[2] = {
-        vec2 {4,2},
-        vec2 {8,18}
+    const vec2 MAP1_WALLS[1] = {
+        vec2 {17,7}
     };
     
     // MAP2
-    const vec2 MAP2_COLLECTIBLES[16] = {
-        vec2 {9,5},
-        vec2 {13,5},
-        vec2 {17,14},
-        vec2 {13,12},
-        vec2 {3,28},
-        vec2 {4,30},
-        vec2 {10,27},
-        vec2 {16,27},
-        vec2 {23,26},
-        vec2 {22,38},
-        vec2 {19,40},
-        vec2 {23,36},
-        vec2 {16,36},
-        vec2 {12,36},
-        vec2 {6,36},
-        vec2 {5,40}
+    const vec2 MAP2_COLLECTIBLES[2] = {
+        vec2 {12,15},
+        vec2 {12,29}
     };
-    const vec2 MAP2_WALLS[2] = {
-        vec2 {5,7},
-        vec2 {1,4}
+    const vec2 MAP2_WALLS[1] = {
+        vec2 {8,2}
     };
 
     // MAP3
     const vec2 MAP3_COLLECTIBLES[4] = {
-        vec2 {3,2},
-        vec2 {11,9},
-        vec2 {9,11},
-        vec2 {12,1}
+        vec2 {19,3},
+        vec2 {29,4}
     };
-    const vec2 MAP3_WALLS[4] = {
-        vec2 {5,7},
-        vec2 {1,1},
-        vec2 {3,3},
-        vec2 {5,4}
+    const vec2 MAP3_WALLS[6] = {
+        vec2 {16,3},
+        vec2 {16,2},
+        vec2 {16,1},
+        vec2 {16,0},
+        vec2 {41,14},
+        vec2 {46,14}
     };
 
     // MAP4

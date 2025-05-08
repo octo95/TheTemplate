@@ -186,7 +186,7 @@ namespace Tmpl8
             if (!wasHoveringStart) gamesound.playSound(gamesound.snd_hover);
             img_menu_main_start_alt.Draw(screen, MAIN_START_X, MAIN_START_Y);
             manageLevelSelect(0);
-            score = 0.0f;
+            score = 0;
             timer_current = 0.0f;
         }
         else
@@ -475,6 +475,12 @@ namespace Tmpl8
 
     }
 
+    void Menu::addScore(int score_increment)
+    {
+        //previousScore = score;
+        score += score_increment * difficulty;
+    }
+
     void Menu::scoreInGame(Surface* screen, float deltaTime)
     {
         if (pauseMenuOpen || nextMenuOpen || endMenuOpen || overMenuOpen) return;
@@ -497,7 +503,7 @@ namespace Tmpl8
         {
             size = vec2(1.05f, 1.05f);  // Scale to 105%
             color = 0xFFFF00;           // Yellow
-            text_width *= size.x;       // Adjust width (unused)
+            text_width = static_cast<int>(static_cast<float>(text_width) * size.x);       // Adjust width (unused)
         }
         if (lastScoreUpdateTime >= color_update_time) 
         {
@@ -598,8 +604,6 @@ namespace Tmpl8
 
         text.printOnScreen((char*)txt.c_str(), draw_pos, screen, size, color);
     }
-
-
 
     void Menu::quitManagerOpen(Surface* screen)
     {

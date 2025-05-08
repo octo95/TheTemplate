@@ -97,11 +97,11 @@ namespace Tmpl8
 			{
 				c = cmap.erase(c);
 				gamesound->playSound(gamesound->snd_collect);
-				collectibles_collected++;
 				player->dash_count++;
+				collectibles_collected = player->dash_count;
 				collected_new = true;
-				menu->previousScore = menu->score;
-				menu->score += 10;
+				menu->addScore(10);
+				printf("dash: %d, collectibles: %d\n", player->dash_count, collectibles_collected);
 			}
 			else 
 			{
@@ -110,9 +110,9 @@ namespace Tmpl8
 		}
 	}
 
-	void manageCollectibleRespawn(float deltaTime)
+	void manageCollectibleRespawn(float deltaTime, Player* player)
 	{
-		if (collectibles_collected < 1 && collected_new)
+		if (player->dash_count < 1 && collected_new)
 		{
 			collectible_respawn_time = 3.0f;
 			collectible_timer_active = true;

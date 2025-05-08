@@ -10,7 +10,7 @@ namespace Tmpl8
 
     void Health::drawHealthBar(Surface* screen, Menu* menu, GameSound* gamesound)
     {
-        if (!menu->start_game) return;
+        if (!menu->start_game || menu->pauseMenuOpen) return;
 
         if (!hp_initialized)
         {
@@ -51,7 +51,7 @@ namespace Tmpl8
         {
         case 1: player_hp = 15; break;
         case 2: player_hp = 10; break;
-        case 3: player_hp = 1;  break;
+        case 3: player_hp = 5;  break;
         }
     }
 

@@ -34,7 +34,7 @@ namespace Tmpl8
                 // Collisions logic
                 manageWallCollision(&player, &gamesound);
                 manageCollectibleCollision(&player, &gamesound, &menu);
-                manageCollectibleRespawn(localTime);
+                manageCollectibleRespawn(localTime, &player);
                 
                 // AI logic
                 //workAI(ai_map, ...);
@@ -57,8 +57,6 @@ namespace Tmpl8
                 localTime = 0.0f;
             }
 
-
-        
             // * Draw the objects on screen
             camera.drawWithCam(tilemap.current_map_draw, screen, vec2(0, 0));
             drawWallMap(&camera, screen, &this->wall);  

@@ -66,9 +66,6 @@ namespace Tmpl8
             // PRESS <D> : Get infinite dashes.
             toggleInfiniteDashes();
 
-            // PRESS <B> : Decrease player speed || PRESS <N> : Increase player speed
-            adjustPlayerSpeed();
-
             // Display the entities' hitboxes
             drawPlayerHitbox(player.position, screen);
             drawPlayerTileHitbox(player.position, screen);
@@ -217,46 +214,4 @@ namespace Tmpl8
     {
         if (GetAsyncKeyState('D') & 0x8000) player.dash_count = 9999;
     }
-
-    void Debug::adjustPlayerSpeed()
-    {
-        static bool bKeyDown = false;
-        static bool nKeyDown = false;
-        const float minSpeed = 0.1f;
-
-        if (GetAsyncKeyState('B') & 0x8000)
-        {
-            if (!bKeyDown) 
-            {
-                player.max_horizontal_speed /= 2.0f;
-                player.max_vertical_speed /= 2.0f;
-
-                if (player.max_horizontal_speed < minSpeed) player.max_horizontal_speed = minSpeed;
-                if (player.max_vertical_speed < minSpeed)   player.max_vertical_speed = minSpeed;
-
-                bKeyDown = true;  
-            }
-        }
-        else
-        {
-            bKeyDown = false;  
-        }
-
-        if (GetAsyncKeyState('N') & 0x8000)
-        {
-            if (!nKeyDown)  
-            {
-                player.max_horizontal_speed *= 2.0f;
-                player.max_vertical_speed *= 2.0f;
-                nKeyDown = true;  
-            }
-        }
-        else
-        {
-            nKeyDown = false; 
-        }
-    }
-
-
-
 }

@@ -78,6 +78,7 @@ namespace Tmpl8
 			void quitManagerOpen(Surface* screen);
 
 			// In game menus
+			void addScore(int score_increment);
 			void scoreInGame(Surface* screen, float deltaTime);
 			void dashCountInGame(Surface* screen, float deltaTime);
 			void timerInGame(Surface* screen, float deltaTime);
@@ -87,6 +88,13 @@ namespace Tmpl8
 			void setMouseState(bool isPressed) { isMousePressed = isPressed; }
 			bool isHoveringSurface(int x, int y, int width, int height);
 
+			// Menu flags
+			bool endMenuOpen = false;
+			bool mainMenuOpen = true;
+			bool audioOpen = true;
+			bool quitOpen = true;
+			bool pauseMenuOpen = false;
+			bool nextMenuOpen = false;
 			bool scoreMenuOpen = false;
 			bool overMenuOpen = false;
 
@@ -107,15 +115,6 @@ namespace Tmpl8
 			bool audioOn = true;
 			float main_bg_x = 0.0f;
 			float timer_current = 0.0f;
-
-			// Menu flags
-			bool endMenuOpen = false;
-			bool mainMenuOpen = true;
-			bool audioOpen = true;
-			bool quitOpen = true;
-			bool pauseMenuOpen = false;
-			bool nextMenuOpen = false;
-
 
 			// Other consts
 			const int SCREEN_HALF_WIDTH = SCREEN_WIDTH / 2;
