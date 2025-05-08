@@ -440,8 +440,8 @@ void Sprite::Draw( Surface* a_Target, int a_X, int a_Y )
 
 void Sprite::Draw(Surface* a_Target, vec2 pos)
 {
-	int draw_x = (int)pos.x;
-	int draw_y = (int)pos.y;
+	int draw_x = static_cast<int>(pos.x);
+	int draw_y = static_cast<int>(pos.y);
 	Draw(a_Target, draw_x, draw_y);
 }
 
@@ -499,7 +499,7 @@ void Sprite::DrawRotated(Surface* a_Target, int a_X, int a_Y, float a_Angle)
 
 void Sprite::DrawRotated(Surface* a_Target, vec2 a_Pos, float a_Angle)
 {
-	DrawRotated(a_Target, (int)a_Pos.x, (int)a_Pos.y, a_Angle);
+	DrawRotated(a_Target, static_cast<int>(a_Pos.x), static_cast<int>(a_Pos.y), a_Angle);
 }
 
 void Sprite::InitializeStartData()
@@ -523,44 +523,6 @@ void Sprite::InitializeStartData()
 	}
 }
 
-/*
-	if ((a_X < -m_Width) || (a_X > (a_Target->GetWidth() + m_Width))) return;
-	if ((a_Y < -m_Height) || (a_Y > (a_Target->GetHeight() + m_Height))) return;
-
-	float radians = a_Angle * (PI / 180.0f);
-	float cosAngle = cosf(radians);
-	float sinAngle = sinf(radians);
-
-	Pixel* src = GetBuffer() + m_CurrentFrame * m_Width;
-	Pixel* dest = a_Target->GetBuffer();
-	const int dpitch = a_Target->GetPitch();
-
-	int centerX = m_Width / 2;
-	int centerY = m_Height / 2;
-
-	for (int y = 0; y < m_Height; y++)
-	{
-		for (int x = 0; x < m_Width; x++)
-		{
-			Pixel color = src[x + y * m_Pitch];
-			if (!(color & 0xffffff)) continue;
-
-			int dx = x - centerX;
-			int dy = y - centerY;
-
-			float fx = dx * cosAngle - dy * sinAngle;
-			float fy = dx * sinAngle + dy * cosAngle;
-
-			int finalX = a_X + centerX + (int)(fx + 0.5f);
-			int finalY = a_Y + centerY + (int)(fy + 0.5f);
-
-			if (finalX >= 0 && finalX < a_Target->GetWidth() && finalY >= 0 && finalY < a_Target->GetHeight())
-			{
-				dest[finalX + finalY * dpitch] = color;
-			}
-		}
-	}
-*/
 Font::Font( char* a_File, char* a_Chars )
 {
 	m_Surface = new Surface( a_File );

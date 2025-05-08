@@ -13,56 +13,71 @@ namespace Tmpl8
 
     extern Sprite img_map1_data_read;
 
-    const vec2 MAP1_COLLECTIBLES[1] = {
+    // Jump collectibles
+    const vec2 MAP1_COLLEC_JUMP[1] = {
         vec2 {10,12}
     };
-    const vec2 MAP1_WALLS[1] = {
-        vec2 {17,7}
-    };
-    
-    // MAP2
-    const vec2 MAP2_COLLECTIBLES[2] = {
+    const vec2 MAP2_COLLEC_JUMP[2] = {
         vec2 {12,15},
         vec2 {12,29}
     };
-    const vec2 MAP2_WALLS[1] = {
-        vec2 {8,2}
-    };
-
-    // MAP3
-    const vec2 MAP3_COLLECTIBLES[4] = {
+    const vec2 MAP3_COLLEC_JUMP[4] = {
         vec2 {19,3},
         vec2 {29,4}
     };
-    const vec2 MAP3_WALLS[6] = {
-        vec2 {16,3},
-        vec2 {16,2},
-        vec2 {16,1},
-        vec2 {16,0},
-        vec2 {41,14},
-        vec2 {46,14}
-    };
-
-    // MAP4
-    const vec2 MAP4_COLLECTIBLES[4] = {
+    const vec2 MAP4_COLLEC_JUMP[4] = {
         vec2 {3,2},
         vec2 {11,9},
         vec2 {9,11},
         vec2 {12,1}
+    };
+    const vec2 MAP5_COLLEC_JUMP[4] = {
+        vec2 {3,2},
+        vec2 {11,9},
+        vec2 {9,11},
+        vec2 {12,1}
+    };
+
+    // Health collectibles
+    const vec2 MAP1_COLLEC_HEALTH[1] = {
+        vec2 {22,7}
+    };
+    const vec2 MAP2_COLLEC_HEALTH[1] = {
+        vec2 {2,29}
+    };
+    const vec2 MAP3_COLLEC_HEALTH[1] = {
+        vec2 {5,2}
+    };
+    const vec2 MAP4_COLLEC_HEALTH[1] = {
+        vec2 {0,0}
+    };
+    const vec2 MAP5_COLLEC_HEALTH[1] = {
+        vec2 {0,0}
+    };
+  
+
+    // Walls
+    const vec2 MAP1_WALLS[1] = {
+        vec2 {21,7}
+    };
+    const vec2 MAP2_WALLS[2] = {
+        vec2 {8,2},
+        vec2 {4,29}
+    };
+    const vec2 MAP3_WALLS[7] = {
+        vec2 {8,3},
+        vec2 {22,3},
+        vec2 {22,2},
+        vec2 {22,1},
+        vec2 {22,0},
+        vec2 {41,14},
+        vec2 {46,14}
     };
     const vec2 MAP4_WALLS[4] = {
         vec2 {5,7},
         vec2 {1,1},
         vec2 {3,3},
         vec2 {5,4}
-    };
-
-    // MAP5
-    const vec2 MAP5_COLLECTIBLES[4] = {
-        vec2 {3,2},
-        vec2 {11,9},
-        vec2 {9,11},
-        vec2 {12,1}
     };
     const vec2 MAP5_WALLS[4] = {
         vec2 {5,7},

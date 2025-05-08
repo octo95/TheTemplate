@@ -4,6 +4,8 @@
 namespace Tmpl8
 {
 	Sprite img_collectible_jump(new Surface("assets/images/map/img_collectible_jump.png"), 1);
+	Sprite img_collectible_health(new Surface("assets/images/map/img_collectible_health.png"), 1);
+
 	int collectibles_collected = 0;
 	int current_map = 1;
 	bool collectible_timer_active = false;
@@ -14,42 +16,57 @@ namespace Tmpl8
 
 	void loadAllCollectibles(int map_index)
 	{
-		// Clear cmap
 		current_map = map_index;
 		cmap = CollectibleMap();
 
-		// Select correct map
-		const vec2* ptr;
-		int size = 0;
+		const vec2* jump_ptr = nullptr;
+		const vec2* health_ptr = nullptr;
+		int jump_size = 0;
+		int health_size = 0;
 
-		switch (map_index) {
+		switch (map_index)
+		{
 		case 1:
-			ptr = MAP1_COLLECTIBLES;
-			size = sizeof(MAP1_COLLECTIBLES) / sizeof(MAP1_COLLECTIBLES[0]);
+			jump_ptr = MAP1_COLLEC_JUMP;
+			jump_size = sizeof(MAP1_COLLEC_JUMP) / sizeof(MAP1_COLLEC_JUMP[0]);
+			health_ptr = MAP1_COLLEC_HEALTH;
+			health_size = sizeof(MAP1_COLLEC_HEALTH) / sizeof(MAP1_COLLEC_HEALTH[0]);
 			break;
 		case 2:
-			ptr = MAP2_COLLECTIBLES;
-			size = sizeof(MAP2_COLLECTIBLES) / sizeof(MAP2_COLLECTIBLES[0]);
+			jump_ptr = MAP2_COLLEC_JUMP;
+			jump_size = sizeof(MAP2_COLLEC_JUMP) / sizeof(MAP2_COLLEC_JUMP[0]);
+			health_ptr = MAP2_COLLEC_HEALTH;
+			health_size = sizeof(MAP2_COLLEC_HEALTH) / sizeof(MAP2_COLLEC_HEALTH[0]);
 			break;
 		case 3:
-			ptr = MAP3_COLLECTIBLES;
-			size = sizeof(MAP3_COLLECTIBLES) / sizeof(MAP3_COLLECTIBLES[0]);
+			jump_ptr = MAP3_COLLEC_JUMP;
+			jump_size = sizeof(MAP3_COLLEC_JUMP) / sizeof(MAP3_COLLEC_JUMP[0]);
+			health_ptr = MAP3_COLLEC_HEALTH;
+			health_size = sizeof(MAP3_COLLEC_HEALTH) / sizeof(MAP3_COLLEC_HEALTH[0]);
 			break;
 		case 4:
-			ptr = MAP4_COLLECTIBLES;
-			size = sizeof(MAP4_COLLECTIBLES) / sizeof(MAP4_COLLECTIBLES[0]);
+			jump_ptr = MAP4_COLLEC_JUMP;
+			jump_size = sizeof(MAP4_COLLEC_JUMP) / sizeof(MAP4_COLLEC_JUMP[0]);
+			health_ptr = MAP4_COLLEC_HEALTH;
+			health_size = sizeof(MAP4_COLLEC_HEALTH) / sizeof(MAP4_COLLEC_HEALTH[0]);
 			break;
 		case 5:
-			ptr = MAP5_COLLECTIBLES;
-			size = sizeof(MAP5_COLLECTIBLES) / sizeof(MAP5_COLLECTIBLES[0]);
+			jump_ptr = MAP5_COLLEC_JUMP;
+			jump_size = sizeof(MAP5_COLLEC_JUMP) / sizeof(MAP5_COLLEC_JUMP[0]);
+			health_ptr = MAP5_COLLEC_HEALTH;
+			health_size = sizeof(MAP5_COLLEC_HEALTH) / sizeof(MAP5_COLLEC_HEALTH[0]);
 			break;
 		}
 
-		// Insert collectible in newly initialized map
-		for (int i = 0; i < size; i++) {
-			cmap.insert({ ptr[i], Collectible(ptr[i])});
-		}
+		// Insert Jump collectibles
+		for (int i = 0; i < jump_size; i++)
+			cmap.insert({ jump_ptr[i], Collectible(jump_ptr[i], Collectible::CollectibleType::Jump) });
+
+		// Insert Health collectibles
+		for (int i = 0; i < health_size; i++)
+			cmap.insert({ health_ptr[i], Collectible(health_ptr[i], Collectible::CollectibleType::Health) });
 	}
+
 
 	void drawCollectibleMap(Camera* camera, Surface* screen, float deltaTime)
 	{
@@ -68,17 +85,30 @@ namespace Tmpl8
 
 			// Offset to make the collectibles float, adding an offset of 4 to put it a bit higher to the ground
 			draw_pos.y += sin((totalTime / floating_time) * 2.0f * 3.1416f) * amplitude - 4.0f;
+
 			camera->drawWithCam(&img_collectible_jump, screen, draw_pos);
+
+			Collectible::CollectibleType type = c.second.type;
+
+			if (type == Collectible::CollectibleType::Jump)
+			{
+				camera->drawWithCam(&img_collectible_jump, screen, draw_pos);
+			}
+			else if (type == Collectible::CollectibleType::Health)
+			{
+				camera->drawWithCam(&img_collectible_health, screen, draw_pos);
+			}
 		}
 	}
 
-	void manageCollectibleCollision(Player* player, GameSound* gamesound, Menu* menu)
+	void manageCollectibleCollision(Player* player, GameSound* gamesound, Menu* menu, Health* health)
 	{
 		float player_x = player->position.x;
 		float player_y = player->position.y;
 		float player_hitbox = hitbox_radius;
 
 		CollectibleMap::iterator c = cmap.begin();
+
 		while (c != cmap.end())
 		{
 			float col_x = c->first.x * TILE_SIZE;
@@ -88,21 +118,34 @@ namespace Tmpl8
 
 			// AABB collision check
 			bool overlap =
-				player_x < col_x + col_width &&
+								player_x < col_x + col_width &&
 				player_x + player_hitbox > col_x &&
-				player_y < col_y + col_height &&
+								player_y < col_y + col_height &&
 				player_y + player_hitbox > col_y;
 
+			// The player touches the collectible, erase it from the map and play its logic
 			if (overlap)
 			{
+				Collectible::CollectibleType type = c->second.type;
+
 				c = cmap.erase(c);
 				gamesound->playSound(gamesound->snd_collect);
-				player->dash_count++;
-				collectibles_collected = player->dash_count;
-				collected_new = true;
-				menu->addScore(10);
-				printf("dash: %d, collectibles: %d\n", player->dash_count, collectibles_collected);
+
+				switch (type)
+				{
+				case Collectible::CollectibleType::Jump:
+					player->dash_count++;
+					collectibles_collected = player->dash_count;
+					collected_new = true;
+					menu->addScore(10);
+					break;
+				case Collectible::CollectibleType::Health:
+					health->player_hp++;
+					menu->addScore(50);
+					break;
+				}
 			}
+			// Otherwise continue going through the map
 			else 
 			{
 				++c;

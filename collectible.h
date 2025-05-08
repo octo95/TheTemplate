@@ -15,28 +15,31 @@ namespace Tmpl8
 
 	class Player;
 	class Menu;
+	class Health;
 
-	struct Collectible
+	class Collectible
 	{
 	public:
 		vec2 pos;
-		//enum class CollectibleType
-		//{
-		//	Jump,
-		//	Health,
-		//	Bullet
-		//};
-		//
-		//CollectibleType type;
+		enum class CollectibleType
+		{
+			Jump,
+			Health,
+			Bullet
+		};
+		
+		CollectibleType type;
 
 		// Default Constructor
 		Collectible() :
-			pos(vec2{ 0,0 })
+			pos(vec2{ 0,0 }),
+			type(CollectibleType::Health)
 		{};
 
 		// Constructor
-		Collectible(vec2 _pos) :
-			pos(_pos)
+		Collectible(vec2 posRef, CollectibleType typeRef) :
+			pos(posRef),
+			type(typeRef)
 		{};
 
 		// Overloading == operator. Collectible are equal if the coordinates are the same.
@@ -55,6 +58,6 @@ namespace Tmpl8
 	// Local functions
 	void loadAllCollectibles(int map);
 	void drawCollectibleMap(Camera* camera, Surface* screen, float deltaTime);
-	void manageCollectibleCollision(Player* player, GameSound* gamesound, Menu* menu);
+	void manageCollectibleCollision(Player* player, GameSound* gamesound, Menu* menu, Health* health);
 	void manageCollectibleRespawn(float deltaTime, Player* player);
 }

@@ -690,7 +690,7 @@ namespace Tmpl8
 
         timer_current += deltaTime;
 
-        int total_seconds = (int)(timer_current);
+        int total_seconds = static_cast<int>(timer_current);
         int minutes = total_seconds / 60;
         int seconds = total_seconds % 60;
 

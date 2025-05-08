@@ -32,7 +32,7 @@ namespace Tmpl8
             {
                 OFF_SCREEN,
                 OFF_SCREEN,
-                vec2 {-2*32,13*32}, // Show on level 3, appear offscreen at first
+                vec2 {-5*32,13*32}, // Show on level 3, appear offscreen at first
                 OFF_SCREEN,
                 vec2 {3 * 32,6 * 32}
             };
@@ -42,7 +42,7 @@ namespace Tmpl8
                 vec2 {13*32,8*32}, // Show on level 2
                 OFF_SCREEN,
                 OFF_SCREEN,
-                vec2 {5 * 32,40 * 32}
+                vec2 {5*32,40*32}
             };
             const vec2 PLAYER_DEFAULT_POS[5] =
             {

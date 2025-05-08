@@ -8,7 +8,7 @@ namespace Tmpl8
     {
         if (!is_following) return;
 
-        const float delayAmplifier = 0.5f;
+        const float delayAmplifier = 0.35f;
 
         float diffX = player.position.x - this->position.x;
         float diffY = player.position.y - this->position.y;

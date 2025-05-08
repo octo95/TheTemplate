@@ -33,7 +33,7 @@ namespace Tmpl8
         
                 // Collisions logic
                 manageWallCollision(&player, &gamesound);
-                manageCollectibleCollision(&player, &gamesound, &menu);
+                manageCollectibleCollision(&player, &gamesound, &menu, &health);
                 manageCollectibleRespawn(localTime, &player);
                 
                 // AI logic

@@ -217,7 +217,8 @@ namespace Tmpl8
             // Apply the power loss for the sides collisions
             player.velocity.x *= powf(player.ENERGY_LOSS, 2);
         }
-        //printf("Bottom: %d, VelY: %f\n", (int)CheckBottom, player.velocity.y);
+        //printf("Bottom: %d, VelY: %f\n", 
+        CheckBottom, player.velocity.y);
         if (CheckY)
         {
             float norm = sqrtf(pow(player.velocity.x, 2) + pow(player.velocity.y, 2));
