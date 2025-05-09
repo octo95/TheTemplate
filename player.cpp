@@ -170,6 +170,7 @@ namespace Tmpl8
 
         if (dashing)
         {
+            velocity.y = 0.1f; // Stabilize the Y velocity to a low value for a more straight dash movement
             dashing_cooldown += deltaTime;
 
             if (dashing_cooldown < dashing_max_time)

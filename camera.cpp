@@ -18,9 +18,13 @@ namespace Tmpl8
                 break;
             case shakeConditions::FallHard:
                 total_time = 1.7f;
-                frequency = 4.0f;
-                amplitude = 3.5f;
+                frequency = 3.5f;
+                amplitude = 2.3f;
                 break;
+            case shakeConditions::Bell:
+                total_time = 2.0f;
+                frequency = 3.0f;
+                amplitude = 1.5;
             }
             shake_conditions = shakeConditions::None;
         }
@@ -37,10 +41,6 @@ namespace Tmpl8
             shake = { 0, 0 };
         }
     }
-
-
-
-
 
     void Camera::drawWithCam(Sprite* img, Surface* screen, vec2 pos)
     {

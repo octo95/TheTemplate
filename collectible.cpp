@@ -15,59 +15,76 @@ namespace Tmpl8
 
 	CollectibleMap cmap;
 
-	void loadAllCollectibles(int map_index)
-	{
-		current_map = map_index;
-		cmap = CollectibleMap();
+	void loadDashCollectibles(int map_index, CollectibleMap& cmap) {
+		const vec2* dash_ptr = nullptr;
+		int dash_size = 0;
 
-		const vec2* jump_ptr = nullptr;
+		switch (map_index)
+		{
+		case 1:
+			dash_ptr = MAP1_COLLEC_DASH;
+			dash_size = sizeof(MAP1_COLLEC_DASH) / sizeof(MAP1_COLLEC_DASH[0]);
+			break;
+		case 2:
+			dash_ptr = MAP2_COLLEC_DASH;
+			dash_size = sizeof(MAP2_COLLEC_DASH) / sizeof(MAP2_COLLEC_DASH[0]);
+			break;
+		case 3:
+			dash_ptr = MAP3_COLLEC_DASH;
+			dash_size = sizeof(MAP3_COLLEC_DASH) / sizeof(MAP3_COLLEC_DASH[0]);
+			break;
+		case 4:
+			dash_ptr = MAP4_COLLEC_DASH;
+			dash_size = sizeof(MAP4_COLLEC_DASH) / sizeof(MAP4_COLLEC_DASH[0]);
+			break;
+		case 5:
+			dash_ptr = MAP5_COLLEC_DASH;
+			dash_size = sizeof(MAP5_COLLEC_DASH) / sizeof(MAP5_COLLEC_DASH[0]);
+			break;
+		}
+
+		for (int i = 0; i < dash_size; i++)
+			cmap.insert({ dash_ptr[i], Collectible(dash_ptr[i], Collectible::CollectibleType::Dash) });
+	}
+
+	void loadHealthCollectibles(int map_index, CollectibleMap& cmap) {
 		const vec2* health_ptr = nullptr;
-		int jump_size = 0;
 		int health_size = 0;
 
 		switch (map_index)
 		{
 		case 1:
-			jump_ptr = MAP1_COLLEC_DASH;
-			jump_size = sizeof(MAP1_COLLEC_DASH) / sizeof(MAP1_COLLEC_DASH[0]);
 			health_ptr = MAP1_COLLEC_HEALTH;
 			health_size = sizeof(MAP1_COLLEC_HEALTH) / sizeof(MAP1_COLLEC_HEALTH[0]);
 			break;
 		case 2:
-			jump_ptr = MAP2_COLLEC_DASH;
-			jump_size = sizeof(MAP2_COLLEC_DASH) / sizeof(MAP2_COLLEC_DASH[0]);
 			health_ptr = MAP2_COLLEC_HEALTH;
 			health_size = sizeof(MAP2_COLLEC_HEALTH) / sizeof(MAP2_COLLEC_HEALTH[0]);
 			break;
 		case 3:
-			jump_ptr = MAP3_COLLEC_DASH;
-			jump_size = sizeof(MAP3_COLLEC_DASH) / sizeof(MAP3_COLLEC_DASH[0]);
 			health_ptr = MAP3_COLLEC_HEALTH;
 			health_size = sizeof(MAP3_COLLEC_HEALTH) / sizeof(MAP3_COLLEC_HEALTH[0]);
 			break;
 		case 4:
-			jump_ptr = MAP4_COLLEC_DASH;
-			jump_size = sizeof(MAP4_COLLEC_DASH) / sizeof(MAP4_COLLEC_DASH[0]);
 			health_ptr = MAP4_COLLEC_HEALTH;
 			health_size = sizeof(MAP4_COLLEC_HEALTH) / sizeof(MAP4_COLLEC_HEALTH[0]);
 			break;
 		case 5:
-			jump_ptr = MAP5_COLLEC_DASH;
-			jump_size = sizeof(MAP5_COLLEC_DASH) / sizeof(MAP5_COLLEC_DASH[0]);
 			health_ptr = MAP5_COLLEC_HEALTH;
 			health_size = sizeof(MAP5_COLLEC_HEALTH) / sizeof(MAP5_COLLEC_HEALTH[0]);
 			break;
 		}
 
-		// Insert Jump collectibles
-		for (int i = 0; i < jump_size; i++)
-			cmap.insert({ jump_ptr[i], Collectible(jump_ptr[i], Collectible::CollectibleType::Dash) });
-
-		// Insert Health collectibles
 		for (int i = 0; i < health_size; i++)
 			cmap.insert({ health_ptr[i], Collectible(health_ptr[i], Collectible::CollectibleType::Health) });
 	}
 
+	void loadAllCollectibles(int map_index) {
+		current_map = map_index;
+		cmap = CollectibleMap();
+		loadDashCollectibles(map_index, cmap);
+		loadHealthCollectibles(map_index, cmap);
+	}
 
 	void drawCollectibleMap(Camera* camera, Surface* screen, float deltaTime)
 	{
@@ -116,8 +133,8 @@ namespace Tmpl8
 
 		while (c != cmap.end())
 		{
-			float col_x = c->first.x * TILE_SIZE;
-			float col_y = c->first.y * TILE_SIZE;
+			float col_x = c->first.x * TILE_SIZE + TILE_SIZE / 2.0f;
+			float col_y = c->first.y * TILE_SIZE + TILE_SIZE / 2.0f;
 			float col_width = TILE_SIZE;
 			float col_height = TILE_SIZE;
 
@@ -177,7 +194,7 @@ namespace Tmpl8
 			if (collectible_respawn_time <= 0.0f)
 			{
 				collectible_timer_active = false;
-				loadAllCollectibles(current_map);
+				loadDashCollectibles(current_map, cmap);
 			}
 		}
 	}

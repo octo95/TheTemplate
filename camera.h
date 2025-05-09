@@ -11,7 +11,8 @@ namespace Tmpl8
 			enum class shakeConditions {
 				None,
 				Damage,
-				FallHard
+				FallHard,
+				Bell
 			};
 
 			shakeConditions shake_conditions = shakeConditions::None;

@@ -17,14 +17,16 @@ namespace Tmpl8
 
             // Functions
             void isBellTouchingPlayer(Player* player, GameSound* gamesound);
-            void drawBell(Surface* screen, Camera* camera, int map_index);
+            void drawBell(Surface* screen, Camera* camera, int map_index, float deltaTime);
 
         private:
+            bool player_touch_bell = false;
+
             Level& level;
             vec2 BELL_POS[5] =
             {
                 vec2 {21,15},
-                vec2 {1,26},
+                vec2 {1,27},
                 vec2 {48,15},
                 vec2 {20,31},
                 vec2 {51,37}

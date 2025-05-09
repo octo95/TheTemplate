@@ -5,18 +5,16 @@
 
 namespace Tmpl8
 {
-    Debug::Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, AI_Follow& ai_followRef, Level& levelRef, Collisions& collisionRef, Menu& menuRef, AI_Patrol& ai_patrolRef, AI_Copy& ai_copyRef) :
+    Debug::Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef, Collisions& collisionRef, Menu& menuRef, AIMap& ai_map) :
         camera(cameraRef),
         tilemap(tilemapRef),
         player(playerRef),
         collectible(collectibleRef),
         wall(wallRef),
-        ai_follow(ai_followRef),
         level(levelRef),
         collisions(collisionRef),
         menu(menuRef),
-        ai_patrol(ai_patrolRef),
-        ai_copy(ai_copyRef)
+        ai_map(ai_map)
     {}
     
     void Debug::drawPlayerHitbox(const vec2& pos, Surface* screen)
@@ -69,14 +67,14 @@ namespace Tmpl8
             // Display the entities' hitboxes
             drawPlayerHitbox(player.position, screen);
             drawPlayerTileHitbox(player.position, screen);
-            drawHitbox(ai_copy.position, &img_ai_copy, screen);
-            drawHitbox(ai_patrol.position, &img_ai_patrol, screen);
-            drawHitbox(ai_follow.position, &img_ai_follow, screen);
+            // drawHitbox(ai_copy.position, &img_ai_copy, screen);
+            // drawHitbox(ai_patrol.position, &img_ai_patrol, screen);
+            // drawHitbox(ai_follow.position, &img_ai_follow, screen);
 
             // Draw the distance between the player and an AI to specify below
-            drawDistancePlayerToAI(ai_copy.position, img_ai_copy.GetWidth(), screen);
-            drawDistancePlayerToAI(ai_follow.position, img_ai_follow.GetWidth(), screen);
-            drawDistancePlayerToAI(ai_patrol.position, img_ai_patrol.GetWidth(), screen);
+            // drawDistancePlayerToAI(ai_copy.position, img_ai_copy.GetWidth(), screen);
+            // drawDistancePlayerToAI(ai_follow.position, img_ai_follow.GetWidth(), screen);
+            // drawDistancePlayerToAI(ai_patrol.position, img_ai_patrol.GetWidth(), screen);
 
             // Display debug text
             char debug_active_txt[100];
@@ -116,9 +114,9 @@ namespace Tmpl8
         if (GetAsyncKeyState('S') & 0x8000) {
             if (!s_wasPressed) 
             {
-                ai_follow.is_following = !ai_follow.is_following;
-                ai_patrol.stop = !ai_patrol.stop;
-                ai_copy.stop = !ai_copy.stop;
+                // ai_follow.is_following = !ai_follow.is_following;
+                // ai_patrol.stop = !ai_patrol.stop;
+                // ai_copy.stop = !ai_copy.stop;
                 s_wasPressed = true;
             }
         }

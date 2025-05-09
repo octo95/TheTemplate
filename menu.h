@@ -131,6 +131,8 @@ namespace Tmpl8
 			const int MAIN_LVL_HEIGHT = img_menu_main_lvl1.GetHeight();
 			const int MAIN_DIFFICULTY_WIDTH = img_menu_main_difficulty_easy.GetWidth();
 			const int MAIN_DIFFICULTY_HEIGHT = img_menu_main_difficulty_easy.GetHeight();
+			//const int MAIN_INFO_WIDTH = img_menu_main_info_info.GetWidth();
+			//const int MAIN_INFO_HEIGHT = img_menu_main_info_info.GetHeight();
 
 			// Next level menu
 			const int NEXT_BG_WIDTH = img_menu_next_bg.GetWidth();

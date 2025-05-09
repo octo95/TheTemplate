@@ -1,7 +1,58 @@
 #include "ai.h"
+#include "ai_copy.h"
+#include "ai_follow.h"
+#include "ai_patrol.h"
+#include "surface.h"
+#include "camera.h"
 
 namespace Tmpl8
 {
+
+    void workAI(AIMap* ai_map, float& localTime, Collisions& collisions) 
+    {
+        if (ai_map->ai_copy_map.size() > 0)
+        {
+            for (AI_Copy& ai : ai_map->ai_copy_map) {
+                ai.setProperties();
+                ai.updatePlayerBuffer();
+            }
+        }
+        if (ai_map->ai_follow_map.size() > 0)
+        {
+            for (AI_Follow& ai : ai_map->ai_follow_map) {
+                ai.followPlayer(localTime);
+            }
+        }
+        if (ai_map->ai_patrol_map.size() > 0) {
+            for (AI_Patrol& ai : ai_map->ai_patrol_map) {
+                ai.setProperties();
+                ai.Patrol(localTime, &collisions);
+            }
+        }
+    }
+
+    void drawAI(AIMap* ai_map, Surface* screen, float& deltaTime, Camera& camera) 
+    {
+        if (ai_map->ai_copy_map.size() > 0)
+        {
+            for (AI_Copy& ai : ai_map->ai_copy_map) {
+                camera.drawAICopy(&img_ai_copy, screen, ai.position, deltaTime, ai.acceleration);
+            }
+        }
+        if (ai_map->ai_follow_map.size() > 0)
+        {
+            for (AI_Follow& ai : ai_map->ai_follow_map) {
+                img_ai_follow.DrawRotated(screen, ai.position + camera.getCamPos(), ai.angle);
+            }
+        }
+        if (ai_map->ai_patrol_map.size() > 0) 
+        {
+            for (AI_Patrol& ai : ai_map->ai_patrol_map) {
+                if(!ai.isDead) img_ai_patrol.DrawRotated(screen, ai.position + camera.getCamPos(), ai.angle);
+            }
+        }
+    }
+
     bool AI::isTouchingPlayer(Sprite* img)
     {
         float ai_rad = img->GetWidth() / 2.0f;

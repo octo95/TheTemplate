@@ -27,12 +27,10 @@ namespace Tmpl8
                 Player& playerRef,
                 CollectibleMap& collectibleRef,
                 WallMap& wallRef,
-                AI_Follow& ai_followRef,
                 Level& levelRef,
                 Collisions& collisionRef,
                 Menu& menuRef,
-                AI_Patrol& ai_patrolRef,
-                AI_Copy& ai_copyRef
+                AIMap& ai_map
             );
 
             // Variables
@@ -65,11 +63,9 @@ namespace Tmpl8
             Player& player;
             CollectibleMap& collectible;
             WallMap& wall;
-            AI_Follow& ai_follow;
             Level& level;
             Collisions& collisions;
             Menu& menu;
-            AI_Patrol& ai_patrol;
-            AI_Copy& ai_copy;
+            AIMap& ai_map;
     };
 }

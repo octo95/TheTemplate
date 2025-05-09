@@ -1,12 +1,14 @@
 #pragma once
 #include "tilemap.h"
 #include "player.h"
-#include "ai_follow.h"
 #include "collectible.h"
 #include "wall.h"
 #include "gamesound.h"
-#include "ai_patrol.h"
+#include "ai.h"
 #include "ai_copy.h"
+#include "ai_follow.h"
+#include "ai_patrol.h"
+#include "camera.h"
 
 namespace Tmpl8
 {
@@ -17,32 +19,27 @@ namespace Tmpl8
             Level(
                 TileMap& tilemapRef,
                 Player& playerRef,
-                AI_Follow& ai_followRef,
                 CollectibleMap& collectibleRef,
                 WallMap& wallRef,
                 GameSound& gamesoundRef,
-                AI_Patrol& ai_patrolRef,
-                AI_Copy& ai_copyRef
+                AIMap& aiMapRef,
+                Camera& cameraRef
             );
 
             const vec2 OFF_SCREEN = vec2{ -500, -500 };
 
 			// Default positions for the player and AIs
-            const vec2 AI_FOLLOW_DEFAULT_POS[5] =
+            const vec2 AI_FOLLOW_SPAWN_POS[2] =
             {
-                OFF_SCREEN,
-                OFF_SCREEN,
-                vec2 {-5*32,13*32}, // Show on level 3, appear offscreen at first
-                OFF_SCREEN,
-                vec2 {33*32,25*32}
+                vec2 {-5,13},   // LVL3
+                vec2 {33,25}    // LVL5
             };
-            const vec2 AI_PATROL_DEFAULT_POS[5] =
+            const vec2 AI_PATROL_SPAWN_POS[4] =
             {
-                OFF_SCREEN,
-                vec2 {13*32,8*32}, // Show on level 2
-                OFF_SCREEN,
-                OFF_SCREEN,
-                vec2 {36*32,5*32}
+                vec2 {13,8},    // LVL2 (top)
+                vec2 {13,29},   // LVL2 (bottom)
+                vec2 {36,5},    // LVL5 (path bottom)
+                vec2 {31,36}    // LVL5 (path right)
             };
             const vec2 PLAYER_DEFAULT_POS[5] =
             {
@@ -63,14 +60,17 @@ namespace Tmpl8
             void manageDefaultPos(int map_index);
             void manageAIsPerMap(int map_index);
 
+            void addAiCopy(AIMap* ai_map, float timer);
+            void addAiFollow(AIMap* ai_map, vec2 spawn_pos);
+            void addAiPatrol(AIMap* ai_map, vec2 spawn_pos);
+
         private:
             TileMap& tilemap;
             Player& player;
-            AI_Follow& ai_follow;
             CollectibleMap& collectible;
             WallMap& wall;
             GameSound& gamesound;
-            AI_Patrol& ai_patrol;
-            AI_Copy& ai_copy;
+            AIMap& ai_map;
+            Camera& camera;
     };
 }

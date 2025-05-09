@@ -27,15 +27,12 @@ namespace Tmpl8
 
 		Game() :
 			player(camera),
-			debug(camera, tilemap, player, collectible, wall, ai_follow, level, collisions, menu, ai_patrol, ai_copy),
+			debug(camera, tilemap, player, collectible, wall, level, collisions, menu, ai_map),
 			menu(level, player, tilemap, gamesound, text, health),
 			tilemap(player),
-			collisions(player, tilemap, ai_follow, level, camera, gamesound, ai_patrol, ai_copy, menu, health),
-			level(tilemap, player, ai_follow, collectible, wall, gamesound, ai_patrol, ai_copy),
+			collisions(player, tilemap, level, camera, gamesound, ai_map, menu, health),
+			level(tilemap, player, collectible, wall, gamesound, ai_map, camera),
 			health(player),
-			ai_follow(player, vec2(-500, -500), camera),   
-			ai_patrol(player, vec2(-500, -500), camera),   
-			ai_copy(player, vec2(-500, -500)),
 			bell(level)
 		{}
 
@@ -66,19 +63,16 @@ namespace Tmpl8
 		CollectibleMap collectible = CollectibleMap();
 		WallMap wall = WallMap();
 		Player player;
-		AI_Follow ai_follow;
-		AI_Patrol ai_patrol;
+		AIMap ai_map = AIMap{ std::vector<AI_Copy>(), std::vector<AI_Follow>(), std::vector<AI_Patrol>() };
 		TileMap tilemap;
 		Collisions collisions;
 		Level level;
 		GameSound gamesound;
 		Health health;
 		Bell bell;
-		AI_Copy ai_copy;
 		CircularBuffer circular_buffer;
 		Text text;
 
-		std::vector<std::pair<AIType, AI*>> ai_map;
 
 		// Dans loadlevel, load ai_map
 

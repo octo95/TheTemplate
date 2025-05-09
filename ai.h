@@ -9,6 +9,11 @@ namespace Tmpl8 {
         Patrol
     };
 
+    class Collisions;
+    class AI_Copy;
+    class AI_Patrol;
+    class AI_Follow;
+
     class AI
     {
     public:
@@ -33,4 +38,13 @@ namespace Tmpl8 {
         bool isTouchingPlayer(Sprite* img);
         void setProperties() {};
     };
+
+    struct AIMap {
+        std::vector<AI_Copy> ai_copy_map;
+        std::vector<AI_Follow> ai_follow_map;
+        std::vector<AI_Patrol> ai_patrol_map;
+    };
+
+    void workAI(AIMap* ai_map, float& localTime, Collisions& collisions);
+    void drawAI(AIMap* ai_map, Surface* screen, float& deltaTime, Camera& camera);
 }

@@ -20,12 +20,10 @@ namespace Tmpl8
         Collisions(
             Player& playerRef,
             TileMap& tilemapRef,
-            AI_Follow& ai_followRef,
             Level& levelRef,
             Camera& cameraRef,
             GameSound& gamesoundRef,
-            AI_Patrol& ai_patrolRef,
-            AI_Copy& ai_copyRef,
+            AIMap& ai_map,
             Menu& menuRef,
             Health& healthRef
         );
@@ -53,12 +51,10 @@ namespace Tmpl8
     private:
         Player& player;
         TileMap& tilemap;
-        AI_Follow& ai_follow;
         Level& level;
         Camera& camera;
         GameSound& gamesound;
-        AI_Patrol& ai_patrol;
-        AI_Copy& ai_copy;
+        AIMap& ai_map;
         Menu& menu;
         Health& health;
 

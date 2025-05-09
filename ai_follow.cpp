@@ -22,21 +22,4 @@ namespace Tmpl8
         this->position.x += diffX * deltaTime * delayAmplifier;
         this->position.y += diffY * deltaTime * delayAmplifier;
     }
-
-    //bool AI_Follow::isTouchingPlayer()
-    //{
-    //    float ai_rad = img_ai_follow.GetWidth() / 2.0f;
-    //    float player_rad = hitbox_radius;
-    //    float tolerance = 3.0f;
-
-    //    float radii_sum = ai_rad + player_rad + tolerance;
-
-    //    float dx = (this->position.x + ai_rad) - (player.position.x);
-    //    float dy = (this->position.y + ai_rad) - (player.position.y);
-    //    float distance = sqrtf(dx * dx + dy * dy);
-
-    //    bool touched_player = distance <= radii_sum;
-
-    //    return (touched_player);
-    //}
 }

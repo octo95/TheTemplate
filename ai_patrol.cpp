@@ -64,30 +64,5 @@ namespace Tmpl8
         
         angle += (position.x - spawn_x) * rotation_speed;
     }
-
-    //bool AI_Patrol::isTouchingPlayer()
-    //{
-    //    float ai_rad = img_ai_patrol.GetWidth() / 2.0f;
-    //    float player_rad = player_img_width / 2.0f;
-
-    //    float radii_sum = ai_rad + player_rad;
-
-    //    // AI center
-    //    float ai_center_x = this->position.x + ai_rad;
-    //    float ai_center_y = this->position.y + ai_rad;
-
-    //    // Player center
-    //    float player_center_x = player.position.x;
-    //    float player_center_y = player.position.y;
-
-    //    // Distance between AI's center and the player's one.
-    //    float dx = ai_center_x - player_center_x;
-    //    float dy = ai_center_y - player_center_y;
-    //    float distance = sqrtf(dx * dx + dy * dy);
-
-    //    bool touched_player = distance <= radii_sum;
-
-    //    return (touched_player);
-    //}
 }
 

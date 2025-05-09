@@ -65,7 +65,7 @@ namespace Tmpl8
 
 		while (wallIt != wmap.end())
 		{
-			float wall_x = wallIt->first.x * TILE_SIZE;
+			float wall_x = wallIt->first.x * TILE_SIZE + TILE_SIZE / 2.0f;
 			float wall_y = wallIt->first.y * TILE_SIZE;
 			float wall_width = img_wall.GetWidth();
 			float wall_height = img_wall.GetHeight();

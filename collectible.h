@@ -56,7 +56,9 @@ namespace Tmpl8
 	typedef std::unordered_map<vec2, Collectible> CollectibleMap;
 
 	// Local functions
-	void loadAllCollectibles(int map);
+	void loadAllCollectibles(int map_index);
+	void loadDashCollectibles(int map_index, CollectibleMap& cmap);
+	void loadHealthCollectibles(int map_index, CollectibleMap& cmap);
 	void drawCollectibleMap(Camera* camera, Surface* screen, float deltaTime);
 	void manageCollectibleCollision(Player* player, GameSound* gamesound, Menu* menu, Health* health);
 	void manageCollectibleRespawn(float deltaTime, Player* player);

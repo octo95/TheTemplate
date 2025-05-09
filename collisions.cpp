@@ -5,17 +5,15 @@
 
 namespace Tmpl8
 {
-    Collisions::Collisions(Player& playerRef, TileMap& tilemapRef, AI_Follow& ai_followRef, Level& levelRef, Camera& cameraRef, GameSound& gamesoundRef, AI_Patrol& ai_patrolRef, AI_Copy& ai_copyRef, Menu& menuRef, Health& healthRef) :
+    Collisions::Collisions(Player& playerRef, TileMap& tilemapRef, Level& levelRef, Camera& cameraRef, GameSound& gamesoundRef, AIMap& ai_map, Menu& menuRef, Health& healthRef) :
         player(playerRef),
         tilemap(tilemapRef),
-        ai_follow(ai_followRef),
         camera(cameraRef),
         gamesound(gamesoundRef),
         level(levelRef),
-        ai_patrol(ai_patrolRef),
-        ai_copy(ai_copyRef),
         menu(menuRef),
-        health(healthRef)
+        health(healthRef),
+        ai_map(ai_map)
     {}
 
     Sprite img_water_slide_right(new Surface("assets/images/entities/img_water_slide_right.tga"), 3);
@@ -179,24 +177,18 @@ namespace Tmpl8
             (((new_pos.y < player.position.y && CheckT != None) || (new_pos.y > player.position.y && CheckB != None)) ? player.position.y : new_pos.y)
             : new_pos.y;
         
-        bool isDamage =
-        (
-            CheckL == Damage ||
-            CheckR == Damage ||
-            CheckB == Damage ||
-            CheckT == Damage ||
-            ai_follow.isTouchingPlayer(&img_ai_follow) ||
-            ai_patrol.isTouchingPlayer(&img_ai_patrol) && !ai_patrol.isAILowerThanPlayer ||
-            ai_copy.isTouchingPlayer(&img_ai_copy)
-        );
+        bool isDamage = CheckB == Damage;
+        for (AI_Copy& ai : ai_map.ai_copy_map) {
+            isDamage = isDamage ? isDamage : ai.isTouchingPlayer(&img_ai_copy);
+        }
+        for (AI_Follow& ai : ai_map.ai_follow_map) {
+            isDamage = isDamage ? isDamage : ai.isTouchingPlayer(&img_ai_follow);
+        }
+        for (AI_Patrol& ai : ai_map.ai_patrol_map) {
+            isDamage = isDamage ? isDamage : ai.isTouchingPlayer(&img_ai_patrol) && !ai.isAILowerThanPlayer;
+        }
 
-        bool isIce =
-        (
-            CheckL == Ice ||
-            CheckR == Ice ||
-            CheckB == Ice ||
-            CheckT == Ice
-        );
+        bool isIce = CheckB == Ice;
 
         bool isCollision =
         (
@@ -207,7 +199,8 @@ namespace Tmpl8
         );
 
         collisionsSFX(CheckB, isIce);
-        applyBouncingPhysics(
+        applyBouncingPhysics
+        (
             new_pos,
             CheckL != None,
             CheckR != None,
@@ -220,7 +213,7 @@ namespace Tmpl8
             level.loadLevel(tilemap.getCurrentLevel());
             gamesound.playSound(gamesound.snd_damage);
             camera.setShakeState(Camera::shakeConditions::Damage);
-            menu.score -= 15.0f;
+            menu.score -= 20.0f * menu.difficulty;
             health.player_hp--;
             if (health.player_hp == 0) health.player_killed = true;
         }
@@ -250,7 +243,7 @@ namespace Tmpl8
 
     void Collisions::drawSplash(Surface* screen, vec2 player_pos, float deltaTime)
     {
-        if (!isOnIce) return;
+        if (checkCollisionB(player_pos, false, false) == None || !isOnIce) return;
 
         static float frame = 0.0f;
         const float animation_fps = 10.0f;

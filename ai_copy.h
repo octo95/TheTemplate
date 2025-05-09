@@ -18,14 +18,14 @@ namespace Tmpl8
         // Constructor
         AI_Copy(
             Player& playerRef,
-            vec2 spawn_pos
+            float& timer
         ) :
-            AI(playerRef, spawn_pos)
+            AI(playerRef, vec2(0,0)),
+            copyTimer(timer)
         {
         };
 
-        //bool isTouchingPlayer();
-
         void setProperties();
+        void updatePlayerBuffer();
     };
 }

@@ -37,15 +37,18 @@ namespace Tmpl8
         vec2 {9,25},
         vec2 {32,25}
     };
-    const vec2 MAP5_COLLEC_DASH[10] = {
+    const vec2 MAP5_COLLEC_DASH[13] = {
         vec2 {2,5},
         vec2 {15,5},
         vec2 {23,5},
         vec2 {30,4},
         vec2 {43,4},
         vec2 {53,5},
-        vec2 {58,13},
+        vec2 {58,11},
         vec2 {59,20},
+        vec2 {60,20},
+        vec2 {61,20},
+        vec2 {62,20},
         vec2 {12,35},
         vec2 {17,35}
     };
@@ -63,8 +66,9 @@ namespace Tmpl8
     const vec2 MAP4_COLLEC_HEALTH[1] = {
         vec2 {4,20}
     };
-    const vec2 MAP5_COLLEC_HEALTH[1] = {
-        vec2 {30,24}
+    const vec2 MAP5_COLLEC_HEALTH[2] = {
+        vec2 {30,24},
+        vec2 {46,18}
     };
   
 
@@ -85,21 +89,24 @@ namespace Tmpl8
         vec2 {41,14},
         vec2 {46,14}
     };
-    const vec2 MAP4_WALLS[6] = {
+    const vec2 MAP4_WALLS[8] = {
         vec2 {36,17},
         vec2 {6,29},
         vec2 {6,28},
         vec2 {56,35},
         vec2 {53,31},
-        vec2 {53,30}
+        vec2 {53,30},
+        vec2 {13,29},
+        vec2 {13,30}
     };
-    const vec2 MAP5_WALLS[6] = {
+    const vec2 MAP5_WALLS[7] = {
         vec2 {47,36},
         vec2 {47,35},
         vec2 {56,36},
         vec2 {56,35},
         vec2 {57,31},
-        vec2 {57,30}
+        vec2 {57,30},
+        vec2 {50,18}
     };
 
     class Player;

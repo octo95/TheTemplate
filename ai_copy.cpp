@@ -19,6 +19,9 @@ namespace Tmpl8
         this->acceleration = pastState.acceleration;
     }
 
+    void AI_Copy::updatePlayerBuffer() {
+        this->playerBuffer.add(player.position, player.angular_acceleration);
+    }
 
     //bool AI_Copy::isTouchingPlayer()
     //{
