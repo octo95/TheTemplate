@@ -70,6 +70,9 @@
     <ClCompile Include="collisions_old.cpp">
       <Filter>Other</Filter>
     </ClCompile>
+    <ClCompile Include="cloud.cpp">
+      <Filter>Solutions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="player.h">
@@ -140,6 +143,9 @@
     </ClInclude>
     <ClInclude Include="ai.h">
       <Filter>Headers\AIs</Filter>
+    </ClInclude>
+    <ClInclude Include="cloud.h">
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

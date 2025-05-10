@@ -6,14 +6,15 @@
 
 namespace Tmpl8
 {
-    Level::Level(TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef,WallMap& wallRef, GameSound& gamesoundRef, AIMap& ai_mapRef, Camera& cameraRef) :
+    Level::Level(TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef,WallMap& wallRef, GameSound& gamesoundRef, AIMap& ai_mapRef, Camera& cameraRef, CloudMap& cloudRef) :
         tilemap(tilemapRef),
         player(playerRef),
         collectible(collectibleRef),
         wall(wallRef),
         gamesound(gamesoundRef),
         ai_map(ai_mapRef),
-        camera(cameraRef)
+        camera(cameraRef),
+        cloud(cloudRef)
     {}
 
     void Level::loadLevel(int map_index)
@@ -21,12 +22,14 @@ namespace Tmpl8
         collected_new = false;
         collectible_timer_active = false;
         player.dash_count = 0;
+        camera.shake_conditions = Camera::shakeConditions::None;
         tilemap.loadMap(map_index);
         tilemap.current_level = map_index;
         player.position = player.default_pos;
         manageDefaultPos(map_index);
         loadAllCollectibles(map_index);
         loadAllWalls(map_index);
+        loadAllClouds(&tilemap);
 
         // reset AI
         ai_map.ai_copy_map.clear();
@@ -59,6 +62,11 @@ namespace Tmpl8
             break;
         case 4: // AI copy on LVL4
             addAiCopy(&ai_map, 5.0f);
+            // + Remove the comment here to do a funny on level 4.
+            // for (float i = 3.0f; i < 11.0f; i += 0.08f)
+            // {
+            //     addAiCopy(&ai_map, i);
+            // }
             break;
         case 5: // All AIs on LVL5
             addAiCopy(&ai_map, 5.0f);

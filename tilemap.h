@@ -123,6 +123,7 @@ namespace Tmpl8
             std::unordered_map<vec2, TileType> map_collision;
             Sprite* current_map_data_read;
             Sprite* current_map_draw;
+            Sprite* current_map_draw_bg;
 
             // 
             const char (*current_map)[TILE_COLUMNS * 3];
@@ -130,10 +131,8 @@ namespace Tmpl8
 
             // Functions
             void readImageToMap(Sprite* image);
-
-
             void loadLevel(int i);
-
+            //void drawClouds(Surface* screen, Camera* camera, float deltaTime);
             int incrementMapIndex() { return current_level = current_level % MAP_AMOUNT + 1; }
 
 			// Getters / Setters

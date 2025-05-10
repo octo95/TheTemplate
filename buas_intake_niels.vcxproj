@@ -232,6 +232,7 @@
     <ClCompile Include="ai_patrol.cpp" />
     <ClCompile Include="bell.cpp" />
     <ClCompile Include="circular_buffer.cpp" />
+    <ClCompile Include="cloud.cpp" />
     <ClCompile Include="collisions_old.cpp" />
     <ClCompile Include="gamesound.cpp" />
     <ClCompile Include="camera.cpp" />
@@ -258,6 +259,7 @@
     <ClInclude Include="bell.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="circular_buffer.h" />
+    <ClInclude Include="cloud.h" />
     <ClInclude Include="collectible.h" />
     <ClInclude Include="collisions.h" />
     <ClInclude Include="debug.h" />

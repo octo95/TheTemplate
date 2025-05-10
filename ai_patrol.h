@@ -2,6 +2,7 @@
 #include "ai.h"
 #include "camera.h"
 #include "player.h"
+#include "tilemap.h"
 
 namespace Tmpl8
 {
@@ -30,10 +31,11 @@ namespace Tmpl8
             // Functions
             void setAIPatrolPos(const vec2& pos) { position = pos; }
             void getStomped();
-            void Patrol(float deltaTime, Collisions* collisions);
+            void Patrol(float deltaTime, Collisions* collisions, TileMap* tilemap);
 
         private:
             Camera& camera;
+
             enum class Direction
             {
                 LEFT,

@@ -16,7 +16,7 @@ namespace Tmpl8
         }
     }
 
-    void AI_Patrol::Patrol(float deltaTime, Collisions* collisions)
+    void AI_Patrol::Patrol(float deltaTime, Collisions* collisions, TileMap* tilemap)
     {
         if (isDead) return;
         
@@ -31,7 +31,7 @@ namespace Tmpl8
         float rotation_speed = 3.0f;
         
         if (stop) position_speed = 0.0f;
-        
+
         // Unused
         //bool conditionTurnRight =   (direction != Direction::LEFT && direction != Direction::RIGHT) ||  // If default case           => TURN RIGHT
         //                            (CheckL && direction == Direction::LEFT) ||                         // If blocked on the left
@@ -47,8 +47,9 @@ namespace Tmpl8
                                     (position.x <= 0 && direction == Direction::RIGHT) ||               // If touches left screen boundary
                                     (CheckL && direction == Direction::LEFT);                           // If touches left collision
         
+
         bool conditionTurnLeft =    ((CheckR && direction == Direction::RIGHT)) ||                                              // If touches right
-                                    (position.x + img_ai_patrol.GetWidth() > SCREEN_WIDTH && direction == Direction::RIGHT);    // If touches right screen boundary
+                                    (position.x + img_ai_patrol.GetWidth() > tilemap->current_map_data_read->GetWidth() && direction == Direction::RIGHT);    // If touches right screen boundary
         
         // Set the direction
         if (conditionTurnRight)

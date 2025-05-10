@@ -38,7 +38,7 @@ namespace Tmpl8
                 manageCollectibleRespawn(localTime, &player);
                 
                 // AI logic
-                workAI(&ai_map, localTime, collisions);
+                workAI(&ai_map, localTime, collisions, tilemap);
                 
                 // Camera logic
                 camera.setCamPos(player.camFollowPlayer(&tilemap));
@@ -55,6 +55,9 @@ namespace Tmpl8
             }
 
             // * Draw the objects on screen
+            camera.drawWithCam(tilemap.current_map_draw_bg, screen, vec2(0, 0));
+            //tilemap.drawClouds(screen, &camera, localTime);
+            drawCloudMap(&camera, screen, &this->cloud, &tilemap, localTime);
             camera.drawWithCam(tilemap.current_map_draw, screen, vec2(0, 0));
             drawWallMap(&camera, screen, &this->wall);  
             drawCollectibleMap(&camera, screen, localTime);       

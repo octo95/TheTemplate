@@ -20,7 +20,6 @@ namespace Tmpl8
 
     vec2 Player::movePlayer(Collisions* collisions, float deltaTime)
     {
-
         // Left
         if (move_cooldown > 0.0f) move_cooldown -= deltaTime;
 
@@ -57,7 +56,7 @@ namespace Tmpl8
         }
 
         // Clamp fall speed
-        velocity.y += GRAVITY;
+        velocity.y += GRAVITY / deltaTime / 120.0f;
         if (velocity.y > max_vertical_speed) velocity.y = max_vertical_speed;
 
         // Jump
@@ -75,13 +74,14 @@ namespace Tmpl8
 
             if (GetAsyncKeyState(VK_UP) & 0x8000 && jumping_cooldown < jumping_max_time)
             {
-                velocity.y = -2.0f;
+                velocity.y = -2.5f;
             }
             else
             {
                 jumping = false;
             }
         }
+
         // Pass the velocity to the camera to make the player rotate while moving
         angular_acceleration = velocity.x * 270.0f;
 
@@ -143,8 +143,8 @@ namespace Tmpl8
         }
         
         // + Clamp the player on screen
-        if (position.x - player_img_width / 2 < 0) position.x = player_img_width / 2;              // On the left
-        if (position.x + player_img_width / 2 > mapSize.x)                      // On the right
+        if (position.x - player_img_width / 2 < 0) position.x = player_img_width / 2;   // On the left
+        if (position.x + player_img_width / 2 > mapSize.x)                              // On the right
             position.x = mapSize.x - player_img_width / 2;
 
         return camPos;
@@ -159,7 +159,10 @@ namespace Tmpl8
         if (velocity.x >= 0) direction =  1.0f;
         if (velocity.x < 0)  direction = -1.0f;
 
-        if (GetAsyncKeyState('X') & 0x8000 && can_dash && !dashing)
+        static bool xPreviouslyPressed = false;
+        bool xCurrentlyPressed = (GetAsyncKeyState('X') & 0x8000);
+
+        if (xCurrentlyPressed && !xPreviouslyPressed && can_dash && !dashing)
         {
             dashing = true;
             dashing_cooldown = 0.0f;
@@ -168,6 +171,8 @@ namespace Tmpl8
             camera.shakeCamera(deltaTime);
         }
 
+        xPreviouslyPressed = xCurrentlyPressed;
+
         if (dashing)
         {
             velocity.y = 0.1f; // Stabilize the Y velocity to a low value for a more straight dash movement
@@ -175,7 +180,8 @@ namespace Tmpl8
 
             if (dashing_cooldown < dashing_max_time)
             {
-                velocity.x = direction * 6.0f;
+                max_horizontal_speed = 1.5f;
+                velocity.x = direction * 5.0f;
             }
             else
             {

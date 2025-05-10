@@ -17,6 +17,7 @@
 #include "wall.h"
 #include "circular_buffer.h"
 #include "text.h"
+#include "cloud.h"
 
 namespace Tmpl8 
 {
@@ -31,7 +32,7 @@ namespace Tmpl8
 			menu(level, player, tilemap, gamesound, text, health),
 			tilemap(player),
 			collisions(player, tilemap, level, camera, gamesound, ai_map, menu, health),
-			level(tilemap, player, collectible, wall, gamesound, ai_map, camera),
+			level(tilemap, player, collectible, wall, gamesound, ai_map, camera, cloud),
 			health(player),
 			bell(level)
 		{}
@@ -62,6 +63,7 @@ namespace Tmpl8
 		// Gameplay
 		CollectibleMap collectible = CollectibleMap();
 		WallMap wall = WallMap();
+		CloudMap cloud = CloudMap();
 		Player player;
 		AIMap ai_map = AIMap{ std::vector<AI_Copy>(), std::vector<AI_Follow>(), std::vector<AI_Patrol>() };
 		TileMap tilemap;

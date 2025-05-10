@@ -24,11 +24,14 @@ namespace Tmpl8
     Sprite img_menu_main_difficulty_easy(new Surface("assets/images/menus/main_menu/img_menu_main_difficulty_easy.png"), 1);
     Sprite img_menu_main_difficulty_medium(new Surface("assets/images/menus/main_menu/img_menu_main_difficulty_medium.png"), 1);
     Sprite img_menu_main_difficulty_hard(new Surface("assets/images/menus/main_menu/img_menu_main_difficulty_hard.png"), 1);
+    Sprite img_menu_main_pro_tip(new Surface("assets/images/menus/main_menu/img_menu_main_pro_tip.png"), 1);
 
         // - Info panel
     Sprite img_menu_main_info_bg(new Surface("assets/images/menus/main_menu/info/img_menu_main_info_bg.png"), 1);
     Sprite img_menu_main_info_info(new Surface("assets/images/menus/main_menu/info/img_menu_main_info_info.png"), 1);
     Sprite img_menu_main_info_info_alt(new Surface("assets/images/menus/main_menu/info/img_menu_main_info_info_alt.png"), 1);
+    Sprite img_menu_main_info_quit(new Surface("assets/images/menus/main_menu/info/img_menu_main_info_quit.png"), 1);
+    Sprite img_menu_main_info_quit_alt(new Surface("assets/images/menus/main_menu/info/img_menu_main_info_quit_alt.png"), 1);
 
         // - Hover
     Sprite img_menu_main_start_alt(new Surface("assets/images/menus/main_menu/hover/img_menu_main_start_alt.png"), 1);
@@ -109,6 +112,7 @@ namespace Tmpl8
         if (!mainMenuOpen) return;
 
         drawMainBGPan(screen, deltaTime);
+        img_menu_main_pro_tip.Draw(screen, 7, SCREEN_HEIGHT - img_menu_main_pro_tip.GetHeight() - 7);
 
         audioOpen = true;
         quitOpen = true;
@@ -126,6 +130,7 @@ namespace Tmpl8
         static bool wasHoveringLevel[5] = { false };
         static bool wasHoveringDifficulty[5] = { false };
         static bool wasHoveringStart = false;
+        static bool wasHoveringInfo = false;
 
         for (int i = 0; i < 5; i++)
         { 
@@ -199,6 +204,59 @@ namespace Tmpl8
         }
 
         wasHoveringStart = isHoveringStart;
+
+        bool isHoveringInfo = isHoveringSurface(MAIN_INFO_X, MAIN_INFO_Y, MAIN_INFO_WIDTH, MAIN_INFO_HEIGHT);
+        static bool wasMousePressedLastFrame = false;
+
+        if (isHoveringInfo)
+        {
+            if (!wasHoveringInfo) gamesound.playSound(gamesound.snd_hover);
+            img_menu_main_info_info_alt.Draw(screen, MAIN_INFO_X, MAIN_INFO_Y);
+
+            if (isMousePressed && !wasMousePressedLastFrame)
+            {
+                gamesound.playSound(gamesound.snd_select);
+                infoMenuOpen = true;
+            }
+        }
+        else
+        {
+            img_menu_main_info_info.Draw(screen, MAIN_INFO_X, MAIN_INFO_Y);
+        }
+
+        openInfoMenu(screen, deltaTime);
+        wasHoveringInfo = isHoveringInfo;
+        wasMousePressedLastFrame = isMousePressed;
+    }
+
+    void Menu::openInfoMenu(Surface* screen, float deltaTime)
+    {
+        if (!infoMenuOpen) return;
+
+        img_menu_main_info_bg.Draw(screen, SCREEN_HALF_WIDTH - MAIN_INFO_BG_WIDTH / 2, SCREEN_HALF_HEIGHT - MAIN_INFO_BG_HEIGHT / 2);
+
+        bool isHoveringQuit = isHoveringSurface(MAIN_INFO_QUIT_X, MAIN_INFO_QUIT_Y, MAIN_INFO_QUIT_WIDTH, MAIN_INFO_QUIT_HEIGHT);
+        static bool wasMousePressedLastFrame = false;
+        static bool wasHoveringQuit = false;
+
+        if (isHoveringQuit)
+        {
+            if (!wasHoveringQuit) gamesound.playSound(gamesound.snd_hover);
+            img_menu_main_info_quit.Draw(screen, MAIN_INFO_QUIT_X, MAIN_INFO_QUIT_Y);
+
+            if (isMousePressed && !wasMousePressedLastFrame)
+            {
+                gamesound.playSound(gamesound.snd_select);
+                infoMenuOpen = false;
+            }
+        }
+        else
+        {
+            img_menu_main_info_quit_alt.Draw(screen, MAIN_INFO_QUIT_X, MAIN_INFO_QUIT_Y);
+        }
+
+        wasHoveringQuit = isHoveringQuit;
+        wasMousePressedLastFrame = isMousePressed;
     }
 
     void Menu::manageLevelSelect(int index)
@@ -215,6 +273,7 @@ namespace Tmpl8
             resume_game = true;
             manualPaused = false;
             mainMenuOpen = false;
+            infoMenuOpen = false;
             endMenuOpen = false;
             level.loadLevel(index + 1);
         }
@@ -293,6 +352,7 @@ namespace Tmpl8
             start_game = false;
             nextMenuOpen = false;
             mainMenuOpen = true;
+
             scoreMenuOpen = false;
         }
     }
@@ -345,6 +405,7 @@ namespace Tmpl8
             start_game = false;
             resume_game = false;
             mainMenuOpen = true;
+            infoMenuOpen = false;
             pauseMenuOpen = false;
             audioOpen = false;
             quitOpen = false;
@@ -409,6 +470,7 @@ namespace Tmpl8
             endMenuOpen = false;
             overMenuOpen = false;
             mainMenuOpen = true;
+            infoMenuOpen = false;
             level.game_finished = false;
             scoreMenuOpen = false;
             score = 0.0f;

@@ -4,11 +4,12 @@
 #include "ai_patrol.h"
 #include "surface.h"
 #include "camera.h"
+#include "tilemap.h"
 
 namespace Tmpl8
 {
 
-    void workAI(AIMap* ai_map, float& localTime, Collisions& collisions) 
+    void workAI(AIMap* ai_map, float& localTime, Collisions& collisions, TileMap& tilemap) 
     {
         if (ai_map->ai_copy_map.size() > 0)
         {
@@ -26,7 +27,7 @@ namespace Tmpl8
         if (ai_map->ai_patrol_map.size() > 0) {
             for (AI_Patrol& ai : ai_map->ai_patrol_map) {
                 ai.setProperties();
-                ai.Patrol(localTime, &collisions);
+                ai.Patrol(localTime, &collisions, &tilemap);
             }
         }
     }
@@ -36,7 +37,7 @@ namespace Tmpl8
         if (ai_map->ai_copy_map.size() > 0)
         {
             for (AI_Copy& ai : ai_map->ai_copy_map) {
-                camera.drawAICopy(&img_ai_copy, screen, ai.position, deltaTime, ai.acceleration);
+                if(ai.ai_copy_started_following) camera.drawAICopy(&img_ai_copy, screen, ai.position, deltaTime, ai.acceleration);
             }
         }
         if (ai_map->ai_follow_map.size() > 0)

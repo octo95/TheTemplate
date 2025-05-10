@@ -45,6 +45,6 @@ namespace Tmpl8 {
         std::vector<AI_Patrol> ai_patrol_map;
     };
 
-    void workAI(AIMap* ai_map, float& localTime, Collisions& collisions);
+    void workAI(AIMap* ai_map, float& localTime, Collisions& collisions, TileMap& tilemap);
     void drawAI(AIMap* ai_map, Surface* screen, float& deltaTime, Camera& camera);
 }

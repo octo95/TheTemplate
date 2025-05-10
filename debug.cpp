@@ -182,8 +182,17 @@ namespace Tmpl8
 
     void Debug::restartCurrentLevel()
     {
-        if (GetAsyncKeyState('R') & 0x8000) level.loadLevel(tilemap.getCurrentLevel());
+        static bool rKeyWasDown = false;
+        bool rKeyIsDown = (GetAsyncKeyState('R') & 0x8000);
+
+        if (rKeyIsDown && !rKeyWasDown)
+        {
+            level.loadLevel(tilemap.getCurrentLevel());
+        }
+
+        rKeyWasDown = rKeyIsDown;
     }
+
 
     void Debug::drawDistancePlayerToAI(vec2 ai_pos, int size, Surface* screen)
     {

@@ -33,6 +33,9 @@ namespace Tmpl8
 	extern Sprite img_menu_main_difficulty_medium;
 	extern Sprite img_menu_main_difficulty_hard;
 	extern Sprite img_quit;
+	extern Sprite img_menu_main_info_info;
+	extern Sprite img_menu_main_info_bg;
+	extern Sprite img_menu_main_info_quit;
 
 	class Health;
 
@@ -69,6 +72,7 @@ namespace Tmpl8
 			void openPauseMenu(Surface* screen);
 			void openEndMenu(Surface* screen);
 			void openScoreMenu(Surface* screen, float deltaTime);
+			void openInfoMenu(Surface* screen, float deltaTime);
 
 			// Menu managers
 			void manageMenus(Surface* screen, float deltaTime);
@@ -97,6 +101,7 @@ namespace Tmpl8
 			bool nextMenuOpen = false;
 			bool scoreMenuOpen = false;
 			bool overMenuOpen = false;
+			bool infoMenuOpen = false;
 
 			int difficulty = 2; // 1: easy, 2: medium (default), 3: hard
 		private:
@@ -131,8 +136,14 @@ namespace Tmpl8
 			const int MAIN_LVL_HEIGHT = img_menu_main_lvl1.GetHeight();
 			const int MAIN_DIFFICULTY_WIDTH = img_menu_main_difficulty_easy.GetWidth();
 			const int MAIN_DIFFICULTY_HEIGHT = img_menu_main_difficulty_easy.GetHeight();
-			//const int MAIN_INFO_WIDTH = img_menu_main_info_info.GetWidth();
-			//const int MAIN_INFO_HEIGHT = img_menu_main_info_info.GetHeight();
+
+				// Info
+			const int MAIN_INFO_WIDTH = img_menu_main_info_info.GetWidth();
+			const int MAIN_INFO_HEIGHT = img_menu_main_info_info.GetHeight();
+			const int MAIN_INFO_BG_WIDTH = img_menu_main_info_bg.GetWidth();
+			const int MAIN_INFO_BG_HEIGHT = img_menu_main_info_bg.GetHeight();
+			const int MAIN_INFO_QUIT_WIDTH = img_menu_main_info_quit.GetWidth();
+			const int MAIN_INFO_QUIT_HEIGHT = img_menu_main_info_quit.GetHeight();
 
 			// Next level menu
 			const int NEXT_BG_WIDTH = img_menu_next_bg.GetWidth();
@@ -172,7 +183,7 @@ namespace Tmpl8
 
 			// Main menu
 
-			// - LVLs
+				// - LVLs
 			const int MAIN_LVL1_X = SCREEN_HALF_WIDTH - (5 * MAIN_LVL_WIDTH + 4 * 20) / 2;
 			const int MAIN_LVLS_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 3 - SCREEN_HEIGHT / 3;
 
@@ -181,16 +192,22 @@ namespace Tmpl8
 			const int MAIN_LVL4_X = MAIN_LVL3_X + MAIN_LVL_WIDTH + 20;
 			const int MAIN_LVL5_X = MAIN_LVL4_X + MAIN_LVL_WIDTH + 20;
 
-			// - Difficulties
+				// - Difficulties
 			const int MAIN_EASY_X = SCREEN_HALF_WIDTH - (3 * MAIN_DIFFICULTY_WIDTH + 2 * 50) / 2;
 			const int MAIN_DIFFICULTIES_Y = SCREEN_HALF_HEIGHT - MAIN_DIFFICULTY_HEIGHT / 2;
 
 			const int MAIN_MEDIUM_X = MAIN_EASY_X + MAIN_DIFFICULTY_WIDTH + 50;
 			const int MAIN_HARD_X = MAIN_MEDIUM_X + MAIN_DIFFICULTY_WIDTH + 50;
 
-			// - Start
+				// - Start
 			const int MAIN_START_X = SCREEN_HALF_WIDTH - MAIN_START_WIDTH / 2;
 			const int MAIN_START_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 2 + SCREEN_HEIGHT / 3;
+
+				// - Info
+			const int MAIN_INFO_X = SCREEN_WIDTH - MAIN_INFO_WIDTH - 7;
+			const int MAIN_INFO_Y = SCREEN_HEIGHT - MAIN_INFO_HEIGHT - 7;
+			const int MAIN_INFO_QUIT_X = (SCREEN_WIDTH - MAIN_INFO_BG_WIDTH) / 2 + MAIN_INFO_BG_WIDTH - MAIN_INFO_QUIT_WIDTH - 5;
+			const int MAIN_INFO_QUIT_Y = (SCREEN_HEIGHT - MAIN_INFO_BG_HEIGHT) / 2 + 5;
 
 			// Next level menu
 			const int NEXT_MENU_X = SCREEN_HALF_WIDTH - NEXT_MENU_WIDTH / 2 - NEXT_BG_WIDTH / 4;

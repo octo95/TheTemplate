@@ -8,19 +8,25 @@ namespace Tmpl8
 
     Sprite img_map1_data_read(new Surface("assets/images/map/data_read/img_map1_data_read.png"), 1);
     Sprite img_map1_draw(new Surface("assets/images/map/draw/img_map1_draw.png"), 1);
+    Sprite img_map1_draw_bg(new Surface("assets/images/map/draw/img_map1_draw_bg.png"), 1);
 
     Sprite img_map2_data_read(new Surface("assets/images/map/data_read/img_map2_data_read.png"), 1);
     Sprite img_map2_draw(new Surface("assets/images/map/draw/img_map2_draw.png"), 1);
+    Sprite img_map2_draw_bg(new Surface("assets/images/map/draw/img_map2_draw_bg.png"), 1);
 
     Sprite img_map3_data_read(new Surface("assets/images/map/data_read/img_map3_data_read.png"), 1);
     Sprite img_map3_draw(new Surface("assets/images/map/draw/img_map3_draw.png"), 1);
+    Sprite img_map3_draw_bg(new Surface("assets/images/map/draw/img_map3_draw_bg.png"), 1);
 
     Sprite img_map4_data_read(new Surface("assets/images/map/data_read/img_map4_data_read.png"), 1);
     Sprite img_map4_draw(new Surface("assets/images/map/draw/img_map4_draw.png"), 1);
+    Sprite img_map4_draw_bg(new Surface("assets/images/map/draw/img_map4_draw_bg.png"), 1);
 
     Sprite img_map5_data_read(new Surface("assets/images/map/data_read/img_map5_data_read.png"), 1);
     Sprite img_map5_draw(new Surface("assets/images/map/draw/img_map5_draw.png"), 1);
+    Sprite img_map5_draw_bg(new Surface("assets/images/map/draw/img_map5_draw_bg.png"), 1);
 
+    //Sprite img_cloud(new Surface("assets/images/map/img_cloud.png"), 1);
 
     void TileMap::loadMap(int index)
     {
@@ -38,9 +44,17 @@ namespace Tmpl8
             &img_map4_draw,
             &img_map5_draw,
         };
+        Sprite* maps_draw_bg[5] = {
+            &img_map1_draw_bg,
+            &img_map2_draw_bg,
+            &img_map3_draw_bg,
+            &img_map4_draw_bg,
+            &img_map5_draw_bg,
+        };
 
         current_map_data_read = maps_data[index-1];
         current_map_draw = maps_draw[index-1];
+        current_map_draw_bg = maps_draw_bg[index - 1];
         current_level = index;
 
         // Load collision
@@ -71,4 +85,14 @@ namespace Tmpl8
         }
         map_collision = new_map;
     }
+
+    //void TileMap::drawClouds(Surface* screen, Camera* camera, float deltaTime)
+    //{
+    //    vec2 draw_pos = vec2(0.0f, 0.0f);
+    //    static float pan_speed = 1000.0f;
+    //    static float pan_pos = 10.0f;
+    //    pan_pos += deltaTime * pan_speed,
+    //    draw_pos += vec2(pan_pos, 0.0f);
+    //    camera->drawWithCam(&img_cloud, screen, draw_pos);
+    //}
 }

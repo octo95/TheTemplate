@@ -7,13 +7,11 @@ namespace Tmpl8
 {
     extern Sprite img_ai_copy;
 
-
-
     class AI_Copy : public AI
     {
     public:
         CircularBuffer playerBuffer;
-        float copyTimer = 4.0f;     // Wait 4 seconds before starting to read the buffer when loading a new level
+        float copyTimer;
 
         // Constructor
         AI_Copy(
@@ -25,6 +23,7 @@ namespace Tmpl8
         {
         };
 
+        bool ai_copy_started_following = false;
         void setProperties();
         void updatePlayerBuffer();
     };

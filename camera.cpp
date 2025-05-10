@@ -29,7 +29,7 @@ namespace Tmpl8
             shake_conditions = shakeConditions::None;
         }
 
-        if (total_time > 0.0f)
+        if (total_time > 0.0f && shake_conditions != shakeConditions::None)
         {
             total_time -= deltaTime;
 

@@ -9,6 +9,7 @@
 #include "ai_follow.h"
 #include "ai_patrol.h"
 #include "camera.h"
+#include "cloud.h"
 
 namespace Tmpl8
 {
@@ -23,7 +24,8 @@ namespace Tmpl8
                 WallMap& wallRef,
                 GameSound& gamesoundRef,
                 AIMap& aiMapRef,
-                Camera& cameraRef
+                Camera& cameraRef,
+                CloudMap& cloudRef
             );
 
             const vec2 OFF_SCREEN = vec2{ -500, -500 };
@@ -34,12 +36,13 @@ namespace Tmpl8
                 vec2 {-5,13},   // LVL3
                 vec2 {33,25}    // LVL5
             };
-            const vec2 AI_PATROL_SPAWN_POS[4] =
+            const vec2 AI_PATROL_SPAWN_POS[5] =
             {
                 vec2 {13,8},    // LVL2 (top)
                 vec2 {13,29},   // LVL2 (bottom)
                 vec2 {36,5},    // LVL5 (path bottom)
-                vec2 {31,36}    // LVL5 (path right)
+                vec2 {31,36},   // LVL5 (path right)
+                vec2 {16,7}     // (test)
             };
             const vec2 PLAYER_DEFAULT_POS[5] =
             {
@@ -72,5 +75,6 @@ namespace Tmpl8
             GameSound& gamesound;
             AIMap& ai_map;
             Camera& camera;
+            CloudMap& cloud;
     };
 }
