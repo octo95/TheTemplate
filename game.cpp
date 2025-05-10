@@ -55,8 +55,7 @@ namespace Tmpl8
             }
 
             // * Draw the objects on screen
-            camera.drawWithCam(tilemap.current_map_draw_bg, screen, vec2(0, 0));
-            //tilemap.drawClouds(screen, &camera, localTime);
+            camera.drawWithCam(tilemap.current_map_draw_bg, screen, vec2(-50.0f, -50.0f));
             drawCloudMap(&camera, screen, &this->cloud, &tilemap, localTime);
             camera.drawWithCam(tilemap.current_map_draw, screen, vec2(0, 0));
             drawWallMap(&camera, screen, &this->wall);  
@@ -80,7 +79,7 @@ namespace Tmpl8
         }
         else
         {
-            menu.openMainMenu(screen, localTime); // As long as we don't start the game, stay in the menu screen
+            menu_main.openMainMenu(screen, localTime); // As long as we don't start the game, stay in the menu screen
         }
     }
 

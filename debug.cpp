@@ -64,17 +64,24 @@ namespace Tmpl8
             // PRESS <D> : Get infinite dashes.
             toggleInfiniteDashes();
 
-            // Display the entities' hitboxes
+            // Display the entities' hitboxes and their distance to the player
             drawPlayerHitbox(player.position, screen);
             drawPlayerTileHitbox(player.position, screen);
-            // drawHitbox(ai_copy.position, &img_ai_copy, screen);
-            // drawHitbox(ai_patrol.position, &img_ai_patrol, screen);
-            // drawHitbox(ai_follow.position, &img_ai_follow, screen);
-
-            // Draw the distance between the player and an AI to specify below
-            // drawDistancePlayerToAI(ai_copy.position, img_ai_copy.GetWidth(), screen);
-            // drawDistancePlayerToAI(ai_follow.position, img_ai_follow.GetWidth(), screen);
-            // drawDistancePlayerToAI(ai_patrol.position, img_ai_patrol.GetWidth(), screen);
+            for (AI_Follow& ai : ai_map.ai_follow_map)
+            {
+                drawHitbox(ai.position, &img_ai_follow, screen);
+                drawDistancePlayerToAI(ai.position, img_ai_follow.GetWidth(), screen);
+            }
+            for (AI_Copy& ai : ai_map.ai_copy_map)
+            {
+                drawHitbox(ai.position, &img_ai_copy, screen);
+                drawDistancePlayerToAI(ai.position, img_ai_copy.GetWidth(), screen);
+            }
+            for (AI_Patrol& ai : ai_map.ai_patrol_map)
+            {
+                drawHitbox(ai.position, &img_ai_patrol, screen);
+                drawDistancePlayerToAI(ai.position, img_ai_patrol.GetWidth(), screen);
+            }
 
             // Display debug text
             char debug_active_txt[100];
@@ -114,9 +121,18 @@ namespace Tmpl8
         if (GetAsyncKeyState('S') & 0x8000) {
             if (!s_wasPressed) 
             {
-                // ai_follow.is_following = !ai_follow.is_following;
-                // ai_patrol.stop = !ai_patrol.stop;
-                // ai_copy.stop = !ai_copy.stop;
+                for (AI_Follow& ai : ai_map.ai_follow_map)
+                {
+                    ai.stop = !ai.stop;
+                }
+                for (AI_Copy& ai : ai_map.ai_copy_map)
+                {
+                    ai.stop = !ai.stop;
+                }
+                for (AI_Patrol& ai : ai_map.ai_patrol_map)
+                {
+                    ai.stop = !ai.stop;
+                }
                 s_wasPressed = true;
             }
         }

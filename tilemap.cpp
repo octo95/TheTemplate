@@ -85,14 +85,4 @@ namespace Tmpl8
         }
         map_collision = new_map;
     }
-
-    //void TileMap::drawClouds(Surface* screen, Camera* camera, float deltaTime)
-    //{
-    //    vec2 draw_pos = vec2(0.0f, 0.0f);
-    //    static float pan_speed = 1000.0f;
-    //    static float pan_pos = 10.0f;
-    //    pan_pos += deltaTime * pan_speed,
-    //    draw_pos += vec2(pan_pos, 0.0f);
-    //    camera->drawWithCam(&img_cloud, screen, draw_pos);
-    //}
 }

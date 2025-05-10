@@ -18,7 +18,7 @@ namespace Tmpl8
 
     void AI_Patrol::Patrol(float deltaTime, Collisions* collisions, TileMap* tilemap)
     {
-        if (isDead) return;
+        if (stop) return;
         
         getStomped();
         float spawn_x = this->position.x;

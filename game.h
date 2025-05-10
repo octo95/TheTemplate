@@ -18,6 +18,7 @@
 #include "circular_buffer.h"
 #include "text.h"
 #include "cloud.h"
+#include "menu_main.h"
 
 namespace Tmpl8 
 {
@@ -34,7 +35,8 @@ namespace Tmpl8
 			collisions(player, tilemap, level, camera, gamesound, ai_map, menu, health),
 			level(tilemap, player, collectible, wall, gamesound, ai_map, camera, cloud),
 			health(player),
-			bell(level)
+			bell(level),
+			menu_main(level, player, tilemap, gamesound, text, health)
 		{}
 
 		void SetTarget( Surface* surface ) { screen = surface; }
@@ -64,6 +66,7 @@ namespace Tmpl8
 		CollectibleMap collectible = CollectibleMap();
 		WallMap wall = WallMap();
 		CloudMap cloud = CloudMap();
+		//MenuMap menu = MenuMap();
 		Player player;
 		AIMap ai_map = AIMap{ std::vector<AI_Copy>(), std::vector<AI_Follow>(), std::vector<AI_Patrol>() };
 		TileMap tilemap;
@@ -74,26 +77,7 @@ namespace Tmpl8
 		Bell bell;
 		CircularBuffer circular_buffer;
 		Text text;
-
-
-		// Dans loadlevel, load ai_map
-
-		// void workAI(std::vector<std::pair<AIType, AI*>>& ai_map)
-		// for(auto &ai : ai_map) {
-		//		switch (ai.first())
-		//		case Follow {
-		//			AI_Follow* ai_follow = (AI_Follow*) ai.second()
-		//			// whatever the AI needs to call or whatever...
-		//		}
-		//		case Follow {
-		//			AI_Patrol* ai_patrol = (AI_Patrol*) ai.second()
-		//			// whatever the AI needs to call or whatever...
-		//		}
-		//		case Follow {
-		//			AI_Copy* ai_copy= (AI_Copy*) ai.second()
-		//			// whatever the AI needs to call or whatever...
-		//		}
-		// }
+		MenuMain menu_main;
 
 		int mousex, mousey;
 		bool start_game = false;

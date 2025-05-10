@@ -26,8 +26,11 @@ namespace Tmpl8
         }
         if (ai_map->ai_patrol_map.size() > 0) {
             for (AI_Patrol& ai : ai_map->ai_patrol_map) {
-                ai.setProperties();
-                ai.Patrol(localTime, &collisions, &tilemap);
+                if (!ai.isDead)
+                {
+                    ai.setProperties();
+                    ai.Patrol(localTime, &collisions, &tilemap);
+                }
             }
         }
     }
@@ -37,7 +40,7 @@ namespace Tmpl8
         if (ai_map->ai_copy_map.size() > 0)
         {
             for (AI_Copy& ai : ai_map->ai_copy_map) {
-                if(ai.ai_copy_started_following) camera.drawAICopy(&img_ai_copy, screen, ai.position, deltaTime, ai.acceleration);
+                camera.drawAICopy(&img_ai_copy, screen, ai.position, deltaTime, ai.acceleration);
             }
         }
         if (ai_map->ai_follow_map.size() > 0)

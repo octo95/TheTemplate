@@ -10,13 +10,13 @@
 namespace Tmpl8
 {
 	// External variables
-	extern Sprite img_menu_main_bg;
-	extern Sprite img_menu_main_start;
-	extern Sprite img_menu_main_bg;
-	extern Sprite img_menu_main_start;
-	extern Sprite img_menu_main_lvl1;
-	extern Sprite img_menu_main_lvl2;
-	extern Sprite img_menu_main_lvl3;
+	//extern Sprite img_menu_main_bg;
+	//extern Sprite img_menu_main_start;
+	//extern Sprite img_menu_main_bg;
+	//extern Sprite img_menu_main_start;
+	//extern Sprite img_menu_main_lvl1;
+	//extern Sprite img_menu_main_lvl2;
+	//extern Sprite img_menu_main_lvl3;
 	extern Sprite img_menu_next_bg;
 	extern Sprite img_menu_next_next;
 	extern Sprite img_menu_next_menu;
@@ -29,15 +29,16 @@ namespace Tmpl8
 	extern Sprite img_menu_end_replay;
 	extern Sprite img_audio_on;
 	extern Sprite img_audio_off;
-	extern Sprite img_menu_main_difficulty_easy;
-	extern Sprite img_menu_main_difficulty_medium;
-	extern Sprite img_menu_main_difficulty_hard;
+	//extern Sprite img_menu_main_difficulty_easy;
+	//extern Sprite img_menu_main_difficulty_medium;
+	//extern Sprite img_menu_main_difficulty_hard;
 	extern Sprite img_quit;
-	extern Sprite img_menu_main_info_info;
-	extern Sprite img_menu_main_info_bg;
-	extern Sprite img_menu_main_info_quit;
+	//extern Sprite img_menu_main_info_info;
+	//extern Sprite img_menu_main_info_bg;
+	//extern Sprite img_menu_main_info_quit;
 
 	class Health;
+	class MenuMain;
 
 	class Menu
 	{
@@ -59,20 +60,30 @@ namespace Tmpl8
 			bool start_game = false;
 			bool resume_game = true;
 			float finish_sfx_played = false;
+			bool wasMousePressedLastFrame = false;
 
 			// Score timer variables
 			float score_timer = 0.0f;
 			int score_value_current = 0;
 			bool score_is_counting = true;
 
+			void handleButton(
+				Surface* screen,
+				int x, int y, int width, int height,
+				Sprite* normalSprite,
+				Sprite* hoverSprite,
+				bool& wasHovering,
+				std::function<void()> onClick
+			);
+
 			// Open menus
-			void drawMainBGPan(Surface* screen, float deltaTime);
-			void openMainMenu(Surface* screen, float deltaTime);
+			//void drawMainBGPan(Surface* screen, float deltaTime);
+			/*void openMainMenu(Surface* screen, float deltaTime);*/
 			void openNextMenu(Surface* screen);
 			void openPauseMenu(Surface* screen);
 			void openEndMenu(Surface* screen);
 			void openScoreMenu(Surface* screen, float deltaTime);
-			void openInfoMenu(Surface* screen, float deltaTime);
+			//void openInfoMenu(Surface* screen, float deltaTime);
 
 			// Menu managers
 			void manageMenus(Surface* screen, float deltaTime);
@@ -104,46 +115,59 @@ namespace Tmpl8
 			bool infoMenuOpen = false;
 
 			int difficulty = 2; // 1: easy, 2: medium (default), 3: hard
-		private:
+
+			// Other consts
+			const int SCREEN_HALF_WIDTH = SCREEN_WIDTH / 2;
+			const int SCREEN_HALF_HEIGHT = SCREEN_HEIGHT / 2;
+
+			float timer_current = 0.0f;
+			bool isMousePressed = false;
 			Level& level;
 			Player& player;
 			TileMap& tilemap;
 			GameSound& gamesound;
 			Text& text;
 			Health& health;
-
 			// Variables
 			int mouseX, mouseY; 
-			bool isMousePressed = false;
+
 			bool manualPaused = false;
 			bool alreadyClickedNextLevel = false;
 			bool audioOn = true;
-			float main_bg_x = 0.0f;
-			float timer_current = 0.0f;
 
-			// Other consts
-			const int SCREEN_HALF_WIDTH = SCREEN_WIDTH / 2;
-			const int SCREEN_HALF_HEIGHT = SCREEN_HEIGHT / 2;
+			//bool wasMousePressedLastFrame = false;
+			bool wasHoveringQuit = false;
+			//bool wasMousePressedLastFrame = false;
+			bool wasHoveringLevel[5] = { false };
+			bool wasHoveringDifficulty[3] = { false };
+			bool wasHoveringStart = false;
+			bool wasHoveringInfo = false;
+		private:
+
+			//float main_bg_x = 0.0f;
+
+
+
 
 			// +-------------------+
 			// | BUTTON DIMENSIONS |
 			// +-------------------+
 
-			// Main menu
-			const int MAIN_START_WIDTH = img_menu_main_start.GetWidth();
-			const int MAIN_START_HEIGHT = img_menu_main_start.GetHeight();
-			const int MAIN_LVL_WIDTH = img_menu_main_lvl1.GetWidth();
-			const int MAIN_LVL_HEIGHT = img_menu_main_lvl1.GetHeight();
-			const int MAIN_DIFFICULTY_WIDTH = img_menu_main_difficulty_easy.GetWidth();
-			const int MAIN_DIFFICULTY_HEIGHT = img_menu_main_difficulty_easy.GetHeight();
+			//// Main menu
+			//const int MAIN_START_WIDTH = img_menu_main_start.GetWidth();
+			//const int MAIN_START_HEIGHT = img_menu_main_start.GetHeight();
+			//const int MAIN_LVL_WIDTH = img_menu_main_lvl1.GetWidth();
+			//const int MAIN_LVL_HEIGHT = img_menu_main_lvl1.GetHeight();
+			//const int MAIN_DIFFICULTY_WIDTH = img_menu_main_difficulty_easy.GetWidth();
+			//const int MAIN_DIFFICULTY_HEIGHT = img_menu_main_difficulty_easy.GetHeight();
 
 				// Info
-			const int MAIN_INFO_WIDTH = img_menu_main_info_info.GetWidth();
-			const int MAIN_INFO_HEIGHT = img_menu_main_info_info.GetHeight();
-			const int MAIN_INFO_BG_WIDTH = img_menu_main_info_bg.GetWidth();
-			const int MAIN_INFO_BG_HEIGHT = img_menu_main_info_bg.GetHeight();
-			const int MAIN_INFO_QUIT_WIDTH = img_menu_main_info_quit.GetWidth();
-			const int MAIN_INFO_QUIT_HEIGHT = img_menu_main_info_quit.GetHeight();
+			//const int MAIN_INFO_WIDTH = img_menu_main_info_info.GetWidth();
+			//const int MAIN_INFO_HEIGHT = img_menu_main_info_info.GetHeight();
+			//const int MAIN_INFO_BG_WIDTH = img_menu_main_info_bg.GetWidth();
+			//const int MAIN_INFO_BG_HEIGHT = img_menu_main_info_bg.GetHeight();
+			//const int MAIN_INFO_QUIT_WIDTH = img_menu_main_info_quit.GetWidth();
+			//const int MAIN_INFO_QUIT_HEIGHT = img_menu_main_info_quit.GetHeight();
 
 			// Next level menu
 			const int NEXT_BG_WIDTH = img_menu_next_bg.GetWidth();
@@ -181,33 +205,33 @@ namespace Tmpl8
 			// | BUTTON POSITIONS |
 			// +------------------+
 
-			// Main menu
-
-				// - LVLs
-			const int MAIN_LVL1_X = SCREEN_HALF_WIDTH - (5 * MAIN_LVL_WIDTH + 4 * 20) / 2;
-			const int MAIN_LVLS_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 3 - SCREEN_HEIGHT / 3;
-
-			const int MAIN_LVL2_X = MAIN_LVL1_X + MAIN_LVL_WIDTH + 20;
-			const int MAIN_LVL3_X = MAIN_LVL2_X + MAIN_LVL_WIDTH + 20;
-			const int MAIN_LVL4_X = MAIN_LVL3_X + MAIN_LVL_WIDTH + 20;
-			const int MAIN_LVL5_X = MAIN_LVL4_X + MAIN_LVL_WIDTH + 20;
-
-				// - Difficulties
-			const int MAIN_EASY_X = SCREEN_HALF_WIDTH - (3 * MAIN_DIFFICULTY_WIDTH + 2 * 50) / 2;
-			const int MAIN_DIFFICULTIES_Y = SCREEN_HALF_HEIGHT - MAIN_DIFFICULTY_HEIGHT / 2;
-
-			const int MAIN_MEDIUM_X = MAIN_EASY_X + MAIN_DIFFICULTY_WIDTH + 50;
-			const int MAIN_HARD_X = MAIN_MEDIUM_X + MAIN_DIFFICULTY_WIDTH + 50;
-
-				// - Start
-			const int MAIN_START_X = SCREEN_HALF_WIDTH - MAIN_START_WIDTH / 2;
-			const int MAIN_START_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 2 + SCREEN_HEIGHT / 3;
-
-				// - Info
-			const int MAIN_INFO_X = SCREEN_WIDTH - MAIN_INFO_WIDTH - 7;
-			const int MAIN_INFO_Y = SCREEN_HEIGHT - MAIN_INFO_HEIGHT - 7;
-			const int MAIN_INFO_QUIT_X = (SCREEN_WIDTH - MAIN_INFO_BG_WIDTH) / 2 + MAIN_INFO_BG_WIDTH - MAIN_INFO_QUIT_WIDTH - 5;
-			const int MAIN_INFO_QUIT_Y = (SCREEN_HEIGHT - MAIN_INFO_BG_HEIGHT) / 2 + 5;
+			//// Main menu
+			//
+			//	// - LVLs
+			//const int MAIN_LVL1_X = SCREEN_HALF_WIDTH - (5 * MAIN_LVL_WIDTH + 4 * 20) / 2;
+			//const int MAIN_LVLS_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 3 - SCREEN_HEIGHT / 3;
+			//
+			//const int MAIN_LVL2_X = MAIN_LVL1_X + MAIN_LVL_WIDTH + 20;
+			//const int MAIN_LVL3_X = MAIN_LVL2_X + MAIN_LVL_WIDTH + 20;
+			//const int MAIN_LVL4_X = MAIN_LVL3_X + MAIN_LVL_WIDTH + 20;
+			//const int MAIN_LVL5_X = MAIN_LVL4_X + MAIN_LVL_WIDTH + 20;
+			//
+			//	// - Difficulties
+			//const int MAIN_EASY_X = SCREEN_HALF_WIDTH - (3 * MAIN_DIFFICULTY_WIDTH + 2 * 50) / 2;
+			//const int MAIN_DIFFICULTIES_Y = SCREEN_HALF_HEIGHT - MAIN_DIFFICULTY_HEIGHT / 2;
+			//
+			//const int MAIN_MEDIUM_X = MAIN_EASY_X + MAIN_DIFFICULTY_WIDTH + 50;
+			//const int MAIN_HARD_X = MAIN_MEDIUM_X + MAIN_DIFFICULTY_WIDTH + 50;
+			//
+			//	// - Start
+			//const int MAIN_START_X = SCREEN_HALF_WIDTH - MAIN_START_WIDTH / 2;
+			//const int MAIN_START_Y = SCREEN_HALF_HEIGHT - MAIN_START_HEIGHT / 2 + SCREEN_HEIGHT / 3;
+			//
+			//	// - Info
+			//const int MAIN_INFO_X = SCREEN_WIDTH - MAIN_INFO_WIDTH - 7;
+			//const int MAIN_INFO_Y = SCREEN_HEIGHT - MAIN_INFO_HEIGHT - 7;
+			//const int MAIN_INFO_QUIT_X = (SCREEN_WIDTH - MAIN_INFO_BG_WIDTH) / 2 + MAIN_INFO_BG_WIDTH - MAIN_INFO_QUIT_WIDTH - 5;
+			//const int MAIN_INFO_QUIT_Y = (SCREEN_HEIGHT - MAIN_INFO_BG_HEIGHT) / 2 + 5;
 
 			// Next level menu
 			const int NEXT_MENU_X = SCREEN_HALF_WIDTH - NEXT_MENU_WIDTH / 2 - NEXT_BG_WIDTH / 4;
@@ -235,4 +259,10 @@ namespace Tmpl8
 			const int QUIT_X = SCREEN_WIDTH - QUIT_WIDTH - QUIT_WIDTH / 10;
 			const int QUIT_Y = QUIT_HEIGHT / 10;
 	};
+
+	struct MenuMap {
+		std::vector<MenuMain> main_map;
+		std::vector<Menu> menu_other_map;
+	};
+
 }

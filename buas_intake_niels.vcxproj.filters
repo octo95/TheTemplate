@@ -13,9 +13,6 @@
     <ClCompile Include="game.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="menu.cpp">
-      <Filter>Solutions</Filter>
-    </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
@@ -73,6 +70,12 @@
     <ClCompile Include="cloud.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
+    <ClCompile Include="menu.cpp">
+      <Filter>Solutions\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="menu_main.cpp">
+      <Filter>Solutions\Menus</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="player.h">
@@ -97,9 +100,6 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="game.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="menu.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="collectible.h">
@@ -147,6 +147,12 @@
     <ClInclude Include="cloud.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="menu.h">
+      <Filter>Headers\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="menu_main.h">
+      <Filter>Headers\Menus</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">
@@ -163,6 +169,12 @@
     </Filter>
     <Filter Include="Solutions\AIs">
       <UniqueIdentifier>{a0f6295d-8473-495f-a53d-35202be8a855}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Menus">
+      <UniqueIdentifier>{e02d9c3b-8b93-4de4-83fe-05c81ecf7c22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Solutions\Menus">
+      <UniqueIdentifier>{10f064f7-50df-4885-b514-95cbbb492097}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

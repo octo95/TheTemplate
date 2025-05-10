@@ -18,12 +18,11 @@ namespace Tmpl8
             Player& playerRef,
             float& timer
         ) :
-            AI(playerRef, vec2(0,0)),
+            AI(playerRef, vec2(-500.0f,-500.0f)),
             copyTimer(timer)
         {
         };
 
-        bool ai_copy_started_following = false;
         void setProperties();
         void updatePlayerBuffer();
     };

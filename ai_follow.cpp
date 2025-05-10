@@ -6,7 +6,7 @@ namespace Tmpl8
 
     void AI_Follow::followPlayer(float deltaTime)
     {
-        if (!is_following) return;
+        if (stop) return;
 
         const float delayAmplifier = 0.35f;
 

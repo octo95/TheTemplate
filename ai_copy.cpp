@@ -13,8 +13,6 @@ namespace Tmpl8
             copyTimer -= 1.0f / 60.0f;
             return;
         }
-
-        ai_copy_started_following = true;
         PlayerState pastState = playerBuffer.read(); 
         this->position = pastState.position + vec2(-hitbox_radius, -hitbox_radius);
         this->acceleration = pastState.acceleration;
