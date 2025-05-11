@@ -118,7 +118,7 @@ namespace Tmpl8
 		}
 	}
 
-	void manageCollectibleCollision(Player* player, GameSound* gamesound, Menu* menu, Health* health)
+	void manageCollectibleCollision(Player* player, GameSound* gamesound, Menu* menu, Health* health, TileMap* tilemap)
 	{
 		float player_x = player->position.x;
 		float player_y = player->position.y;
@@ -140,8 +140,26 @@ namespace Tmpl8
 								player_y < col_y + col_height &&
 				player_y + player_hitbox > col_y;
 
+			float secret_col_x = 30.0f * TILE_SIZE;
+			float secret_col_y = 23.0F * TILE_SIZE;  
+			float secret_height = TILE_SIZE * 3.0f;  
+			float secret_width = TILE_SIZE;       
+
+			// AABB check with expanded height
+			bool overlap_secret =
+				player_x < secret_col_x + secret_width &&
+				player_x + player_hitbox > secret_col_x &&
+				player_y < secret_col_y + secret_height &&
+				player_y + player_hitbox > secret_col_y;
+
+			if (overlap_secret) 
+			{
+				menu->addScore(1000);
+				tilemap->secret_collected = true;
+			}
+
+
 			// The player touches the collectible, erase it from the map and play its logic
-			
 			if (overlap)
 			{
 				Collectible::CollectibleType type = c->second.type;

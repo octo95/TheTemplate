@@ -4,14 +4,16 @@
 
 namespace Tmpl8
 {
-    Menu::Menu(Level& levelRef, Player& playerRef, TileMap& tilemapRef, GameSound& gamesoundRef, Text& textRef, Health& healthRef) :
-        level(levelRef),
-        player(playerRef),
-        tilemap(tilemapRef),
-        gamesound(gamesoundRef),
-        text(textRef),
-        health(healthRef)
-    {}
+    Menu::Menu(GameSound& gamesound, Health& health, Level& level, Player& player, Text& text, TileMap& tilemap)
+        : gamesound(gamesound),
+        health(health),
+        level(level),
+        player(player),
+        text(text),
+        tilemap(tilemap)
+    {
+    }
+
 
     // + MAIN MENU
     Sprite img_menu_main_bg(new Surface("assets/images/menus/main_menu/img_menu_main_bg.png"), 1);
@@ -92,7 +94,8 @@ namespace Tmpl8
 
     bool Menu::isHoveringSurface(vec2 pos, vec2 size)
     {
-        return mouseX >= pos.x && mouseX <= pos.x + size.x && mouseY >= pos.y && mouseY <= pos.y + size.y;
+        return  mouse_pos.x >= pos.x && mouse_pos.x <= pos.x + size.x && 
+                mouse_pos.y >= pos.y && mouse_pos.y <= pos.y + size.y;
     }
 
     void Menu::handleButton(
@@ -134,6 +137,8 @@ namespace Tmpl8
         // Draw background using vec2 for position on the same line
         img_menu_main_info_bg.Draw(screen, MAIN_INFO_BG_POS);
 
+        static bool wasHoveringQuitInfo = false;
+
         // Adjust handleButton to use vec2 for position and size on the same line
         handleButton(
             screen,
@@ -141,7 +146,7 @@ namespace Tmpl8
             MAIN_INFO_QUIT_SIZE,
             &img_menu_main_info_quit_alt,
             &img_menu_main_info_quit,
-            wasHoveringQuit,
+            wasHoveringQuitInfo,
             [&]() {
                 if (isMousePressed && !wasMousePressedLastFrame) {
                     gamesound.playSound(gamesound.snd_select);
@@ -155,6 +160,7 @@ namespace Tmpl8
 
     void Menu::drawMainBGPan(Surface* screen, float deltaTime)
     {
+        static float main_bg_x = 0.0f;
         float panning_speed = 150.0f; 
         float bg_width = img_menu_main_bg.GetWidth();
 
@@ -171,7 +177,14 @@ namespace Tmpl8
         if (!mainMenuOpen) return;
 
         drawMainBGPan(screen, deltaTime);
-        img_menu_main_pro_tip.Draw(screen, vec2(7, SCREEN_HEIGHT - img_menu_main_pro_tip.GetHeight() - 7));
+        img_menu_main_pro_tip.Draw(screen, vec2(7, SCREEN_HEIGHT - img_menu_main_pro_tip.GetHeight() - 7.0f));
+
+        // Prevents the main menu from being interactible while the info menu pops up on top.
+        if (infoMenuOpen)   
+        {
+            openInfoMenu(screen, deltaTime);
+            return;
+        }
 
         audioOpen = true;
         quitOpen = true;
@@ -304,7 +317,7 @@ namespace Tmpl8
 
     void Menu::openNextMenu(Surface* screen)
     {
-        scoreMenuOpen = true;
+        resultsMenuOpen = true;
         nextMenuOpen = level.level_finished;
         if (!nextMenuOpen) return;
 
@@ -316,39 +329,31 @@ namespace Tmpl8
         // Handle "Next Level" button
         handleButton(
             screen,
-            NEXT_LVL_POS, NEXT_NEXT_SIZE,
+            NEXT_NEXT_POS, NEXT_NEXT_SIZE,
             &img_menu_next_next,
             &img_menu_next_next_alt,
             wasHoveringNext,
             [&]() {
-                if (!alreadyClickedNextLevel)
-                {
-                    gamesound.playSound(gamesound.snd_select);
-                    resume_game = true;
-                    level.loadLevel(tilemap.incrementMapIndex());
-                    level.level_finished = false;
-                    alreadyClickedNextLevel = true;
-                    nextMenuOpen = false;
-                    scoreMenuOpen = false;
-                }
+                resume_game = true;
+                level.loadLevel(tilemap.incrementMapIndex());
+                level.level_finished = false;
+                nextMenuOpen = false;
+                resultsMenuOpen = false;
             });
-
-        alreadyClickedNextLevel = !alreadyClickedNextLevel;
 
         // Handle "Menu" button
         handleButton(
             screen,
-            NEXT_MENU_POS, NEXT_NEXT_SIZE,
+            NEXT_MENU_POS, NEXT_MENU_SIZE,
             &img_menu_next_menu,
             &img_menu_next_menu_alt,
             wasHoveringMenu,
             [&]() {
-                gamesound.playSound(gamesound.snd_select);
                 gamesound.playMusic(gamesound.mus_menu);
                 start_game = false;
                 nextMenuOpen = false;
                 mainMenuOpen = true;
-                scoreMenuOpen = false;
+                resultsMenuOpen = false;
             });
     }
 
@@ -400,11 +405,10 @@ namespace Tmpl8
             });
     }
 
-
     void Menu::openEndMenu(Surface* screen)
     {
         endMenuOpen = level.game_finished;
-        scoreMenuOpen = true;
+        resultsMenuOpen = true;
 
         if (endMenuOpen)
         {
@@ -439,7 +443,7 @@ namespace Tmpl8
                 mainMenuOpen = true;
                 infoMenuOpen = false;
                 level.game_finished = false;
-                scoreMenuOpen = false;
+                resultsMenuOpen = false;
                 score = 0;
                 timer_current = 0.0f;
             });
@@ -462,7 +466,7 @@ namespace Tmpl8
                 level.game_finished = false;
                 health.initHealth(this);
                 level.loadLevel(1);
-                scoreMenuOpen = false;
+                resultsMenuOpen = false;
                 score = 0;
                 timer_current = 0.0f;
             });
@@ -534,8 +538,10 @@ namespace Tmpl8
         int text_width = stb_easy_font_width((char*)txt.c_str());
         float offset_to_corner = 10.0f;
         static float lastScoreUpdateTime = -1.0f;
-        if (score_updated) 
+        if (score_updated)
+        {
             lastScoreUpdateTime = 0.0f; 
+        }
         if (lastScoreUpdateTime >= 0.0f && lastScoreUpdateTime < color_update_time && score!=0) 
         {
             size = vec2(1.05f, 1.05f);  // Scale to 105%
@@ -586,11 +592,38 @@ namespace Tmpl8
         text.printOnScreen((char*)txt.c_str(), draw_pos, screen, size, color);            // Actual text (color)
     }
 
-    void Menu::openScoreMenu(Surface* screen, float deltaTime)
+    void Menu::timerInGame(Surface* screen, float deltaTime)
+    {
+        if (pauseMenuOpen || nextMenuOpen || endMenuOpen || overMenuOpen) return;
+
+        timer_current += deltaTime;
+
+        int total_seconds = static_cast<int>(timer_current);
+        int minutes = total_seconds / 60;
+        int seconds = total_seconds % 60;
+
+        char buffer[50];
+        sprintf(buffer, "Time: %02d:%02d", minutes, seconds);
+
+        std::string txt = buffer;
+        int text_width = stb_easy_font_width((char*)txt.c_str());
+        int text_height = stb_easy_font_height((char*)txt.c_str());
+
+        vec2 size = vec2(1.0f, 1.0f);
+        vec2 draw_pos = vec2(
+            10.0f,
+            30.0f
+        );
+
+        text.printOnScreen((char*)txt.c_str(), draw_pos + vec2(2.0f, 2.0f), screen, size, 0x934712);
+        text.printOnScreen((char*)txt.c_str(), draw_pos, screen, size, 0xFFFFFF);
+    }
+
+    void Menu::openResultsMenu(Surface* screen, float deltaTime)
     {
         if (score <= 0) score = 0; // The score can't go below 0
 
-        if (!scoreMenuOpen)
+        if (!resultsMenuOpen)
         {
             score_timer = 0.0f;
             score_value_current = 0;
@@ -602,15 +635,13 @@ namespace Tmpl8
         static const float counting_speed = 0.5f; // In secs
 
         Pixel color = 0xFFFFFF;
-        vec2 size = vec2(4.0f, 4.0f);
+        vec2 size = vec2(5.0f, 5.0f);
 
         score_timer += deltaTime;
         for (int i = 0; i < score; i++)
         {
             score_value_current = static_cast<int>(score * score_timer / counting_speed);
-
             color = 0xFFFF00;
-            size = vec2(5.2f, 5.2f);
 
             if (score_value_current >= score)
             {
@@ -618,7 +649,7 @@ namespace Tmpl8
                 score_is_counting = false;
                 if (endMenuOpen) color = 0x00FF00;
                 else color = 0xFFFFFF;
-                size = vec2(5.0f, 5.0f);
+                size = vec2(5.1f, 5.1f);
 
                 if(!finish_sfx_played && endMenuOpen) // Play a victory SFX once the count finishes
                 {
@@ -627,8 +658,13 @@ namespace Tmpl8
                 }
             }
         }
+
+        int total_seconds = static_cast<int>(timer_current);
+        int minutes = total_seconds / 60;
+        int seconds = total_seconds % 60;
+
         char buffer[50];
-        sprintf(buffer, "Score: %04d", static_cast<int>(score_value_current));
+        sprintf(buffer, "Score: %04d\n Time: %02d:%02d", static_cast<int>(score_value_current), minutes, seconds);
 
         std::string txt = buffer;
         int text_width = stb_easy_font_width((char*)txt.c_str());
@@ -698,39 +734,5 @@ namespace Tmpl8
             });
 
         wasHoveringAudio = isHoveringAudio;
-    }
-
-    void Menu::timerInGame(Surface* screen, float deltaTime)
-    {
-        if (pauseMenuOpen || nextMenuOpen || endMenuOpen || overMenuOpen) return;
-
-        timer_current += deltaTime;
-
-        int total_seconds = static_cast<int>(timer_current);
-        int minutes = total_seconds / 60;
-        int seconds = total_seconds % 60;
-
-        char buffer[50];
-        sprintf(buffer, "Time: %02d:%02d", minutes, seconds);
-
-        std::string txt = buffer;
-        int text_width = stb_easy_font_width((char*)txt.c_str());
-        int text_height = stb_easy_font_height((char*)txt.c_str());
-
-        vec2 size = vec2(1.0f, 1.0f);
-        vec2 draw_pos = vec2(
-            10.0f,
-            30.0f
-        );
-
-        text.printOnScreen((char*)txt.c_str(), draw_pos + vec2(2.0f, 2.0f), screen, size, 0x934712);
-        text.printOnScreen((char*)txt.c_str(), draw_pos, screen, size, 0xFFFFFF);
-    }
-
-
-    void Menu::setMousePosition(int x, int y)
-    {
-        mouseX = x;
-        mouseY = y;
     }
 }

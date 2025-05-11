@@ -5,17 +5,18 @@
 
 namespace Tmpl8
 {
-    Debug::Debug(Camera& cameraRef, TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef, WallMap& wallRef, Level& levelRef, Collisions& collisionRef, Menu& menuRef, AIMap& ai_map) :
+    Debug::Debug(AIMap& ai_map, Camera& cameraRef, CollectibleMap& collectibleRef, Collisions& collisionRef, Level& levelRef, Menu& menuRef, Player& playerRef, TileMap& tilemapRef, WallMap& wallRef) :
+        ai_map(ai_map),
         camera(cameraRef),
-        tilemap(tilemapRef),
-        player(playerRef),
         collectible(collectibleRef),
-        wall(wallRef),
-        level(levelRef),
         collisions(collisionRef),
+        level(levelRef),
         menu(menuRef),
-        ai_map(ai_map)
-    {}
+        player(playerRef),
+        tilemap(tilemapRef),
+        wall(wallRef)
+    {
+    }
     
     void Debug::drawPlayerHitbox(const vec2& pos, Surface* screen)
     {

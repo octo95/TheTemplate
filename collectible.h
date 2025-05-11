@@ -1,6 +1,6 @@
 #pragma once
 #include "surface.h"
-#include "tilemap.h"
+//#include "tilemap.h"
 #include "vec2_hash.h"
 #include <unordered_map>
 
@@ -16,7 +16,9 @@ namespace Tmpl8
 	class Health;
 	class Player;
 	class GameSound;
-
+	class TileMap;
+	class Camera;
+	
 	class Collectible
 	{
 	public:
@@ -60,6 +62,6 @@ namespace Tmpl8
 	void loadDashCollectibles(int map_index, CollectibleMap& cmap);
 	void loadHealthCollectibles(int map_index, CollectibleMap& cmap);
 	void drawCollectibleMap(Camera* camera, Surface* screen, float deltaTime);
-	void manageCollectibleCollision(Player* player, GameSound* gamesound, Menu* menu, Health* health);
+	void manageCollectibleCollision(Player* player, GameSound* gamesound, Menu* menu, Health* health, TileMap* tilemap);
 	void manageCollectibleRespawn(float deltaTime, Player* player);
 }

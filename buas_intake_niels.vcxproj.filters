@@ -178,8 +178,5 @@
     <Text Include="_readme.txt">
       <Filter>Other</Filter>
     </Text>
-    <Text Include="trash.txt">
-      <Filter>Other</Filter>
-    </Text>
   </ItemGroup>
 </Project>

@@ -1,6 +1,5 @@
 #pragma once
 #include "surface.h"
-#include "tilemap.h"
 #include "player.h"
 #include "vec2_hash.h"
 #include <unordered_map>
@@ -15,6 +14,7 @@ namespace Tmpl8
     extern Sprite img_map1_data_read;
     extern Sprite img_map1_draw;
     extern Sprite img_map1_draw_bg;
+    extern Sprite img_map5_draw_alt;
 
     const float TILE_SIZE = 32.0f;
     enum TileType
@@ -52,7 +52,7 @@ namespace Tmpl8
         vec2 {9,25},
         vec2 {32,25}
     };
-    const vec2 MAP5_COLLEC_DASH[13] = {
+    const vec2 MAP5_COLLEC_DASH[17] = {
         vec2 {2,5},
         vec2 {15,5},
         vec2 {23,5},
@@ -65,7 +65,7 @@ namespace Tmpl8
         vec2 {61,20},
         vec2 {62,20},
         vec2 {12,35},
-        vec2 {17,35}
+        vec2 {17,35},
     };
 
     // Health collectibles
@@ -140,6 +140,7 @@ namespace Tmpl8
             Sprite* current_map_draw_bg = &img_map1_draw_bg;
 
             int current_level = 1;
+            bool secret_collected = false;
 
             // Functions
             void readImageToMap(Sprite* image);

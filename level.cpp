@@ -6,16 +6,18 @@
 
 namespace Tmpl8
 {
-    Level::Level(TileMap& tilemapRef, Player& playerRef, CollectibleMap& collectibleRef,WallMap& wallRef, GameSound& gamesoundRef, AIMap& ai_mapRef, Camera& cameraRef, CloudMap& cloudRef) :
-        tilemap(tilemapRef),
-        player(playerRef),
-        collectible(collectibleRef),
-        wall(wallRef),
-        gamesound(gamesoundRef),
+    Level::Level(AIMap& ai_mapRef, Camera& cameraRef, CloudMap& cloudRef, CollectibleMap& collectibleRef, GameSound& gamesoundRef, Player& playerRef, TileMap& tilemapRef, WallMap& wallRef) :
         ai_map(ai_mapRef),
         camera(cameraRef),
-        cloud(cloudRef)
-    {}
+        cloud(cloudRef),
+        collectible(collectibleRef),
+        gamesound(gamesoundRef),
+        player(playerRef),
+        tilemap(tilemapRef),
+        wall(wallRef)
+    {
+    }
+
 
     void Level::loadLevel(int map_index)
     {

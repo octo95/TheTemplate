@@ -38,7 +38,7 @@ namespace Tmpl8
         }
         else
         {
-            shake = { 0, 0 };
+            shake = { 0.0f, 0.0f };
         }
     }
 

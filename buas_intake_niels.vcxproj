@@ -279,7 +279,6 @@
     <ClInclude Include="wall.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="trash.txt" />
     <Text Include="_readme.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

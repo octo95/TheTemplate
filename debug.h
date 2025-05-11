@@ -22,15 +22,15 @@ namespace Tmpl8
         public:
             // Constructor
             Debug(
+                AIMap& ai_map,
                 Camera& cameraRef,
-                TileMap& tilemapRef,
-                Player& playerRef,
                 CollectibleMap& collectibleRef,
-                WallMap& wallRef,
-                Level& levelRef,
                 Collisions& collisionRef,
+                Level& levelRef,
                 Menu& menuRef,
-                AIMap& ai_map
+                Player& playerRef,
+                TileMap& tilemapRef,
+                WallMap& wallRef
             );
 
             // Variables

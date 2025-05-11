@@ -18,15 +18,16 @@ namespace Tmpl8
         public:
             // Constructor
             Level(
-                TileMap& tilemapRef,
-                Player& playerRef,
-                CollectibleMap& collectibleRef,
-                WallMap& wallRef,
-                GameSound& gamesoundRef,
-                AIMap& aiMapRef,
+                AIMap& ai_mapRef,
                 Camera& cameraRef,
-                CloudMap& cloudRef
+                CloudMap& cloudRef,
+                CollectibleMap& collectibleRef,
+                GameSound& gamesoundRef,
+                Player& playerRef,
+                TileMap& tilemapRef,
+                WallMap& wallRef
             );
+
 
             const vec2 OFF_SCREEN = vec2{ -500, -500 };
 

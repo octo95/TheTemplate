@@ -18,15 +18,16 @@ namespace Tmpl8
     public:
         // Constructor
         Collisions(
-            Player& playerRef,
-            TileMap& tilemapRef,
-            Level& levelRef,
+            AIMap& ai_map,
             Camera& cameraRef,
             GameSound& gamesoundRef,
-            AIMap& ai_map,
+            Health& healthRef,
+            Level& levelRef,
             Menu& menuRef,
-            Health& healthRef
+            Player& playerRef,
+            TileMap& tilemapRef
         );
+
 
         // Collision checks
         TileType getTileCollision(const vec2& player_tpos, const vec2& offset);

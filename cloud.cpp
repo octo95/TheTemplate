@@ -7,6 +7,7 @@
 namespace Tmpl8
 {
 	Sprite img_cloud(new Surface("assets/images/map/img_cloud.png"), 1);
+	Sprite img_cloud_silly(new Surface("assets/images/map/img_cloud_silly.png"), 1);
 
 	CloudMap cmap;
 
@@ -29,18 +30,27 @@ namespace Tmpl8
 	{
 		for (auto& c : cmap)
 		{
-			// Move cloud.
-			c.first.x += deltaTime * c.second;
+			c.pos.x += deltaTime * c.speed;
 
-			// Wrap the cloud around once it reaches the right side of the map.
-			if (c.first.x > tilemap->current_map_data_read->GetWidth()) c.first.x = -img_cloud.GetWidth();
+			if (c.pos.x > tilemap->current_map_data_read->GetWidth())
+			{
+				c.pos.x = -img_cloud.GetWidth();
 
-			// Draw cloud at updated position
-			camera->drawWithCam(&img_cloud, screen, c.first);
+			}
+
+			if (c.is_silly)
+			{
+				camera->drawWithCam(&img_cloud_silly, screen, c.pos);
+			}
+			else
+			{
+				camera->drawWithCam(&img_cloud, screen, c.pos);
+			}
 		}
+
 	}
 
-	std::pair<vec2, float> generateRandomMapSpawn(TileMap* map)
+	Cloud generateRandomMapSpawn(TileMap* map)
 	{
 		vec2 mapSize = vec2(
 			map->current_map_data_read->GetWidth(),
@@ -55,24 +65,23 @@ namespace Tmpl8
 		float min_x = -cloudSize.x;
 		float max_x = mapSize.x;
 		float min_y = -cloudSize.y;
-		float max_y = mapSize.y / 3.0f; // Clouds appear on the upper third half of the map
+		float max_y = mapSize.y / 3.0f; // Upper third
 		float min_speed = 5.0f;
 		float max_speed = 50.0f;
 
-		// Using RNG based on https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution
 		static std::random_device rd;
 		static std::mt19937 gen(rd());
 
 		std::uniform_real_distribution<float> dist_x(min_x, max_x);
 		std::uniform_real_distribution<float> dist_y(min_y, max_y);
 		std::uniform_real_distribution<float> dist_speed(min_speed, max_speed);
+		std::uniform_int_distribution<int> dist_silly(1, 10); // 1 in 10 chance of being silly
 
-		float random_x = dist_x(gen);
-		float random_y = dist_y(gen);
+		vec2 spawn_pos = vec2(dist_x(gen), dist_y(gen));
 		float speed = dist_speed(gen);
+		bool is_silly = (dist_silly(gen) == 1);
 
-		vec2 spawn_pos = vec2(random_x, random_y);
-
-		return { spawn_pos, speed };
+		return { spawn_pos, speed, is_silly };
 	}
+
 }

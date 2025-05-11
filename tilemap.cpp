@@ -20,9 +20,8 @@ namespace Tmpl8
 
     Sprite img_map5_data_read(new Surface("assets/images/map/data_read/img_map5_data_read.png"), 1);
     Sprite img_map5_draw(new Surface("assets/images/map/draw/img_map5_draw.png"), 1);
+    Sprite img_map5_draw_alt(new Surface("assets/images/map/draw/img_map5_draw_alt.png"), 1);
     Sprite img_map5_draw_bg(new Surface("assets/images/map/draw/img_map5_draw_bg.png"), 1);
-
-    //Sprite img_cloud(new Surface("assets/images/map/img_cloud.png"), 1);
 
     void TileMap::loadMap(int index)
     {
@@ -38,7 +37,7 @@ namespace Tmpl8
             &img_map2_draw,
             &img_map3_draw,
             &img_map4_draw,
-            &img_map5_draw,
+            &img_map5_draw
         };
         Sprite* maps_draw_bg[5] = {
             &img_map1_draw_bg,

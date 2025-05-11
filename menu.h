@@ -46,35 +46,14 @@ namespace Tmpl8
 
 			// Constructor
 			Menu(
-				Level& levelRef, 
-				Player& playerRef, 
-				TileMap& tilemapRef, 
-				GameSound& gamesoundRef,
-				Text& textRef,
-				Health& healthRef
+				GameSound& gamesound,
+				Health& health,
+				Level& level,
+				Player& player,
+				Text& text,
+				TileMap& tilemap
 			);
 
-			// Variables
-			int score = 0;
-			int previousScore = 0;
-			bool start_game = false;
-			bool resume_game = true;
-			float finish_sfx_played = false;
-			bool wasMousePressedLastFrame = false;
-
-			// Score timer variables
-			float score_timer = 0.0f;
-			int score_value_current = 0;
-			bool score_is_counting = true;
-
-			void handleButton(
-				Surface* screen,
-				vec2 pos, vec2 size,
-				Sprite* normalSprite,
-				Sprite* hoverSprite,
-				bool& wasHovering,
-				std::function<void()> onClick
-			);
 
 			// Open menus
 			void drawMainBGPan(Surface* screen, float deltaTime);
@@ -82,7 +61,7 @@ namespace Tmpl8
 			void openNextMenu(Surface* screen);
 			void openPauseMenu(Surface* screen);
 			void openEndMenu(Surface* screen);
-			void openScoreMenu(Surface* screen, float deltaTime);
+			void openResultsMenu(Surface* screen, float deltaTime);
 			void openInfoMenu(Surface* screen, float deltaTime);
 
 			// Menu managers
@@ -99,59 +78,73 @@ namespace Tmpl8
 			void timerInGame(Surface* screen, float deltaTime);
 
 			// Mouse functions
-			void setMousePosition(int x, int y); 
+			void setMousePosition(vec2 pos) { mouse_pos = pos; }
 			void setMouseState(bool isPressed) { isMousePressed = isPressed; }
 			bool isHoveringSurface(vec2 pos, vec2 size);
+			void handleButton(
+				Surface* screen, 
+				vec2 pos, vec2 size, 
+				Sprite* 
+				normalSprite, 
+				Sprite* hoverSprite, 
+				bool& wasHovering, 
+				std::function<void()> onClick);
 
-			// Menu flags
-			bool endMenuOpen = false;
+			// Menu State Flags
 			bool mainMenuOpen = true;
-			bool audioOpen = true;
-			bool quitOpen = true;
+			bool infoMenuOpen = false;
+			bool endMenuOpen = false;
 			bool pauseMenuOpen = false;
 			bool nextMenuOpen = false;
-			bool scoreMenuOpen = false;
+			bool resultsMenuOpen = false;
 			bool overMenuOpen = false;
-			bool infoMenuOpen = false;
 
+			// Submenu Toggles
+			bool audioOpen = true;
+			bool quitOpen = true;
+
+			// Mouse Input
+			bool isMousePressed = false;
+			bool wasMousePressedLastFrame = false;
+			vec2 mouse_pos = vec2(0.0f, 0.0f);
+
+			// Gameplay State
+			bool start_game = false;
+			bool resume_game = true;
+			bool manualPaused = false;
+			float timer_current = 0.0f;
 			int difficulty = 2; // 1: easy, 2: medium (default), 3: hard
 
-			// Other consts
-
-			float timer_current = 0.0f;
-			bool isMousePressed = false;
-			Level& level;
-			Player& player;
-			TileMap& tilemap;
-			GameSound& gamesound;
-			Text& text;
-			Health& health;
-
-			// Variables
-			int mouseX, mouseY; 
-			float main_bg_x = 0.0f;
-			bool manualPaused = false;
-			bool alreadyClickedNextLevel = false;
+			// Audio Settings
 			bool audioOn = true;
-			bool wasHoveringQuit = false;
-			bool wasHoveringLevel[5] = { false };
-			bool wasHoveringDifficulty[3] = { false };
-			bool wasHoveringStart = false;
-			bool wasHoveringInfo = false;
+			bool finish_sfx_played = false;
+
+			// Scoring System
+			int score = 0;
+			int previousScore = 0;
+			float score_timer = 0.0f;
+			int score_value_current = 0;
+			bool score_is_counting = true;
+
+
 
 	private:
+
+		// Objects
+		Level& level;
+		Player& player;
+		TileMap& tilemap;
+		GameSound& gamesound;
+		Text& text;
+		Health& health;
 
 		// +-------------------+
 		// | BUTTON DIMENSIONS |
 		// +-------------------+
 
+		const vec2 SCREEN_HALF_SIZE = vec2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f);
+
 		// Main menu
-
-		const vec2 SCREEN_HALF_SIZE = vec2(
-			SCREEN_WIDTH / 2.0f,
-			SCREEN_HEIGHT / 2.0f
-		);
-
 		const vec2 MAIN_START_SIZE = img_menu_main_start.GetSize();
 		const vec2 MAIN_LVL_SIZE = img_menu_main_lvl1.GetSize();
 		const vec2 MAIN_DIFFICULTY_SIZE = img_menu_main_difficulty_easy.GetSize();
@@ -258,7 +251,7 @@ namespace Tmpl8
 			SCREEN_HALF_SIZE.y - NEXT_MENU_SIZE.y / 2.0f + NEXT_BG_SIZE.y / 3.0f
 		);
 
-		const vec2 NEXT_LVL_POS = vec2(
+		const vec2 NEXT_NEXT_POS = vec2(
 			SCREEN_HALF_SIZE.x - NEXT_NEXT_SIZE.x / 2.0f + NEXT_BG_SIZE.x / 4.0f,
 			NEXT_MENU_POS.y
 		);

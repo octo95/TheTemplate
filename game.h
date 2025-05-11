@@ -5,6 +5,8 @@
 #include "ai_patrol.h"
 #include "bell.h"
 #include "camera.h"
+#include "cloud.h"
+#include "circular_buffer.h"
 #include "collectible.h"
 #include "collisions.h"
 #include "debug.h"
@@ -12,13 +14,11 @@
 #include "health.h"
 #include "level.h"
 #include "menu.h"
+#include "menu_main.h"
 #include "player.h"
+#include "text.h"
 #include "tilemap.h"
 #include "wall.h"
-#include "circular_buffer.h"
-#include "text.h"
-#include "cloud.h"
-#include "menu_main.h"
 
 namespace Tmpl8 
 {
@@ -26,14 +26,13 @@ namespace Tmpl8
 	class Game
 	{
 	public:
-
 		Game() :
 			bell(level),
-			collisions(player, tilemap, level, camera, gamesound, ai_map, menu, health),
-			debug(camera, tilemap, player, collectible, wall, level, collisions, menu, ai_map),
+			collisions(ai_map, camera, gamesound, health, level, menu, player, tilemap),
+			debug(ai_map, camera, collectible, collisions, level, menu, player, tilemap, wall),
 			health(player),
-			level(tilemap, player, collectible, wall, gamesound, ai_map, camera, cloud),
-			menu(level, player, tilemap, gamesound, text, health),
+			level(ai_map, camera, cloud, collectible, gamesound, player, tilemap, wall),
+			menu(gamesound, health, level, player, text, tilemap),
 			player(camera),
 			tilemap(player)
 		{}
@@ -42,20 +41,21 @@ namespace Tmpl8
 		void Init();
 		void Shutdown();
 		void Tick( float deltaTime );
+		void GameLogic();
+		void GameDraw(float deltaTime);
 		void MouseUp(int button) { menu.setMouseState(false); }
 		void MouseDown(int button) { menu.setMouseState(true); }
-		void MouseMove(int x, int y) { menu.setMousePosition(x, y); }
+		void MouseMove(vec2 pos) { menu.setMousePosition(pos); }
 		void KeyUp( int key ) {}
 		void KeyDown( int key ) {}
 
 		~Game(){}
 	private:
-		AIMap ai_map = AIMap{ std::vector<AI_Copy>(), std::vector<AI_Follow>(), std::vector<AI_Patrol>() };
+
+		// Create all the objects for the game
 		Bell bell;
 		Camera camera;
 		CircularBuffer circular_buffer;
-		CloudMap cloud = CloudMap();
-		CollectibleMap collectible = CollectibleMap();
 		Collisions collisions;
 		Debug debug;
 		GameSound gamesound;
@@ -66,9 +66,17 @@ namespace Tmpl8
 		Surface* screen;
 		Text text;
 		TileMap tilemap;
+
+		// Map objects
+		AIMap ai_map = AIMap{ std::vector<AI_Copy>(), std::vector<AI_Follow>(), std::vector<AI_Patrol>() };
+		CloudMap cloud = CloudMap();
+		CollectibleMap collectible = CollectibleMap();
 		WallMap wall = WallMap();
 
-		float localTime = 0.0f;
-		float frameTime = 0.0f;
+		// Variables
+		vec2 new_pos;			// To determine the new position of the player next tick
+		float localTime = 0.0f;	// We split the calls of the functions between localTime and deltaTime allowing us when the game is paused
+								// to pause only the functions we want to as some still need to be running even during a pause.
+		float frameTime = 0.0f;	// To cap the game at a specific FPS (unused)
 	};
 }

@@ -5,16 +5,18 @@
 
 namespace Tmpl8
 {
-    Collisions::Collisions(Player& playerRef, TileMap& tilemapRef, Level& levelRef, Camera& cameraRef, GameSound& gamesoundRef, AIMap& ai_map, Menu& menuRef, Health& healthRef) :
-        player(playerRef),
-        tilemap(tilemapRef),
+    Collisions::Collisions(AIMap& ai_map, Camera& cameraRef, GameSound& gamesoundRef, Health& healthRef, Level& levelRef, Menu& menuRef, Player& playerRef, TileMap& tilemapRef) :
+        ai_map(ai_map),
         camera(cameraRef),
         gamesound(gamesoundRef),
+        health(healthRef),
         level(levelRef),
         menu(menuRef),
-        health(healthRef),
-        ai_map(ai_map)
-    {}
+        player(playerRef),
+        tilemap(tilemapRef)
+    {
+    }
+
 
     Sprite img_water_slide_right(new Surface("assets/images/entities/img_water_slide_right.tga"), 3);
     Sprite img_water_slide_left(new Surface("assets/images/entities/img_water_slide_left.tga"), 3);  
