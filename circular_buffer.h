@@ -7,7 +7,7 @@ namespace Tmpl8
 {
     struct PlayerState {
         vec2 position;
-        float acceleration;
+        float rotation_acceleration = 0.0f;
     };
 
     class CircularBuffer {

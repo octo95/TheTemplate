@@ -8,28 +8,48 @@ namespace Tmpl8
         head(0),
         tail(0)
     {
-        buf.resize(720);
+        buf.resize(BUFFER_SIZE);
     }
 
-    void CircularBuffer::incrementTail() {
-        tail = (tail == 720 - 1) ? 0 : tail + 1;
+    void CircularBuffer::incrementTail() 
+    {
+        if (tail == BUFFER_SIZE - 1)
+        {
+            tail = 0;
+        }
+        else 
+        {
+            tail++;
+        }
+
     }
 
-    void CircularBuffer::add(vec2& item, float angle) {
+    void CircularBuffer::add(vec2& item, float angle) 
+    {
         buf[head] = { item, angle };
-        head = (head == 720 - 1) ? 0 : head + 1;
+        if (head == BUFFER_SIZE - 1) 
+        {
+            head = 0;
+        }
+        else 
+        {
+            head++;
+        }
+
     }
 
-    PlayerState CircularBuffer::read() {
+    PlayerState CircularBuffer::read() 
+    {
         PlayerState item = buf[tail];
         incrementTail();
         return item;
     }
 
-    void CircularBuffer::reset() {
+    void CircularBuffer::reset() 
+    {
         head = 0;
         tail = 0;
         buf.clear();
-        buf.resize(720);
+        buf.resize(BUFFER_SIZE);
     }
 }

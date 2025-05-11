@@ -1,6 +1,6 @@
 #include "ai_patrol.h"
 #include "collisions.h"
-#include "tile.h"
+#include "tilemap.h"
 
 namespace Tmpl8
 {

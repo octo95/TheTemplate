@@ -1,7 +1,8 @@
 #pragma once
 #include "surface.h"
-#include "tile.h"
+#include "tilemap.h"
 #include "player.h"
+#include "vec2_hash.h"
 #include <unordered_map>
 
 namespace Tmpl8
@@ -10,6 +11,20 @@ namespace Tmpl8
     const int TILE_ROWS = 32;
     const int TILE_COLUMNS = 27;
     const int MAP_AMOUNT = 5;
+
+    extern Sprite img_map1_data_read;
+    extern Sprite img_map1_draw;
+    extern Sprite img_map1_draw_bg;
+
+    const float TILE_SIZE = 32.0f;
+    enum TileType
+    {
+        None = 0,
+        Damage = 1,
+        End = 2,
+        Collision = 3,
+        Ice = 4
+    };
 
     extern Sprite img_map1_data_read;
 
@@ -71,7 +86,6 @@ namespace Tmpl8
         vec2 {46,18}
     };
   
-
     // Walls
     const vec2 MAP1_WALLS[1] = {
         vec2 {21,7}
@@ -115,24 +129,21 @@ namespace Tmpl8
     {
         public:
 			// Constructor
-            TileMap(
-                Player& playerRef
-            );
+            TileMap(Player& player) : player(player) {}
 
 			// Variables
             std::unordered_map<vec2, TileType> map_collision;
-            Sprite* current_map_data_read;
-            Sprite* current_map_draw;
-            Sprite* current_map_draw_bg;
 
-            // 
-            const char (*current_map)[TILE_COLUMNS * 3];
+            // Initialize by default the maps on map1
+            Sprite* current_map_data_read = &img_map1_data_read;
+            Sprite* current_map_draw = &img_map1_draw;
+            Sprite* current_map_draw_bg = &img_map1_draw_bg;
+
             int current_level = 1;
 
             // Functions
             void readImageToMap(Sprite* image);
             void loadLevel(int i);
-            //void drawClouds(Surface* screen, Camera* camera, float deltaTime);
             int incrementMapIndex() { return current_level = current_level % MAP_AMOUNT + 1; }
 
 			// Getters / Setters

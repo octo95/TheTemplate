@@ -14,8 +14,8 @@ namespace Tmpl8
             return;
         }
         PlayerState pastState = playerBuffer.read(); 
-        this->position = pastState.position + vec2(-hitbox_radius, -hitbox_radius);
-        this->acceleration = pastState.acceleration;
+        this->position = pastState.position + vec2(-player.hitbox_radius, -player.hitbox_radius);
+        this->acceleration = pastState.rotation_acceleration;
     }
 
     void AI_Copy::updatePlayerBuffer() {

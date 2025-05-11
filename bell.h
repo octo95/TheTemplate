@@ -21,6 +21,9 @@ namespace Tmpl8
 
         private:
             bool player_touch_bell = false;
+            const vec2 BELL_SIZE = img_bell.GetSize();
+            float frame = 0.0f;
+            int bell_loop_index = 0;
 
             Level& level;
             vec2 BELL_POS[5] =

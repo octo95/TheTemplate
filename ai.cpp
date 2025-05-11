@@ -68,7 +68,7 @@ namespace Tmpl8
         vec2 diff = ai_pos - player.position;
 
         float distance = sqrtf(diff.x * diff.x + diff.y * diff.y);
-        float radii_sum = ai_rad + hitbox_radius;
+        float radii_sum = ai_rad + player.hitbox_radius;
 
         // The AI touches the player if its distance is inferior to the sum of the radii
         bool touch = distance <= radii_sum;

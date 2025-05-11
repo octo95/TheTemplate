@@ -28,25 +28,24 @@ namespace Tmpl8
             Health& healthRef
         );
 
-        // Variables
-        bool playerHitAI = false;
-        bool isOnIce = false;
-
         // Collision checks
+        TileType getTileCollision(const vec2& player_tpos, const vec2& offset);
         TileType checkCollisionB(const vec2& pos, bool left, bool right);
         TileType checkCollisionT(const vec2& pos, bool left, bool right);
         TileType checkCollisionR(const vec2& pos);
         TileType checkCollisionL(const vec2& pos);
 
         // Other functions
+        vec2 getPlayerTPos(const vec2& pos);
         void manageCollisions(vec2& new_pos);
+        bool manageAICollisions();
+        void applyCollisions(bool isDamage, bool isIce, bool isCollision);
         void drawSplash(Surface* screen, vec2 player_pos, float deltaTime);
         void applyBouncingPhysics(vec2& new_pos, bool left, bool right, bool bottom, bool top);
-        void collisionsSFX(bool bottom, bool isIce);
+        void applyCollisionsSFX(bool bottom, bool isIce);
 
         // Getters / Setters
         bool getJumpState(vec2& new_pos);
-        void setTouchStateFollowAI(bool isTouched) { playerHitAI = isTouched; }
 
     private:
         Player& player;
@@ -58,6 +57,7 @@ namespace Tmpl8
         Menu& menu;
         Health& health;
 
+        bool isOnIce = false;
         bool FallNormal = false;
         bool FallHard = false;
         bool canPlayerJump = false;

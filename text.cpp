@@ -2,6 +2,8 @@
 
 namespace Tmpl8
 {
+    // The following function has been assisted with ai generation. Heavily edited, reworked and adjusted to make it work but based on it as a basis.
+
     void Text::printOnScreen(const std::string& txt, vec2 pos, Surface* screen, vec2 size, Pixel c)
     {
         const int buffer_size = 99999;          // A large buffer static size just in case a text is too long

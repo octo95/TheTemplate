@@ -248,7 +248,7 @@
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="template.cpp" />
     <ClCompile Include="text.cpp" />
-    <ClCompile Include="tile.cpp" />
+    <ClCompile Include="tile_old.cpp" />
     <ClCompile Include="tilemap.cpp" />
     <ClCompile Include="wall.cpp" />
   </ItemGroup>
@@ -274,7 +274,6 @@
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />
     <ClInclude Include="text.h" />
-    <ClInclude Include="tile.h" />
     <ClInclude Include="tilemap.h" />
     <ClInclude Include="vec2_hash.h" />
     <ClInclude Include="wall.h" />

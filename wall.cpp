@@ -72,10 +72,10 @@ namespace Tmpl8
 
 			// AABB collision check
 			bool overlap =
-								player->position.x < wall_x + wall_width &&
-				player->position.x + hitbox_radius > wall_x &&
-								player->position.y < wall_y + wall_height  &&
-				player->position.y + hitbox_radius > wall_y ;
+										player->position.x < wall_x + wall_width &&
+				player->position.x + player->hitbox_radius > wall_x &&
+										player->position.y < wall_y + wall_height  &&
+				player->position.y + player->hitbox_radius > wall_y ;
 
 			if (overlap)
 			{
@@ -86,7 +86,7 @@ namespace Tmpl8
 				gamesound->playSound(gamesound->snd_break_wall);
 
 				// Remove all the wall that are on the same column to make bigger walls
-				int hitX = wallIt->first.x; 
+				float hitX = wallIt->first.x; 
 
 				while (wallColumnIt != wmap.end()) // Check through the map a second time to detect walls within the same column
 				{

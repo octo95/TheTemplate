@@ -11,8 +11,9 @@ constexpr int GreenMask = 0x00ff00;
 constexpr int BlueMask = 0x0000ff;
 
 // Constants
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 512;
+const float SCREEN_WIDTH = 800.0f;
+const float SCREEN_HEIGHT = 512.0f;
+const vec2 SCREEN_SIZE = vec2(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 typedef unsigned int Pixel; // unsigned int is assumed to be 32-bit, which seems a safe assumption.
 
@@ -114,8 +115,9 @@ public:
 	void SetFlags( unsigned int a_Flags ) { m_Flags = a_Flags; }
 	void SetFrame( unsigned int a_Index ) { m_CurrentFrame = a_Index; }
 	unsigned int GetFlags() const { return m_Flags; }
-	int GetWidth() { return m_Width; }
-	int GetHeight() { return m_Height; }
+	float GetWidth() { return static_cast<float>(m_Width); }
+	float GetHeight() { return static_cast<float>(m_Height); }
+	vec2 GetSize() { return vec2(static_cast<float>(m_Width), static_cast<float>(m_Height)); }
 	Pixel* GetBuffer() { return m_Surface->GetBuffer(); }	
 	unsigned int Frames() { return m_NumFrames; }
 	Surface* GetSurface() { return m_Surface; }

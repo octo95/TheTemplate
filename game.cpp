@@ -79,7 +79,7 @@ namespace Tmpl8
         }
         else
         {
-            menu_main.openMainMenu(screen, localTime); // As long as we don't start the game, stay in the menu screen
+            menu.openMainMenu(screen, localTime); // As long as we don't start the game, stay in the menu screen
         }
     }
 

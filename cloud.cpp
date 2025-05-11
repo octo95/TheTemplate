@@ -16,7 +16,7 @@ namespace Tmpl8
 		cmap = CloudMap();
 	
 		// Make the number of clouds dependant on the width of the map to be proportional.
-		int cloud_amount = map->current_map_data_read->GetWidth() / 200;
+		int cloud_amount = static_cast<int>(map->current_map_data_read->GetWidth() / 200.0f);
 
 		for (int i = 0; i < cloud_amount; i++)
 		{

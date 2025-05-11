@@ -8,12 +8,8 @@
 namespace Tmpl8
 {
     extern Sprite img_player;
-    extern int hitbox_radius;
-    extern int player_img_width;
-    extern int player_img_height;
    
     class TileMap;
-
     class Collisions;
 
     class Player 
@@ -30,6 +26,10 @@ namespace Tmpl8
             vec2 position = { 0, 0 };
             vec2 default_pos = { 0, 0 };
 
+            float hitbox_tolerance = 2.0f;
+            float hitbox_radius = 16.0f - hitbox_tolerance;
+            float player_img_width = img_player.GetWidth();
+            float player_img_height = img_player.GetHeight();
             bool can_jump = false;
             float move_cooldown = 0.0f;
             bool jumping = false;
@@ -43,7 +43,6 @@ namespace Tmpl8
 		    float max_vertical_speed = 10.0f;           // Max vertical speed
             const float GRAVITY = 0.10f;
             const float ENERGY_LOSS = 0.7f;             // How much energy the ball keeps after a bounce in %
-		    const float PLAYER_DRAW_OFFSET_Y = -4.0f;   // Offset for the player sprite (since it has a reduced hitbox, to put it back on the ground)
 
             // Functions
             vec2 movePlayer(Collisions* collisions, float deltaTime);

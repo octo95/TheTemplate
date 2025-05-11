@@ -52,14 +52,14 @@ namespace Tmpl8
     void Camera::drawPlayer(Sprite* img, Surface* screen, vec2 pos, float deltaTime, float acceleration)
     {
         player_angle += deltaTime * acceleration;
-        pos += getCamPos(); //- vec2(0,4) ;
+        pos += getCamPos();
         img->DrawRotated(screen, pos + vec2(-img->GetWidth() / 2, -img->GetHeight() / 2), player_angle);
     }
 
     void Camera::drawAICopy(Sprite* img, Surface* screen, vec2 pos, float deltaTime, float acceleration)
     {
         ai_copy_angle += deltaTime * acceleration;
-        pos += getCamPos() - vec2(0, 4);
+        pos += getCamPos() - vec2(0.0f, 4.0f);
         img->DrawRotated(screen, pos, ai_copy_angle);
     }
 };

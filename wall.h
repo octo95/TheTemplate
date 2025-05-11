@@ -1,6 +1,6 @@
 #pragma once
 #include "surface.h"
-#include "tile.h"
+#include "tilemap.h"
 #include <map>
 #include <iostream>
 #include <functional>

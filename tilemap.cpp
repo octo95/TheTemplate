@@ -2,10 +2,6 @@
 
 namespace Tmpl8
 {
-    TileMap::TileMap(Player& playerRef) :
-        player(playerRef)
-    {}
-
     Sprite img_map1_data_read(new Surface("assets/images/map/data_read/img_map1_data_read.png"), 1);
     Sprite img_map1_draw(new Surface("assets/images/map/draw/img_map1_draw.png"), 1);
     Sprite img_map1_draw_bg(new Surface("assets/images/map/draw/img_map1_draw_bg.png"), 1);
@@ -63,13 +59,13 @@ namespace Tmpl8
 
     void TileMap::readImageToMap(Sprite* image) {
         Pixel* src = image->GetBuffer();
-        size_t width = image->GetWidth();
-        size_t height = image->GetHeight();
+        size_t width = static_cast<size_t>(image->GetWidth());
+        size_t height = static_cast<size_t>(image->GetHeight());
         std::unordered_map<vec2, TileType> new_map = std::unordered_map<vec2, TileType>{};
 
-        for ( int y = 0; y < height; y+=TILE_SIZE ) 
+        for ( size_t y = 0; y < height; y += static_cast<size_t>(TILE_SIZE) ) 
         {
-            for ( int x = 0; x < width; x+=TILE_SIZE ) 
+            for ( size_t x = 0; x < width; x += static_cast<size_t>(TILE_SIZE) ) 
             {
 
                 TileType type = TileType::Ice;

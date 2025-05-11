@@ -13,11 +13,6 @@ namespace Tmpl8
     // Variables
     Sprite img_player(new Surface("assets/images/entities/img_player.png"), 1);
 
-    int hitbox_radius = 16 - 2; // Tolerance of 2 pixels on the hitbox
-    int player_img_width = img_player.GetWidth();
-    int player_img_height = img_player.GetHeight();
-    bool canJump = false;
-
     vec2 Player::movePlayer(Collisions* collisions, float deltaTime)
     {
         // Left
@@ -142,10 +137,13 @@ namespace Tmpl8
             }
         }
         
-        // + Clamp the player on screen
+        // + Clamp the player on screen with the map size
         if (position.x - player_img_width / 2 < 0) position.x = player_img_width / 2;   // On the left
         if (position.x + player_img_width / 2 > mapSize.x)                              // On the right
             position.x = mapSize.x - player_img_width / 2;
+
+        float offset = hitbox_radius - TILE_SIZE / 1.4f;        // Let the player be able to go a bit out of the boundaries by a little extra without letting them able to clip out of bounds.
+        if (position.y - offset  < 0.0f) position.y = offset;   // On the left
 
         return camPos;
     }

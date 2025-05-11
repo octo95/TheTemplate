@@ -28,15 +28,14 @@ namespace Tmpl8
 	public:
 
 		Game() :
-			player(camera),
-			debug(camera, tilemap, player, collectible, wall, level, collisions, menu, ai_map),
-			menu(level, player, tilemap, gamesound, text, health),
-			tilemap(player),
-			collisions(player, tilemap, level, camera, gamesound, ai_map, menu, health),
-			level(tilemap, player, collectible, wall, gamesound, ai_map, camera, cloud),
-			health(player),
 			bell(level),
-			menu_main(level, player, tilemap, gamesound, text, health)
+			collisions(player, tilemap, level, camera, gamesound, ai_map, menu, health),
+			debug(camera, tilemap, player, collectible, wall, level, collisions, menu, ai_map),
+			health(player),
+			level(tilemap, player, collectible, wall, gamesound, ai_map, camera, cloud),
+			menu(level, player, tilemap, gamesound, text, health),
+			player(camera),
+			tilemap(player)
 		{}
 
 		void SetTarget( Surface* surface ) { screen = surface; }
@@ -45,43 +44,30 @@ namespace Tmpl8
 		void Tick( float deltaTime );
 		void MouseUp(int button) { menu.setMouseState(false); }
 		void MouseDown(int button) { menu.setMouseState(true); }
-		void MouseMove(int x, int y) 
-		{ 
-			mousex = x;
-			mousey = y;
-			menu.setMousePosition(mousex, mousey);
-		}
-		void KeyUp( int key ) { /* implement if you want to handle keys */ }
-		void KeyDown( int key ) { /* implement if you want to handle keys */ }
+		void MouseMove(int x, int y) { menu.setMousePosition(x, y); }
+		void KeyUp( int key ) {}
+		void KeyDown( int key ) {}
 
 		~Game(){}
 	private:
-		// Graphics
-		Surface* screen;
-		Camera camera;
-		Debug debug;
-		Menu menu;
-		
-		// Gameplay
-		CollectibleMap collectible = CollectibleMap();
-		WallMap wall = WallMap();
-		CloudMap cloud = CloudMap();
-		//MenuMap menu = MenuMap();
-		Player player;
 		AIMap ai_map = AIMap{ std::vector<AI_Copy>(), std::vector<AI_Follow>(), std::vector<AI_Patrol>() };
-		TileMap tilemap;
+		Bell bell;
+		Camera camera;
+		CircularBuffer circular_buffer;
+		CloudMap cloud = CloudMap();
+		CollectibleMap collectible = CollectibleMap();
 		Collisions collisions;
-		Level level;
+		Debug debug;
 		GameSound gamesound;
 		Health health;
-		Bell bell;
-		CircularBuffer circular_buffer;
+		Level level;
+		Menu menu;
+		Player player;
+		Surface* screen;
 		Text text;
-		MenuMain menu_main;
+		TileMap tilemap;
+		WallMap wall = WallMap();
 
-		int mousex, mousey;
-		bool start_game = false;
-		bool isTDown = false;
 		float localTime = 0.0f;
 		float frameTime = 0.0f;
 	};

@@ -22,9 +22,6 @@
     <ClCompile Include="template.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="tile.cpp">
-      <Filter>Solutions</Filter>
-    </ClCompile>
     <ClCompile Include="tilemap.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
@@ -76,6 +73,9 @@
     <ClCompile Include="menu_main.cpp">
       <Filter>Solutions\Menus</Filter>
     </ClCompile>
+    <ClCompile Include="tile_old.cpp">
+      <Filter>Other</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="player.h">
@@ -85,9 +85,6 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="template.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="tile.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="tilemap.h">

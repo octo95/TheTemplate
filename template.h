@@ -1,7 +1,7 @@
 // Template, BUAS version https://www.buas.nl/games
 // IGAD/BUAS(NHTV)/UU - Jacco Bikker - 2006-2020
-
 #pragma once
+
 #if defined _M_IX86
 #pragma comment(linker, "/manifestdependency:\"name='dlls_x86' version='1.0.0.0' type='win32'\"")
 #elif defined _M_X64

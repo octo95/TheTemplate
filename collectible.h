@@ -1,5 +1,4 @@
 #pragma once
-#include "gamesound.h"
 #include "surface.h"
 #include "tilemap.h"
 #include "vec2_hash.h"
@@ -13,9 +12,10 @@ namespace Tmpl8
 	extern bool collectible_timer_active;
 	extern bool collected_new;
 
-	class Player;
 	class Menu;
 	class Health;
+	class Player;
+	class GameSound;
 
 	class Collectible
 	{

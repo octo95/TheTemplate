@@ -45,7 +45,7 @@ namespace Tmpl8
             void drawPlayerTileHitbox(const vec2& pos, Surface* screen);
             void drawHitbox(const vec2& pos, Sprite* img, Surface* screen);
             void drawVelocityNorm(Surface* screen);
-            void drawDistancePlayerToAI(vec2 ai_pos, int size, Surface* screen);
+            void drawDistancePlayerToAI(vec2 ai_pos, float size, Surface* screen);
 
             // Other functions
             void defaultPos();

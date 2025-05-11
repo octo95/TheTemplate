@@ -457,6 +457,7 @@ void Sprite::DrawScaled( int a_X, int a_Y, int a_Width, int a_Height, Surface* a
 	}
 }
 
+// The following DrawRotated function was made using ai generation using a rotation matrix.
 void Sprite::DrawRotated(Surface* a_Target, int a_X, int a_Y, float a_Angle)
 {
 	if ((a_X < -m_Width) || (a_X > (a_Target->GetWidth() + m_Width))) return;
@@ -497,6 +498,7 @@ void Sprite::DrawRotated(Surface* a_Target, int a_X, int a_Y, float a_Angle)
 	}
 }
 
+// Override
 void Sprite::DrawRotated(Surface* a_Target, vec2 a_Pos, float a_Angle)
 {
 	DrawRotated(a_Target, static_cast<int>(a_Pos.x), static_cast<int>(a_Pos.y), a_Angle);

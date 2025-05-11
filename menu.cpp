@@ -13,36 +13,36 @@ namespace Tmpl8
         health(healthRef)
     {}
 
-    //// + MAIN MENU
-    //Sprite img_menu_main_bg(new Surface("assets/images/menus/main_menu/img_menu_main_bg.png"), 1);
-    //Sprite img_menu_main_start(new Surface("assets/images/menus/main_menu/img_menu_main_start.png"), 1);
-    //Sprite img_menu_main_lvl1(new Surface("assets/images/menus/main_menu/img_menu_main_lvl1.png"), 1);
-    //Sprite img_menu_main_lvl2(new Surface("assets/images/menus/main_menu/img_menu_main_lvl2.png"), 1);
-    //Sprite img_menu_main_lvl3(new Surface("assets/images/menus/main_menu/img_menu_main_lvl3.png"), 1);
-    //Sprite img_menu_main_lvl4(new Surface("assets/images/menus/main_menu/img_menu_main_lvl4.png"), 1);
-    //Sprite img_menu_main_lvl5(new Surface("assets/images/menus/main_menu/img_menu_main_lvl5.png"), 1);
-    //Sprite img_menu_main_difficulty_easy(new Surface("assets/images/menus/main_menu/img_menu_main_difficulty_easy.png"), 1);
-    //Sprite img_menu_main_difficulty_medium(new Surface("assets/images/menus/main_menu/img_menu_main_difficulty_medium.png"), 1);
-    //Sprite img_menu_main_difficulty_hard(new Surface("assets/images/menus/main_menu/img_menu_main_difficulty_hard.png"), 1);
-    //Sprite img_menu_main_pro_tip(new Surface("assets/images/menus/main_menu/img_menu_main_pro_tip.png"), 1);
+    // + MAIN MENU
+    Sprite img_menu_main_bg(new Surface("assets/images/menus/main_menu/img_menu_main_bg.png"), 1);
+    Sprite img_menu_main_start(new Surface("assets/images/menus/main_menu/img_menu_main_start.png"), 1);
+    Sprite img_menu_main_lvl1(new Surface("assets/images/menus/main_menu/img_menu_main_lvl1.png"), 1);
+    Sprite img_menu_main_lvl2(new Surface("assets/images/menus/main_menu/img_menu_main_lvl2.png"), 1);
+    Sprite img_menu_main_lvl3(new Surface("assets/images/menus/main_menu/img_menu_main_lvl3.png"), 1);
+    Sprite img_menu_main_lvl4(new Surface("assets/images/menus/main_menu/img_menu_main_lvl4.png"), 1);
+    Sprite img_menu_main_lvl5(new Surface("assets/images/menus/main_menu/img_menu_main_lvl5.png"), 1);
+    Sprite img_menu_main_difficulty_easy(new Surface("assets/images/menus/main_menu/img_menu_main_difficulty_easy.png"), 1);
+    Sprite img_menu_main_difficulty_medium(new Surface("assets/images/menus/main_menu/img_menu_main_difficulty_medium.png"), 1);
+    Sprite img_menu_main_difficulty_hard(new Surface("assets/images/menus/main_menu/img_menu_main_difficulty_hard.png"), 1);
+    Sprite img_menu_main_pro_tip(new Surface("assets/images/menus/main_menu/img_menu_main_pro_tip.png"), 1);
 
-    //    // - Info panel
-    //Sprite img_menu_main_info_bg(new Surface("assets/images/menus/main_menu/info/img_menu_main_info_bg.png"), 1);
-    //Sprite img_menu_main_info_info(new Surface("assets/images/menus/main_menu/info/img_menu_main_info_info.png"), 1);
-    //Sprite img_menu_main_info_info_alt(new Surface("assets/images/menus/main_menu/info/img_menu_main_info_info_alt.png"), 1);
-    //Sprite img_menu_main_info_quit(new Surface("assets/images/menus/main_menu/info/img_menu_main_info_quit.png"), 1);
-    //Sprite img_menu_main_info_quit_alt(new Surface("assets/images/menus/main_menu/info/img_menu_main_info_quit_alt.png"), 1);
+        // - Info panel
+    Sprite img_menu_main_info_bg(new Surface("assets/images/menus/main_menu/info/img_menu_main_info_bg.png"), 1);
+    Sprite img_menu_main_info_info(new Surface("assets/images/menus/main_menu/info/img_menu_main_info_info.png"), 1);
+    Sprite img_menu_main_info_info_alt(new Surface("assets/images/menus/main_menu/info/img_menu_main_info_info_alt.png"), 1);
+    Sprite img_menu_main_info_quit(new Surface("assets/images/menus/main_menu/info/img_menu_main_info_quit.png"), 1);
+    Sprite img_menu_main_info_quit_alt(new Surface("assets/images/menus/main_menu/info/img_menu_main_info_quit_alt.png"), 1);
 
-    //    // - Hover
-    //Sprite img_menu_main_start_alt(new Surface("assets/images/menus/main_menu/hover/img_menu_main_start_alt.png"), 1);
-    //Sprite img_menu_main_lvl1_alt(new Surface("assets/images/menus/main_menu/hover/img_menu_main_lvl1_alt.png"), 1);
-    //Sprite img_menu_main_lvl2_alt(new Surface("assets/images/menus/main_menu/hover/img_menu_main_lvl2_alt.png"), 1);
-    //Sprite img_menu_main_lvl3_alt(new Surface("assets/images/menus/main_menu/hover/img_menu_main_lvl3_alt.png"), 1);
-    //Sprite img_menu_main_lvl4_alt(new Surface("assets/images/menus/main_menu/hover/img_menu_main_lvl4_alt.png"), 1);
-    //Sprite img_menu_main_lvl5_alt(new Surface("assets/images/menus/main_menu/hover/img_menu_main_lvl5_alt.png"), 1);
-    //Sprite img_menu_main_difficulty_easy_hover(new Surface("assets/images/menus/main_menu/hover/img_menu_main_difficulty_easy_hover.png"), 1);
-    //Sprite img_menu_main_difficulty_medium_hover(new Surface("assets/images/menus/main_menu/hover/img_menu_main_difficulty_medium_hover.png"), 1);
-    //Sprite img_menu_main_difficulty_hard_hover(new Surface("assets/images/menus/main_menu/hover/img_menu_main_difficulty_hard_hover.png"), 1);
+        // - Hover
+    Sprite img_menu_main_start_alt(new Surface("assets/images/menus/main_menu/hover/img_menu_main_start_alt.png"), 1);
+    Sprite img_menu_main_lvl1_alt(new Surface("assets/images/menus/main_menu/hover/img_menu_main_lvl1_alt.png"), 1);
+    Sprite img_menu_main_lvl2_alt(new Surface("assets/images/menus/main_menu/hover/img_menu_main_lvl2_alt.png"), 1);
+    Sprite img_menu_main_lvl3_alt(new Surface("assets/images/menus/main_menu/hover/img_menu_main_lvl3_alt.png"), 1);
+    Sprite img_menu_main_lvl4_alt(new Surface("assets/images/menus/main_menu/hover/img_menu_main_lvl4_alt.png"), 1);
+    Sprite img_menu_main_lvl5_alt(new Surface("assets/images/menus/main_menu/hover/img_menu_main_lvl5_alt.png"), 1);
+    Sprite img_menu_main_difficulty_easy_hover(new Surface("assets/images/menus/main_menu/hover/img_menu_main_difficulty_easy_hover.png"), 1);
+    Sprite img_menu_main_difficulty_medium_hover(new Surface("assets/images/menus/main_menu/hover/img_menu_main_difficulty_medium_hover.png"), 1);
+    Sprite img_menu_main_difficulty_hard_hover(new Surface("assets/images/menus/main_menu/hover/img_menu_main_difficulty_hard_hover.png"), 1);
 
     // + NEXT MENU
     Sprite img_menu_next_bg(new Surface("assets/images/menus/next_menu/img_menu_next_bg.png"), 1);
@@ -83,33 +83,34 @@ namespace Tmpl8
     Sprite img_audio_off_hover(new Surface("assets/images/UI/img_audio_off_hover.png"), 1);
 
     // + GLOBAL
-    //Sprite img_selected(new Surface("assets/images/UI/img_selected.png"), 1);
+    Sprite img_selected(new Surface("assets/images/UI/img_selected.png"), 1);
     Sprite img_quit(new Surface("assets/images/UI/img_quit.png"), 1);
 
         // - Hover
     Sprite img_quit_hover(new Surface("assets/images/UI/img_quit_hover.png"), 1);
 
-    bool Menu::isHoveringSurface(int x, int y, int width, int height)
+
+    bool Menu::isHoveringSurface(vec2 pos, vec2 size)
     {
-        return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
+        return mouseX >= pos.x && mouseX <= pos.x + size.x && mouseY >= pos.y && mouseY <= pos.y + size.y;
     }
 
     void Menu::handleButton(
         Surface* screen,
-        int x, int y, int width, int height,
+        vec2 pos, vec2 size,
         Sprite* normalSprite,
         Sprite* hoverSprite,
         bool& wasHovering,
         std::function<void()> onClick)
     {
-        bool isHovering = isHoveringSurface(x, y, width, height);
+        bool isHovering = isHoveringSurface(pos, size);
 
         if (isHovering)
         {
             if (!wasHovering)
                 gamesound.playSound(gamesound.snd_hover);
 
-            hoverSprite->Draw(screen, x, y);
+            hoverSprite->Draw(screen, pos);
 
             if (isMousePressed && !wasMousePressedLastFrame)
             {
@@ -120,133 +121,156 @@ namespace Tmpl8
         }
         else
         {
-            normalSprite->Draw(screen, x, y);
+            normalSprite->Draw(screen, pos);
         }
 
         wasHovering = isHovering;
     }
 
-    //void Menu::drawMainBGPan(Surface* screen, float deltaTime)
-    //{
-    //    float panning_speed = 150.0f; 
-    //    float bg_width = img_menu_main_bg.GetWidth();
+    void Menu::openInfoMenu(Surface* screen, float deltaTime)
+    {
+        if (!infoMenuOpen) return;
 
-    //    main_bg_x += panning_speed * deltaTime;
+        // Draw background using vec2 for position on the same line
+        img_menu_main_info_bg.Draw(screen, MAIN_INFO_BG_POS);
 
-    //    if (main_bg_x >= bg_width) main_bg_x -= bg_width;
+        // Adjust handleButton to use vec2 for position and size on the same line
+        handleButton(
+            screen,
+            MAIN_INFO_QUIT_POS,
+            MAIN_INFO_QUIT_SIZE,
+            &img_menu_main_info_quit_alt,
+            &img_menu_main_info_quit,
+            wasHoveringQuit,
+            [&]() {
+                if (isMousePressed && !wasMousePressedLastFrame) {
+                    gamesound.playSound(gamesound.snd_select);
+                    infoMenuOpen = false;
+                }
+            }
+        );
 
-    //    img_menu_main_bg.Draw(screen, -main_bg_x, 0);           
-    //    img_menu_main_bg.Draw(screen, -main_bg_x + bg_width, 0);
-    //}
+        wasMousePressedLastFrame = isMousePressed;
+    }
 
-    //void Menu::openMainMenu(Surface* screen, float deltaTime)
-    //{
-    //    if (!mainMenuOpen) return;
+    void Menu::drawMainBGPan(Surface* screen, float deltaTime)
+    {
+        float panning_speed = 150.0f; 
+        float bg_width = img_menu_main_bg.GetWidth();
 
-    //    drawMainBGPan(screen, deltaTime);
-    //    img_menu_main_pro_tip.Draw(screen, 7, SCREEN_HEIGHT - img_menu_main_pro_tip.GetHeight() - 7);
+        main_bg_x += panning_speed * deltaTime;
 
-    //    audioOpen = true;
-    //    quitOpen = true;
-    //    audioManagerOpen(screen);
-    //    quitManagerOpen(screen);
+        if (main_bg_x >= bg_width) main_bg_x -= bg_width;
 
-    //    // Level buttons
-    //    Sprite* lvl_hover_list[5] = { &img_menu_main_lvl1_alt, &img_menu_main_lvl2_alt, &img_menu_main_lvl3_alt, &img_menu_main_lvl4_alt, &img_menu_main_lvl5_alt };
-    //    Sprite* lvl_list[5] = { &img_menu_main_lvl1, &img_menu_main_lvl2, &img_menu_main_lvl3, &img_menu_main_lvl4, &img_menu_main_lvl5 };
-    //    int lvl_list_X[5] = { MAIN_LVL1_X, MAIN_LVL2_X, MAIN_LVL3_X, MAIN_LVL4_X, MAIN_LVL5_X };
+        img_menu_main_bg.Draw(screen, vec2(-main_bg_x, 0.0f));           
+        img_menu_main_bg.Draw(screen, vec2(-main_bg_x + bg_width, 0.0f));
+    }
 
-    //    // Difficulty buttons
-    //    Sprite* difficulty_hover_list[3] = { &img_menu_main_difficulty_easy_hover, &img_menu_main_difficulty_medium_hover, &img_menu_main_difficulty_hard_hover };
-    //    Sprite* difficulty_list[3] = { &img_menu_main_difficulty_easy, &img_menu_main_difficulty_medium, &img_menu_main_difficulty_hard };
-    //    int difficulty_X[3] = { MAIN_EASY_X, MAIN_MEDIUM_X, MAIN_HARD_X };
+    void Menu::openMainMenu(Surface* screen, float deltaTime)
+    {
+        if (!mainMenuOpen) return;
 
-    //    // Variables to track button hover state
-    //    static bool wasHoveringLevel[5] = { false };
-    //    static bool wasHoveringDifficulty[3] = { false };
-    //    static bool wasHoveringStart = false;
-    //    static bool wasHoveringInfo = false;
+        drawMainBGPan(screen, deltaTime);
+        img_menu_main_pro_tip.Draw(screen, vec2(7, SCREEN_HEIGHT - img_menu_main_pro_tip.GetHeight() - 7));
 
-    //    // Level buttons loop
-    //    for (int i = 0; i < 5; i++)
-    //    {
-    //        handleButton(
-    //            screen,
-    //            lvl_list_X[i], MAIN_LVLS_Y,
-    //            MAIN_LVL_WIDTH, MAIN_LVL_HEIGHT,
-    //            lvl_list[i], lvl_hover_list[i],
-    //            wasHoveringLevel[i],
-    //            [&]() {
-    //                manageLevelSelect(i);
-    //                score = 0.0f;
-    //                timer_current = 0.0f;
-    //            });
-    //    }
+        audioOpen = true;
+        quitOpen = true;
+        audioManagerOpen(screen);
+        quitManagerOpen(screen);
 
-    //    // Difficulty buttons loop
-    //    for (int i = 0; i < 3; i++)
-    //    {
-    //        handleButton(
-    //            screen,
-    //            difficulty_X[i], MAIN_DIFFICULTIES_Y,
-    //            MAIN_DIFFICULTY_WIDTH, MAIN_DIFFICULTY_HEIGHT,
-    //            difficulty_list[i], difficulty_hover_list[i],
-    //            wasHoveringDifficulty[i],
-    //            [&]() {
-    //                manageDifficultySelect(i);
-    //            });
+        // Level buttons
+        Sprite* lvl_hover_list[5] = { &img_menu_main_lvl1_alt, &img_menu_main_lvl2_alt, &img_menu_main_lvl3_alt, &img_menu_main_lvl4_alt, &img_menu_main_lvl5_alt };
+        Sprite* lvl_list[5] = { &img_menu_main_lvl1, &img_menu_main_lvl2, &img_menu_main_lvl3, &img_menu_main_lvl4, &img_menu_main_lvl5 };
+        vec2 lvl_positions[5] = { MAIN_LVL1_POS, MAIN_LVL2_POS, MAIN_LVL3_POS, MAIN_LVL4_POS, MAIN_LVL5_POS };
 
-    //        // Draw the selected difficulty marker
-    //        if (difficulty == i + 1)
-    //        {
-    //            static float totalTime = 0.0f;
-    //            float floating_time = 2.0f;
-    //            float amplitude = 5.0f;
-    //            vec2 draw_pos = vec2(
-    //                difficulty_X[i] + MAIN_DIFFICULTY_WIDTH / 2 - img_selected.GetWidth() / 2,
-    //                MAIN_DIFFICULTIES_Y + MAIN_DIFFICULTY_HEIGHT + 10.0f
-    //            );
-    //            totalTime += deltaTime;
-    //            draw_pos.y += sin((totalTime / floating_time) * 2.0f * PI) * amplitude - 4.0f;
-    //            img_selected.Draw(screen, draw_pos);
-    //        }
-    //    }
+        // Difficulty buttons
+        Sprite* difficulty_hover_list[3] = { &img_menu_main_difficulty_easy_hover, &img_menu_main_difficulty_medium_hover, &img_menu_main_difficulty_hard_hover };
+        Sprite* difficulty_list[3] = { &img_menu_main_difficulty_easy, &img_menu_main_difficulty_medium, &img_menu_main_difficulty_hard };
+        vec2 difficulty_positions[3] = { MAIN_EASY_POS, MAIN_MEDIUM_POS, MAIN_HARD_POS };
 
-    //    // Start button hover logic
-    //    handleButton(
-    //        screen,
-    //        MAIN_START_X, MAIN_START_Y,
-    //        MAIN_START_WIDTH, MAIN_START_HEIGHT,
-    //        &img_menu_main_start, &img_menu_main_start_alt,
-    //        wasHoveringStart,
-    //        [&]() {
-    //            manageLevelSelect(0);
-    //            score = 0;
-    //            timer_current = 0.0f;
-    //        });
+        // Variables to track button hover state
+        static bool wasHoveringLevel[5] = { false };
+        static bool wasHoveringDifficulty[3] = { false };
+        static bool wasHoveringStart = false;
+        static bool wasHoveringInfo = false;
 
-    //    // Info button hover logic
-    //    static bool wasMousePressedLastFrame = false;
-    //    handleButton(
-    //        screen,
-    //        MAIN_INFO_X, MAIN_INFO_Y,
-    //        MAIN_INFO_WIDTH, MAIN_INFO_HEIGHT,
-    //        &img_menu_main_info_info, &img_menu_main_info_info_alt,
-    //        wasHoveringInfo,
-    //        [&]() {
-    //            if (isMousePressed && !wasMousePressedLastFrame)
-    //            {
-    //                gamesound.playSound(gamesound.snd_select);
-    //                infoMenuOpen = true;
-    //            }
-    //        });
+        // Level buttons loop
+        for (int i = 0; i < 5; i++)
+        {
+            handleButton(
+                screen,
+                lvl_positions[i], MAIN_LVL_SIZE,
+                lvl_list[i], lvl_hover_list[i],
+                wasHoveringLevel[i],
+                [&]() {
+                    manageLevelSelect(i);
+                    score = 0;
+                    timer_current = 0.0f;
+                });
+        }
 
-    //    // Open the info menu
-    //    openInfoMenu(screen, deltaTime);
+        // Difficulty buttons loop
+        for (int i = 0; i < 3; i++)
+        {
+            handleButton(
+                screen,
+                difficulty_positions[i], MAIN_DIFFICULTY_SIZE,
+                difficulty_list[i], difficulty_hover_list[i],
+                wasHoveringDifficulty[i],
+                [&]() {
+                    manageDifficultySelect(i);
+                });
 
-    //    // Store mouse pressed state for next frame
-    //    wasMousePressedLastFrame = isMousePressed;
-    //}
+            // Draw the selected difficulty marker
+            if (difficulty == i + 1)
+            {
+                static float totalTime = 0.0f;
+                float floating_time = 2.0f;
+                float amplitude = 5.0f;
+                vec2 draw_pos = vec2(
+                    difficulty_positions[i].x + MAIN_DIFFICULTY_SIZE.x / 2 - img_selected.GetWidth() / 2,
+                    difficulty_positions[i].y + MAIN_DIFFICULTY_SIZE.y + 10.0f
+                );
+                totalTime += deltaTime;
+                draw_pos.y += sin((totalTime / floating_time) * 2.0f * PI) * amplitude - 4.0f;
+                img_selected.Draw(screen, draw_pos);
+            }
+        }
+
+        // Start button hover logic
+        handleButton(
+            screen,
+            MAIN_START_POS, MAIN_START_SIZE,
+            &img_menu_main_start, &img_menu_main_start_alt,
+            wasHoveringStart,
+            [&]() {
+                manageLevelSelect(0);
+                score = 0;
+                timer_current = 0.0f;
+            });
+
+        // Info button hover logic
+        static bool wasMousePressedLastFrame = false;
+        handleButton(
+            screen,
+            MAIN_INFO_POS, MAIN_INFO_SIZE,
+            &img_menu_main_info_info, &img_menu_main_info_info_alt,
+            wasHoveringInfo,
+            [&]() {
+                if (isMousePressed && !wasMousePressedLastFrame)
+                {
+                    gamesound.playSound(gamesound.snd_select);
+                    infoMenuOpen = true;
+                }
+            });
+
+        // Open the info menu
+        openInfoMenu(screen, deltaTime);
+
+        // Store mouse pressed state for next frame
+        wasMousePressedLastFrame = isMousePressed;
+    }
+
 
     void Menu::manageLevelSelect(int index)
     {
@@ -284,7 +308,7 @@ namespace Tmpl8
         nextMenuOpen = level.level_finished;
         if (!nextMenuOpen) return;
 
-        img_menu_next_bg.Draw(screen, SCREEN_WIDTH / 2 - NEXT_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - NEXT_BG_HEIGHT / 2);
+        img_menu_next_bg.Draw(screen, SCREEN_HALF_SIZE - NEXT_BG_SIZE / 2.0f);
 
         static bool wasHoveringNext = false;
         static bool wasHoveringMenu = false;
@@ -292,8 +316,7 @@ namespace Tmpl8
         // Handle "Next Level" button
         handleButton(
             screen,
-            NEXT_LVL_X, NEXT_LVL_Y,
-            NEXT_NEXT_WIDTH, NEXT_NEXT_HEIGHT,
+            NEXT_LVL_POS, NEXT_NEXT_SIZE,
             &img_menu_next_next,
             &img_menu_next_next_alt,
             wasHoveringNext,
@@ -310,11 +333,12 @@ namespace Tmpl8
                 }
             });
 
+        alreadyClickedNextLevel = !alreadyClickedNextLevel;
+
         // Handle "Menu" button
         handleButton(
             screen,
-            NEXT_MENU_X, NEXT_MENU_Y,
-            NEXT_NEXT_WIDTH, NEXT_NEXT_HEIGHT,
+            NEXT_MENU_POS, NEXT_NEXT_SIZE,
             &img_menu_next_menu,
             &img_menu_next_menu_alt,
             wasHoveringMenu,
@@ -337,7 +361,7 @@ namespace Tmpl8
         audioManagerOpen(screen);
         quitManagerOpen(screen);
 
-        img_menu_pause_bg.Draw(screen, SCREEN_WIDTH / 2 - PAUSE_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_HEIGHT / 2);
+        img_menu_pause_bg.Draw(screen, vec2(SCREEN_WIDTH / 2 - PAUSE_BG_SIZE.x / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_SIZE.y / 2));
 
         static bool wasHoveringResume = false;
         static bool wasHoveringQuit = false;
@@ -345,8 +369,7 @@ namespace Tmpl8
         // Pause Button
         handleButton(
             screen,
-            PAUSE_RESUME_X, PAUSE_RESUME_Y,
-            PAUSE_RESUME_WIDTH, PAUSE_RESUME_HEIGHT,
+            PAUSE_RESUME_POS, PAUSE_RESUME_SIZE,
             &img_menu_pause_resume,
             &img_menu_pause_resume_alt,
             wasHoveringResume,
@@ -361,8 +384,7 @@ namespace Tmpl8
         // Quit Button
         handleButton(
             screen,
-            PAUSE_QUIT_X, PAUSE_QUIT_Y,
-            PAUSE_QUIT_WIDTH, PAUSE_QUIT_HEIGHT,
+            PAUSE_QUIT_POS, PAUSE_QUIT_SIZE,
             &img_menu_pause_quit,
             &img_menu_pause_quit_alt,
             wasHoveringQuit,
@@ -378,17 +400,24 @@ namespace Tmpl8
             });
     }
 
+
     void Menu::openEndMenu(Surface* screen)
     {
         endMenuOpen = level.game_finished;
         scoreMenuOpen = true;
 
         if (endMenuOpen)
-            img_menu_end_bg.Draw(screen, SCREEN_WIDTH / 2 - PAUSE_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_HEIGHT / 2);
+        {
+            img_menu_end_bg.Draw(screen, SCREEN_HALF_SIZE - END_BG_SIZE / 2.0f);
+        }
         else if (overMenuOpen)
-            img_menu_over_bg.Draw(screen, SCREEN_WIDTH / 2 - PAUSE_BG_WIDTH / 2, SCREEN_HEIGHT / 2 - PAUSE_BG_HEIGHT / 2);
+        {
+            img_menu_over_bg.Draw(screen, SCREEN_HALF_SIZE - END_BG_SIZE / 2.0f);
+        }
         else
+        {
             return;
+        }
 
         static bool wasHoveringMenu = false;
         static bool wasHoveringReplay = false;
@@ -396,8 +425,7 @@ namespace Tmpl8
         // Menu button
         handleButton(
             screen,
-            END_MENU_X, END_MENU_Y,
-            END_MENU_WIDTH, END_MENU_HEIGHT,
+            END_MENU_POS, END_MENU_SIZE,
             &img_menu_end_menu,
             &img_menu_end_menu_alt,
             wasHoveringMenu,
@@ -412,15 +440,14 @@ namespace Tmpl8
                 infoMenuOpen = false;
                 level.game_finished = false;
                 scoreMenuOpen = false;
-                score = 0.0f;
+                score = 0;
                 timer_current = 0.0f;
             });
 
         // Replay button
         handleButton(
             screen,
-            END_REPLAY_X, END_REPLAY_Y, 
-            END_REPLAY_WIDTH, END_REPLAY_HEIGHT,
+            END_REPLAY_POS, END_REPLAY_SIZE,
             &img_menu_end_replay,
             &img_menu_end_replay_alt,
             wasHoveringReplay,
@@ -436,10 +463,11 @@ namespace Tmpl8
                 health.initHealth(this);
                 level.loadLevel(1);
                 scoreMenuOpen = false;
-                score = 0.0f;
+                score = 0;
                 timer_current = 0.0f;
             });
     }
+
 
     void Menu::manageMenus(Surface* screen, float deltaTime)
     {
@@ -579,7 +607,7 @@ namespace Tmpl8
         score_timer += deltaTime;
         for (int i = 0; i < score; i++)
         {
-            score_value_current = score * score_timer / counting_speed;
+            score_value_current = static_cast<int>(score * score_timer / counting_speed);
 
             color = 0xFFFF00;
             size = vec2(5.2f, 5.2f);
@@ -600,7 +628,7 @@ namespace Tmpl8
             }
         }
         char buffer[50];
-        sprintf(buffer, "Score: %04d", score_value_current);
+        sprintf(buffer, "Score: %04d", static_cast<int>(score_value_current));
 
         std::string txt = buffer;
         int text_width = stb_easy_font_width((char*)txt.c_str());
@@ -622,8 +650,7 @@ namespace Tmpl8
 
         handleButton(
             screen,
-            QUIT_X, QUIT_Y,
-            QUIT_WIDTH, QUIT_HEIGHT,
+            QUIT_POS, QUIT_SIZE,
             &img_quit,
             &img_quit_hover,
             wasHoveringQuit,
@@ -638,13 +665,12 @@ namespace Tmpl8
         if (!audioOpen) return;
 
         static bool wasHoveringAudio = false;
-        bool isHoveringAudio = isHoveringSurface(AUDIO_X, AUDIO_Y, AUDIO_WIDTH, AUDIO_HEIGHT);
+        bool isHoveringAudio = isHoveringSurface(AUDIO_POS, AUDIO_SIZE);
 
         handleButton(
             screen,
-            AUDIO_X, AUDIO_Y,
-            AUDIO_WIDTH, AUDIO_HEIGHT,
-            audioOn ? &img_audio_on : &img_audio_off, 
+            AUDIO_POS, AUDIO_SIZE,
+            audioOn ? &img_audio_on : &img_audio_off,
             audioOn ? &img_audio_on_hover : &img_audio_off_hover,
             wasHoveringAudio,
             [&]() {
@@ -676,7 +702,7 @@ namespace Tmpl8
 
     void Menu::timerInGame(Surface* screen, float deltaTime)
     {
-        if ( pauseMenuOpen || nextMenuOpen || endMenuOpen || overMenuOpen) return;
+        if (pauseMenuOpen || nextMenuOpen || endMenuOpen || overMenuOpen) return;
 
         timer_current += deltaTime;
 
@@ -691,15 +717,16 @@ namespace Tmpl8
         int text_width = stb_easy_font_width((char*)txt.c_str());
         int text_height = stb_easy_font_height((char*)txt.c_str());
 
-        vec2 size = vec2(1.0f,1.0f);
+        vec2 size = vec2(1.0f, 1.0f);
         vec2 draw_pos = vec2(
             10.0f,
-            30.0f 
+            30.0f
         );
 
-        text.printOnScreen((char*)txt.c_str(), draw_pos + 2.0f, screen, size, 0x934712);
+        text.printOnScreen((char*)txt.c_str(), draw_pos + vec2(2.0f, 2.0f), screen, size, 0x934712);
         text.printOnScreen((char*)txt.c_str(), draw_pos, screen, size, 0xFFFFFF);
     }
+
 
     void Menu::setMousePosition(int x, int y)
     {

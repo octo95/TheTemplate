@@ -5,7 +5,6 @@ namespace Tmpl8
 {
 	Sprite img_collectible_dash(new Surface("assets/images/UI/img_collectible_dash.png"), 1);
 	Sprite img_collectible_health(new Surface("assets/images/UI/img_collectible_health.png"), 1);
-	Sprite img_collectible_health_collected(new Surface("assets/images/UI/img_collectible_health_collected.png"), 1);
 
 	int collectibles_collected = 0;
 	int current_map = 1;
@@ -116,10 +115,6 @@ namespace Tmpl8
 			{
 				camera->drawWithCam(&img_collectible_health, screen, draw_pos);
 			}
-			else if (type == Collectible::CollectibleType::HealthCollected)	// UNUSED
-			{
-				camera->drawWithCam(&img_collectible_health_collected, screen, draw_pos);
-			}
 		}
 	}
 
@@ -127,7 +122,7 @@ namespace Tmpl8
 	{
 		float player_x = player->position.x;
 		float player_y = player->position.y;
-		float player_hitbox = hitbox_radius;
+		float player_hitbox = player->hitbox_radius;
 
 		CollectibleMap::iterator c = cmap.begin();
 

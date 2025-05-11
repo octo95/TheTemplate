@@ -19,12 +19,8 @@ namespace Tmpl8
     
     void Debug::drawPlayerHitbox(const vec2& pos, Surface* screen)
     {
-        //vec2 offset(player_img_width / 2.0f, player_img_height / 2.0f); 
-        //vec2 hitbox_size(hitbox_radius, hitbox_radius);
-        //vec2 center = pos + camera.getCamPos() + offset;
-
-        vec2 pos1 = pos + vec2(-hitbox_radius, -hitbox_radius) + camera.getCamPos();
-        vec2 pos2 = pos + vec2(hitbox_radius, hitbox_radius) + camera.getCamPos();
+        vec2 pos1 = pos + vec2(-player.hitbox_radius, -player.hitbox_radius) + camera.getCamPos();
+        vec2 pos2 = pos + vec2(player.hitbox_radius, player.hitbox_radius) + camera.getCamPos();
 
         screen->Box(pos1, pos2, 0xFF0000);
         screen->Box(pos + vec2(-2,-2) + camera.getCamPos(), pos + vec2(2, 2) + camera.getCamPos(), 0x5555DF);
@@ -154,7 +150,7 @@ namespace Tmpl8
 
         if (timeAccumulator >= refreshRate)
         {
-            lastFPS = frameCounter / timeAccumulator;
+            lastFPS = static_cast<int>(frameCounter / timeAccumulator);
             timeAccumulator = 0.0f;
             frameCounter = 0;
         }
@@ -209,13 +205,12 @@ namespace Tmpl8
         rKeyWasDown = rKeyIsDown;
     }
 
-
-    void Debug::drawDistancePlayerToAI(vec2 ai_pos, int size, Surface* screen)
+    void Debug::drawDistancePlayerToAI(vec2 ai_pos, float size, Surface* screen)
     {
-        int start_x = player.position.x + camera.getCamPos().x;
-        int start_y = player.position.y  - 4 + camera.getCamPos().y;
-        int end_y = ai_pos.y + size / 2 + camera.getCamPos().y;
-        int end_x = ai_pos.x + size / 2 + camera.getCamPos().x;
+        float start_x = player.position.x + camera.getCamPos().x;
+        float start_y = player.position.y  - 4 + camera.getCamPos().y;
+        float end_y = ai_pos.y + size / 2 + camera.getCamPos().y;
+        float end_x = ai_pos.x + size / 2 + camera.getCamPos().x;
 
         screen->Line(start_x, start_y, end_x, end_y, 0x00FF00);
     }
