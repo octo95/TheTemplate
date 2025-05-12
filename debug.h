@@ -33,10 +33,6 @@ namespace Tmpl8
                 WallMap& wallRef
             );
 
-            // Variables
-            bool gameSlow = false;
-            bool isTDown = false;
-
             // Main debug function
             void displayDebug(Surface* screen, float deltaTime);
 
@@ -55,7 +51,7 @@ namespace Tmpl8
 
 		    // Getters / Setters
             int getFPS(float deltaTime);
-            void toggleInfiniteDashes();
+            void giveDashes();
 
         private:
             Camera& camera;

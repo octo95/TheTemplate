@@ -36,6 +36,7 @@ namespace Tmpl8
 	extern Sprite img_menu_main_info_info;
 	extern Sprite img_menu_main_info_bg;
 	extern Sprite img_menu_main_info_quit;
+	extern Sprite img_menu_over_bg;
 
 	class Health;
 	class MenuMain;
@@ -60,7 +61,7 @@ namespace Tmpl8
 			void openMainMenu(Surface* screen, float deltaTime);
 			void openNextMenu(Surface* screen);
 			void openPauseMenu(Surface* screen);
-			void openEndMenu(Surface* screen);
+			void openEndMenu(Surface* screen, float deltaTime);
 			void openResultsMenu(Surface* screen, float deltaTime);
 			void openInfoMenu(Surface* screen, float deltaTime);
 
@@ -126,8 +127,6 @@ namespace Tmpl8
 			int score_value_current = 0;
 			bool score_is_counting = true;
 
-
-
 	private:
 
 		// Objects
@@ -166,6 +165,7 @@ namespace Tmpl8
 
 		// End menu
 		const vec2 END_BG_SIZE = img_menu_end_bg.GetSize();
+		const vec2 END_BG_OVER_SIZE = img_menu_over_bg.GetSize();
 		const vec2 END_MENU_SIZE = img_menu_end_menu.GetSize();
 		const vec2 END_REPLAY_SIZE = img_menu_end_replay.GetSize();
 

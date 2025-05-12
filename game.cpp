@@ -24,6 +24,7 @@ namespace Tmpl8
         new_pos = player.movePlayer(&collisions, localTime);
         player.setJumpState(collisions.getJumpState(new_pos));
         collisions.manageCollisions(new_pos);
+        player.restrictPlayerInMap(&tilemap);
 
         // Collisions logic
         manageWallCollision(&player, &gamesound);
@@ -45,18 +46,19 @@ namespace Tmpl8
     // |    DRAW GAME    |
     // +-----------------+
 
-    // The game is drawn layer by layer, the first being called are the most in the background and the last one are the most in the foreground, the order is the following:
-    /* 
-    * - Background
-    * - Clouds
-    * - Map
-    * - Collectibles
-    * - Player
-    * - AIs
-    * - Bells
-    * - Menus
-    * - UI
-    * - Debug
+    // The game is drawn layer by layer, the first being called are the most in the background 
+    // and the last ones are the most in the foreground, the order is the following:
+    /* --------------------------------------------------------------------------------------
+    * -  1. Background
+    * -  2. Clouds
+    * -  3. Map
+    * -  4. Collectibles
+    * -  5. Player
+    * -  6. AIs
+    * -  7. Bells
+    * -  8. Menus
+    * -  9. UI
+    * - 10. Debug
     */
 
     void Game::GameDraw(float deltaTime)
@@ -86,7 +88,7 @@ namespace Tmpl8
         menu.dashCountInGame(screen, localTime);
         menu.timerInGame(screen, deltaTime);
         menu.openResultsMenu(screen, deltaTime);
-        health.drawHealthBar(screen, &menu, &gamesound);
+        health.drawHealthBar(screen, &menu, &gamesound, localTime);
 
         // * DEBUG: Enabled if pressing <SPACEBAR>
         debug.displayDebug(screen, localTime);

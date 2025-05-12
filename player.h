@@ -47,6 +47,8 @@ namespace Tmpl8
             // Functions
             vec2 movePlayer(Collisions* collisions, float deltaTime);
             vec2 camFollowPlayer(TileMap* map);
+            void restrictPlayerInMap(TileMap* tilemap);
+            void manageJump(float deltaTime);
             void manageDash(float deltaTime);
 
 		    // Getters / Setters
@@ -55,7 +57,7 @@ namespace Tmpl8
             void setJumpState(bool canJump) { can_jump = canJump; }
             void setPlayerDefaultPos(const vec2& pos) { default_pos = pos; }
             void getPlayerDefaultPos(vec2& pos) { pos = default_pos; }
-            void resetPlayerVelocity() { velocity = { 0, 0 }; }
+            void resetPlayerVelocity() { velocity = { 0.0f, 0.0f }; }
 
         private:
             Camera& camera;

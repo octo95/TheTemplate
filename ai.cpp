@@ -11,6 +11,7 @@ namespace Tmpl8
 
     void workAI(AIMap* ai_map, float& localTime, Collisions& collisions, TileMap& tilemap) 
     {
+        // Apply the properties to all the AIs in their respective maps.
         if (ai_map->ai_copy_map.size() > 0)
         {
             for (AI_Copy& ai : ai_map->ai_copy_map) {
@@ -24,6 +25,8 @@ namespace Tmpl8
                 ai.followPlayer(localTime);
             }
         }
+
+        // The patrol AI can be killed if stomped, we need to make sure it's not dead before assigning it its properties.
         if (ai_map->ai_patrol_map.size() > 0) {
             for (AI_Patrol& ai : ai_map->ai_patrol_map) {
                 if (!ai.isDead)
@@ -37,6 +40,7 @@ namespace Tmpl8
 
     void drawAI(AIMap* ai_map, Surface* screen, float& deltaTime, Camera& camera) 
     {
+        // Draw all the AIs for each of their respective maps.
         if (ai_map->ai_copy_map.size() > 0)
         {
             for (AI_Copy& ai : ai_map->ai_copy_map) {
@@ -49,6 +53,7 @@ namespace Tmpl8
                 img_ai_follow.DrawRotated(screen, ai.position + camera.getCamPos(), ai.angle);
             }
         }
+        // Just as we want to make we don't apply the logic to a dead AI patrol, we need to make sure it's not dead before drawing it as well.
         if (ai_map->ai_patrol_map.size() > 0) 
         {
             for (AI_Patrol& ai : ai_map->ai_patrol_map) {
@@ -72,7 +77,6 @@ namespace Tmpl8
 
         // The AI touches the player if its distance is inferior to the sum of the radii
         bool touch = distance <= radii_sum;
-
         return touch;
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Tmpl8
 {
+	// Importing the sprites.
 	Sprite img_wall(new Surface("assets/images/map/img_wall.png"), 1);
-	int walls_count = 0;
 
 	WallMap wmap;
 
@@ -16,6 +16,7 @@ namespace Tmpl8
 		const vec2* ptr;
 		int size = 0;
 
+		// Following the same logic as collectibles.cpp
 		switch (map) {
 		case 1:
 			ptr = MAP1_WALLS;
@@ -85,7 +86,7 @@ namespace Tmpl8
 				player->velocity.y = player->velocity.x * 1.3f;		// Make the player bounce back up based on its horizontal speed
 				gamesound->playSound(gamesound->snd_break_wall);
 
-				// Remove all the wall that are on the same column to make bigger walls
+				// Remove all the walls that are on the same column to make bigger walls
 				float hitX = wallIt->first.x; 
 
 				while (wallColumnIt != wmap.end()) // Check through the map a second time to detect walls within the same column

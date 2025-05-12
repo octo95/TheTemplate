@@ -6,30 +6,27 @@ namespace Tmpl8
         level(levelRef)
     {}
 
+    // Importing the sprites
 	Sprite img_bell(new Surface("assets/images/map/img_bell.png"), 1);
     Sprite img_bell_animated(new Surface("assets/images/map/img_bell_animated.tga"), 5);
 
     void Bell::isBellTouchingPlayer(Player* player, GameSound* gamesound)
     {
-        // Define player bounding box
-        float player_x = player->position.x;
-        float player_y = player->position.y;
-        float player_hitbox = player->hitbox_radius;  
-
+        // Define the bell's hitbox
         float reduce_hitbox = 10.0f; // Shrink the bell's hitbox
         float bell_x = bell_current_pos.x + reduce_hitbox;
         float bell_y = bell_current_pos.y - BELL_SIZE.y + reduce_hitbox;
         float bell_width = BELL_SIZE.x - 2 * reduce_hitbox;
         float bell_height = BELL_SIZE.y - 2 * reduce_hitbox;
 
-        // AABB collision check
+        // AABB collision check with the player
         player_touch_bell =
-                            player_x < bell_x + bell_width &&
-            player_x + player_hitbox > bell_x &&
-                            player_y < bell_y + bell_height &&
-            player_y + player_hitbox > bell_y;
+                                    player->position.x < bell_x + bell_width &&
+            player->position.x + player->hitbox_radius > bell_x &&
+                                    player->position.y < bell_y + bell_height &&
+            player->position.y + player->hitbox_radius > bell_y;
 
-
+        // If the player touches the bell, play SFX and go to the next level
         if (player_touch_bell)
         {
             gamesound->playSound(gamesound->snd_bell);
@@ -39,11 +36,17 @@ namespace Tmpl8
 
 	void Bell::drawBell(Surface* screen, Camera* camera, int map_index, float deltaTime)
 	{
+        // The bell's position is stored in an array depending on the map_index, we gather it 
+        // and multiple it by TILE_SIZE to get the screen coordinates.
 		vec2 current_pos = { BELL_POS[map_index - 1] * TILE_SIZE };
+
+        // Pass this position to be used in the hitbox detection check
 		bell_current_pos = current_pos;
 
+        // Offset the position for drawing
 		vec2 draw_pos = { current_pos.x, current_pos.y - 0.9f * BELL_SIZE.y };
 
+        // Once the player touches the bell, it loops rings twice and shakes the scree
         const int bell_loops = 2;
         float animation_fps = 20.0f;
         const float total_frames = 5.0f;
@@ -73,8 +76,8 @@ namespace Tmpl8
             }
         }
 
+        // Gather the frame to use and draw it on the screen attatched to the camera.
         img_bell_animated.SetFrame(static_cast<int>(frame));
-
         camera->drawWithCam(&img_bell_animated, screen, draw_pos);
 	}
 }

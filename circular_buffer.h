@@ -25,6 +25,7 @@ namespace Tmpl8
         void add(vec2& item, float angle);
         PlayerState read();
     private:
-        const size_t BUFFER_SIZE = 720; // Expecting a maximum size of 3 seconds * 240 frames
+        const size_t BUFFER_SIZE = 720; // Expecting a maximum size of 3 seconds * 240 frames for a fixed size of the buffer 
+                                        // that will allow us to store all the previous state of the player for a given of time.
     };
 }

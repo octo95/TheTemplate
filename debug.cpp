@@ -15,38 +15,12 @@ namespace Tmpl8
         player(playerRef),
         tilemap(tilemapRef),
         wall(wallRef)
-    {
-    }
-    
-    void Debug::drawPlayerHitbox(const vec2& pos, Surface* screen)
-    {
-        vec2 pos1 = pos + vec2(-player.hitbox_radius, -player.hitbox_radius) + camera.getCamPos();
-        vec2 pos2 = pos + vec2(player.hitbox_radius, player.hitbox_radius) + camera.getCamPos();
-
-        screen->Box(pos1, pos2, 0xFF0000);
-        screen->Box(pos + vec2(-2,-2) + camera.getCamPos(), pos + vec2(2, 2) + camera.getCamPos(), 0x5555DF);
-    }
-
-
-    void Debug::drawPlayerTileHitbox(const vec2& pos, Surface* screen)
-    {
-        vec2 floorPos = vec2(std::floor(pos.x / TILE_SIZE), std::floor(pos.y / TILE_SIZE));
-        vec2 pos1 =  floorPos * TILE_SIZE + camera.getCamPos();
-        vec2 pos2 = pos1 + vec2(TILE_SIZE, TILE_SIZE);
-
-        screen->Box(pos1, pos2, 0x0FF000);
-    }
-
-    void Debug::drawHitbox(const vec2& pos, Sprite* img, Surface* screen)   
-    {
-        vec2 pos1 = pos + camera.getCamPos();
-        vec2 pos2 = pos1 + vec2(img->GetWidth(), img->GetHeight());
-
-        screen->Box(pos1, pos2, 0xFF0000);
-    }
-
+    {}
     void Debug::displayDebug(Surface* screen, float deltaTime)
     {
+        // Enables debug visuals and allows to enable cheats for debugging.
+        // Calls all the helper function of this class and additional elements, it is the main debug function.
+
         if (GetAsyncKeyState(VK_SPACE))
         {
             // PRESS <R> : Teleports player back to restart the current level.
@@ -59,7 +33,7 @@ namespace Tmpl8
             stopAIs();
 
             // PRESS <D> : Get infinite dashes.
-            toggleInfiniteDashes();
+            giveDashes();
 
             // Display the entities' hitboxes and their distance to the player
             drawPlayerHitbox(player.position, screen);
@@ -95,7 +69,6 @@ namespace Tmpl8
             sprintf(player_tpos_txt, "tx: %.0f, ty: %.0f", floor(player.position.x / 32), floor(player.position.y / 32));
             screen->Print(player_tpos_txt, 10, 50, 0xFFFF00);
 
-
             // Display current map level and spawn point
             char map_lvl_txt[100];
             sprintf(map_lvl_txt, "current map: %d - (%.0f, %.0f)", tilemap.getCurrentLevel(), player.default_pos.x, player.default_pos.y);
@@ -111,6 +84,36 @@ namespace Tmpl8
         }
     }
 
+    // Draw the player's hitbox in screen coordinates
+    void Debug::drawPlayerHitbox(const vec2& pos, Surface* screen)
+    {
+        vec2 pos1 = pos + vec2(-player.hitbox_radius, -player.hitbox_radius) + camera.getCamPos();
+        vec2 pos2 = pos + vec2(player.hitbox_radius, player.hitbox_radius) + camera.getCamPos();
+
+        screen->Box(pos1, pos2, 0xFF0000);
+        screen->Box(pos + vec2(-2,-2) + camera.getCamPos(), pos + vec2(2, 2) + camera.getCamPos(), 0x5555DF);
+    }
+
+    // Draw the a square around the tile the player is detected in, can be also called the display of the player's tile position.
+    void Debug::drawPlayerTileHitbox(const vec2& pos, Surface* screen)
+    {
+        vec2 floorPos = vec2(std::floor(pos.x / TILE_SIZE), std::floor(pos.y / TILE_SIZE));
+        vec2 pos1 =  floorPos * TILE_SIZE + camera.getCamPos();
+        vec2 pos2 = pos1 + vec2(TILE_SIZE, TILE_SIZE);
+
+        screen->Box(pos1, pos2, 0x0FF000);
+    }
+
+    // Generic drawHitbox function to display the hitbox of the AIs.
+    void Debug::drawHitbox(const vec2& pos, Sprite* img, Surface* screen)   
+    {
+        vec2 pos1 = pos + camera.getCamPos();
+        vec2 pos2 = pos1 + vec2(img->GetWidth(), img->GetHeight());
+
+        screen->Box(pos1, pos2, 0xFF0000);
+    }
+
+    // Stop the AIs logic if pressing <S>
     void Debug::stopAIs()
     {
         static bool s_wasPressed = false;
@@ -139,6 +142,7 @@ namespace Tmpl8
         }
     }
 
+    // Get the current FPS of the game based on deltaTime
     int Debug::getFPS(float deltaTime)
     {
         static float timeAccumulator = 0.0f;
@@ -158,6 +162,7 @@ namespace Tmpl8
         return lastFPS;
     }
 
+    // Helper function to put back the player to its default position.
     void Debug::defaultPos()
     {
         vec2 defaultPos;
@@ -165,9 +170,10 @@ namespace Tmpl8
         player.setPlayerPos(defaultPos);
     }
 
-    bool tabPressedLastFrame = false;
+    // Allows to skip to the next level by pressing <TAB>
     void Debug::nextDebugMap()
     {
+        static bool tabPressedLastFrame = false;
         bool isTabDown = GetAsyncKeyState(VK_TAB) & 0x8000;
         if (isTabDown && !tabPressedLastFrame)
         {
@@ -177,6 +183,7 @@ namespace Tmpl8
         tabPressedLastFrame = isTabDown;
     }
 
+    // Draws the player's velocity norm at the player's center.
     void Debug::drawVelocityNorm(Surface* screen)
     { 
         float lineSize = 10.0f;
@@ -193,6 +200,7 @@ namespace Tmpl8
         screen->Line(start_x, start_y, end_x, end_y, 0x33F8FF);
     }
 
+    // Restart the level if pressing <R> by reloading it using loadLevel(...)
     void Debug::restartCurrentLevel()
     {
         static bool rKeyWasDown = false;
@@ -206,30 +214,19 @@ namespace Tmpl8
         rKeyWasDown = rKeyIsDown;
     }
 
+    // Draws a line from the player to the AI.
     void Debug::drawDistancePlayerToAI(vec2 ai_pos, float size, Surface* screen)
     {
         float start_x = player.position.x + camera.getCamPos().x;
-        float start_y = player.position.y  - 4 + camera.getCamPos().y;
-        float end_y = ai_pos.y + size / 2 + camera.getCamPos().y;
-        float end_x = ai_pos.x + size / 2 + camera.getCamPos().x;
+        float start_y = player.position.y  - 4.0f + camera.getCamPos().y;
+        float end_y = ai_pos.y + size / 2.0f + camera.getCamPos().y;
+        float end_x = ai_pos.x + size / 2.0f + camera.getCamPos().x;
 
         screen->Line(start_x, start_y, end_x, end_y, 0x00FF00);
     }
 
-    const char* getTileTypeName(TileType type)
-    {
-        switch (type)
-        {
-        case TileType::Collision: return "Collision";
-        case TileType::Ice: return "Ice";
-        case TileType::Damage: return "Damage";
-        case TileType::End: return "End";
-        case TileType::None: return "None";
-        default: return "Unknown";
-        }
-    }
-
-    void Debug::toggleInfiniteDashes()
+    // Give the player 9999 dashes if pressing <D>
+    void Debug::giveDashes()
     {
         if (GetAsyncKeyState('D') & 0x8000) player.dash_count = 9999;
     }

@@ -179,7 +179,7 @@ namespace Tmpl8
         drawMainBGPan(screen, deltaTime);
         img_menu_main_pro_tip.Draw(screen, vec2(7, SCREEN_HEIGHT - img_menu_main_pro_tip.GetHeight() - 7.0f));
 
-        // Prevents the main menu from being interactible while the info menu pops up on top.
+        // Prevents from interacting with the main menu when the info menu pops on top.
         if (infoMenuOpen)   
         {
             openInfoMenu(screen, deltaTime);
@@ -405,10 +405,11 @@ namespace Tmpl8
             });
     }
 
-    void Menu::openEndMenu(Surface* screen)
+    void Menu::openEndMenu(Surface* screen, float deltaTime)
     {
-        endMenuOpen = level.game_finished;
         resultsMenuOpen = true;
+
+        endMenuOpen = level.game_finished;
 
         if (endMenuOpen)
         {
@@ -416,13 +417,14 @@ namespace Tmpl8
         }
         else if (overMenuOpen)
         {
-            img_menu_over_bg.Draw(screen, SCREEN_HALF_SIZE - END_BG_SIZE / 2.0f);
+            img_menu_over_bg.Draw(screen, SCREEN_HALF_SIZE - END_BG_OVER_SIZE / 2.0f);
         }
         else
         {
             return;
         }
 
+        openResultsMenu(screen, deltaTime);
         static bool wasHoveringMenu = false;
         static bool wasHoveringReplay = false;
 
@@ -507,7 +509,7 @@ namespace Tmpl8
                 if(score <= 0) gamesound.playSound(gamesound.snd_level_finished); // If the player has 0 score, play the SFX instantly instead of waiting for the countdown
                 end_sound_played = true;
             }
-            openEndMenu(screen);
+            openEndMenu(screen, deltaTime);
             resume_game = false;
         }
         else
@@ -519,7 +521,7 @@ namespace Tmpl8
 
     void Menu::addScore(int score_increment)
     {
-        score += score_increment * difficulty;
+        score += (score_increment * difficulty);
     }
 
     void Menu::scoreInGame(Surface* screen, float deltaTime)
@@ -632,6 +634,7 @@ namespace Tmpl8
             return;
         }
 
+        printf("open res: %d\n", resultsMenuOpen);
         static const float counting_speed = 0.5f; // In secs
 
         Pixel color = 0xFFFFFF;
