@@ -490,9 +490,18 @@ void Sprite::DrawRotated(Surface* a_Target, int a_X, int a_Y, float a_Angle)
 			int finalX = a_X + centerX + (int)(fx + 0.5f);
 			int finalY = a_Y + centerY + (int)(fy + 0.5f);
 
-			if (finalX >= 0 && finalX < a_Target->GetWidth() && finalY >= 0 && finalY < a_Target->GetHeight())
+			// 2x2 blocks to fill potential gaps
+			for (int oy = 0; oy <= 1; oy++)
 			{
-				dest[finalX + finalY * dpitch] = color;
+				for (int ox = 0; ox <= 1; ox++)
+				{
+					int px = finalX + ox;
+					int py = finalY + oy;
+					if (px >= 0 && px < a_Target->GetWidth() && py >= 0 && py < a_Target->GetHeight())
+					{
+						dest[px + py * dpitch] = color;
+					}
+				}
 			}
 		}
 	}

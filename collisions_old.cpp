@@ -1,4 +1,8 @@
-
+//        /!\ THIS DOCUMENT IS FOR ARCHIVE PURPOSES /!\
+// ---------------------------------------------------------------
+// This shows multiple iterations of different collision 
+// systems I tried that I thought were interesting enough to show.
+// ----------------------------------------------------------------
 
 // AABB Version of the collisions (scrapped)
 /*
