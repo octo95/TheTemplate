@@ -22,7 +22,7 @@ namespace Tmpl8
 
         PlayerState pastState = playerBuffer.read(); 
         this->position = pastState.position + vec2(-player.hitbox_radius, -player.hitbox_radius);
-        this->acceleration = pastState.rotation_acceleration;
+        this->angular_acceleration = pastState.rotation_acceleration;
     }
 
     void AI_Copy::updatePlayerBuffer() {

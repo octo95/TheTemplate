@@ -18,7 +18,7 @@ namespace Tmpl8
             Player& playerRef,
             float& timer
         ) :
-            AI(playerRef, vec2(-500.0f,-500.0f)),
+            AI(playerRef, vec2(-500.0f,-500.0f)),   // Make the AI appear out of bounds until its copyTimer starts.
             copyTimer(timer)
         {
         };

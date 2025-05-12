@@ -9,6 +9,8 @@ namespace Tmpl8
     // The tail will allow us to read the previous player's state and the head to write it on the AI to set its state later.
     // +-------------------------------------------------------------------------------------------------------------------------+
 
+    // CircularBuffer implementation inspired by https://www.geeksforgeeks.org/implement-circular-buffer-using-std-vector-in-cpp/.
+
     CircularBuffer::CircularBuffer() :
         timer(0.0f),
         buf(std::vector<PlayerState>{}),

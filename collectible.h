@@ -43,12 +43,6 @@ namespace Tmpl8
 			type(typeRef)
 		{};
 
-		// Overloading == operator. Collectible are equal if the coordinates are the same.
-		bool operator==(const Collectible& rhs) const noexcept
-		{
-			return this->pos == rhs.pos;
-		}
-
 		// Destructor
 		~Collectible() {};
 	};

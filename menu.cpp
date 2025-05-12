@@ -14,7 +14,6 @@ namespace Tmpl8
     {
     }
 
-
     // + MAIN MENU
     Sprite img_menu_main_bg(new Surface("assets/images/menus/main_menu/img_menu_main_bg.png"), 1);
     Sprite img_menu_main_start(new Surface("assets/images/menus/main_menu/img_menu_main_start.png"), 1);
@@ -27,6 +26,7 @@ namespace Tmpl8
     Sprite img_menu_main_difficulty_medium(new Surface("assets/images/menus/main_menu/img_menu_main_difficulty_medium.png"), 1);
     Sprite img_menu_main_difficulty_hard(new Surface("assets/images/menus/main_menu/img_menu_main_difficulty_hard.png"), 1);
     Sprite img_menu_main_pro_tip(new Surface("assets/images/menus/main_menu/img_menu_main_pro_tip.png"), 1);
+    Sprite img_menu_main_logo(new Surface("assets/images/menus/main_menu/img_menu_main_logo.png"), 1);
 
         // - Info panel
     Sprite img_menu_main_info_bg(new Surface("assets/images/menus/main_menu/info/img_menu_main_info_bg.png"), 1);
@@ -134,12 +134,10 @@ namespace Tmpl8
     {
         if (!infoMenuOpen) return;
 
-        // Draw background using vec2 for position on the same line
         img_menu_main_info_bg.Draw(screen, MAIN_INFO_BG_POS);
 
         static bool wasHoveringQuitInfo = false;
 
-        // Adjust handleButton to use vec2 for position and size on the same line
         handleButton(
             screen,
             MAIN_INFO_QUIT_POS,
@@ -177,7 +175,8 @@ namespace Tmpl8
         if (!mainMenuOpen) return;
 
         drawMainBGPan(screen, deltaTime);
-        img_menu_main_pro_tip.Draw(screen, vec2(7, SCREEN_HEIGHT - img_menu_main_pro_tip.GetHeight() - 7.0f));
+        img_menu_main_pro_tip.Draw(screen, vec2(7.0f, SCREEN_HEIGHT - img_menu_main_pro_tip.GetHeight() - 7.0f));
+        img_menu_main_logo.Draw(screen, vec2(SCREEN_HALF_SIZE.x - MAIN_LOGO_SIZE.x / 2.0f, SCREEN_SIZE.y / 3.0f - MAIN_LOGO_SIZE.y / 2.0f));
 
         // Prevents from interacting with the main menu when the info menu pops on top.
         if (infoMenuOpen)   
@@ -283,7 +282,6 @@ namespace Tmpl8
         // Store mouse pressed state for next frame
         wasMousePressedLastFrame = isMousePressed;
     }
-
 
     void Menu::manageLevelSelect(int index)
     {
@@ -634,7 +632,6 @@ namespace Tmpl8
             return;
         }
 
-        printf("open res: %d\n", resultsMenuOpen);
         static const float counting_speed = 0.5f; // In secs
 
         Pixel color = 0xFFFFFF;

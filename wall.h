@@ -17,7 +17,7 @@ namespace Tmpl8
 
 	struct Wall
 	{
-		Tmpl8::vec2 pos;
+		vec2 pos;
 
 		// Default Constructor
 		Wall() :
@@ -25,15 +25,9 @@ namespace Tmpl8
 		{};
 
 		// Constructor
-		Wall(Tmpl8::vec2 _pos) :
+		Wall(vec2 _pos) :
 			pos(_pos)
 		{};
-
-		// Overloading == operator. Wall are equal if the coordinates are the same.
-		bool operator==(const Wall& rhs) const noexcept
-		{
-			return this->pos == rhs.pos;
-		}
 
 		// Destructor
 		~Wall() {};

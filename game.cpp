@@ -1,5 +1,4 @@
 #include "game.h"
-#include "text.h"
 
 namespace Tmpl8
 {

@@ -28,7 +28,7 @@ namespace Tmpl8 {
         };
 
         // Variables
-        float acceleration = 0;
+        float angular_acceleration = 0;
         bool stop = false;                  // Stops the AI if true (for debug)
         vec2 default_pos = { -500, -500 };  // Make the AI appear out of bounds when not on screen
         vec2 position;
@@ -39,6 +39,7 @@ namespace Tmpl8 {
         void setProperties() {};
     };
 
+    // Create a map containing all the AI types.
     struct AIMap {
         std::vector<AI_Copy> ai_copy_map;
         std::vector<AI_Follow> ai_follow_map;

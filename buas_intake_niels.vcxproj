@@ -243,7 +243,6 @@
     <ClCompile Include="health.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="menu.cpp" />
-    <ClCompile Include="menu_main.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="template.cpp" />
@@ -267,7 +266,6 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="health.h" />
     <ClInclude Include="level.h" />
-    <ClInclude Include="menu_main.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="gamesound.h" />

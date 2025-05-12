@@ -37,9 +37,9 @@ namespace Tmpl8
 	extern Sprite img_menu_main_info_bg;
 	extern Sprite img_menu_main_info_quit;
 	extern Sprite img_menu_over_bg;
+	extern Sprite img_menu_main_logo;
 
 	class Health;
-	class MenuMain;
 
 	class Menu
 	{
@@ -54,7 +54,6 @@ namespace Tmpl8
 				Text& text,
 				TileMap& tilemap
 			);
-
 
 			// Open menus
 			void drawMainBGPan(Surface* screen, float deltaTime);
@@ -147,6 +146,7 @@ namespace Tmpl8
 		const vec2 MAIN_START_SIZE = img_menu_main_start.GetSize();
 		const vec2 MAIN_LVL_SIZE = img_menu_main_lvl1.GetSize();
 		const vec2 MAIN_DIFFICULTY_SIZE = img_menu_main_difficulty_easy.GetSize();
+		const vec2 MAIN_LOGO_SIZE = img_menu_main_logo.GetSize();
 
 		// Info
 		const vec2 MAIN_INFO_SIZE = img_menu_main_info_info.GetSize();

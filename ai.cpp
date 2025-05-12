@@ -44,7 +44,7 @@ namespace Tmpl8
         if (ai_map->ai_copy_map.size() > 0)
         {
             for (AI_Copy& ai : ai_map->ai_copy_map) {
-                camera.drawAICopy(&img_ai_copy, screen, ai.position, deltaTime, ai.acceleration);
+                camera.drawAICopy(&img_ai_copy, screen, ai.position, deltaTime, ai.angular_acceleration);
             }
         }
         if (ai_map->ai_follow_map.size() > 0)

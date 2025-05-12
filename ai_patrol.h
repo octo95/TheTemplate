@@ -36,11 +36,10 @@ namespace Tmpl8
         private:
             Camera& camera;
 
-            enum class Direction
-            {
+            enum class Direction{
                 LEFT,
                 RIGHT
             };
-            Direction direction = Direction::RIGHT;
+            Direction direction = Direction::RIGHT; // Default direction of the AI patrol on the right.
     };
 }
