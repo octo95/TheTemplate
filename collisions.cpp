@@ -307,13 +307,13 @@ namespace Tmpl8
         // If the player touches ice:
         /*----------------------------
         * - Set the Ice state to true to draw the splash effect.
-        * - Set the friction to 0 to make the player style.
+        * - Set the friction really low to make the player slide.
         * - Increase the max_horizontal_speed to increase the sliding effect.
         */
         if (isIce)
         {
             isOnIce = true;
-            player.friction = 0.0f;
+            player.friction = 0.005f;
             player.max_horizontal_speed = 2.7f;
         }
 

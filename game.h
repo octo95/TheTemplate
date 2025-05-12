@@ -54,7 +54,6 @@ namespace Tmpl8
 		// Create all the objects for the game
 		Bell bell;
 		Camera camera;
-		CircularBuffer circular_buffer;
 		Collisions collisions;
 		Debug debug;
 		GameSound gamesound;

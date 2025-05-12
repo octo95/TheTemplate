@@ -102,10 +102,10 @@ namespace Tmpl8
         deltaTime /= 1000.0f;   // Convert deltaTime to seconds
         localTime = deltaTime;  // Seperate deltaTime logic for pause
 
-        // * Cap the framerate (Unused)
-        //frameTime += deltaTime;
-        //if (frameTime < 1 / 60.0f) return;
-        //frameTime = 0.0f;
+        // * Cap the framerate
+        frameTime += deltaTime;
+        if (frameTime < 1 / 144.0f) return;
+        frameTime = 0.0f;
 
         // Starting the game logic
         if (menu.start_game)
