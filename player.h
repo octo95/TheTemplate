@@ -39,8 +39,8 @@ namespace Tmpl8
             float angular_acceleration = 0.0f;
             int dash_count = 0;
 		    float friction = 0.05f;                     // Friction on the ground, lower friction results in more momentum
-		    float max_horizontal_speed = 1.5f;          // Max horizontal speed
-		    float max_vertical_speed = 10.0f;           // Max vertical speed
+		    float max_horizontal_speed = 2.5f;          // Max horizontal speed
+		    float max_vertical_speed = 25.0f;           // Max vertical speed
             const float GRAVITY = 0.10f;
             const float ENERGY_LOSS = 0.7f;             // How much energy the ball keeps after a bounce in %
 

@@ -1,3 +1,25 @@
+// +----------------------------------------------------------------------------+
+// | _____ ____  _   _ ___ _____ ____     ____ ___  _     _     ___ ____  _____ |
+// ||  ___|  _ \| | | |_ _|_   _/ ___|   / ___/ _ \| |   | |   |_ _|  _ \| ____||
+// || |_  | |_) | | | || |  | | \___ \  | |  | | | | |   | |    | || | | |  _|  |
+// ||  _| |  _ <| |_| || |  | |  ___) | | |__| |_| | |___| |___ | || |_| | |___ |
+// ||_|   |_| \_\\___/|___| |_| |____/   \____\___/|_____|_____|___|____/|_____||
+// |                                                                            |
+// +----------------------------------------------------------------------------+
+
+// A game for the BUas programming intake for the academic year of 2025 / 2026.
+
+// * CREDITS:
+// -----------
+// Game by Niels DUNOU.
+// Art assets made for the game by gegega.
+// Music and sound design made for the game by Synth Mints.
+// Using background assets from: https://free-game-assets.itch.io/free-summer-pixel-art-backgrounds.
+// Using the template Tmpl8, BUAS version https://www.buas.nl/games (IGAD/BUAS(NHTV)/UU - Jacco Bikker - 2006-2020)
+// Using the following additional libraries:
+// - Audio library made by Jeremiah: https://github.com/jpvanoosten/Audio
+// - stb_easy_fonts:https://github.com/nothings/stb/blob/master/stb_easy_font.h
+
 #include "game.h"
 
 namespace Tmpl8

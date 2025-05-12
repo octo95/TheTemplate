@@ -314,7 +314,7 @@ namespace Tmpl8
         {
             isOnIce = true;
             player.friction = 0.005f;
-            player.max_horizontal_speed = 2.7f;
+            player.max_horizontal_speed = 4.0f;
         }
 
         // If the player touches a collision:
@@ -326,8 +326,8 @@ namespace Tmpl8
         if (isCollision)
         {
             isOnIce = false;
-            player.friction = 0.05f;
-            player.max_horizontal_speed = 1.5f;
+            player.friction = 0.1f;
+            player.max_horizontal_speed = 2.5f;
         }
     }
 
