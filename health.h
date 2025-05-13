@@ -16,6 +16,7 @@ namespace Tmpl8
             Health(
                 Player& playerRef
             );
+
 			// Functions
             void drawHealthBar(Surface* screen, Menu* menu, GameSound* gamesound, float deltaTime);
             void initHealth(Menu* menu);

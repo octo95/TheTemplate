@@ -68,6 +68,8 @@ namespace Tmpl8
 			void manageMenus(Surface* screen, float deltaTime);
 			void manageLevelSelect(int index);
 			void manageDifficultySelect(int index);
+
+			// [Audio] / [Quit] icon functions.
 			void audioManagerOpen(Surface* screen);
 			void quitManagerOpen(Surface* screen);
 

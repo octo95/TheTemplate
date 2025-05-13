@@ -280,7 +280,7 @@ namespace Tmpl8
             }
         }
 
-        // Start button hover logic
+        // [START]
         handleButton(
             screen,
             MAIN_START_POS, MAIN_START_SIZE,
@@ -292,7 +292,7 @@ namespace Tmpl8
                 timer_current = 0.0f;
             });
 
-        // Info button hover logic
+        // [HOW TO PLAY]
         static bool wasMousePressedLastFrame = false;
         handleButton(
             screen,
@@ -300,18 +300,11 @@ namespace Tmpl8
             &img_menu_main_info_info, &img_menu_main_info_info_alt,
             wasHoveringInfo,
             [&]() {
-                if (isMousePressed && !wasMousePressedLastFrame)
-                {
-                    gamesound.playSound(gamesound.snd_select);
-                    infoMenuOpen = true;
-                }
+                infoMenuOpen = true;
             });
 
         // Open the info menu
         openInfoMenu(screen, deltaTime);
-
-        // Store mouse pressed state for next frame
-        wasMousePressedLastFrame = isMousePressed;
     }
 
     // Helper function to execute the logic upon selecting the level in the main menu.

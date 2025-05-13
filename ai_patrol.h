@@ -29,13 +29,13 @@ namespace Tmpl8
             bool isAILowerThanPlayer = true;
 
             // Functions
-            void setAIPatrolPos(const vec2& pos) { position = pos; }
             void getStomped();
             void Patrol(float deltaTime, Collisions* collisions, TileMap* tilemap);
 
         private:
             Camera& camera;
 
+            // To determine what direction the AI is going.
             enum class Direction{
                 LEFT,
                 RIGHT

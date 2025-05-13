@@ -7,6 +7,7 @@ namespace Tmpl8
 {
     extern Sprite img_ai_follow;
 
+    // Inherit from AI.
     class AI_Follow: public AI
     {
         public:
@@ -22,14 +23,10 @@ namespace Tmpl8
             };
 
 		    // Variables
-            float angle = 0.0f;
-            bool is_following = true;
+            float angle = 0.0f;  // Angle to draw the AI at.
             Camera& camera;
 
             // Functions
             void followPlayer(float deltaTime);
-            void setAIFollowDefaultPos(const vec2& pos) { default_pos = pos; }
-            void setAIFollowPos(const vec2& pos) { position = pos; }
-            void getAIFollowPos(vec2& pos) { pos = position; }
     };
 }

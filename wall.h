@@ -33,11 +33,13 @@ namespace Tmpl8
 		~Wall() {};
 	};
 
-	// Definition of the WallMap type
+	// Definition of the WallMap type.
 	typedef std::unordered_map<vec2, Wall> WallMap;
 
-	// Local functions
+	// Local functions.
 	void loadAllWalls(int map);
 	void drawWallMap(Camera* camera, Surface* screen, WallMap* collectibles);
+
+	// Handles the detection of collisions and pushing back the player when colliding with a wall.
 	void manageWallCollision(Player* player, GameSound* gamesound);
 }

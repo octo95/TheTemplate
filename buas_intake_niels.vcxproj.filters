@@ -163,7 +163,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="_readme.txt">
+    <Text Include="tmpl8_readme.txt">
+      <Filter>Other</Filter>
+    </Text>
+    <Text Include="intake_readme.txt">
       <Filter>Other</Filter>
     </Text>
   </ItemGroup>

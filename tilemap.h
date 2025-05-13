@@ -6,9 +6,7 @@
 
 namespace Tmpl8
 {
-    const int TOTAL_MAPS = 3;
-    const int TILE_ROWS = 32;
-    const int TILE_COLUMNS = 27;
+    // The game contains 5 levels.
     const int MAP_AMOUNT = 5;
 
     extern Sprite img_map1_data_read;
@@ -16,7 +14,17 @@ namespace Tmpl8
     extern Sprite img_map1_draw_bg;
     extern Sprite img_map5_draw_alt;
 
+    // The game is drawn with tiles, each tile having a size of 32 pixels.
     const float TILE_SIZE = 32.0f;
+
+    // The game contains multiple tiles that will affect the player differently:
+    /*---------------------------------------------------------------------------
+    * - None:       Basically air, can go through it.
+    * - Damage:     Lava that hits the player if they enter it by more than half from the bottom.
+    * - End:        (unused)
+    * - Collision:  Walls the player can't go through. In collision logic however we often use rather !None in case we want the logic to apply to the other types.
+    * - Ice:        Similar to the collision but makes the player slide on it. 
+    */
     enum TileType
     {
         None = 0,
@@ -28,7 +36,7 @@ namespace Tmpl8
 
     extern Sprite img_map1_data_read;
 
-    // Jump collectibles
+    // Place the dash collectibles in tile coordinates for every map.
     const vec2 MAP1_COLLEC_DASH[1] = {
         vec2 {10,12}
     };
@@ -68,7 +76,7 @@ namespace Tmpl8
         vec2 {17,35},
     };
 
-    // Health collectibles
+    // Place the health collectibles in tile coordinates for every map.
     const vec2 MAP1_COLLEC_HEALTH[1] = {
         vec2 {22,7}
     };
@@ -86,7 +94,7 @@ namespace Tmpl8
         vec2 {46,18}
     };
   
-    // Walls
+    // Place the walls in tile coordinates for every map.
     const vec2 MAP1_WALLS[1] = {
         vec2 {21,7}
     };
@@ -139,12 +147,13 @@ namespace Tmpl8
             Sprite* current_map_draw = &img_map1_draw;
             Sprite* current_map_draw_bg = &img_map1_draw_bg;
 
-            int current_level = 1;
-            bool secret_collected = false;
+            int current_level = 1;          // Sets the map_index.
+            bool secret_collected = false;  // Handles the detection of the secret room of level 5.
 
-            // Functions
+            // We hold and read the collision data for each map in pictures that are easy to read with basic colors.
             void readImageToMap(Sprite* image);
-            void loadLevel(int i);
+
+            // Helper function to increment the map index and wrap around when reaching the total amount back to the first one instead of going out of scope.
             int incrementMapIndex() { return current_level = current_level % MAP_AMOUNT + 1; }
 
 			// Getters / Setters

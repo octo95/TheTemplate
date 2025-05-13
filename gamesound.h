@@ -1,5 +1,6 @@
 #pragma once
 #include <Audio/Sound.hpp>
+// The audio of the game is handled with the help of the Audio library made by Jeremiah: https://github.com/jpvanoosten/Audio
 
 namespace Tmpl8
 {
@@ -9,10 +10,10 @@ namespace Tmpl8
     class GameSound
     {
         public:
-		    // Global volume for all sounds
+		    // Global volume for all sounds.
             float globalVolume = 0.1f;
 
-            // All SFX paths
+            // All SFX paths.
             const std::string snd_damage = "assets/audio/SFX/snd_damage.wav";
             const std::string snd_level_finished = "assets/audio/SFX/snd_level_finished.wav";
             const std::string snd_select = "assets/audio/SFX/snd_select.wav";
@@ -30,15 +31,12 @@ namespace Tmpl8
             const std::string mus_level = "assets/audio/Music/mus_level.wav";
             const std::string mus_menu = "assets/audio/Music/mus_menu.wav";
 
-		    // Functions
+		    // Functions to manage the sound of the game.
             void playSound(const std::string& filePath);
-            void playRollingSound(const std::string& filePath);
             void playMusic(const std::string& filePath);
             void stopMusic();
-            void stopRollingSound();
 
         private:
-            bool rollingSoundPlaying = false;
             SoundType activeSounds;  // For storing active sound effects
             SoundType activeMusics;  // For storing active music tracks
     };

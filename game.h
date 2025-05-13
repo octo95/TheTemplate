@@ -1,4 +1,16 @@
-﻿#pragma once
+﻿// +----------------------------------------------------------------------------+
+// | _____ ____  _   _ ___ _____ ____     ____ ___  _     _     ___ ____  _____ |
+// ||  ___|  _ \| | | |_ _|_   _/ ___|   / ___/ _ \| |   | |   |_ _|  _ \| ____||
+// || |_  | |_) | | | || |  | | \___ \  | |  | | | | |   | |    | || | | |  _|  |
+// ||  _| |  _ <| |_| || |  | |  ___) | | |__| |_| | |___| |___ | || |_| | |___ |
+// ||_|   |_| \_\\___/|___| |_| |____/   \____\___/|_____|_____|___|____/|_____||
+// |                                                                            |
+// +----------------------------------------------------------------------------+
+
+// Find all the documentation in both .h and .cpp files!
+// Credits in game.cpp
+
+#pragma once
 #include "ai.h"
 #include "ai_copy.h"
 #include "ai_follow.h"
@@ -25,6 +37,7 @@ namespace Tmpl8
 	class Game
 	{
 	public:
+		// Main game constructor, pass all the objects to their respective constructors as they are all created in game.h
 		Game() :
 			bell(level),
 			collisions(ai_map, camera, gamesound, health, level, menu, player, tilemap),
@@ -36,6 +49,7 @@ namespace Tmpl8
 			tilemap(player)
 		{}
 
+		// Template functions.
 		void SetTarget( Surface* surface ) { screen = surface; }
 		void Init();
 		void Shutdown();
@@ -72,9 +86,9 @@ namespace Tmpl8
 		WallMap wall = WallMap();
 
 		// Variables
-		vec2 new_pos;			// To determine the new position of the player next tick
-		float localTime = 0.0f;	// We split the calls of the functions between localTime and deltaTime allowing us when the game is paused
+		vec2 new_pos;			// To determine the new position of the player next tick.
+		float localTime = 0.0f;	// We split the calls of the functions between localTime and deltaTime allowing us when the game is paused.
 								// to pause only the functions we want to as some still need to be running even during a pause.
-		float frameTime = 0.0f;	// To cap the game at a specific FPS (unused)
+		float frameTime = 0.0f;	// To cap the game at a specific FPS.
 	};
 }

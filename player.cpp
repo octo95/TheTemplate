@@ -61,19 +61,17 @@ namespace Tmpl8
                 if (velocity.x > 0) velocity.x = 0;
             }
         }
-
-        // Clamp fall speed depending on the gravity and deltaTime.
-        velocity.y += GRAVITY / deltaTime / 120.0f;
-        if (velocity.y > max_vertical_speed) velocity.y = max_vertical_speed;
-
         // Pass the velocity to the camera to make the player rotate while moving
         angular_acceleration = velocity.x * 270.0f;
 
-        // Call helper functions to manage the player's movement for jumping and dashing.
-        manageJump(deltaTime);
-        manageDash(deltaTime);
-
         return position + velocity;
+    }
+
+    void Player::applyGravity(float deltaTime)
+    {
+        // Clamp fall speed depending on the gravity and deltaTime.
+        velocity.y += GRAVITY / deltaTime / 120.0f;
+        if (velocity.y > max_vertical_speed) velocity.y = max_vertical_speed;
     }
 
     void Player::manageJump(float deltaTime)

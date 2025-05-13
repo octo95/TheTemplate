@@ -19,6 +19,7 @@
 // Using the following additional libraries:
 // - Audio library made by Jeremiah: https://github.com/jpvanoosten/Audio
 // - stb_easy_fonts:https://github.com/nothings/stb/blob/master/stb_easy_font.h
+// Contains references to medias owned by their respective copyright holders.
 
 #include "game.h"
 
@@ -43,8 +44,12 @@ namespace Tmpl8
     {
         // Player logic
         new_pos = player.movePlayer(&collisions, localTime);
-        player.setJumpState(collisions.getJumpState(new_pos));
         collisions.manageCollisions(new_pos);
+
+        player.setJumpState(collisions.getJumpState(new_pos));
+        player.manageJump(localTime);
+        player.applyGravity(localTime);
+        player.manageDash(localTime);
         player.restrictPlayerInMap(&tilemap);
 
         // Collisions logic

@@ -13,6 +13,7 @@ namespace Tmpl8
 	class Cloud
 	{
 	public:
+		// Each cloud is drawn at a random position and speed. It has 1 in 10 chances of being silly with a smile on it.
 		Tmpl8::vec2 pos;
 		float speed;
 		bool is_silly;
@@ -40,8 +41,12 @@ namespace Tmpl8
 	// Definition of the CloudMap type
 	typedef std::vector<Cloud> CloudMap;
 
-	// Local functions
-	void loadAllClouds(TileMap* map);
+	// Local all the clouds in the map.
+	void loadAllClouds(TileMap* tilemap);
+
+	// Draw every cloud of the map.
 	void drawCloudMap(Camera* camera, Surface* screen, CloudMap* clouds, TileMap* tilemap, float deltaTime);
+
+	// Give each cloud random properties.
 	Cloud generateRandomMapSpawn(TileMap* map);
 }

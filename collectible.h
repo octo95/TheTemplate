@@ -22,11 +22,12 @@ namespace Tmpl8
 	{
 	public:
 		vec2 pos;
+
+		// A collectible can either give you a dash or an HP.
 		enum class CollectibleType
 		{
 			Dash,
-			Health,
-			HealthCollected
+			Health
 		};
 		
 		CollectibleType type;
@@ -50,11 +51,17 @@ namespace Tmpl8
 	// Definition of the CollectibleMap type
 	typedef std::unordered_map<vec2, Collectible> CollectibleMap;
 
-	// Local functions
+	// The logic is split between dash and health in order to seperate them. This allows us for example
+	// to make it so that if the player doesn't have any dashes left it will make dash collectibles appear again but
+	// not the heart ones.
+
 	void loadAllCollectibles(int map_index);
 	void loadDashCollectibles(int map_index, CollectibleMap& cmap);
 	void loadHealthCollectibles(int map_index, CollectibleMap& cmap);
 	void drawCollectibleMap(Camera* camera, Surface* screen, float deltaTime);
 	void manageCollectibleCollision(Player* player, GameSound* gamesound, Menu* menu, Health* health, TileMap* tilemap);
+
+	// If the player collected the last collectible and has 0 dashes left, spawn a collectible after 3 seconds
+	// to prevent soft lock.
 	void manageCollectibleRespawn(float deltaTime, Player* player);
 }

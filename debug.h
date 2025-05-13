@@ -33,10 +33,11 @@ namespace Tmpl8
                 WallMap& wallRef
             );
 
-            // Main debug function
+            // Main debug function, press <SPACEBAR> to enable it. 
+            // /!\ Every other function can be called only if debug is active.
             void displayDebug(Surface* screen, float deltaTime);
 
-            // Draw functions
+            // Draw functions for hitboxes and lines.
             void drawPlayerHitbox(const vec2& pos, Surface* screen);
             void drawPlayerTileHitbox(const vec2& pos, Surface* screen);
             void drawHitbox(const vec2& pos, Sprite* img, Surface* screen);

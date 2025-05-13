@@ -47,9 +47,12 @@ namespace Tmpl8
         TileType right_tile = None;
         TileType middle_tile = None;
 
+        // Do we enter the tile top from the middle.
         bool touch_top = (player_pos.y - player_tpos.y) - player.hitbox_radius <= 0;
-        bool overlap_tile_left = !left && (player_pos.x - player.hitbox_radius + 1) - player_tpos.x <= 0;
-        bool overlap_tile_right = !right && (player_pos.x + player.hitbox_radius - 1) - player_tpos.x >= TILE_SIZE;
+
+        // Do we enter the tile from the left or right.
+        bool overlap_tile_left = left && (player_pos.x - player.hitbox_radius + 1) - player_tpos.x <= 0;
+        bool overlap_tile_right = right && (player_pos.x + player.hitbox_radius - 1) - player_tpos.x >= TILE_SIZE;
 
         // Determine the offsets to use to check the tiles at the desired offsets (left/middle/right)
         vec2 offset_middle = vec2(0.0f, -TILE_SIZE);
@@ -90,8 +93,8 @@ namespace Tmpl8
         vec2 offset_middle = vec2(0.0f, TILE_SIZE);
 
         bool touch_bottom = player_pos.y - player_tpos.y + player.hitbox_radius >= TILE_SIZE;
-        bool overlap_tile_left = !left && (player_pos.x - player.hitbox_radius + 1) - player_tpos.x <= 0;
-        bool overlap_tile_right = !right && (player_pos.x + player.hitbox_radius - 1) - player_tpos.x >= TILE_SIZE;
+        bool overlap_tile_left = left && (player_pos.x - player.hitbox_radius + 1) - player_tpos.x <= 0;
+        bool overlap_tile_right = right && (player_pos.x + player.hitbox_radius - 1) - player_tpos.x >= TILE_SIZE;
 
         if (touch_bottom) 
         {
@@ -254,6 +257,27 @@ namespace Tmpl8
         TileType CheckB = checkCollisionB(new_pos, CheckL != None, CheckR != None);
         TileType CheckT = checkCollisionT(new_pos, CheckL != None, CheckR != None);
 
+
+        // If the player is stuck on a wall either on the top, left or right, push them back slightly to avoid sticking to walls.
+        float push_back = 1.0f;
+        if (CheckL != None && CheckB != None && CheckT == None)         // Unstuck left.
+        {
+            player.position.x += push_back; 
+            new_pos.x = player.position.x;
+        }
+        else if (CheckR != None && CheckB != None && CheckT == None)    // Unstuck right.
+        {
+            player.position.x -= push_back;
+            new_pos.x = player.position.x;
+        }
+        else if (CheckT != None && CheckB == None)                      // Unstuck top.
+        {
+            player.jumping = false;
+            player.velocity.y = 0.0f;
+            player.position.y += push_back;
+            new_pos.y = player.position.y;
+        }
+
         // If the player touches a side and enters it, block the player.
         bool block_x = (
             (CheckL != None && new_pos.x < player.position.x) ||
@@ -387,21 +411,5 @@ namespace Tmpl8
             gamesound.playSound(gamesound.snd_fall_strong);
             camera.setShakeState(Camera::shakeConditions::FallHard);
         }
-
-        // Play SFX when the player is rolling, different on the ice. 
-        // (i) The following code logic works but lags the game so it has been disabled and left for documentation purposes.
-        
-        //if (bottom && isIce)
-        //{
-        //    gamesound.playRollingSound(gamesound.snd_slide);
-        //}
-        //else if (bottom && !isIce && fabs(player.velocity.x) > 0.5f)
-        //{
-        //    gamesound.playRollingSound(gamesound.snd_rolling);
-        //}
-        //else
-        //{
-        //    gamesound.stopRollingSound();
-        //}
     }
 }

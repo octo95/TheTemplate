@@ -8,7 +8,7 @@ template<>
 class std::hash<Tmpl8::vec2>
 {
 public:
-	// Overload the function call operator to work with a vec2 key.
+	// Overload the function call operator to work with a <vec2> key.
 	size_t operator()(const Tmpl8::vec2& key) const
 	{
 		// Hash the x and y elements of vec2(x,y).

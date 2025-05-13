@@ -48,6 +48,7 @@ namespace Tmpl8
             vec2 movePlayer(Collisions* collisions, float deltaTime);
             vec2 camFollowPlayer(TileMap* map);
             void restrictPlayerInMap(TileMap* tilemap);
+            void applyGravity(float deltaTime);
             void manageJump(float deltaTime);
             void manageDash(float deltaTime);
 
