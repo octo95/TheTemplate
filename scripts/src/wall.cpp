@@ -81,9 +81,9 @@ namespace Tmpl8
 			if (overlap)
 			{
 				// Bounce the player
-				player->move_cooldown = 0.2f;						// Stop the player's input for 0.2 seconds
-				player->velocity.x = -player->velocity.x * 1.5f;	// Make the player bounce back in the opposite direction
-				player->velocity.y = player->velocity.x * 1.3f;		// Make the player bounce back up based on its horizontal speed
+				player->move_cooldown = 0.3f;							// Stop the player's input for 0.2 seconds
+				player->velocity.x = -player->velocity.x * 1.1f;		// Make the player bounce back in the opposite direction
+				player->velocity.y = -fabs(player->velocity.x * 0.8f);	// Make the player bounce back (always up) based on its horizontal speed
 				gamesound->playSound(gamesound->snd_break_wall);
 
 				// Remove all the walls that are on the same column to make bigger walls

@@ -257,7 +257,6 @@ namespace Tmpl8
         TileType CheckB = checkCollisionB(new_pos, CheckL != None, CheckR != None);
         TileType CheckT = checkCollisionT(new_pos, CheckL != None, CheckR != None);
 
-
         // If the player is stuck on a wall either on the top, left or right, push them back slightly to avoid sticking to walls.
         float push_back = 1.0f;
         if (CheckL != None && CheckB != None && CheckT == None)         // Unstuck left.
