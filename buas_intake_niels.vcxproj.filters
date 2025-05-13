@@ -1,147 +1,141 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="collectible.cpp">
+    <ClCompile Include="scripts\src\collectible.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="debug.cpp">
+    <ClCompile Include="scripts\src\debug.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="camera.cpp">
+    <ClCompile Include="scripts\src\camera.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="game.cpp">
+    <ClCompile Include="scripts\game.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="player.cpp">
+    <ClCompile Include="scripts\src\player.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="surface.cpp">
+    <ClCompile Include="scripts\src\surface.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="template.cpp">
+    <ClCompile Include="scripts\src\template.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="tilemap.cpp">
+    <ClCompile Include="scripts\src\tilemap.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="wall.cpp">
+    <ClCompile Include="scripts\src\wall.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="collisions.cpp">
+    <ClCompile Include="scripts\src\collisions.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="level.cpp">
+    <ClCompile Include="scripts\src\level.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="gamesound.cpp">
+    <ClCompile Include="scripts\src\gamesound.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="health.cpp">
+    <ClCompile Include="scripts\src\health.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="bell.cpp">
+    <ClCompile Include="scripts\src\bell.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="circular_buffer.cpp">
+    <ClCompile Include="scripts\src\circular_buffer.cpp">
       <Filter>Solutions\AIs</Filter>
     </ClCompile>
-    <ClCompile Include="ai_patrol.cpp">
+    <ClCompile Include="scripts\src\ai_patrol.cpp">
       <Filter>Solutions\AIs</Filter>
     </ClCompile>
-    <ClCompile Include="ai_follow.cpp">
+    <ClCompile Include="scripts\src\ai_follow.cpp">
       <Filter>Solutions\AIs</Filter>
     </ClCompile>
-    <ClCompile Include="ai_copy.cpp">
+    <ClCompile Include="scripts\src\ai_copy.cpp">
       <Filter>Solutions\AIs</Filter>
     </ClCompile>
-    <ClCompile Include="text.cpp">
+    <ClCompile Include="scripts\src\text.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="ai.cpp">
+    <ClCompile Include="scripts\src\ai.cpp">
       <Filter>Solutions\AIs</Filter>
     </ClCompile>
-    <ClCompile Include="collisions_old.cpp">
-      <Filter>Other</Filter>
-    </ClCompile>
-    <ClCompile Include="cloud.cpp">
+    <ClCompile Include="scripts\src\cloud.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
-    <ClCompile Include="tile_old.cpp">
-      <Filter>Other</Filter>
-    </ClCompile>
-    <ClCompile Include="menu.cpp">
+    <ClCompile Include="scripts\src\menu.cpp">
       <Filter>Solutions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="player.h">
+    <ClInclude Include="scripts\include\player.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="surface.h">
+    <ClInclude Include="scripts\include\surface.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="template.h">
+    <ClInclude Include="scripts\include\template.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="tilemap.h">
+    <ClInclude Include="scripts\include\tilemap.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="debug.h">
+    <ClInclude Include="scripts\include\debug.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="camera.h">
+    <ClInclude Include="scripts\include\camera.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="game.h">
+    <ClInclude Include="scripts\game.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="collectible.h">
+    <ClInclude Include="scripts\include\collectible.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="wall.h">
+    <ClInclude Include="scripts\include\wall.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="vec2_hash.h">
+    <ClInclude Include="scripts\include\vec2_hash.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="collisions.h">
+    <ClInclude Include="scripts\include\collisions.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="level.h">
+    <ClInclude Include="scripts\include\level.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="gamesound.h">
+    <ClInclude Include="scripts\include\gamesound.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="health.h">
+    <ClInclude Include="scripts\include\health.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="bell.h">
+    <ClInclude Include="scripts\include\bell.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="ai_patrol.h">
+    <ClInclude Include="scripts\include\ai_patrol.h">
       <Filter>Headers\AIs</Filter>
     </ClInclude>
-    <ClInclude Include="ai_copy.h">
+    <ClInclude Include="scripts\include\ai_copy.h">
       <Filter>Headers\AIs</Filter>
     </ClInclude>
-    <ClInclude Include="ai_follow.h">
+    <ClInclude Include="scripts\include\ai_follow.h">
       <Filter>Headers\AIs</Filter>
     </ClInclude>
-    <ClInclude Include="circular_buffer.h">
+    <ClInclude Include="scripts\include\circular_buffer.h">
       <Filter>Headers\AIs</Filter>
     </ClInclude>
-    <ClInclude Include="text.h">
+    <ClInclude Include="scripts\include\text.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="ai.h">
+    <ClInclude Include="scripts\include\ai.h">
       <Filter>Headers\AIs</Filter>
     </ClInclude>
-    <ClInclude Include="cloud.h">
+    <ClInclude Include="scripts\include\cloud.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="menu.h">
+    <ClInclude Include="scripts\include\menu.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -163,10 +157,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="tmpl8_readme.txt">
-      <Filter>Other</Filter>
-    </Text>
-    <Text Include="intake_readme.txt">
+    <Text Include="readme.txt">
       <Filter>Other</Filter>
     </Text>
   </ItemGroup>
