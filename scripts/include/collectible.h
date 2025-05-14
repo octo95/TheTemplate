@@ -51,8 +51,8 @@ namespace Tmpl8
 	// Definition of the CollectibleMap type
 	typedef std::unordered_map<vec2, Collectible> CollectibleMap;
 
-	// The logic is split between dash and health in order to seperate them. This allows us for example
-	// to make it so that if the player doesn't have any dashes left it will make dash collectibles appear again but
+	// The logic is split between dash and health in order to separate them. This allows us, for example,
+	// make it so if the player doesn't have any dashes left, dash collectibles will appear again but
 	// not the heart ones.
 
 	void loadAllCollectibles(int map_index);

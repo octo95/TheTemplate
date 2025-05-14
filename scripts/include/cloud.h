@@ -38,7 +38,7 @@ namespace Tmpl8
 		~Cloud() {};
 	};
 
-	// Definition of the CloudMap type
+	// Definition of the CloudMap type.
 	typedef std::vector<Cloud> CloudMap;
 
 	// Local all the clouds in the map.

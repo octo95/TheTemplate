@@ -20,7 +20,7 @@ namespace Tmpl8
         buf.resize(BUFFER_SIZE);
     }
 
-    // Increment the tail to let us later read. The position is the fixed size of the buffer - 1 since the size count starts from 1 and the index from 0.
+    // Increment the tail to let us read later. The position is the fixed size of the buffer - 1 since the size count starts from 1 and the index from 0.
     void CircularBuffer::incrementTail() 
     {
         if (tail == BUFFER_SIZE - 1)

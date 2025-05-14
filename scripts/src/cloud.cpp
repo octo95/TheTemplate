@@ -24,7 +24,6 @@ namespace Tmpl8
 		// Insert all the clouds in the map.
 		for (int i = 0; i < cloud_amount; i++)
 		{
-			srand(static_cast<unsigned>(time(0)) + i);
 			cmap.emplace_back(generateRandomMapSpawn(map));
 		}
 	}

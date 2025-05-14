@@ -87,8 +87,8 @@ namespace Tmpl8
 
 		// Variables
 		vec2 new_pos;			// To determine the new position of the player next tick.
-		float localTime = 0.0f;	// We split the calls of the functions between localTime and deltaTime allowing us when the game is paused.
-								// to pause only the functions we want to as some still need to be running even during a pause.
+		float localTime = 0.0f;	// We split the calls of the functions between localTime and deltaTime allowing us
+								// to pause only the functions that we want to pause as some still need to be running even during a pause.
 		float frameTime = 0.0f;	// To cap the game at a specific FPS.
 	};
 }

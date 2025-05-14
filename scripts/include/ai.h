@@ -52,7 +52,7 @@ namespace Tmpl8 {
         std::vector<AI_Patrol> ai_patrol_map;
     };
 
-    // We seperate the logic of the AIs with work and draw to be able to pause their logic properly when pausing the game.
+    // Seperate the logic of the AIs with work and draw to be able to pause their logic properly when pausing the game.
     void workAI(AIMap* ai_map, float& localTime, Collisions& collisions, TileMap& tilemap);
     void drawAI(AIMap* ai_map, Surface* screen, float& deltaTime, Camera& camera);
 }

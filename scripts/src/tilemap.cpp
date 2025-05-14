@@ -71,7 +71,7 @@ namespace Tmpl8
 
     void TileMap::readImageToMap(Sprite* image) {
 
-        // Read the data of picture representing the tile collisions with simple colors. By going through it by TILE_SIZE intervals
+        // Read the data of a picture representing the tile collisions with simple colors. By going through it by TILE_SIZE intervals
         // We can read the color of the pixels to determine what TileType they represent. We store in a map for each coordinate what
         // TileType data they hold by reading the corresponding pixel.
 

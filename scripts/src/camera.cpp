@@ -36,9 +36,9 @@ namespace Tmpl8
             shake_conditions = shakeConditions::None;
         }
 
-        // (!) The following shaking math was made with the help of the lecturer Jeremiah on the 3dgep.com Discord server.
+        // (i) The following shaking math was made with the help of the lecturer Jeremiah on the 3dgep.com Discord server.
 
-        // If the timer is not gone, continue it by decrementing deltaTime to total_time.
+        // If the timer is not done, continue it by decrementing deltaTime to total_time.
         // If the shakeConditions is None this will stop the shake even if it's not done.
         if (total_time > 0.0f && shake_conditions != shakeConditions::None)
         {

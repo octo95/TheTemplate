@@ -64,9 +64,9 @@ namespace Tmpl8
             sprintf(player_pos_txt, "px: %.0f, py: %.0f", player.position.x, player.position.y);
             screen->Print(player_pos_txt, 10, 30, 0xFFFF00);
 
-            // Display player's position
+            // Display player's tile position
             char player_tpos_txt[100];
-            sprintf(player_tpos_txt, "tx: %.0f, ty: %.0f", floor(player.position.x / 32), floor(player.position.y / 32));
+            sprintf(player_tpos_txt, "tx: %.0f, ty: %.0f", floor(player.position.x / TILE_SIZE), floor(player.position.y / TILE_SIZE));
             screen->Print(player_tpos_txt, 10, 50, 0xFFFF00);
 
             // Display current map level and spawn point

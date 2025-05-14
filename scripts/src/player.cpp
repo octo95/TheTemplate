@@ -117,7 +117,7 @@ namespace Tmpl8
         if (position.x + player_img_width / 2 > mapSize.x)                              // On the right
             position.x = mapSize.x - player_img_width / 2;
 
-        float offset = hitbox_radius - TILE_SIZE / 1.4f;        // Let the player be able to go a bit out of the boundaries by a little extra without letting them able to clip out of bounds.
+        float offset = hitbox_radius - TILE_SIZE / 1.4f;        // Let the player be able to go a bit out of the boundaries without letting them clip out of bounds.
         if (position.y - offset < 0.0f) position.y = offset;    // On the left
     }
 

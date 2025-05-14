@@ -19,7 +19,7 @@ namespace Tmpl8
 			// Initialize the shake to None by default.
 			shakeConditions shake_conditions = shakeConditions::None;
 
-			// Shaking functions
+			// Handle the camera shaking.
 			void shakeCamera(float deltaTime);
 
 			// Helper functions to draw objects that follow the camera logic.

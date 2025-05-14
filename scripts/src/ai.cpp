@@ -53,7 +53,7 @@ namespace Tmpl8
                 img_ai_follow.DrawRotated(screen, ai.position + camera.getCamPos(), ai.angle);
             }
         }
-        // Just as we want to make we don't apply the logic to a dead AI patrol, we need to make sure it's not dead before drawing it as well.
+        // Just as we want to make sure we don't apply the logic to a dead AI patrol, we need to make sure it's not dead before drawing it as well.
         if (ai_map->ai_patrol_map.size() > 0) 
         {
             for (AI_Patrol& ai : ai_map->ai_patrol_map) {
