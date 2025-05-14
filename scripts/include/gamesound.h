@@ -11,7 +11,7 @@ namespace Tmpl8
     {
         public:
 		    // Global volume for all sounds.
-            float globalVolume = 0.1f;
+            float globalVolume = 0.3f;
 
             // All SFX paths.
             const std::string snd_damage = "assets/audio/SFX/snd_damage.wav";
