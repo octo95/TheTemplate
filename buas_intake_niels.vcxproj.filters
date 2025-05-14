@@ -138,6 +138,9 @@
     <ClInclude Include="scripts\include\menu.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Other</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">
@@ -160,5 +163,15 @@
     <Text Include="readme.txt">
       <Filter>Other</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\icons\icon_fruits_collide_release.ico">
+      <Filter>Other</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>Other</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

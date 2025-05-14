@@ -257,6 +257,7 @@
     <ClCompile Include="scripts\src\wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="scripts\include\ai.h" />
     <ClInclude Include="scripts\include\ai_copy.h" />
     <ClInclude Include="scripts\include\ai_follow.h" />
@@ -283,6 +284,12 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\icons\icon_fruits_collide_release.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
